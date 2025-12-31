@@ -1,0 +1,278 @@
+/* ============================================
+   Support Page - Premium Design
+   ============================================ */
+
+.support-page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0;
+}
+
+/* ============================================
+   Header Section
+   ============================================ */
+
+.support-header {
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--card-border);
+}
+
+.support-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 0;
+    letter-spacing: -1px;
+    line-height: 1.2;
+    background: linear-gradient(135deg, var(--text-primary) 0%, var(--text-secondary) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* ============================================
+   Support Section
+   ============================================ */
+
+.support-section {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+}
+
+.support-intro {
+    margin-bottom: 0.5rem;
+}
+
+.support-intro-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 0 0 1rem 0;
+    letter-spacing: -0.5px;
+    line-height: 1.2;
+}
+
+.support-intro-subtitle {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    margin: 0;
+    line-height: 1.6;
+    font-weight: 400;
+}
+
+/* ============================================
+   Support Channels
+   ============================================ */
+
+.support-channels {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+}
+
+.support-channel-group {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.support-channel-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 0 0 1rem 0;
+    letter-spacing: -0.25px;
+}
+
+.support-channel-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.support-channel-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 16px;
+    padding: 1.5rem;
+    box-shadow: var(--shadow-sm);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.support-channel-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    opacity: 0;
+    transition: var(--transition);
+}
+
+.support-channel-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--card-border-hover);
+}
+
+.support-channel-card:hover::before {
+    opacity: 1;
+}
+
+.support-channel-card:has(.whatsapp-icon)::before {
+    background: linear-gradient(90deg, #25D366 0%, #128C7E 100%);
+}
+
+.support-channel-card:has(.phone-icon)::before {
+    background: linear-gradient(90deg, var(--primary-gradient-start) 0%, var(--primary-gradient-end) 100%);
+}
+
+.support-channel-card:has(.facebook-icon)::before {
+    background: linear-gradient(90deg, #1877F2 0%, #166FE5 100%);
+}
+
+.support-channel-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    flex-shrink: 0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.whatsapp-icon {
+    background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+    color: white;
+}
+
+.phone-icon {
+    background: linear-gradient(135deg, var(--primary-gradient-start) 0%, var(--primary-gradient-end) 100%);
+    color: white;
+}
+
+.facebook-icon {
+    background: linear-gradient(135deg, #1877F2 0%, #166FE5 100%);
+    color: white;
+}
+
+.support-channel-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.support-channel-label {
+    font-size: 0.8125rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.support-channel-value {
+    font-size: 0.9375rem;
+    color: var(--text-primary);
+    font-weight: 500;
+    word-break: break-all;
+    line-height: 1.5;
+}
+
+.support-copy-btn {
+    padding: 0.75rem 1rem;
+    background: linear-gradient(135deg, var(--primary-gradient-start) 0%, var(--primary-gradient-end) 100%);
+    color: #000;
+    border: none;
+    border-radius: 12px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: var(--transition-fast);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(0, 255, 136, 0.3);
+    flex-shrink: 0;
+}
+
+.support-copy-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 255, 136, 0.4);
+}
+
+.support-copy-btn.copied {
+    background: linear-gradient(135deg, var(--primary-gradient-start) 0%, var(--primary-gradient-end) 100%);
+}
+
+.support-copy-btn.copied i {
+    color: #000;
+}
+
+/* ============================================
+   Responsive Design
+   ============================================ */
+
+@media (max-width: 768px) {
+    .support-header {
+        margin-bottom: 1.5rem;
+    }
+
+    .support-title {
+        font-size: 2rem;
+    }
+
+    .support-intro-title {
+        font-size: 1.75rem;
+    }
+
+    .support-channel-card {
+        padding: 1.25rem;
+        flex-wrap: wrap;
+    }
+
+    .support-channel-content {
+        min-width: 100%;
+        order: 3;
+    }
+
+    .support-copy-btn {
+        width: 100%;
+        order: 4;
+    }
+}
+
+@media (max-width: 480px) {
+    .support-title {
+        font-size: 1.75rem;
+    }
+
+    .support-intro-title {
+        font-size: 1.5rem;
+    }
+
+    .support-channel-card {
+        padding: 1rem;
+        gap: 1rem;
+    }
+
+    .support-channel-icon {
+        width: 48px;
+        height: 48px;
+        font-size: 1.25rem;
+    }
+
+    .support-channel-value {
+        font-size: 0.875rem;
+    }
+}

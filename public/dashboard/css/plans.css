@@ -1,0 +1,714 @@
+/* ============================================
+   Investment Plans Page - Modern Redesign
+   ============================================ */
+
+.plans-page-modern {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0;
+}
+
+/* ============================================
+   Hero Section
+   ============================================ */
+
+.plans-hero-section {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 16px;
+    padding: 3rem;
+    margin-bottom: 2rem;
+    position: relative;
+    overflow: hidden;
+    box-shadow: var(--shadow-sm), inset 0 0 40px rgba(0, 255, 136, 0.05);
+}
+
+.plans-hero-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary-gradient-start) 0%, var(--primary-gradient-end) 100%);
+    box-shadow: 0 0 20px rgba(0, 255, 136, 0.5);
+}
+
+.plans-hero-content {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+}
+
+.plans-hero-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 0 0 1rem 0;
+    letter-spacing: -1px;
+}
+
+.plans-hero-subtitle {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    margin: 0 0 2rem 0;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.plans-hero-stats {
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+    flex-wrap: wrap;
+    margin-top: 2rem;
+}
+
+.plans-hero-stat {
+    text-align: center;
+}
+
+.plans-hero-stat-value {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+    text-shadow: 0 0 15px rgba(0, 255, 136, 0.5);
+}
+
+.plans-hero-stat-label {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* ============================================
+   Plan Card Modern
+   ============================================ */
+
+.plan-card-modern {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 20px;
+    padding: 2.5rem;
+    margin-bottom: 2rem;
+    position: relative;
+    overflow: hidden;
+    box-shadow: var(--shadow-sm), inset 0 0 50px rgba(0, 255, 136, 0.03);
+    transition: var(--transition-fast);
+}
+
+.plan-card-modern::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 5px;
+    background: linear-gradient(90deg, var(--primary-gradient-start) 0%, var(--primary-gradient-end) 100%);
+    box-shadow: 0 0 25px rgba(0, 255, 136, 0.6);
+}
+
+.plan-card-modern:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg), 0 0 30px rgba(0, 255, 136, 0.25);
+    border-color: var(--card-border-hover);
+}
+
+.plan-card-header-modern {
+    margin-bottom: 2rem;
+}
+
+.plan-card-badge-modern {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: linear-gradient(135deg, rgba(0, 255, 136, 0.2) 0%, rgba(0, 217, 119, 0.15) 100%);
+    border: 1px solid rgba(0, 255, 136, 0.3);
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--primary-color);
+    margin-bottom: 1.5rem;
+    box-shadow: 0 0 12px rgba(0, 255, 136, 0.2);
+}
+
+.plan-card-badge-modern i {
+    font-size: 0.875rem;
+}
+
+.plan-card-header-content {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+.plan-icon-modern {
+    flex-shrink: 0;
+}
+
+.plan-icon-wrapper-modern {
+    width: 100px;
+    height: 100px;
+    border-radius: 20px;
+    background: linear-gradient(135deg, rgba(0, 255, 136, 0.15) 0%, rgba(0, 217, 119, 0.1) 100%);
+    border: 2px solid rgba(0, 255, 136, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    box-shadow: 0 8px 24px rgba(0, 255, 136, 0.2);
+    transition: var(--transition-fast);
+}
+
+.plan-card-modern:hover .plan-icon-wrapper-modern {
+    transform: scale(1.05) rotate(5deg);
+    box-shadow: 0 12px 32px rgba(0, 255, 136, 0.3);
+}
+
+.plan-icon-wrapper-modern svg {
+    width: 100%;
+    height: 100%;
+    color: var(--primary-color);
+}
+
+.plan-header-info-modern {
+    flex: 1;
+}
+
+.plan-name-modern {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 0 0 0.5rem 0;
+    letter-spacing: -1px;
+}
+
+.plan-tagline-modern {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    margin: 0;
+}
+
+/* ============================================
+   Security Badge
+   ============================================ */
+
+.plan-security-modern {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.25rem;
+    background: rgba(0, 255, 136, 0.08);
+    border: 1px solid rgba(0, 255, 136, 0.2);
+    border-radius: 12px;
+    margin-bottom: 2rem;
+}
+
+.plan-security-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, var(--primary-gradient-start) 0%, var(--primary-gradient-end) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #000;
+    font-size: 1.25rem;
+    box-shadow: 0 4px 16px rgba(0, 255, 136, 0.3);
+    flex-shrink: 0;
+}
+
+.plan-security-text {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.plan-security-title {
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.plan-security-desc {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+}
+
+/* ============================================
+   Plan Features Grid
+   ============================================ */
+
+.plan-features-modern {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.plan-feature-item-modern {
+    background: var(--bg-darker);
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    transition: var(--transition-fast);
+    position: relative;
+    overflow: hidden;
+}
+
+.plan-feature-item-modern::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--primary-gradient-start) 0%, var(--primary-gradient-end) 100%);
+    opacity: 0;
+    transition: var(--transition-fast);
+}
+
+.plan-feature-item-modern:hover {
+    transform: translateY(-4px);
+    border-color: var(--card-border-hover);
+    box-shadow: var(--shadow-md), 0 0 20px rgba(0, 255, 136, 0.15);
+}
+
+.plan-feature-item-modern:hover::before {
+    opacity: 1;
+}
+
+.plan-feature-item-modern.plan-feature-highlight {
+    background: rgba(0, 255, 136, 0.05);
+    border-color: rgba(0, 255, 136, 0.3);
+    box-shadow: 0 0 20px rgba(0, 255, 136, 0.1);
+}
+
+.plan-feature-icon-modern {
+    width: 56px;
+    height: 56px;
+    border-radius: 12px;
+    background: rgba(0, 255, 136, 0.1);
+    border: 1px solid rgba(0, 255, 136, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+    transition: var(--transition-fast);
+}
+
+.plan-feature-item-modern:hover .plan-feature-icon-modern {
+    background: rgba(0, 255, 136, 0.15);
+    border-color: var(--primary-color);
+    box-shadow: 0 4px 16px rgba(0, 255, 136, 0.3);
+    transform: scale(1.1);
+}
+
+.plan-feature-icon-highlight {
+    background: linear-gradient(135deg, var(--primary-gradient-start) 0%, var(--primary-gradient-end) 100%);
+    border: none;
+    color: #000;
+    box-shadow: 0 4px 16px rgba(0, 255, 136, 0.4);
+}
+
+.plan-feature-content-modern {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.plan-feature-label-modern {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 600;
+}
+
+.plan-feature-value-modern {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    font-variant-numeric: tabular-nums;
+}
+
+.plan-feature-value-highlight {
+    color: var(--primary-color);
+    text-shadow: 0 0 15px rgba(0, 255, 136, 0.5);
+}
+
+.plan-feature-hint-modern {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+}
+
+/* ============================================
+   Calculator Preview
+   ============================================ */
+
+.plan-calculator-preview-modern {
+    background: var(--bg-darker);
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.calculator-preview-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.calculator-preview-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 0;
+}
+
+.calculator-toggle-btn {
+    padding: 0.5rem 1rem;
+    background: rgba(0, 255, 136, 0.1);
+    border: 1px solid rgba(0, 255, 136, 0.2);
+    border-radius: 8px;
+    color: var(--primary-color);
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition-fast);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.calculator-toggle-btn:hover {
+    background: rgba(0, 255, 136, 0.15);
+    border-color: var(--primary-color);
+    box-shadow: 0 0 12px rgba(0, 255, 136, 0.2);
+}
+
+.calculator-preview-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+}
+
+.calculator-preview-item {
+    text-align: center;
+    padding: 1rem;
+    background: rgba(0, 255, 136, 0.05);
+    border-radius: 10px;
+    border: 1px solid rgba(0, 255, 136, 0.1);
+}
+
+.calculator-preview-label {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+}
+
+.calculator-preview-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+    font-variant-numeric: tabular-nums;
+    text-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
+}
+
+.calculator-preview-note {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+}
+
+/* ============================================
+   Action Buttons
+   ============================================ */
+
+.plan-actions-modern {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.plan-action-btn-modern {
+    flex: 1;
+    padding: 1.25rem 2rem;
+    border: none;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: var(--transition-fast);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.plan-action-primary-modern {
+    background: linear-gradient(135deg, var(--primary-gradient-start) 0%, var(--primary-gradient-end) 100%);
+    color: #000;
+    box-shadow: 0 4px 20px rgba(0, 255, 136, 0.4);
+}
+
+.plan-action-primary-modern:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 30px rgba(0, 255, 136, 0.6);
+}
+
+.plan-action-primary-modern::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.plan-action-primary-modern:hover::before {
+    width: 400px;
+    height: 400px;
+}
+
+.plan-action-secondary-modern {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    color: var(--text-primary);
+}
+
+.plan-action-secondary-modern:hover {
+    background: rgba(0, 255, 136, 0.1);
+    border-color: var(--primary-color);
+    box-shadow: 0 0 20px rgba(0, 255, 136, 0.2);
+    transform: translateY(-2px);
+}
+
+.plan-action-btn-modern i {
+    font-size: 1.125rem;
+}
+
+/* ============================================
+   Plan Info
+   ============================================ */
+
+.plan-info-modern {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--card-border);
+}
+
+.plan-info-item-modern {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+}
+
+.plan-info-item-modern i {
+    color: var(--primary-color);
+    font-size: 1rem;
+}
+
+/* ============================================
+   Coming Soon Section
+   ============================================ */
+
+.plans-coming-soon-modern {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 16px;
+    padding: 2rem;
+    box-shadow: var(--shadow-sm);
+}
+
+.coming-soon-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.coming-soon-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 0 0 0.5rem 0;
+}
+
+.coming-soon-subtitle {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    margin: 0;
+}
+
+.coming-soon-cards {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.coming-soon-card {
+    background: var(--bg-darker);
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+    padding: 2rem;
+    text-align: center;
+    transition: var(--transition-fast);
+    opacity: 0.6;
+}
+
+.coming-soon-card:hover {
+    transform: translateY(-2px);
+    border-color: var(--card-border-hover);
+    opacity: 0.8;
+}
+
+.coming-soon-icon {
+    width: 64px;
+    height: 64px;
+    margin: 0 auto 1rem;
+    border-radius: 12px;
+    background: rgba(0, 255, 136, 0.1);
+    border: 1px solid rgba(0, 255, 136, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: var(--primary-color);
+}
+
+.coming-soon-name {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+}
+
+.coming-soon-status {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 600;
+}
+
+/* ============================================
+   Responsive Design
+   ============================================ */
+
+@media (max-width: 1200px) {
+    .plans-hero-stats {
+        gap: 2rem;
+    }
+
+    .plan-features-modern {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .plans-hero-section {
+        padding: 2rem;
+    }
+
+    .plans-hero-title {
+        font-size: 2rem;
+    }
+
+    .plans-hero-stats {
+        gap: 1.5rem;
+    }
+
+    .plans-hero-stat-value {
+        font-size: 1.5rem;
+    }
+
+    .plan-card-modern {
+        padding: 1.5rem;
+    }
+
+    .plan-card-header-content {
+        flex-direction: column;
+        text-align: center;
+        gap: 1.5rem;
+    }
+
+    .plan-name-modern {
+        font-size: 2rem;
+    }
+
+    .plan-icon-wrapper-modern {
+        width: 80px;
+        height: 80px;
+    }
+
+    .plan-features-modern {
+        grid-template-columns: 1fr;
+    }
+
+    .calculator-preview-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .plan-actions-modern {
+        flex-direction: column;
+    }
+
+    .plan-info-modern {
+        grid-template-columns: 1fr;
+    }
+
+    .coming-soon-cards {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .plans-hero-section {
+        padding: 1.5rem;
+    }
+
+    .plans-hero-title {
+        font-size: 1.75rem;
+    }
+
+    .plans-hero-stats {
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+
+    .plan-card-modern {
+        padding: 1.25rem;
+    }
+
+    .plan-name-modern {
+        font-size: 1.75rem;
+    }
+
+    .plan-action-btn-modern {
+        padding: 1rem 1.5rem;
+        font-size: 0.875rem;
+    }
+}

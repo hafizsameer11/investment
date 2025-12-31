@@ -1,0 +1,270 @@
+/* ============================================
+   Targets Page - Premium Design
+   ============================================ */
+
+.targets-page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0;
+}
+
+/* ============================================
+   Header Section
+   ============================================ */
+
+.targets-header {
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--card-border);
+}
+
+.targets-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 0;
+    letter-spacing: -1px;
+    line-height: 1.2;
+    background: linear-gradient(135deg, var(--text-primary) 0%, var(--text-secondary) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* ============================================
+   Targets Section
+   ============================================ */
+
+.targets-section {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.target-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 20px;
+    padding: 2.5rem;
+    box-shadow: var(--shadow-sm);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    max-width: 800px;
+}
+
+.target-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary-gradient-start) 0%, var(--primary-gradient-end) 100%);
+    opacity: 0;
+    transition: var(--transition);
+}
+
+.target-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg), var(--glow-primary);
+    border-color: var(--card-border-hover);
+    background: var(--card-bg-hover);
+}
+
+.target-card:hover::before {
+    opacity: 1;
+}
+
+/* Target Card Header */
+.target-card-header {
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--card-border);
+}
+
+.target-current-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.target-star-icon {
+    width: 32px;
+    height: 32px;
+    color: #F97316;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    filter: drop-shadow(0 0 8px rgba(249, 115, 22, 0.5));
+}
+
+.target-star-icon svg {
+    width: 100%;
+    height: 100%;
+}
+
+.target-current-label {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #F97316;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Target Card Body */
+.target-card-body {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+}
+
+.target-status {
+    text-align: center;
+}
+
+.target-status-text {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 0;
+    letter-spacing: -0.5px;
+}
+
+/* Target Progress Section */
+.target-progress-section {
+    width: 100%;
+}
+
+.target-progress-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.target-progress-label {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    letter-spacing: -0.25px;
+}
+
+.target-progress-percent {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    font-variant-numeric: tabular-nums;
+}
+
+.target-progress-bar {
+    width: 100%;
+    height: 12px;
+    background: var(--bg-darker);
+    border-radius: 6px;
+    overflow: hidden;
+    position: relative;
+}
+
+.target-progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary-gradient-start) 0%, var(--primary-gradient-end) 100%);
+    border-radius: 6px;
+    transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.target-progress-fill::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(90deg, 
+        transparent 0%, 
+        rgba(255, 255, 255, 0.2) 50%, 
+        transparent 100%);
+    animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+    0% {
+        transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+/* ============================================
+   Responsive Design
+   ============================================ */
+
+@media (max-width: 768px) {
+    .targets-title {
+        font-size: 2rem;
+    }
+
+    .target-card {
+        padding: 2rem;
+    }
+
+    .target-status-text {
+        font-size: 1.25rem;
+    }
+
+    .target-progress-label,
+    .target-progress-percent {
+        font-size: 0.9375rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .targets-page {
+        padding: 0;
+    }
+
+    .targets-title {
+        font-size: 1.75rem;
+    }
+
+    .target-card {
+        padding: 1.5rem;
+        border-radius: 16px;
+    }
+
+    .target-card-header {
+        margin-bottom: 1.5rem;
+        padding-bottom: 1rem;
+    }
+
+    .target-card-body {
+        gap: 2rem;
+    }
+
+    .target-star-icon {
+        width: 28px;
+        height: 28px;
+    }
+
+    .target-current-label {
+        font-size: 0.875rem;
+    }
+
+    .target-status-text {
+        font-size: 1.125rem;
+    }
+
+    .target-progress-bar {
+        height: 10px;
+    }
+}
+
+
+
+

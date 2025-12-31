@@ -1,0 +1,481 @@
+/* ============================================
+   Withdraw Security Page - Premium Design
+   ============================================ */
+
+.withdraw-security-page {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0;
+}
+
+/* ============================================
+   Header Section
+   ============================================ */
+
+.withdraw-security-header {
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--card-border);
+}
+
+.withdraw-security-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 0;
+    letter-spacing: -1px;
+    line-height: 1.2;
+    background: linear-gradient(135deg, var(--text-primary) 0%, var(--text-secondary) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* ============================================
+   Security Section
+   ============================================ */
+
+.withdraw-security-section {
+    display: flex;
+    justify-content: center;
+}
+
+.withdraw-security-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 20px;
+    padding: 3rem;
+    box-shadow: var(--shadow-sm);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    max-width: 600px;
+}
+
+.withdraw-security-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary-gradient-start) 0%, var(--primary-gradient-end) 100%);
+    opacity: 1;
+    transition: var(--transition);
+}
+
+/* ============================================
+   Progress Steps
+   ============================================ */
+
+.security-progress-steps {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 3rem;
+    position: relative;
+}
+
+.security-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    flex: 1;
+    position: relative;
+    z-index: 2;
+}
+
+.security-step-number {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: var(--bg-darker);
+    border: 2px solid var(--card-border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-secondary);
+    transition: var(--transition);
+}
+
+.security-step.active .security-step-number {
+    background: linear-gradient(135deg, var(--primary-gradient-start) 0%, var(--primary-gradient-end) 100%);
+    border-color: var(--primary-gradient-start);
+    color: white;
+    box-shadow: 0 0 20px rgba(0, 255, 136, 0.4);
+}
+
+.security-step.completed .security-step-number {
+    background: var(--success-color);
+    border-color: var(--success-color);
+    color: white;
+}
+
+.security-step.completed .security-step-number::after {
+    content: '✓';
+    font-size: 1.5rem;
+}
+
+.security-step-label {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    text-align: center;
+    transition: var(--transition);
+}
+
+.security-step.active .security-step-label {
+    color: var(--primary-gradient-start);
+}
+
+.security-step.completed .security-step-label {
+    color: var(--success-color);
+}
+
+.security-step-line {
+    flex: 1;
+    height: 2px;
+    background: var(--card-border);
+    margin: 0 1rem;
+    position: relative;
+    top: -24px;
+    z-index: 1;
+}
+
+.security-step-line.active {
+    background: linear-gradient(90deg, var(--primary-gradient-start) 0%, var(--primary-gradient-end) 100%);
+}
+
+/* ============================================
+   Step Content
+   ============================================ */
+
+.security-step-content {
+    display: none;
+    text-align: center;
+}
+
+.security-step-content.active {
+    display: block;
+    animation: fadeIn 0.4s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.security-step-icon {
+    width: 120px;
+    height: 120px;
+    margin: 0 auto 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: rgba(0, 255, 136, 0.1);
+    color: var(--primary-gradient-start);
+    font-size: 3.5rem;
+    transition: var(--transition);
+}
+
+.security-step-icon.success {
+    background: rgba(0, 255, 136, 0.1);
+    color: var(--success-color);
+}
+
+.security-step-title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 0 0 0.75rem 0;
+    letter-spacing: -0.5px;
+    line-height: 1.2;
+}
+
+.security-step-subtitle {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    margin: 0 0 2.5rem 0;
+    line-height: 1.6;
+    font-weight: 400;
+}
+
+/* ============================================
+   Security Form
+   ============================================ */
+
+.security-form {
+    margin-bottom: 2rem;
+    text-align: left;
+}
+
+.security-form-label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 0.75rem;
+}
+
+.security-input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.security-input-icon {
+    position: absolute;
+    left: 1.25rem;
+    color: var(--text-secondary);
+    font-size: 1rem;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.security-form-input {
+    width: 100%;
+    padding: 1rem 1.25rem 1rem 3.5rem;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    color: var(--text-primary);
+    font-size: 1rem;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    font-family: inherit;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    position: relative;
+}
+
+.security-form-input::placeholder {
+    color: var(--text-muted);
+    opacity: 0.6;
+}
+
+.security-form-input:focus {
+    outline: none;
+    border-color: var(--primary-gradient-start);
+    box-shadow: 0 0 0 3px rgba(0, 255, 136, 0.15), 0 4px 12px rgba(0, 255, 136, 0.1);
+    background: rgba(255, 255, 255, 0.05);
+    transform: translateY(-1px);
+}
+
+.security-otp-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1rem;
+}
+
+.security-resend-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.625rem 1rem;
+    background: none;
+    border: none;
+    color: var(--primary-gradient-start);
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.security-resend-btn:hover:not(:disabled) {
+    color: var(--primary-gradient-end);
+    transform: translateX(2px);
+}
+
+.security-resend-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.security-timer {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+}
+
+/* ============================================
+   Success Message
+   ============================================ */
+
+.security-success-message {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    padding: 2rem;
+    background: rgba(0, 255, 136, 0.1);
+    border: 1px solid rgba(0, 255, 136, 0.2);
+    border-radius: 12px;
+    margin-bottom: 2rem;
+}
+
+.security-success-message i {
+    font-size: 3rem;
+    color: var(--success-color);
+}
+
+.security-success-message p {
+    font-size: 1rem;
+    color: var(--text-primary);
+    margin: 0;
+    text-align: center;
+    line-height: 1.6;
+}
+
+/* ============================================
+   Continue Button
+   ============================================ */
+
+.security-continue-btn {
+    width: 100%;
+    padding: 1.125rem 1.5rem;
+    background: linear-gradient(135deg, var(--primary-gradient-start) 0%, var(--primary-gradient-end) 100%);
+    border: none;
+    border-radius: 12px;
+    color: white;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: var(--transition);
+    box-shadow: 0 4px 16px rgba(0, 255, 136, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.security-continue-btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.security-continue-btn:hover::before {
+    width: 300px;
+    height: 300px;
+}
+
+.security-continue-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 24px rgba(0, 255, 136, 0.4);
+}
+
+.security-continue-btn:active {
+    transform: translateY(0);
+}
+
+.security-continue-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* ============================================
+   Responsive Design
+   ============================================ */
+
+@media (max-width: 768px) {
+    .withdraw-security-title {
+        font-size: 2rem;
+    }
+
+    .withdraw-security-card {
+        padding: 2rem;
+    }
+
+    .security-progress-steps {
+        margin-bottom: 2rem;
+    }
+
+    .security-step-number {
+        width: 40px;
+        height: 40px;
+        font-size: 1rem;
+    }
+
+    .security-step-label {
+        font-size: 0.75rem;
+    }
+
+    .security-step-icon {
+        width: 100px;
+        height: 100px;
+        font-size: 3rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .security-step-title {
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .withdraw-security-page {
+        padding: 0;
+    }
+
+    .withdraw-security-title {
+        font-size: 1.75rem;
+    }
+
+    .withdraw-security-card {
+        padding: 1.5rem;
+        border-radius: 16px;
+    }
+
+    .security-progress-steps {
+        gap: 0.5rem;
+    }
+
+    .security-step-line {
+        margin: 0 0.5rem;
+    }
+
+    .security-step-number {
+        width: 36px;
+        height: 36px;
+        font-size: 0.875rem;
+    }
+
+    .security-step-label {
+        font-size: 0.6875rem;
+    }
+
+    .security-step-icon {
+        width: 80px;
+        height: 80px;
+        font-size: 2.5rem;
+    }
+
+    .security-step-title {
+        font-size: 1.25rem;
+    }
+
+    .security-step-subtitle {
+        font-size: 0.875rem;
+    }
+}
+

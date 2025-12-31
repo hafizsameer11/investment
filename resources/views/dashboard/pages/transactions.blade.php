@@ -1,0 +1,785 @@
+@extends('dashboard.layouts.main')
+
+@section('title', 'Core Mining - Transactions')
+
+@push('styles')
+<link rel="stylesheet" href="{{ asset('dashboard/css/transactions.css') }}">
+<style>
+    .transactions-new-page {
+        padding: 2rem;
+        max-width: 1600px;
+        margin: 0 auto;
+    }
+
+    /* Hero Section */
+    .transactions-hero-new {
+        text-align: center;
+        padding: 3rem 2rem;
+        background: var(--card-bg);
+        border: 1px solid var(--card-border);
+        border-radius: 24px;
+        margin-bottom: 3rem;
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    }
+
+    .transactions-hero-new::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 6px;
+        background: linear-gradient(90deg, #00FF88 0%, #00D977 50%, #00FF88 100%);
+        background-size: 200% 100%;
+        animation: shimmer 3s linear infinite;
+    }
+
+    @keyframes shimmer {
+        0% { background-position: 200% 0; }
+        100% { background-position: -200% 0; }
+    }
+
+    .transactions-hero-new::after {
+        content: '';
+        position: absolute;
+        top: -50%;
+        right: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(circle, rgba(0, 255, 136, 0.08) 0%, transparent 70%);
+        pointer-events: none;
+    }
+
+    .transactions-hero-content-new {
+        position: relative;
+        z-index: 1;
+    }
+
+    .transactions-hero-title-new {
+        font-size: 3rem;
+        font-weight: 700;
+        background: linear-gradient(135deg, #00FF88 0%, #00D977 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin: 0 0 1rem 0;
+        letter-spacing: -2px;
+    }
+
+    .transactions-hero-subtitle-new {
+        font-size: 1.125rem;
+        color: var(--text-secondary);
+        margin: 0;
+        max-width: 700px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    /* Summary Section */
+    .transactions-summary-section-new {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 2rem;
+        margin-bottom: 3rem;
+    }
+
+    .transactions-summary-card-new {
+        background: var(--card-bg);
+        border: 1px solid var(--card-border);
+        border-radius: 20px;
+        padding: 2.5rem;
+        position: relative;
+        overflow: hidden;
+        transition: var(--transition);
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+    }
+
+    .transactions-summary-card-new::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 5px;
+        background: linear-gradient(90deg, var(--primary-gradient-start) 0%, var(--primary-gradient-end) 100%);
+        transform: scaleX(0);
+        transition: transform 0.3s ease;
+    }
+
+    .transactions-summary-card-new:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 32px rgba(0, 255, 136, 0.2);
+        border-color: var(--primary-color);
+    }
+
+    .transactions-summary-card-new:hover::before {
+        transform: scaleX(1);
+    }
+
+    .transactions-summary-icon-new {
+        width: 80px;
+        height: 80px;
+        border-radius: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2rem;
+        color: #000;
+        flex-shrink: 0;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .transactions-summary-icon-earning-new {
+        background: linear-gradient(135deg, #00FF88 0%, #00D977 100%);
+    }
+
+    .transactions-summary-icon-referral-new {
+        background: linear-gradient(135deg, #00AAFF 0%, #0088CC 100%);
+    }
+
+    .transactions-summary-icon-deposit-new {
+        background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+    }
+
+    .transactions-summary-icon-withdraw-new {
+        background: linear-gradient(135deg, #FF4444 0%, #DC2626 100%);
+    }
+
+    .transactions-summary-content-new {
+        flex: 1;
+    }
+
+    .transactions-summary-label-new {
+        font-size: 0.875rem;
+        color: var(--text-secondary);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: 0.75rem;
+        font-weight: 600;
+    }
+
+    .transactions-summary-value-new {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        font-variant-numeric: tabular-nums;
+        line-height: 1;
+    }
+
+    /* History Section */
+    .transactions-history-section-new {
+        margin-bottom: 2rem;
+    }
+
+    .transactions-history-header-new {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 2rem;
+        flex-wrap: wrap;
+        gap: 1.5rem;
+    }
+
+    .transactions-history-title-section-new {
+        flex: 1;
+    }
+
+    .transactions-history-title-new {
+        font-size: 2rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin: 0 0 0.5rem 0;
+    }
+
+    .transactions-history-subtitle-new {
+        font-size: 1rem;
+        color: var(--text-secondary);
+        margin: 0;
+    }
+
+    .transactions-history-controls-new {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        flex-wrap: wrap;
+    }
+
+    .transactions-search-box-new {
+        position: relative;
+        display: flex;
+        align-items: center;
+    }
+
+    .transactions-search-box-new i {
+        position: absolute;
+        left: 1.25rem;
+        color: var(--text-secondary);
+        font-size: 0.9375rem;
+        z-index: 1;
+    }
+
+    .transactions-search-input-new {
+        padding: 0.875rem 1.25rem 0.875rem 3rem;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 12px;
+        color: var(--text-primary);
+        font-size: 0.9375rem;
+        width: 300px;
+        transition: var(--transition);
+    }
+
+    .transactions-search-input-new:focus {
+        outline: none;
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 3px rgba(0, 255, 136, 0.1), 0 4px 16px rgba(0, 255, 136, 0.1);
+        background: rgba(255, 255, 255, 0.05);
+    }
+
+    .transactions-filter-btn-new {
+        padding: 0.875rem 1.25rem;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 12px;
+        color: var(--text-secondary);
+        cursor: pointer;
+        transition: var(--transition);
+        font-size: 0.9375rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .transactions-filter-btn-new:hover {
+        background: rgba(0, 255, 136, 0.1);
+        border-color: var(--primary-color);
+        color: var(--primary-color);
+    }
+
+    .transactions-date-filter-new {
+        padding: 0.875rem 1.25rem;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 12px;
+        color: var(--text-primary);
+        font-size: 0.9375rem;
+        cursor: pointer;
+        transition: var(--transition);
+    }
+
+    .transactions-date-filter-new:focus {
+        outline: none;
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 3px rgba(0, 255, 136, 0.1);
+    }
+
+    .transactions-history-card-new {
+        background: var(--card-bg);
+        border: 1px solid var(--card-border);
+        border-radius: 20px;
+        padding: 2.5rem;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .transactions-history-card-new::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 5px;
+        background: linear-gradient(90deg, var(--primary-gradient-start) 0%, var(--primary-gradient-end) 100%);
+    }
+
+    .transactions-table-wrapper-new {
+        overflow-x: auto;
+        margin-bottom: 1.5rem;
+        border-radius: 12px;
+    }
+
+    .transactions-table-new {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .transactions-table-new thead {
+        background: linear-gradient(180deg, rgba(0, 255, 136, 0.1) 0%, rgba(0, 217, 119, 0.05) 100%);
+        border-bottom: 2px solid rgba(0, 255, 136, 0.2);
+    }
+
+    .transactions-table-new th {
+        padding: 1.25rem 1.5rem;
+        text-align: left;
+        font-size: 0.8125rem;
+        font-weight: 600;
+        color: var(--text-secondary);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .transactions-table-new td {
+        padding: 1.5rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .transactions-table-new tbody tr {
+        transition: var(--transition);
+    }
+
+    .transactions-table-new tbody tr:hover {
+        background: rgba(0, 255, 136, 0.05);
+    }
+
+    .transactions-type-cell-new {
+        display: flex;
+        align-items: center;
+        gap: 1.25rem;
+    }
+
+    .transactions-type-icon-new {
+        width: 56px;
+        height: 56px;
+        border-radius: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        color: #000;
+        flex-shrink: 0;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .transactions-type-icon-new::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, transparent 70%);
+        animation: icon-shine 3s ease-in-out infinite;
+    }
+
+    @keyframes icon-shine {
+        0%, 100% { opacity: 0; }
+        50% { opacity: 1; }
+    }
+
+    .transactions-type-icon-success-new {
+        background: linear-gradient(135deg, #00FF88 0%, #00D977 100%);
+    }
+
+    .transactions-type-icon-warning-new {
+        background: linear-gradient(135deg, #FF6B35 0%, #F7931E 100%);
+    }
+
+    .transactions-type-icon-danger-new {
+        background: linear-gradient(135deg, #FF4444 0%, #DC2626 100%);
+    }
+
+    .transactions-type-icon-info-new {
+        background: linear-gradient(135deg, #00AAFF 0%, #0088CC 100%);
+    }
+
+    .transactions-type-icon-new i {
+        position: relative;
+        z-index: 1;
+    }
+
+    .transactions-type-info-new {
+        flex: 1;
+    }
+
+    .transactions-type-name-new {
+        font-size: 1rem;
+        font-weight: 600;
+        color: var(--text-primary);
+        margin-bottom: 0.5rem;
+    }
+
+    .transactions-type-date-new {
+        font-size: 0.8125rem;
+        color: var(--text-secondary);
+    }
+
+    .transactions-amount-cell-new {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .transactions-amount-value-new {
+        font-size: 1.25rem;
+        font-weight: 700;
+        font-variant-numeric: tabular-nums;
+        line-height: 1;
+    }
+
+    .transactions-amount-success-new {
+        color: var(--primary-color);
+        text-shadow: 0 0 15px rgba(0, 255, 136, 0.5);
+    }
+
+    .transactions-amount-danger-new {
+        color: #FF4444;
+    }
+
+    .transactions-amount-wallet-new {
+        font-size: 0.8125rem;
+        color: var(--text-secondary);
+    }
+
+    .transactions-status-cell-new {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+
+    .transactions-status-badge-new {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.625rem 1.25rem;
+        border-radius: 20px;
+        font-size: 0.8125rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        width: fit-content;
+    }
+
+    .transactions-status-completed-new {
+        background: rgba(0, 255, 136, 0.15);
+        border: 1px solid rgba(0, 255, 136, 0.3);
+        color: var(--primary-color);
+        box-shadow: 0 0 12px rgba(0, 255, 136, 0.2);
+    }
+
+    .transactions-status-pending-new {
+        background: rgba(255, 107, 53, 0.15);
+        border: 1px solid rgba(255, 107, 53, 0.3);
+        color: #FF6B35;
+    }
+
+    .transactions-status-failed-new {
+        background: rgba(220, 38, 38, 0.15);
+        border: 1px solid rgba(220, 38, 38, 0.3);
+        color: #FF4444;
+    }
+
+    .transactions-status-badge-new::before {
+        content: '';
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: currentColor;
+        box-shadow: 0 0 8px currentColor;
+    }
+
+    .transactions-status-time-new {
+        font-size: 0.8125rem;
+        color: var(--text-secondary);
+    }
+
+    /* Pagination */
+    .transactions-pagination-new {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 1.5rem;
+        padding-top: 2rem;
+        border-top: 1px solid var(--card-border);
+    }
+
+    .transactions-pagination-btn-new {
+        padding: 0.875rem 1.5rem;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 12px;
+        color: var(--text-secondary);
+        cursor: pointer;
+        transition: var(--transition);
+        font-size: 0.9375rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .transactions-pagination-btn-new:hover:not(:disabled) {
+        background: rgba(0, 255, 136, 0.1);
+        border-color: var(--primary-color);
+        color: var(--primary-color);
+        box-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
+    }
+
+    .transactions-pagination-btn-new:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+
+    .transactions-pagination-info-new {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.9375rem;
+        color: var(--text-primary);
+    }
+
+    .transactions-pagination-current-new {
+        font-weight: 700;
+        color: var(--primary-color);
+        font-size: 1.125rem;
+    }
+
+    .transactions-pagination-separator-new {
+        color: var(--text-secondary);
+    }
+
+    .transactions-pagination-total-new {
+        color: var(--text-secondary);
+    }
+
+    /* Empty State */
+    .transactions-empty-state-new {
+        text-align: center;
+        padding: 4rem 2rem;
+    }
+
+    .transactions-empty-icon-new {
+        font-size: 5rem;
+        color: var(--text-secondary);
+        opacity: 0.3;
+        margin-bottom: 1.5rem;
+    }
+
+    .transactions-empty-text-new {
+        font-size: 1.125rem;
+        font-weight: 600;
+        color: var(--text-primary);
+        margin-bottom: 0.5rem;
+    }
+
+    .transactions-empty-subtext-new {
+        font-size: 0.9375rem;
+        color: var(--text-secondary);
+    }
+
+    @media (max-width: 768px) {
+        .transactions-new-page {
+            padding: 1rem;
+        }
+
+        .transactions-hero-title-new {
+            font-size: 2rem;
+        }
+
+        .transactions-summary-section-new {
+            grid-template-columns: 1fr;
+        }
+
+        .transactions-history-controls-new {
+            flex-direction: column;
+            width: 100%;
+        }
+
+        .transactions-search-input-new {
+            width: 100%;
+        }
+
+        .transactions-table-new {
+            font-size: 0.8125rem;
+        }
+
+        .transactions-table-new th,
+        .transactions-table-new td {
+            padding: 1rem;
+        }
+    }
+</style>
+@endpush
+
+@section('content')
+<div class="transactions-new-page">
+    <!-- Hero Section -->
+    <div class="transactions-hero-new">
+        <div class="transactions-hero-content-new">
+            <h1 class="transactions-hero-title-new">Mining Transaction History</h1>
+            <p class="transactions-hero-subtitle-new">Track all your mining activities and transactions in one place</p>
+        </div>
+    </div>
+
+    <!-- Financial Summary Section -->
+    <div class="transactions-summary-section-new">
+        <!-- Total Earning -->
+        <div class="transactions-summary-card-new">
+            <div class="transactions-summary-icon-new transactions-summary-icon-earning-new">
+                <i class="fas fa-dollar-sign"></i>
+            </div>
+            <div class="transactions-summary-content-new">
+                <div class="transactions-summary-label-new">Total Earning</div>
+                <div class="transactions-summary-value-new">$0.00</div>
+            </div>
+        </div>
+
+        <!-- Referral Earning -->
+        <div class="transactions-summary-card-new">
+            <div class="transactions-summary-icon-new transactions-summary-icon-referral-new">
+                <i class="fas fa-users"></i>
+            </div>
+            <div class="transactions-summary-content-new">
+                <div class="transactions-summary-label-new">Referral Earning</div>
+                <div class="transactions-summary-value-new">$0.00</div>
+            </div>
+        </div>
+
+        <!-- Total Deposit -->
+        <div class="transactions-summary-card-new">
+            <div class="transactions-summary-icon-new transactions-summary-icon-deposit-new">
+                <i class="fas fa-arrow-up"></i>
+            </div>
+            <div class="transactions-summary-content-new">
+                <div class="transactions-summary-label-new">Total Deposit</div>
+                <div class="transactions-summary-value-new">$0.30</div>
+            </div>
+        </div>
+
+        <!-- Total Withdrawn -->
+        <div class="transactions-summary-card-new">
+            <div class="transactions-summary-icon-new transactions-summary-icon-withdraw-new">
+                <i class="fas fa-arrow-down"></i>
+            </div>
+            <div class="transactions-summary-content-new">
+                <div class="transactions-summary-label-new">Total Withdrawn</div>
+                <div class="transactions-summary-value-new">$0.00</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Transaction History Section -->
+    <div class="transactions-history-section-new">
+        <div class="transactions-history-header-new">
+            <div class="transactions-history-title-section-new">
+                <h2 class="transactions-history-title-new">All Transactions</h2>
+                <p class="transactions-history-subtitle-new">View and filter your complete transaction history</p>
+            </div>
+            <div class="transactions-history-controls-new">
+                <div class="transactions-search-box-new">
+                    <i class="fas fa-search"></i>
+                    <input type="text" class="transactions-search-input-new" placeholder="Search transactions..." id="transactionSearch">
+                </div>
+                <button class="transactions-filter-btn-new" title="Filter">
+                    <i class="fas fa-filter"></i>
+                    <span>Filter</span>
+                </button>
+                <select class="transactions-date-filter-new" id="transactionDateFilter">
+                    <option value="3">3 Days</option>
+                    <option value="7">7 Days</option>
+                    <option value="30">30 Days</option>
+                    <option value="all">All Time</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="transactions-history-card-new">
+            <div class="transactions-table-wrapper-new">
+                <table class="transactions-table-new">
+                    <thead>
+                        <tr>
+                            <th>Transaction</th>
+                            <th>Amount</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="transactionsTableBody">
+                        <tr>
+                            <td>
+                                <div class="transactions-type-cell-new">
+                                    <div class="transactions-type-icon-new transactions-type-icon-success-new">
+                                        <i class="fas fa-gift"></i>
+                                    </div>
+                                    <div class="transactions-type-info-new">
+                                        <div class="transactions-type-name-new">User-Bonus</div>
+                                        <div class="transactions-type-date-new">Dec 28, 2025 11:11 PM</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="transactions-amount-cell-new">
+                                    <div class="transactions-amount-value-new transactions-amount-success-new">+$0.30</div>
+                                    <div class="transactions-amount-wallet-new">Earning Wallet: $0</div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="transactions-status-cell-new">
+                                    <span class="transactions-status-badge-new transactions-status-completed-new">
+                                        <span>Completed</span>
+                                    </span>
+                                    <div class="transactions-status-time-new">2 hours ago</div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="transactions-pagination-new">
+                <button class="transactions-pagination-btn-new" id="prevPage" disabled>
+                    <i class="fas fa-chevron-left"></i>
+                    <span>Previous</span>
+                </button>
+                <div class="transactions-pagination-info-new">
+                    <span>Page</span>
+                    <span class="transactions-pagination-current-new" id="currentPage">1</span>
+                    <span class="transactions-pagination-separator-new">of</span>
+                    <span class="transactions-pagination-total-new" id="totalPages">1</span>
+                </div>
+                <button class="transactions-pagination-btn-new" id="nextPage">
+                    <span>Next</span>
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@push('scripts')
+<script src="{{ asset('dashboard/js/transactions.js') }}"></script>
+<script>
+    // Search functionality
+    const searchInput = document.getElementById('transactionSearch');
+    if (searchInput) {
+        searchInput.addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            const rows = document.querySelectorAll('.transactions-table-new tbody tr');
+            
+            rows.forEach(row => {
+                const text = row.textContent.toLowerCase();
+                if (text.includes(searchTerm)) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        });
+    }
+
+    // Date filter functionality
+    const dateFilter = document.getElementById('transactionDateFilter');
+    if (dateFilter) {
+        dateFilter.addEventListener('change', function(e) {
+            // Filter logic can be implemented here
+            console.log('Filter changed to:', e.target.value);
+        });
+    }
+</script>
+@endpush
+@endsection
