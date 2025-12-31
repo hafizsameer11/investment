@@ -1,5 +1,4 @@
-# Multi-stage build for Laravel application
-FROM php:8.2-fpm AS php-base
+FROM php:8.2-fpm
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
@@ -8,19 +7,23 @@ RUN apt-get update && apt-get install -y \
     libpng-dev \
     libonig-dev \
     libxml2-dev \
+    libzip-dev \
     zip \
     unzip \
+    nginx \
+    supervisor \
     && rm -rf /var/lib/apt/lists/*
 
 # Install PHP extensions
-RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd
+RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd zip
 
 # Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 # Install Node.js
 RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
-    && apt-get install -y nodejs
+    && apt-get install -y nodejs \
+    && rm -rf /var/lib/apt/lists/*
 
 # Set working directory
 WORKDIR /var/www/html
@@ -43,29 +46,10 @@ COPY . .
 # Build frontend assets
 RUN npm run build
 
-# Set permissions
-RUN chown -R www-data:www-data /var/www/html \
-    && chmod -R 755 /var/www/html/storage \
-    && chmod -R 755 /var/www/html/bootstrap/cache
-
-# Production stage
-FROM php:8.2-fpm
-
-# Install system dependencies
-RUN apt-get update && apt-get install -y \
-    nginx \
-    supervisor \
-    libpng-dev \
-    libonig-dev \
-    libxml2-dev \
-    libzip-dev \
+# Remove Node.js and npm (not needed in production)
+RUN apt-get purge -y nodejs npm \
+    && apt-get autoremove -y \
     && rm -rf /var/lib/apt/lists/*
-
-# Install PHP extensions
-RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd zip
-
-# Copy application from build stage
-COPY --from=php-base /var/www/html /var/www/html
 
 # Configure nginx
 RUN echo 'server { \
@@ -108,9 +92,6 @@ stdout_logfile_maxbytes=0 \
 stderr_logfile=/dev/stderr \
 stderr_logfile_maxbytes=0' > /etc/supervisor/conf.d/supervisord.conf
 
-# Set working directory
-WORKDIR /var/www/html
-
 # Set permissions
 RUN chown -R www-data:www-data /var/www/html \
     && chmod -R 755 /var/www/html/storage \
@@ -121,4 +102,3 @@ EXPOSE 80
 
 # Start supervisor
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
-
