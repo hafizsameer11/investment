@@ -20,8 +20,6 @@ RUN apk add --no-cache \
     freetype-dev \
     libjpeg-turbo-dev \
     libwebp-dev \
-    nodejs \
-    npm \
     && docker-php-ext-configure gd \
        --with-freetype=/usr/include/ \
        --with-jpeg=/usr/include/ \
@@ -37,26 +35,11 @@ RUN apk add --no-cache \
 # Install composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Copy package files first for better caching
-COPY package.json package-lock.json* ./
-
-# Install Node dependencies
-RUN npm ci --only=production || npm install
-
-# Copy composer files
-COPY composer.json composer.lock ./
-
-# Install PHP dependencies
-RUN composer install --no-dev --no-interaction --optimize-autoloader
-
 # Copy app (but exclude vendor from context)
 COPY . /var/www/html
 
-# Build frontend assets
-RUN npm run build
-
-# Remove Node.js and npm (not needed in production)
-RUN apk del nodejs npm
+# Install PHP dependencies
+RUN composer install --no-dev --no-interaction --optimize-autoloader
 
 # Copy Nginx config
 COPY docker/nginx.conf /etc/nginx/nginx.conf
@@ -91,4 +74,4 @@ RUN chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
 
 EXPOSE 80
 
-CMD ["/entrypoint.sh"]
+CMD ["/entrypoint.sh", "/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]

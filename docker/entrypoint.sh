@@ -16,6 +16,6 @@ php artisan view:cache || true
 
 echo "Laravel setup completed!"
 
-# Start supervisor
-exec /usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf
+# Execute the main command
+exec "$@"
 
