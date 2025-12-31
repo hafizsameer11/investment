@@ -1,5 +1,5 @@
 # Multi-stage build for Laravel application
-FROM php:8.2-fpm as php-base
+FROM php:8.2-fpm AS php-base
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
@@ -55,10 +55,14 @@ FROM php:8.2-fpm
 RUN apt-get update && apt-get install -y \
     nginx \
     supervisor \
+    libpng-dev \
+    libonig-dev \
+    libxml2-dev \
+    libzip-dev \
     && rm -rf /var/lib/apt/lists/*
 
 # Install PHP extensions
-RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd
+RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd zip
 
 # Copy application from build stage
 COPY --from=php-base /var/www/html /var/www/html
