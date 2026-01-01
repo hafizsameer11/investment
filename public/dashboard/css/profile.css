@@ -6,6 +6,9 @@
     max-width: 1200px;
     margin: 0 auto;
     padding: 0;
+    width: 100%;
+    box-sizing: border-box;
+    overflow-x: hidden;
 }
 
 /* ============================================
@@ -480,6 +483,9 @@
     .profile-page-modern {
         max-width: 100%;
         padding: 0 1rem;
+        width: 100%;
+        box-sizing: border-box;
+        overflow-x: hidden;
     }
 }
 
@@ -507,11 +513,18 @@
 @media (max-width: 768px) {
     .profile-page-modern {
         padding: 0;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+        overflow-x: hidden;
     }
 
     .profile-hero-section {
         padding: 2rem;
         margin-bottom: 1.5rem;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
     }
 
     .profile-hero-title {
@@ -520,12 +533,18 @@
 
     .profile-main-card {
         padding: 1.5rem;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
     }
 
     .profile-header-modern {
         flex-direction: column;
         align-items: flex-start;
         gap: 1.5rem;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
     }
 
     .profile-header-left-modern {
@@ -570,6 +589,9 @@
         flex-direction: column;
         text-align: center;
         gap: 1rem;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
     }
 
     .profile-contact-btn-modern {
@@ -579,8 +601,18 @@
 }
 
 @media (max-width: 480px) {
+    .profile-page-modern {
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+        overflow-x: hidden;
+    }
+
     .profile-hero-section {
         padding: 1.5rem;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
     }
 
     .profile-hero-title {
@@ -589,6 +621,9 @@
 
     .profile-main-card {
         padding: 1.25rem;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
     }
 
     .profile-avatar-modern {
@@ -616,5 +651,137 @@
     .profile-tab-modern {
         padding: 0.875rem 1.25rem;
         font-size: 0.9375rem;
+    }
+
+    .profile-header-modern {
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+
+    .profile-form-grid-modern {
+        grid-template-columns: 1fr;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+
+    .profile-contact-card-modern {
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+}
+
+@media (max-width: 400px) {
+    .profile-page-modern {
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+        overflow-x: hidden;
+    }
+
+    .profile-hero-section {
+        padding: 1.25rem;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+
+    .profile-hero-title {
+        font-size: 1.5rem;
+    }
+
+    .profile-hero-subtitle {
+        font-size: 0.875rem;
+    }
+
+    .profile-main-card {
+        padding: 1rem;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+
+    .profile-header-modern {
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+        gap: 1rem;
+    }
+
+    .profile-avatar-modern {
+        width: 80px;
+        height: 80px;
+    }
+
+    .profile-name-modern {
+        font-size: 1.25rem;
+    }
+
+    .profile-email-modern {
+        font-size: 0.875rem;
+    }
+
+    .profile-form-grid-modern {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+
+    .profile-form-group-modern {
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+
+    .profile-form-input-modern {
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+
+    .profile-tabs-modern {
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+
+    .profile-tab-modern {
+        width: 100%;
+        padding: 0.75rem 1rem;
+        font-size: 0.875rem;
+    }
+
+    .profile-contact-card-modern {
+        padding: 1.5rem;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+
+    .profile-contact-icon-modern {
+        width: 56px;
+        height: 56px;
+        font-size: 1.5rem;
+    }
+
+    .profile-contact-title-modern {
+        font-size: 1.125rem;
+    }
+
+    .profile-contact-subtitle-modern {
+        font-size: 0.8125rem;
+    }
+
+    .profile-edit-btn-modern,
+    .profile-save-btn-modern,
+    .profile-cancel-btn-modern,
+    .profile-contact-btn-modern {
+        width: 100%;
+        padding: 0.875rem 1.25rem;
+        font-size: 0.875rem;
     }
 }
