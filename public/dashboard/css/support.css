@@ -223,7 +223,28 @@
    Responsive Design
    ============================================ */
 
+@media (max-width: 1400px) {
+    .support-page {
+        max-width: 100%;
+        padding: 0 1rem;
+    }
+}
+
+@media (max-width: 992px) {
+    .support-header {
+        margin-bottom: 2rem;
+    }
+
+    .support-title {
+        font-size: 2.25rem;
+    }
+}
+
 @media (max-width: 768px) {
+    .support-page {
+        padding: 0;
+    }
+
     .support-header {
         margin-bottom: 1.5rem;
     }
@@ -236,9 +257,19 @@
         font-size: 1.75rem;
     }
 
+    .support-intro-section {
+        padding: 2rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .support-channels-section {
+        gap: 1.5rem;
+    }
+
     .support-channel-card {
         padding: 1.25rem;
         flex-wrap: wrap;
+        gap: 1rem;
     }
 
     .support-channel-content {
@@ -249,12 +280,22 @@
     .support-copy-btn {
         width: 100%;
         order: 4;
+        padding: 0.875rem 1rem;
+        font-size: 0.9375rem;
     }
 }
 
 @media (max-width: 480px) {
+    .support-header {
+        margin-bottom: 1.25rem;
+    }
+
     .support-title {
         font-size: 1.75rem;
+    }
+
+    .support-intro-section {
+        padding: 1.5rem;
     }
 
     .support-intro-title {
@@ -272,7 +313,11 @@
         font-size: 1.25rem;
     }
 
+    .support-channel-name {
+        font-size: 1.125rem;
+    }
+
     .support-channel-value {
-        font-size: 0.875rem;
+        font-size: 0.9375rem;
     }
 }

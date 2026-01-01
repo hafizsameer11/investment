@@ -5,6 +5,9 @@
 </head>
 <body>
     <div class="dashboard-wrapper">
+        <!-- Mobile Overlay -->
+        <div class="sidebar-overlay" id="sidebarOverlay"></div>
+        
         <!-- Left Sidebar -->
         @include('dashboard.layouts.sidebar')
 

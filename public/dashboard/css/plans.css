@@ -6,6 +6,9 @@
     max-width: 1200px;
     margin: 0 auto;
     padding: 0;
+    width: 100%;
+    box-sizing: border-box;
+    overflow-x: hidden;
 }
 
 /* ============================================
@@ -618,6 +621,13 @@
    Responsive Design
    ============================================ */
 
+@media (max-width: 1400px) {
+    .plans-page-modern {
+        max-width: 100%;
+        padding: 0 1rem;
+    }
+}
+
 @media (max-width: 1200px) {
     .plans-hero-stats {
         gap: 2rem;
@@ -626,11 +636,38 @@
     .plan-features-modern {
         grid-template-columns: 1fr;
     }
+
+    .calculator-preview-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 992px) {
+    .plans-hero-section {
+        padding: 2rem;
+    }
+
+    .plans-hero-title {
+        font-size: 2.25rem;
+    }
+
+    .plans-hero-stats {
+        gap: 1.75rem;
+    }
+
+    .plan-card-modern {
+        padding: 2rem;
+    }
 }
 
 @media (max-width: 768px) {
+    .plans-page-modern {
+        padding: 0;
+    }
+
     .plans-hero-section {
         padding: 2rem;
+        margin-bottom: 1.5rem;
     }
 
     .plans-hero-title {
@@ -638,7 +675,13 @@
     }
 
     .plans-hero-stats {
+        flex-wrap: wrap;
         gap: 1.5rem;
+    }
+
+    .plans-hero-stat-modern {
+        flex: 1 1 calc(50% - 0.75rem);
+        min-width: 0;
     }
 
     .plans-hero-stat-value {
@@ -647,6 +690,7 @@
 
     .plan-card-modern {
         padding: 1.5rem;
+        margin-bottom: 1.5rem;
     }
 
     .plan-card-header-content {
@@ -666,22 +710,31 @@
 
     .plan-features-modern {
         grid-template-columns: 1fr;
+        gap: 1rem;
     }
 
     .calculator-preview-grid {
         grid-template-columns: 1fr;
+        gap: 1rem;
     }
 
     .plan-actions-modern {
         flex-direction: column;
+        gap: 0.75rem;
+    }
+
+    .plan-action-btn-modern {
+        width: 100%;
     }
 
     .plan-info-modern {
         grid-template-columns: 1fr;
+        gap: 1rem;
     }
 
     .coming-soon-cards {
         grid-template-columns: 1fr;
+        gap: 1rem;
     }
 }
 
@@ -699,6 +752,11 @@
         gap: 1.5rem;
     }
 
+    .plans-hero-stat-modern {
+        flex: 1 1 100%;
+        width: 100%;
+    }
+
     .plan-card-modern {
         padding: 1.25rem;
     }
@@ -707,8 +765,75 @@
         font-size: 1.75rem;
     }
 
+    .plan-icon-wrapper-modern {
+        width: 70px;
+        height: 70px;
+    }
+
     .plan-action-btn-modern {
         padding: 1rem 1.5rem;
         font-size: 0.875rem;
+    }
+
+    .plan-feature-item-modern {
+        padding: 1rem;
+    }
+}
+
+@media (max-width: 400px) {
+    .plans-page-modern {
+        padding: 0;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+        overflow-x: hidden;
+    }
+
+    .plans-hero-section {
+        padding: 1.25rem;
+        border-radius: 12px;
+    }
+
+    .plans-hero-title {
+        font-size: 1.5rem;
+    }
+
+    .plans-hero-stats {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .plans-hero-stat-modern {
+        flex: 1 1 100%;
+        width: 100%;
+        min-width: 0;
+    }
+
+    .plan-card-modern {
+        padding: 1.25rem;
+        border-radius: 12px;
+    }
+
+    .plan-name-modern {
+        font-size: 1.375rem;
+    }
+
+    .plan-icon-wrapper-modern {
+        width: 60px;
+        height: 60px;
+    }
+
+    .plan-feature-item-modern {
+        padding: 1rem;
+    }
+
+    .plan-action-btn-modern {
+        padding: 1rem 1.25rem;
+        font-size: 0.875rem;
+    }
+
+    .coming-soon-cards {
+        grid-template-columns: 1fr;
+        gap: 1rem;
     }
 }

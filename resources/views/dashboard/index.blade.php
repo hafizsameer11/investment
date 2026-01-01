@@ -47,6 +47,70 @@
         position: relative;
         z-index: 1;
     }
+
+    /* Ensure navigation button is always clickable on dashboard page */
+    @media (max-width: 768px) {
+        .sidebar-toggle {
+            z-index: 10002 !important;
+            position: relative !important;
+            pointer-events: auto !important;
+            cursor: pointer !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            min-width: 44px !important;
+            min-height: 44px !important;
+            background: transparent !important;
+            border: none !important;
+            -webkit-tap-highlight-color: rgba(0, 255, 136, 0.3) !important;
+        }
+
+        .sidebar-toggle:active,
+        .sidebar-toggle:focus {
+            outline: 2px solid rgba(0, 255, 136, 0.5) !important;
+            outline-offset: 2px !important;
+        }
+
+        .sidebar-toggle i {
+            pointer-events: none !important;
+            z-index: 0 !important;
+        }
+
+        .header-left {
+            z-index: 10002 !important;
+            position: relative !important;
+            pointer-events: auto !important;
+        }
+
+        .dashboard-header {
+            z-index: 10001 !important;
+            position: sticky !important;
+        }
+
+        .header-content {
+            z-index: 10002 !important;
+            position: relative !important;
+        }
+
+        .mining-hero-card,
+        .mining-logo-header,
+        .mining-stats-grid,
+        .mining-dashboard {
+            z-index: 0 !important;
+            position: relative !important;
+        }
+
+        /* Ensure nothing blocks the header */
+        .content-area {
+            position: relative;
+            z-index: 0;
+        }
+
+        /* Prevent any overlay from blocking */
+        .mining-hero-card::before {
+            z-index: -1 !important;
+        }
+    }
     
     .mining-logo-large {
         width: 80px;

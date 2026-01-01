@@ -1,7 +1,7 @@
 <div class="dashboard-header">
     <div class="header-content">
         <div class="header-left">
-            <button class="sidebar-toggle" id="sidebarToggle">
+            <button class="sidebar-toggle" id="sidebarToggle" onclick="toggleMobileSidebar(event)">
                 <i class="fas fa-bars"></i>
             </button>
         </div>

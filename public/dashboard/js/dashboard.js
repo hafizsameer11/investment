@@ -16,7 +16,12 @@
 
     // Initialize
     document.addEventListener('DOMContentLoaded', function() {
-        initSidebarToggle();
+        // Initialize sidebar toggle first
+        if (sidebarToggle && sidebar) {
+            initSidebarToggle();
+        } else {
+            console.warn('Sidebar toggle elements not found');
+        }
         highlightActiveNavItem();
         // Only initialize balance toggle if on dashboard page
         if (document.getElementById('balanceToggle')) {
@@ -70,19 +75,138 @@
      * Sidebar Toggle (Mobile)
      */
     function initSidebarToggle() {
-        if (!sidebarToggle || !sidebar) return;
+        if (!sidebarToggle || !sidebar) {
+            console.warn('Sidebar toggle: Missing elements', { sidebarToggle, sidebar });
+            return;
+        }
 
-        sidebarToggle.addEventListener('click', function() {
-            sidebar.classList.toggle('active');
-        });
+        const sidebarOverlay = document.getElementById('sidebarOverlay');
+        
+        // Ensure button is clickable - multiple approaches
+        sidebarToggle.style.pointerEvents = 'auto';
+        sidebarToggle.style.cursor = 'pointer';
+        sidebarToggle.style.zIndex = '10002';
+        sidebarToggle.style.position = 'relative';
+        sidebarToggle.setAttribute('tabindex', '0');
+        sidebarToggle.setAttribute('role', 'button');
+        sidebarToggle.setAttribute('aria-label', 'Toggle navigation menu');
+        
+        // Remove any existing event listeners by cloning the element
+        const newToggle = sidebarToggle.cloneNode(true);
+        sidebarToggle.parentNode.replaceChild(newToggle, sidebarToggle);
+        const toggle = document.getElementById('sidebarToggle');
+
+        // Toggle function
+        function toggleSidebar(e) {
+            if (e) {
+                e.preventDefault();
+                e.stopPropagation();
+                e.stopImmediatePropagation();
+            }
+            
+            const isActive = sidebar.classList.contains('active');
+            if (isActive) {
+                sidebar.classList.remove('active');
+                if (sidebarOverlay) {
+                    sidebarOverlay.classList.remove('active');
+                }
+                document.body.style.overflow = '';
+            } else {
+                sidebar.classList.add('active');
+                if (sidebarOverlay) {
+                    sidebarOverlay.classList.add('active');
+                }
+                document.body.style.overflow = 'hidden';
+            }
+            
+            return false;
+        }
+
+        // Handle click events - multiple event types
+        toggle.addEventListener('click', toggleSidebar, true);
+        toggle.addEventListener('mousedown', function(e) {
+            e.preventDefault();
+            toggleSidebar(e);
+        }, true);
+        
+        // Handle touch events for better mobile support
+        toggle.addEventListener('touchend', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            toggleSidebar(e);
+        }, true);
+        
+        toggle.addEventListener('touchstart', function(e) {
+            e.stopPropagation();
+        }, true);
+
+        // Close sidebar when clicking overlay (mobile)
+        if (sidebarOverlay) {
+            sidebarOverlay.addEventListener('click', function() {
+                if (window.innerWidth <= 768) {
+                    sidebar.classList.remove('active');
+                    sidebarOverlay.classList.remove('active');
+                    document.body.style.overflow = '';
+                }
+            });
+        }
 
         // Close sidebar when clicking outside (mobile)
         document.addEventListener('click', function(e) {
             if (window.innerWidth <= 768) {
-                if (!sidebar.contains(e.target) && !sidebarToggle.contains(e.target)) {
-                    sidebar.classList.remove('active');
+                if (sidebar.classList.contains('active')) {
+                    if (!sidebar.contains(e.target) && !sidebarToggle.contains(e.target) && !sidebarOverlay.contains(e.target)) {
+                        sidebar.classList.remove('active');
+                        if (sidebarOverlay) {
+                            sidebarOverlay.classList.remove('active');
+                        }
+                        document.body.style.overflow = '';
+                    }
                 }
             }
+        });
+
+        // Ensure nav links work on mobile - use both click and touchstart
+        const navLinks = document.querySelectorAll('.dashboard-sidebar .nav-link');
+        navLinks.forEach(link => {
+            // Handle click events
+            link.addEventListener('click', function(e) {
+                e.stopPropagation();
+                // Allow navigation to proceed normally
+                if (window.innerWidth <= 768) {
+                    // Close sidebar after navigation on mobile
+                    setTimeout(() => {
+                        sidebar.classList.remove('active');
+                        if (sidebarOverlay) {
+                            sidebarOverlay.classList.remove('active');
+                        }
+                        document.body.style.overflow = '';
+                    }, 300);
+                }
+            }, { passive: false });
+
+            // Also handle touch events for better mobile support
+            link.addEventListener('touchend', function(e) {
+                e.stopPropagation();
+                // Trigger click if it's a valid tap (not a scroll)
+                if (!this.dataset.touchMoved) {
+                    this.click();
+                }
+                delete this.dataset.touchMoved;
+            }, { passive: true });
+
+            let touchStartY = 0;
+            link.addEventListener('touchstart', function(e) {
+                touchStartY = e.touches[0].clientY;
+                this.dataset.touchMoved = 'false';
+            }, { passive: true });
+
+            link.addEventListener('touchmove', function(e) {
+                const touchY = e.touches[0].clientY;
+                if (Math.abs(touchY - touchStartY) > 10) {
+                    this.dataset.touchMoved = 'true';
+                }
+            }, { passive: true });
         });
     }
 

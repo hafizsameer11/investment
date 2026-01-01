@@ -523,7 +523,7 @@
             <div class="support-channel-card-new">
                 <div class="support-channel-header-new">
                     <div class="support-channel-icon-wrapper-new support-channel-icon-whatsapp-new">
-                        <i class="fab fa-whatsapp"></i>
+                            <i class="fab fa-whatsapp"></i>
                     </div>
                     <h3 class="support-channel-name-new">WhatsApp</h3>
                 </div>
@@ -559,7 +559,7 @@
             <div class="support-channel-card-new">
                 <div class="support-channel-header-new">
                     <div class="support-channel-icon-wrapper-new support-channel-icon-phone-new">
-                        <i class="fas fa-headset"></i>
+                            <i class="fas fa-headset"></i>
                     </div>
                     <h3 class="support-channel-name-new">Phone</h3>
                 </div>
@@ -583,7 +583,7 @@
             <div class="support-channel-card-new">
                 <div class="support-channel-header-new">
                     <div class="support-channel-icon-wrapper-new support-channel-icon-facebook-new">
-                        <i class="fab fa-facebook-f"></i>
+                            <i class="fab fa-facebook-f"></i>
                     </div>
                     <h3 class="support-channel-name-new">Facebook</h3>
                 </div>

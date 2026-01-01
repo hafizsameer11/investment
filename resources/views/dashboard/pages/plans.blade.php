@@ -9,6 +9,9 @@
         padding: 2rem;
         max-width: 1400px;
         margin: 0 auto;
+        width: 100%;
+        box-sizing: border-box;
+        overflow-x: hidden;
     }
 
     /* Hero Section */
@@ -22,6 +25,9 @@
         position: relative;
         overflow: hidden;
         box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
     }
 
     .plans-hero-new::before {
@@ -126,6 +132,9 @@
         position: relative;
         overflow: hidden;
         box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
     }
 
     .plan-main-card-new::before {
@@ -585,6 +594,9 @@
         padding: 3rem;
         text-align: center;
         box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
     }
 
     .coming-soon-title-new {
@@ -669,10 +681,48 @@
     @media (max-width: 768px) {
         .plans-new-page {
             padding: 1rem;
+            width: 100%;
+            max-width: 100%;
+            box-sizing: border-box;
+            overflow-x: hidden;
+        }
+
+        .plans-hero-new {
+            padding: 2rem 1.5rem;
+            margin-bottom: 2rem;
+            border-radius: 16px;
         }
 
         .plans-hero-title-new {
             font-size: 2rem;
+        }
+
+        .plans-hero-subtitle-new {
+            font-size: 1rem;
+        }
+
+        .plans-hero-stats-new {
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+
+        .plan-main-card-new {
+            padding: 2rem 1.5rem;
+            margin-bottom: 2rem;
+            border-radius: 16px;
+        }
+
+        .plan-header-new {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 1.5rem;
+        }
+
+        .plan-header-left-new {
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 1.5rem;
         }
 
         .plan-name-new {
@@ -686,10 +736,345 @@
 
         .plan-features-grid-new {
             grid-template-columns: 1fr;
+            gap: 1rem;
+        }
+
+        .plan-calculator-section-new {
+            padding: 1.5rem;
+        }
+
+        .plan-calculator-grid-new {
+            grid-template-columns: 1fr;
         }
 
         .plan-actions-new {
             grid-template-columns: 1fr;
+            gap: 1rem;
+        }
+
+        .plan-benefits-new {
+            grid-template-columns: 1fr;
+        }
+
+        .plans-coming-soon-new {
+            padding: 2rem 1.5rem;
+            border-radius: 16px;
+        }
+
+        .coming-soon-cards-new {
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .plans-new-page {
+            padding: 0;
+            width: 100%;
+            max-width: 100%;
+            box-sizing: border-box;
+            overflow-x: hidden;
+        }
+
+        .plans-hero-new {
+            padding: 1.5rem 1rem;
+            margin-bottom: 1.5rem;
+            border-radius: 12px;
+        }
+
+        .plans-hero-title-new {
+            font-size: 1.75rem;
+        }
+
+        .plans-hero-subtitle-new {
+            font-size: 0.875rem;
+        }
+
+        .plans-hero-stats-new {
+            grid-template-columns: 1fr;
+            gap: 1rem;
+        }
+
+        .plans-hero-stat-new {
+            padding: 1.25rem;
+        }
+
+        .plans-hero-stat-value-new {
+            font-size: 2rem;
+        }
+
+        .plan-main-card-new {
+            padding: 1.5rem 1rem;
+            margin-bottom: 1.5rem;
+            border-radius: 12px;
+        }
+
+        .plan-header-new {
+            margin-bottom: 1.5rem;
+        }
+
+        .plan-header-left-new {
+            gap: 1rem;
+        }
+
+        .plan-name-new {
+            font-size: 1.5rem;
+        }
+
+        .plan-icon-large-new {
+            width: 70px;
+            height: 70px;
+        }
+
+        .plan-icon-large-new svg {
+            width: 40px;
+            height: 40px;
+        }
+
+        .plan-security-badge-new {
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .plan-features-grid-new {
+            gap: 0.875rem;
+        }
+
+        .plan-feature-card-new {
+            padding: 1.5rem;
+        }
+
+        .plan-feature-value-new {
+            font-size: 1.75rem;
+        }
+
+        .plan-calculator-section-new {
+            padding: 1.25rem;
+        }
+
+        .plan-calculator-header-new {
+            flex-direction: column;
+            align-items: stretch;
+            gap: 1rem;
+        }
+
+        .plan-calculator-toggle-new {
+            width: 100%;
+            justify-content: center;
+        }
+
+        .plan-action-btn-new {
+            padding: 1.25rem 1.5rem;
+            font-size: 0.9375rem;
+        }
+
+        .plans-coming-soon-new {
+            padding: 1.5rem 1rem;
+            border-radius: 12px;
+        }
+
+        .coming-soon-title-new {
+            font-size: 1.5rem;
+        }
+
+        .coming-soon-subtitle-new {
+            font-size: 0.875rem;
+        }
+
+        .coming-soon-card-new {
+            padding: 1.5rem;
+        }
+
+        .coming-soon-icon-new {
+            width: 64px;
+            height: 64px;
+            font-size: 1.5rem;
+        }
+
+        .coming-soon-name-new {
+            font-size: 1.25rem;
+        }
+    }
+
+    @media (max-width: 400px) {
+        .plans-new-page {
+            padding: 0;
+            width: 100%;
+            max-width: 100%;
+            box-sizing: border-box;
+            overflow-x: hidden;
+        }
+
+        .plans-hero-new {
+            padding: 1.25rem 0.875rem;
+            margin-bottom: 1.25rem;
+            border-radius: 12px;
+        }
+
+        .plans-hero-title-new {
+            font-size: 1.5rem;
+            letter-spacing: -1px;
+        }
+
+        .plans-hero-subtitle-new {
+            font-size: 0.8125rem;
+        }
+
+        .plans-hero-stats-new {
+            gap: 0.875rem;
+        }
+
+        .plans-hero-stat-new {
+            padding: 1rem;
+        }
+
+        .plans-hero-stat-value-new {
+            font-size: 1.75rem;
+        }
+
+        .plans-hero-stat-label-new {
+            font-size: 0.75rem;
+        }
+
+        .plan-main-card-new {
+            padding: 1.25rem 0.875rem;
+            margin-bottom: 1.25rem;
+            border-radius: 12px;
+        }
+
+        .plan-header-new {
+            margin-bottom: 1.25rem;
+            gap: 1rem;
+        }
+
+        .plan-header-left-new {
+            gap: 0.875rem;
+        }
+
+        .plan-badge-new {
+            padding: 0.5rem 1rem;
+            font-size: 0.75rem;
+        }
+
+        .plan-name-new {
+            font-size: 1.375rem;
+        }
+
+        .plan-tagline-new {
+            font-size: 0.9375rem;
+        }
+
+        .plan-icon-large-new {
+            width: 60px;
+            height: 60px;
+        }
+
+        .plan-icon-large-new svg {
+            width: 32px;
+            height: 32px;
+        }
+
+        .plan-security-badge-new {
+            padding: 0.875rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .plan-security-icon-new {
+            width: 40px;
+            height: 40px;
+            font-size: 1rem;
+        }
+
+        .plan-features-grid-new {
+            gap: 0.75rem;
+        }
+
+        .plan-feature-card-new {
+            padding: 1.25rem;
+        }
+
+        .plan-feature-icon-new {
+            width: 56px;
+            height: 56px;
+            font-size: 1.5rem;
+        }
+
+        .plan-feature-value-new {
+            font-size: 1.5rem;
+        }
+
+        .plan-calculator-section-new {
+            padding: 1rem;
+        }
+
+        .plan-calculator-title-new {
+            font-size: 1.25rem;
+        }
+
+        .plan-calculator-grid-new {
+            gap: 1rem;
+        }
+
+        .plan-calculator-item-new {
+            padding: 1.25rem;
+        }
+
+        .plan-calculator-value-new {
+            font-size: 1.75rem;
+        }
+
+        .plan-actions-new {
+            gap: 0.875rem;
+        }
+
+        .plan-action-btn-new {
+            padding: 1rem 1.25rem;
+            font-size: 0.875rem;
+        }
+
+        .plan-benefits-new {
+            gap: 0.75rem;
+        }
+
+        .plan-benefit-item-new {
+            padding: 0.875rem;
+        }
+
+        .plan-benefit-icon-new {
+            width: 36px;
+            height: 36px;
+            font-size: 1rem;
+        }
+
+        .plans-coming-soon-new {
+            padding: 1.25rem 0.875rem;
+            border-radius: 12px;
+        }
+
+        .coming-soon-title-new {
+            font-size: 1.375rem;
+        }
+
+        .coming-soon-subtitle-new {
+            font-size: 0.8125rem;
+        }
+
+        .coming-soon-cards-new {
+            gap: 1rem;
+        }
+
+        .coming-soon-card-new {
+            padding: 1.25rem;
+        }
+
+        .coming-soon-icon-new {
+            width: 56px;
+            height: 56px;
+            font-size: 1.25rem;
+        }
+
+        .coming-soon-name-new {
+            font-size: 1.125rem;
         }
     }
 </style>
@@ -745,14 +1130,14 @@
                         </div>
                         <h2 class="plan-name-new">Lithium</h2>
                         <p class="plan-tagline-new">Advanced Mining Plan for Maximum Returns</p>
-                    </div>
                 </div>
             </div>
+        </div>
 
-            <!-- Security Badge -->
+        <!-- Security Badge -->
             <div class="plan-security-badge-new">
                 <div class="plan-security-icon-new">
-                    <i class="fas fa-shield-alt"></i>
+                <i class="fas fa-shield-alt"></i>
                 </div>
                 <div class="plan-security-text-new">
                     <div class="plan-security-title-new">Principal Return Guarantee</div>
@@ -773,7 +1158,7 @@
 
                 <div class="plan-feature-card-new highlight">
                     <div class="plan-feature-icon-new">
-                        <i class="fas fa-chart-line"></i>
+                    <i class="fas fa-chart-line"></i>
                     </div>
                     <div class="plan-feature-label-new">Daily ROI</div>
                     <div class="plan-feature-value-new">3% - 3.5%</div>
@@ -809,9 +1194,9 @@
                         <div class="plan-calculator-label-new">Monthly Earnings</div>
                         <div class="plan-calculator-value-new">$0.00</div>
                         <div class="plan-calculator-note-new">30 days projection</div>
-                    </div>
                 </div>
             </div>
+        </div>
 
             <!-- Action Buttons -->
             <div class="plan-actions-new">
@@ -842,15 +1227,15 @@
                 <div class="plan-benefit-item-new">
                     <div class="plan-benefit-icon-new">
                         <i class="fas fa-check-circle"></i>
-                    </div>
+            </div>
                     <div class="plan-benefit-text-new">Principal protection</div>
-                </div>
+        </div>
                 <div class="plan-benefit-item-new">
                     <div class="plan-benefit-icon-new">
-                        <i class="fas fa-check-circle"></i>
-                    </div>
+                <i class="fas fa-check-circle"></i>
+            </div>
                     <div class="plan-benefit-text-new">Real-time mining tracking</div>
-                </div>
+            </div>
             </div>
         </div>
     </div>

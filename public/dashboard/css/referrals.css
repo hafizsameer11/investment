@@ -6,6 +6,9 @@
     max-width: 1600px;
     margin: 0 auto;
     padding: 0;
+    width: 100%;
+    box-sizing: border-box;
+    overflow-x: hidden;
 }
 
 /* ============================================
@@ -769,19 +772,22 @@
     flex-shrink: 0;
 }
 
-.referrals-network-filter-select-modern {
-    padding: 0.75rem 1rem;
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 12px;
-    color: var(--text-primary);
-    font-size: 0.875rem;
-    font-family: inherit;
-    cursor: pointer;
-    backdrop-filter: blur(10px);
-    transition: var(--transition-fast);
-    min-width: 150px;
-}
+    .referrals-network-filter-select-modern {
+        padding: 0.75rem 1rem;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 12px;
+        color: var(--text-primary);
+        font-size: 0.875rem;
+        font-family: inherit;
+        cursor: pointer;
+        backdrop-filter: blur(10px);
+        transition: var(--transition-fast);
+        min-width: 0;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+    }
 
 .referrals-network-filter-select-modern:focus {
     outline: none;
@@ -799,9 +805,12 @@
 }
 
 .referrals-network-table-wrapper-modern {
-    overflow-x: auto;
+    overflow-x: visible;
     scrollbar-width: none;
     -ms-overflow-style: none;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
 }
 
 .referrals-network-table-wrapper-modern::-webkit-scrollbar {
@@ -969,19 +978,53 @@
    Responsive Design
    ============================================ */
 
+@media (max-width: 1400px) {
+    .referrals-page-modern {
+        max-width: 100%;
+        padding: 0 1rem;
+    }
+}
+
 @media (max-width: 1200px) {
     .referrals-commission-grid-modern {
         grid-template-columns: repeat(3, 1fr);
+        gap: 1.5rem;
     }
 
     .referrals-referrer-info-grid {
         grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+    }
+
+    .referrals-tools-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+    }
+}
+
+@media (max-width: 992px) {
+    .referrals-hero-section {
+        padding: 2rem;
+    }
+
+    .referrals-hero-title {
+        font-size: 2.25rem;
+    }
+
+    .referrals-stats-grid-modern {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
     }
 }
 
 @media (max-width: 768px) {
+    .referrals-page-modern {
+        padding: 0;
+    }
+
     .referrals-hero-section {
         padding: 2rem;
+        margin-bottom: 1.5rem;
     }
 
     .referrals-hero-title {
@@ -990,23 +1033,28 @@
 
     .referrals-stats-grid-modern {
         grid-template-columns: 1fr;
+        gap: 1.5rem;
     }
 
     .referrals-tools-grid {
         grid-template-columns: 1fr;
+        gap: 1.5rem;
     }
 
     .referrals-commission-grid-modern {
         grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
     }
 
     .referrals-referrer-info-grid {
         grid-template-columns: 1fr;
+        gap: 1.5rem;
     }
 
     .referrals-network-header {
         flex-direction: column;
         gap: 1rem;
+        align-items: stretch;
     }
 
     .referrals-earning-wallet-card {
@@ -1015,6 +1063,24 @@
 
     .referrals-earning-amount {
         font-size: 2.5rem;
+    }
+
+    .referrals-tool-card-modern,
+    .referrals-referrer-card-modern,
+    .referrals-rules-card-modern {
+        padding: 1.5rem;
+    }
+
+    /* Make table responsive on mobile - no horizontal scroll */
+    .referrals-network-table-wrapper-modern {
+        overflow-x: visible;
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .referrals-network-table-modern {
+        width: 100%;
+        min-width: 0;
     }
 }
 
@@ -1029,6 +1095,58 @@
 
     .referrals-commission-grid-modern {
         grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .referrals-tool-card-modern,
+    .referrals-referrer-card-modern,
+    .referrals-rules-card-modern {
+        padding: 1.25rem;
+    }
+
+    .referrals-earning-amount {
+        font-size: 2rem;
+    }
+
+    .referrals-network-table-modern {
+        width: 100%;
+        min-width: 0;
+        font-size: 0.875rem;
+    }
+
+    .referrals-tool-copy-btn-modern {
+        width: 100%;
+        padding: 0.875rem 1rem;
+        font-size: 0.875rem;
+    }
+}
+
+@media (max-width: 400px) {
+    .referrals-page-modern {
+        padding: 0;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+        overflow-x: hidden;
+    }
+
+    .referrals-hero-section {
+        padding: 1.25rem;
+        border-radius: 12px;
+    }
+
+    .referrals-hero-title {
+        font-size: 1.5rem;
+    }
+
+    .referrals-stats-grid-modern {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .referrals-commission-grid-modern {
+        grid-template-columns: 1fr;
+        gap: 1rem;
     }
 
     .referrals-tool-card-modern,

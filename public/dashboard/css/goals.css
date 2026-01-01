@@ -779,9 +779,37 @@
    Responsive Design
    ============================================ */
 
+@media (max-width: 1400px) {
+    .goals-page-modern {
+        max-width: 100%;
+        padding: 0 1rem;
+    }
+}
+
 @media (max-width: 1200px) {
     .goals-status-grid {
         grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .goals-rewards-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+    }
+
+    .goals-all-levels-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+    }
+}
+
+@media (max-width: 992px) {
+    .goals-hero-section {
+        padding: 2rem;
+    }
+
+    .goals-hero-title {
+        font-size: 2.25rem;
     }
 
     .goals-rewards-grid {
@@ -794,8 +822,13 @@
 }
 
 @media (max-width: 768px) {
+    .goals-page-modern {
+        padding: 0;
+    }
+
     .goals-hero-section {
         padding: 2rem;
+        margin-bottom: 1.5rem;
     }
 
     .goals-hero-title {
@@ -804,19 +837,27 @@
 
     .goals-status-grid {
         grid-template-columns: 1fr;
+        gap: 1.5rem;
     }
 
     .goals-rewards-grid {
         grid-template-columns: 1fr;
+        gap: 1.5rem;
     }
 
     .goals-all-levels-grid {
         grid-template-columns: 1fr;
+        gap: 1.5rem;
     }
 
     .goals-rank-card-modern,
     .goals-progress-card-modern,
     .goals-next-goal-card-modern {
+        padding: 1.5rem;
+    }
+
+    .goals-reward-card-modern,
+    .goals-level-card-modern {
         padding: 1.5rem;
     }
 }
@@ -828,6 +869,12 @@
 
     .goals-hero-title {
         font-size: 1.75rem;
+    }
+
+    .goals-rank-card-modern,
+    .goals-progress-card-modern,
+    .goals-next-goal-card-modern {
+        padding: 1.25rem;
     }
 
     .goals-reward-card-modern,
@@ -845,5 +892,9 @@
     .goals-reward-name-modern,
     .goals-level-name-modern {
         font-size: 1.25rem;
+    }
+
+    .goals-progress-bar-modern {
+        height: 8px;
     }
 }

@@ -397,17 +397,41 @@
    Responsive Design
    ============================================ */
 
+@media (max-width: 1400px) {
+    .withdraw-security-page {
+        max-width: 100%;
+        padding: 0 1rem;
+    }
+}
+
+@media (max-width: 992px) {
+    .withdraw-security-title {
+        font-size: 2.25rem;
+    }
+
+    .withdraw-security-card {
+        padding: 2.5rem;
+    }
+}
+
 @media (max-width: 768px) {
+    .withdraw-security-page {
+        padding: 0;
+    }
+
     .withdraw-security-title {
         font-size: 2rem;
     }
 
     .withdraw-security-card {
         padding: 2rem;
+        margin-bottom: 1.5rem;
     }
 
     .security-progress-steps {
         margin-bottom: 2rem;
+        flex-wrap: wrap;
+        gap: 1rem;
     }
 
     .security-step-number {
@@ -430,13 +454,13 @@
     .security-step-title {
         font-size: 1.5rem;
     }
+
+    .security-step-content {
+        padding: 2rem;
+    }
 }
 
 @media (max-width: 480px) {
-    .withdraw-security-page {
-        padding: 0;
-    }
-
     .withdraw-security-title {
         font-size: 1.75rem;
     }
@@ -444,6 +468,26 @@
     .withdraw-security-card {
         padding: 1.5rem;
         border-radius: 16px;
+    }
+
+    .security-progress-steps {
+        flex-direction: column;
+        align-items: center;
+        gap: 1.5rem;
+    }
+
+    .security-step-icon {
+        width: 80px;
+        height: 80px;
+        font-size: 2.5rem;
+    }
+
+    .security-step-title {
+        font-size: 1.375rem;
+    }
+
+    .security-step-content {
+        padding: 1.5rem;
     }
 
     .security-progress-steps {

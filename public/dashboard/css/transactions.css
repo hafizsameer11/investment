@@ -6,6 +6,9 @@
     max-width: 1600px;
     margin: 0 auto;
     padding: 0;
+    width: 100%;
+    box-sizing: border-box;
+    overflow-x: hidden;
 }
 
 /* ============================================
@@ -298,7 +301,8 @@
     cursor: pointer;
     backdrop-filter: blur(10px);
     transition: var(--transition-fast);
-    min-width: 120px;
+    min-width: 0;
+    box-sizing: border-box;
 }
 
 .transactions-date-filter-modern:focus {
@@ -317,9 +321,12 @@
 }
 
 .transactions-table-wrapper-modern {
-    overflow-x: auto;
+    overflow-x: visible;
     scrollbar-width: none;
     -ms-overflow-style: none;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
 }
 
 .transactions-table-wrapper-modern::-webkit-scrollbar {
@@ -328,7 +335,9 @@
 
 .transactions-table-modern {
     width: 100%;
+    max-width: 100%;
     border-collapse: collapse;
+    box-sizing: border-box;
 }
 
 .transactions-table-modern thead {
@@ -545,28 +554,60 @@
    Responsive Design
    ============================================ */
 
+@media (max-width: 1400px) {
+    .transactions-page-modern {
+        max-width: 100%;
+        padding: 0 1rem;
+    }
+}
+
 @media (max-width: 1200px) {
     .transactions-summary-grid-modern {
         grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
     }
 
     .transactions-hero-section {
         flex-direction: column;
         text-align: center;
+        gap: 1.5rem;
     }
 
     .transactions-hero-image {
         width: 100%;
+        max-width: 400px;
+        margin: 0 auto;
     }
 
     .transactions-hero-image-placeholder {
         width: 100%;
+        max-width: 400px;
+        margin: 0 auto;
+    }
+}
+
+@media (max-width: 992px) {
+    .transactions-hero-section {
+        padding: 2rem;
+    }
+
+    .transactions-hero-title {
+        font-size: 2.25rem;
+    }
+
+    .transactions-summary-grid-modern {
+        grid-template-columns: repeat(2, 1fr);
     }
 }
 
 @media (max-width: 768px) {
+    .transactions-page-modern {
+        padding: 0;
+    }
+
     .transactions-hero-section {
         padding: 2rem;
+        margin-bottom: 1.5rem;
     }
 
     .transactions-hero-title {
@@ -575,30 +616,74 @@
 
     .transactions-summary-grid-modern {
         grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .transactions-summary-card-modern {
+        padding: 1.5rem;
+    }
+
+    .transactions-history-section-modern {
+        padding: 1.5rem;
     }
 
     .transactions-history-header {
         flex-direction: column;
         gap: 1rem;
+        align-items: stretch;
+        margin-bottom: 1.5rem;
     }
 
     .transactions-history-controls-modern {
         width: 100%;
         flex-wrap: wrap;
+        gap: 1rem;
     }
 
     .transactions-search-input-modern {
         width: 100%;
-        flex: 1;
+        max-width: 100%;
+        box-sizing: border-box;
     }
 
     .transactions-search-input-modern:focus {
         width: 100%;
+        max-width: 100%;
+    }
+
+    .transactions-filters-modern {
+        width: 100%;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+    }
+
+    .transactions-filter-btn-modern {
+        flex: 1;
+        min-width: 0;
+        box-sizing: border-box;
+    }
+
+    /* Make table responsive on mobile - no horizontal scroll */
+    .transactions-table-wrapper-modern {
+        overflow-x: visible;
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .transactions-table-modern {
+        width: 100%;
+        min-width: 0;
     }
 
     .transactions-table-modern th,
     .transactions-table-modern td {
-        padding: 1rem;
+        padding: 1rem 0.75rem;
+        font-size: 0.875rem;
+    }
+
+    .transactions-pagination-modern {
+        flex-wrap: wrap;
+        gap: 0.75rem;
     }
 }
 
@@ -612,16 +697,65 @@
     }
 
     .transactions-summary-card-modern {
-        padding: 1.5rem;
+        padding: 1.25rem;
     }
 
-    .transactions-type-cell-modern {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 0.75rem;
+    .transactions-history-section-modern {
+        padding: 1.25rem;
+    }
+
+    .transactions-table-modern {
+        width: 100%;
+        min-width: 0;
+        font-size: 0.8125rem;
+    }
+
+    .transactions-filter-btn-modern {
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+        font-size: 0.875rem;
+        padding: 0.75rem 1rem;
+    }
+}
+
+@media (max-width: 400px) {
+    .transactions-page-modern {
+        padding: 0;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+        overflow-x: hidden;
+    }
+
+    .transactions-hero-section {
+        padding: 1.25rem;
+        border-radius: 12px;
+    }
+
+    .transactions-hero-title {
+        font-size: 1.5rem;
+    }
+
+    .transactions-summary-grid-modern {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .transactions-summary-card-modern {
+        padding: 1rem;
+    }
+
+    .transactions-history-section-modern {
+        padding: 1rem;
     }
 
     .transactions-pagination-modern {
-        flex-wrap: wrap;
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .transactions-pagination-info-modern {
+        text-align: center;
     }
 }

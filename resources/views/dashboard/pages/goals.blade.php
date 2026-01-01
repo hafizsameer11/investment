@@ -879,10 +879,10 @@
                 <div class="goals-next-goal-name-new">Team Builder</div>
                 <div class="goals-next-goal-requirements-new">
                     <div class="goals-requirement-item-new">
-                        <i class="fas fa-users"></i>
-                        <span>Team Progress: <strong>$0</strong></span>
+                            <i class="fas fa-users"></i>
+                            <span>Team Progress: <strong>$0</strong></span>
+                        </div>
                     </div>
-                </div>
                 <div class="goals-next-progress-bar-wrapper-new">
                     <div class="goals-next-progress-fill-new" style="width: 0%"></div>
                 </div>
@@ -920,7 +920,7 @@
                         <div class="goals-reward-prize-label-new">Reward</div>
                         <div class="goals-reward-prize-value-new">$2</div>
                     </div>
-                </div>
+                        </div>
                 <div class="goals-reward-progress-new">
                     <div class="goals-reward-progress-bar-wrapper-new">
                         <div class="goals-reward-progress-fill-new" style="width: 0%"></div>
@@ -949,7 +949,7 @@
                         <div class="goals-reward-prize-label-new">Reward</div>
                         <div class="goals-reward-prize-value-new">$5</div>
                     </div>
-                </div>
+                        </div>
                 <div class="goals-reward-progress-new">
                     <div class="goals-reward-progress-bar-wrapper-new">
                         <div class="goals-reward-progress-fill-new" style="width: 0%"></div>
@@ -978,7 +978,7 @@
                         <div class="goals-reward-prize-label-new">Reward</div>
                         <div class="goals-reward-prize-value-new">$8</div>
                     </div>
-                </div>
+                        </div>
                 <div class="goals-reward-progress-new">
                     <div class="goals-reward-progress-bar-wrapper-new">
                         <div class="goals-reward-progress-fill-new" style="width: 0%"></div>

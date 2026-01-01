@@ -476,9 +476,42 @@
    Responsive Design
    ============================================ */
 
-@media (max-width: 768px) {
+@media (max-width: 1400px) {
+    .profile-page-modern {
+        max-width: 100%;
+        padding: 0 1rem;
+    }
+}
+
+@media (max-width: 1200px) {
+    .profile-form-grid-modern {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+    }
+}
+
+@media (max-width: 992px) {
     .profile-hero-section {
         padding: 2rem;
+    }
+
+    .profile-hero-title {
+        font-size: 2.25rem;
+    }
+
+    .profile-form-grid-modern {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .profile-page-modern {
+        padding: 0;
+    }
+
+    .profile-hero-section {
+        padding: 2rem;
+        margin-bottom: 1.5rem;
     }
 
     .profile-hero-title {
@@ -506,6 +539,7 @@
     .profile-edit-btn-modern {
         width: 100%;
         justify-content: center;
+        padding: 1rem 1.5rem;
     }
 
     .profile-tabs-modern {
@@ -519,6 +553,7 @@
         border-bottom: 1px solid var(--card-border);
         border-left: 3px solid transparent;
         margin-bottom: 0;
+        padding: 1rem 1.5rem;
     }
 
     .profile-tab-modern.active {
@@ -528,11 +563,13 @@
 
     .profile-form-grid-modern {
         grid-template-columns: 1fr;
+        gap: 1.5rem;
     }
 
     .profile-contact-card-modern {
         flex-direction: column;
         text-align: center;
+        gap: 1rem;
     }
 
     .profile-contact-btn-modern {
@@ -565,11 +602,19 @@
 
     .profile-form-actions-modern {
         flex-direction: column;
+        gap: 0.75rem;
     }
 
     .profile-save-btn-modern,
     .profile-cancel-btn-modern {
         width: 100%;
         justify-content: center;
+        padding: 1rem 1.5rem;
+        font-size: 0.9375rem;
+    }
+
+    .profile-tab-modern {
+        padding: 0.875rem 1.25rem;
+        font-size: 0.9375rem;
     }
 }

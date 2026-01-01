@@ -9,6 +9,9 @@
         padding: 2rem;
         max-width: 1600px;
         margin: 0 auto;
+        width: 100%;
+        box-sizing: border-box;
+        overflow-x: hidden;
     }
 
     /* Hero Section */
@@ -22,6 +25,9 @@
         position: relative;
         overflow: hidden;
         box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
     }
 
     .transactions-hero-new::before {
@@ -231,6 +237,8 @@
         color: var(--text-primary);
         font-size: 0.9375rem;
         width: 300px;
+        max-width: 100%;
+        box-sizing: border-box;
         transition: var(--transition);
     }
 
@@ -286,6 +294,9 @@
         box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
         position: relative;
         overflow: hidden;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
     }
 
     .transactions-history-card-new::before {
@@ -299,14 +310,20 @@
     }
 
     .transactions-table-wrapper-new {
-        overflow-x: auto;
+        overflow-x: visible;
         margin-bottom: 1.5rem;
         border-radius: 12px;
+        -webkit-overflow-scrolling: touch;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
     }
 
     .transactions-table-new {
         width: 100%;
+        max-width: 100%;
         border-collapse: collapse;
+        box-sizing: border-box;
     }
 
     .transactions-table-new thead {
@@ -573,35 +590,412 @@
         color: var(--text-secondary);
     }
 
+    @media (max-width: 1400px) {
+        .transactions-new-page {
+            max-width: 100%;
+            padding: 0 1rem;
+        }
+    }
+
+    @media (max-width: 1200px) {
+        .transactions-summary-section-new {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+        }
+    }
+
+    @media (max-width: 992px) {
+        .transactions-new-page {
+            padding: 1.5rem;
+        }
+
+        .transactions-hero-new {
+            padding: 2.5rem 2rem;
+        }
+
+        .transactions-hero-title-new {
+            font-size: 2.5rem;
+        }
+
+        .transactions-summary-section-new {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+        }
+
+        .transactions-summary-card-new {
+            padding: 2rem;
+        }
+    }
+
     @media (max-width: 768px) {
         .transactions-new-page {
             padding: 1rem;
+            width: 100%;
+            max-width: 100%;
+            box-sizing: border-box;
+            overflow-x: hidden;
+        }
+
+        .transactions-hero-new {
+            padding: 2rem 1.5rem;
+            margin-bottom: 2rem;
+            border-radius: 16px;
+            width: 100%;
+            max-width: 100%;
+            box-sizing: border-box;
         }
 
         .transactions-hero-title-new {
             font-size: 2rem;
         }
 
+        .transactions-hero-subtitle-new {
+            font-size: 1rem;
+        }
+
         .transactions-summary-section-new {
             grid-template-columns: 1fr;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .transactions-summary-card-new {
+            padding: 1.5rem;
+            gap: 1.25rem;
+            flex-direction: column;
+            text-align: center;
+        }
+
+        .transactions-summary-icon-new {
+            width: 60px;
+            height: 60px;
+            font-size: 1.5rem;
+        }
+
+        .transactions-summary-value-new {
+            font-size: 1.75rem;
+        }
+
+        .transactions-history-section-new {
+            margin-bottom: 2rem;
+        }
+
+        .transactions-history-header-new {
+            flex-direction: column;
+            gap: 1.5rem;
+            align-items: stretch;
+            margin-bottom: 1.5rem;
+        }
+
+        .transactions-history-title-section-new {
+            text-align: center;
+        }
+
+        .transactions-history-title-new {
+            font-size: 1.75rem;
         }
 
         .transactions-history-controls-new {
             flex-direction: column;
             width: 100%;
+            gap: 1rem;
+        }
+
+        .transactions-search-box-new {
+            width: 100%;
         }
 
         .transactions-search-input-new {
             width: 100%;
+            max-width: 100%;
+            box-sizing: border-box;
+        }
+
+        .transactions-filter-btn-new,
+        .transactions-date-filter-new {
+            width: 100%;
+            justify-content: center;
+            padding: 1rem 1.25rem;
+            box-sizing: border-box;
+        }
+
+        .transactions-history-card-new {
+            padding: 1.5rem;
+            border-radius: 16px;
+            width: 100%;
+            max-width: 100%;
+            box-sizing: border-box;
+        }
+
+        /* Make table responsive on mobile - no horizontal scroll */
+        .transactions-table-wrapper-new {
+            overflow-x: visible;
+            -webkit-overflow-scrolling: touch;
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            max-width: 100%;
+        }
+
+        .transactions-table-new {
+            width: 100%;
+            min-width: 0;
+            font-size: 0.875rem;
+            display: block;
+            border-collapse: separate;
+        }
+
+        .transactions-table-new thead {
+            display: none;
+        }
+
+        .transactions-table-new tbody {
+            display: block;
+            width: 100%;
+        }
+
+        .transactions-table-new tbody tr {
+            display: block;
+            width: 100%;
+            margin-bottom: 1rem;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 1rem;
+            box-sizing: border-box;
+        }
+
+        .transactions-table-new tbody tr:last-child {
+            margin-bottom: 0;
+        }
+
+        .transactions-table-new td {
+            display: block;
+            width: 100%;
+            padding: 0.75rem 0;
+            border: none;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            text-align: left;
+            font-size: 0.875rem;
+            box-sizing: border-box;
+        }
+
+        .transactions-table-new td:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .transactions-table-new td:first-child {
+            padding-top: 0;
+        }
+
+        .transactions-type-cell-new,
+        .transactions-amount-cell-new,
+        .transactions-status-cell-new {
+            width: 100%;
+            max-width: 100%;
+            box-sizing: border-box;
+        }
+
+        .transactions-table-new th,
+        .transactions-table-new td {
+            padding: 1rem 0.75rem;
+        }
+
+        .transactions-type-cell-new {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.75rem;
+        }
+
+        .transactions-type-icon-new {
+            width: 48px;
+            height: 48px;
+            font-size: 1.25rem;
+        }
+
+        .transactions-amount-value-new {
+            font-size: 1.125rem;
+        }
+
+        .transactions-pagination-new {
+            flex-direction: column;
+            gap: 1rem;
+            align-items: stretch;
+            padding-top: 1.5rem;
+        }
+
+        .transactions-pagination-btn-new {
+            width: 100%;
+            justify-content: center;
+        }
+
+        .transactions-pagination-info-new {
+            text-align: center;
+            order: -1;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .transactions-new-page {
+            padding: 0;
+            width: 100%;
+            max-width: 100%;
+            box-sizing: border-box;
+            overflow-x: hidden;
+        }
+
+        .transactions-hero-new {
+            padding: 1.5rem 1rem;
+            margin-bottom: 1.5rem;
+            border-radius: 12px;
+        }
+
+        .transactions-hero-title-new {
+            font-size: 1.75rem;
+        }
+
+        .transactions-hero-subtitle-new {
+            font-size: 0.9375rem;
+        }
+
+        .transactions-summary-section-new {
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .transactions-summary-card-new {
+            padding: 1.25rem;
+            gap: 1rem;
+        }
+
+        .transactions-summary-icon-new {
+            width: 56px;
+            height: 56px;
+            font-size: 1.375rem;
+        }
+
+        .transactions-summary-label-new {
+            font-size: 0.875rem;
+        }
+
+        .transactions-summary-value-new {
+            font-size: 1.5rem;
+        }
+
+        .transactions-history-card-new {
+            padding: 1.25rem;
+            border-radius: 12px;
         }
 
         .transactions-table-new {
             font-size: 0.8125rem;
         }
 
-        .transactions-table-new th,
         .transactions-table-new td {
+            padding: 0.75rem 0;
+            font-size: 0.8125rem;
+        }
+
+        .transactions-type-icon-new {
+            width: 44px;
+            height: 44px;
+            font-size: 1.125rem;
+        }
+
+        .transactions-type-name-new {
+            font-size: 0.9375rem;
+        }
+
+        .transactions-amount-value-new {
+            font-size: 1rem;
+        }
+
+        .transactions-status-badge-new {
+            padding: 0.5rem 1rem;
+            font-size: 0.75rem;
+        }
+
+        .transactions-pagination-btn-new {
+            padding: 0.75rem 1.25rem;
+            font-size: 0.875rem;
+        }
+    }
+
+    @media (max-width: 400px) {
+        .transactions-new-page {
+            padding: 0;
+            width: 100%;
+            max-width: 100%;
+            box-sizing: border-box;
+            overflow-x: hidden;
+        }
+
+        .transactions-hero-new {
+            padding: 1.25rem 0.875rem;
+            margin-bottom: 1.25rem;
+            border-radius: 12px;
+        }
+
+        .transactions-hero-title-new {
+            font-size: 1.5rem;
+            letter-spacing: -1px;
+        }
+
+        .transactions-hero-subtitle-new {
+            font-size: 0.8125rem;
+        }
+
+        .transactions-summary-section-new {
+            gap: 0.875rem;
+        }
+
+        .transactions-summary-card-new {
             padding: 1rem;
+            gap: 0.875rem;
+        }
+
+        .transactions-summary-icon-new {
+            width: 48px;
+            height: 48px;
+            font-size: 1.25rem;
+        }
+
+        .transactions-summary-value-new {
+            font-size: 1.375rem;
+        }
+
+        .transactions-history-card-new {
+            padding: 1rem;
+            border-radius: 12px;
+        }
+
+        .transactions-history-title-new {
+            font-size: 1.375rem;
+        }
+
+        .transactions-table-new td {
+            padding: 0.625rem 0;
+            font-size: 0.75rem;
+        }
+
+        .transactions-type-icon-new {
+            width: 40px;
+            height: 40px;
+            font-size: 1rem;
+        }
+
+        .transactions-type-name-new {
+            font-size: 0.875rem;
+        }
+
+        .transactions-amount-value-new {
+            font-size: 0.9375rem;
+        }
+
+        .transactions-status-badge-new {
+            padding: 0.5rem 0.875rem;
+            font-size: 0.6875rem;
         }
     }
 </style>
@@ -619,44 +1013,44 @@
 
     <!-- Financial Summary Section -->
     <div class="transactions-summary-section-new">
-        <!-- Total Earning -->
+            <!-- Total Earning -->
         <div class="transactions-summary-card-new">
             <div class="transactions-summary-icon-new transactions-summary-icon-earning-new">
-                <i class="fas fa-dollar-sign"></i>
-            </div>
+                    <i class="fas fa-dollar-sign"></i>
+                </div>
             <div class="transactions-summary-content-new">
                 <div class="transactions-summary-label-new">Total Earning</div>
                 <div class="transactions-summary-value-new">$0.00</div>
+                </div>
             </div>
-        </div>
 
-        <!-- Referral Earning -->
+            <!-- Referral Earning -->
         <div class="transactions-summary-card-new">
             <div class="transactions-summary-icon-new transactions-summary-icon-referral-new">
-                <i class="fas fa-users"></i>
-            </div>
+                    <i class="fas fa-users"></i>
+                </div>
             <div class="transactions-summary-content-new">
                 <div class="transactions-summary-label-new">Referral Earning</div>
                 <div class="transactions-summary-value-new">$0.00</div>
+                </div>
             </div>
-        </div>
 
-        <!-- Total Deposit -->
+            <!-- Total Deposit -->
         <div class="transactions-summary-card-new">
             <div class="transactions-summary-icon-new transactions-summary-icon-deposit-new">
-                <i class="fas fa-arrow-up"></i>
-            </div>
+                    <i class="fas fa-arrow-up"></i>
+                </div>
             <div class="transactions-summary-content-new">
                 <div class="transactions-summary-label-new">Total Deposit</div>
                 <div class="transactions-summary-value-new">$0.30</div>
+                </div>
             </div>
-        </div>
 
-        <!-- Total Withdrawn -->
+            <!-- Total Withdrawn -->
         <div class="transactions-summary-card-new">
             <div class="transactions-summary-icon-new transactions-summary-icon-withdraw-new">
-                <i class="fas fa-arrow-down"></i>
-            </div>
+                    <i class="fas fa-arrow-down"></i>
+                </div>
             <div class="transactions-summary-content-new">
                 <div class="transactions-summary-label-new">Total Withdrawn</div>
                 <div class="transactions-summary-value-new">$0.00</div>

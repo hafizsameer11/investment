@@ -205,13 +205,35 @@
    Responsive Design
    ============================================ */
 
+@media (max-width: 1400px) {
+    .targets-page {
+        max-width: 100%;
+        padding: 0 1rem;
+    }
+}
+
+@media (max-width: 992px) {
+    .targets-title {
+        font-size: 2.25rem;
+    }
+
+    .target-card {
+        padding: 2rem;
+    }
+}
+
 @media (max-width: 768px) {
+    .targets-page {
+        padding: 0;
+    }
+
     .targets-title {
         font-size: 2rem;
     }
 
     .target-card {
         padding: 2rem;
+        margin-bottom: 1.5rem;
     }
 
     .target-status-text {
@@ -225,10 +247,6 @@
 }
 
 @media (max-width: 480px) {
-    .targets-page {
-        padding: 0;
-    }
-
     .targets-title {
         font-size: 1.75rem;
     }
@@ -260,10 +278,16 @@
         font-size: 1.125rem;
     }
 
+    .target-status-text {
+        font-size: 1.125rem;
+    }
+
     .target-progress-bar {
         height: 10px;
     }
 }
+
+
 
 
 
