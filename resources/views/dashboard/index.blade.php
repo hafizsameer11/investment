@@ -26,8 +26,8 @@
     /* Balance Section */
     .wallet-balance-section {
         padding: 2rem 1.5rem;
-        background: linear-gradient(135deg, rgba(0, 255, 136, 0.08) 0%, rgba(0, 217, 119, 0.05) 100%);
-        border-bottom: 1px solid rgba(0, 255, 136, 0.1);
+        background: linear-gradient(135deg, rgba(255, 178, 30, 0.08) 0%, rgba(255, 138, 29, 0.05) 100%);
+        border-bottom: 1px solid rgba(255, 178, 30, 0.1);
     }
 
     .balance-header-row {
@@ -92,7 +92,7 @@
         color: var(--primary-color);
         line-height: 1.2;
         font-variant-numeric: tabular-nums;
-        text-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
+        text-shadow: 0 0 20px rgba(255, 178, 30, 0.3);
     }
 
     .deposit-wallet-info {
@@ -100,7 +100,7 @@
         align-items: center;
         gap: 0.5rem;
         padding-top: 1rem;
-        border-top: 1px solid rgba(0, 255, 136, 0.1);
+        border-top: 1px solid rgba(255, 178, 30, 0.1);
     }
 
     .deposit-wallet-label {
@@ -158,8 +158,8 @@
     }
 
     .wallet-action-btn:hover .wallet-action-icon {
-        background: rgba(0, 255, 136, 0.1);
-        border-color: rgba(0, 255, 136, 0.3);
+        background: rgba(255, 178, 30, 0.1);
+        border-color: rgba(255, 178, 30, 0.3);
         transform: scale(1.05);
     }
 
@@ -245,10 +245,10 @@
 
     @keyframes glow {
         0%, 100% {
-            box-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
+            box-shadow: 0 0 20px rgba(255, 178, 30, 0.3);
         }
         50% {
-            box-shadow: 0 0 30px rgba(0, 255, 136, 0.6);
+            box-shadow: 0 0 30px rgba(255, 178, 30, 0.6);
         }
     }
 
@@ -291,13 +291,13 @@
     .mining-logo-large {
         width: 80px;
         height: 80px;
-        background: linear-gradient(135deg, rgba(0, 255, 136, 0.2) 0%, rgba(0, 217, 119, 0.1) 100%);
-        border: 2px solid rgba(0, 255, 136, 0.4);
+        background: linear-gradient(135deg, rgba(255, 178, 30, 0.2) 0%, rgba(255, 138, 29, 0.1) 100%);
+        border: 2px solid rgba(255, 178, 30, 0.4);
         border-radius: 16px;
         display: flex;
         align-items: center;
         justify-content: center;
-        box-shadow: 0 0 30px rgba(0, 255, 136, 0.3);
+        box-shadow: 0 0 30px rgba(255, 178, 30, 0.3);
         animation: scaleIn 0.8s ease-out 0.2s forwards, float 3s ease-in-out infinite 1s;
         opacity: 0;
         transition: transform 0.3s ease;
@@ -305,13 +305,13 @@
 
     .mining-logo-large:hover {
         transform: scale(1.1) rotate(5deg);
-        box-shadow: 0 0 40px rgba(0, 255, 136, 0.5);
+        box-shadow: 0 0 40px rgba(255, 178, 30, 0.5);
     }
 
     .mining-logo-large svg {
         width: 50px;
         height: 50px;
-        filter: drop-shadow(0 0 10px rgba(0, 255, 136, 0.8));
+        filter: drop-shadow(0 0 10px rgba(255, 178, 30, 0.8));
         transition: transform 0.3s ease;
     }
 
@@ -326,13 +326,13 @@
     .mining-brand-title {
         font-size: 2.5rem;
         font-weight: 700;
-        background: linear-gradient(135deg, #00FF88 0%, #00D977 100%);
+        background: linear-gradient(135deg, #FFB21E 0%, #FF8A1D 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
         margin: 0 0 0.5rem 0;
         letter-spacing: -1px;
-        text-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
+        text-shadow: 0 0 20px rgba(255, 178, 30, 0.3);
     }
 
     .mining-brand-subtitle {
@@ -372,7 +372,7 @@
         width: 40px;
         height: 40px;
         border-radius: 10px;
-        background: rgba(0, 255, 136, 0.1);
+        background: rgba(255, 178, 30, 0.1);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -420,7 +420,7 @@
         align-items: center;
         gap: 0.5rem;
         cursor: pointer;
-        -webkit-tap-highlight-color: rgba(0, 255, 136, 0.2);
+        -webkit-tap-highlight-color: rgba(255, 178, 30, 0.2);
     }
 
     .mining-action-card::before {
@@ -441,7 +441,7 @@
 
     .mining-action-card:hover {
         background: rgba(255, 255, 255, 0.04);
-        border-color: rgba(0, 255, 136, 0.2);
+        border-color: rgba(255, 178, 30, 0.2);
     }
 
     .mining-action-card:active {
@@ -453,7 +453,7 @@
     .mining-action-icon {
         width: 48px;
         height: 48px;
-        background: rgba(0, 255, 136, 0.1);
+        background: rgba(255, 178, 30, 0.1);
         border-radius: 12px;
         display: flex;
         align-items: center;
@@ -464,7 +464,7 @@
 
     .mining-action-card:active .mining-action-icon {
         transform: scale(0.95);
-        background: rgba(0, 255, 136, 0.15);
+        background: rgba(255, 178, 30, 0.15);
     }
 
     .mining-action-icon i {
@@ -557,7 +557,7 @@
 
     .mining-overview-card:hover {
         border-color: var(--primary-color);
-        box-shadow: 0 8px 25px rgba(0, 255, 136, 0.2);
+        box-shadow: 0 8px 25px rgba(255, 178, 30, 0.2);
         transform: translateY(-4px) scale(1.02);
     }
 
@@ -643,7 +643,7 @@
     }
 
     .legend-dot-app.investment {
-        background: #00D977;
+        background: #FF8A1D;
     }
 
     .graph-wrapper-app {
@@ -677,8 +677,8 @@
         }
 
         .wallet-action-btn:hover .wallet-action-icon {
-            background: rgba(0, 255, 136, 0.15);
-            border-color: rgba(0, 255, 136, 0.4);
+        background: rgba(255, 178, 30, 0.15);
+        border-color: rgba(255, 178, 30, 0.4);
             transform: scale(1.08);
         }
     }
@@ -965,7 +965,7 @@
             width: 44px;
             height: 44px;
             border-radius: 10px;
-            background: rgba(0, 255, 136, 0.1);
+            background: rgba(255, 178, 30, 0.1);
             border: none;
             box-shadow: none;
         }
@@ -1137,19 +1137,19 @@
             width: 32px;
             height: 32px;
             border-radius: 8px;
-            background: rgba(0, 255, 136, 0.1);
+            background: rgba(255, 178, 30, 0.1);
             border: none;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            -webkit-tap-highlight-color: rgba(0, 255, 136, 0.2);
+            -webkit-tap-highlight-color: rgba(255, 178, 30, 0.2);
             transition: all 0.2s ease;
         }
 
         .mining-activity-toggle:active {
             transform: scale(0.9);
-            background: rgba(0, 255, 136, 0.2);
+            background: rgba(255, 178, 30, 0.2);
         }
 
         .mining-activity-toggle i {
@@ -1233,7 +1233,7 @@
         .btn {
             min-height: 36px;
             min-width: 44px;
-            -webkit-tap-highlight-color: rgba(0, 255, 136, 0.2);
+            -webkit-tap-highlight-color: rgba(255, 178, 30, 0.2);
         }
 
         /* Typography */
@@ -1287,7 +1287,7 @@
             margin-bottom: 0.5rem;
             padding: 0.5rem 0.75rem;
             background: rgba(0, 0, 0, 0.95);
-            border: 1px solid rgba(0, 255, 136, 0.2);
+            border: 1px solid rgba(255, 178, 30, 0.2);
             border-radius: 8px;
             font-size: 0.6875rem;
             color: var(--text-primary);
@@ -1383,7 +1383,7 @@
 
         /* Mobile touch feedback animations */
         .mining-action-card {
-            -webkit-tap-highlight-color: rgba(0, 255, 136, 0.2);
+            -webkit-tap-highlight-color: rgba(255, 178, 30, 0.2);
         }
 
         .mining-action-card:active {
@@ -1654,9 +1654,9 @@
                 return;
             }
 
-            // Use green colors only
-            const earningsColor = '#00FF88';
-            const investmentColor = '#00D977';
+            // Use orange colors only
+            const earningsColor = '#FFB21E';
+            const investmentColor = '#FF8A1D';
             const isMobile = window.innerWidth <= 390;
 
             new Chart(chartCtx, {
@@ -1668,7 +1668,7 @@
                             label: 'Earnings',
                             data: [120, 190, 300, 250, 400, 350, 450],
                             borderColor: earningsColor,
-                            backgroundColor: 'rgba(0, 255, 136, 0.1)',
+                            backgroundColor: 'rgba(255, 178, 30, 0.1)',
                             borderWidth: 2,
                             fill: true,
                             tension: 0.4,
@@ -1682,7 +1682,7 @@
                             label: 'Investment',
                             data: [80, 150, 200, 180, 280, 240, 320],
                             borderColor: investmentColor,
-                            backgroundColor: 'rgba(0, 217, 119, 0.1)',
+                            backgroundColor: 'rgba(255, 138, 29, 0.1)',
                             borderWidth: 2,
                             fill: true,
                             tension: 0.4,
@@ -1705,7 +1705,7 @@
                             backgroundColor: 'rgba(0, 0, 0, 0.9)',
                             titleColor: '#fff',
                             bodyColor: '#fff',
-                            borderColor: '#00FF88',
+                                borderColor: '#FFB21E',
                             borderWidth: 1,
                             padding: 12,
                             displayColors: true,
@@ -1761,8 +1761,8 @@
             const chartCtx = document.getElementById('miningOverviewChart');
             if (chartCtx && !chartCtx.chart && typeof Chart !== 'undefined') {
                 console.log('Retrying chart initialization...');
-                const earningsColor = '#00FF88';
-                const investmentColor = '#00D977';
+                const earningsColor = '#FFB21E';
+                const investmentColor = '#FF8A1D';
                 const isMobile = window.innerWidth <= 390;
 
                 new Chart(chartCtx, {
@@ -1774,7 +1774,7 @@
                                 label: 'Earnings',
                                 data: [120, 190, 300, 250, 400, 350, 450],
                                 borderColor: earningsColor,
-                                backgroundColor: 'rgba(0, 255, 136, 0.1)',
+                                backgroundColor: 'rgba(255, 178, 30, 0.1)',
                                 borderWidth: 2,
                                 fill: true,
                                 tension: 0.4,
@@ -1788,7 +1788,7 @@
                                 label: 'Investment',
                                 data: [80, 150, 200, 180, 280, 240, 320],
                                 borderColor: investmentColor,
-                                backgroundColor: 'rgba(0, 217, 119, 0.1)',
+                                backgroundColor: 'rgba(255, 138, 29, 0.1)',
                                 borderWidth: 2,
                                 fill: true,
                                 tension: 0.4,
@@ -1811,7 +1811,7 @@
                                 backgroundColor: 'rgba(0, 0, 0, 0.9)',
                                 titleColor: '#fff',
                                 bodyColor: '#fff',
-                                borderColor: '#00FF88',
+                                borderColor: '#FFB21E',
                                 borderWidth: 1,
                                 padding: 12,
                                 displayColors: true,
