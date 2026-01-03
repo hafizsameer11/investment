@@ -5,140 +5,91 @@
 <link rel="stylesheet" href="{{ asset('dashboard/css/dashboard.css') }}">
 @stack('styles')
 <style>
-    /* Global Sidebar Responsive Styles - Applied to All Pages */
+    /* Mobile-first improvements - Sidebar is hidden on mobile, using bottom nav instead */
     @media (max-width: 768px) {
-        .dashboard-sidebar {
-            transform: translateX(-100%);
-            width: 300px;
-            z-index: 9999;
-        }
-
-        .dashboard-sidebar.active {
-            transform: translateX(0);
-            z-index: 9999;
-        }
-
-        /* Mobile Overlay */
-        .sidebar-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.7);
-            z-index: 9998;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            pointer-events: none;
-        }
-
-        .sidebar-overlay.active {
-            display: block;
-            opacity: 1;
-            pointer-events: auto;
-        }
-
-        /* Ensure nav links are clickable on mobile */
-        .dashboard-sidebar.active .nav-link {
-            pointer-events: auto !important;
-            touch-action: manipulation;
-            -webkit-tap-highlight-color: rgba(0, 255, 136, 0.3);
-            cursor: pointer;
-            position: relative;
-            z-index: 10001;
-            min-height: 48px;
-            display: flex;
-            align-items: center;
-        }
-
-        .dashboard-sidebar.active .nav-item {
-            pointer-events: auto !important;
-            position: relative;
-            z-index: 10001;
-        }
-
-        .dashboard-sidebar.active .sidebar-content {
-            pointer-events: auto !important;
-            position: relative;
-            z-index: 10001;
-        }
-
-        .dashboard-sidebar.active .sidebar-nav {
-            pointer-events: auto !important;
-            position: relative;
-            z-index: 10001;
-        }
-
-        .dashboard-sidebar.active .nav-menu {
-            pointer-events: auto !important;
-        }
-
-        /* Child elements should not block clicks */
-        .dashboard-sidebar.active .nav-link .nav-icon-wrapper,
-        .dashboard-sidebar.active .nav-link .nav-text,
-        .dashboard-sidebar.active .nav-link .nav-indicator {
-            pointer-events: none;
-        }
-
-        /* Better touch targets on mobile */
-        .dashboard-sidebar.active .nav-link {
-            min-height: 48px;
-            padding: 1rem 1.25rem;
-        }
-
-        /* Navigation Toggle Button - Global Fix */
-        .sidebar-toggle {
-            display: flex !important;
-            z-index: 10002 !important;
-            position: relative !important;
-            min-width: 44px !important;
-            min-height: 44px !important;
-            touch-action: manipulation !important;
-            pointer-events: auto !important;
-            -webkit-tap-highlight-color: rgba(0, 255, 136, 0.3) !important;
-            background: none !important;
-            border: none !important;
-            cursor: pointer !important;
-            align-items: center !important;
-            justify-content: center !important;
-        }
-
-        .sidebar-toggle:active,
-        .sidebar-toggle:focus {
-            outline: 2px solid rgba(0, 255, 136, 0.5) !important;
-            outline-offset: 2px !important;
-        }
-
-        .sidebar-toggle i {
-            pointer-events: none !important;
-            z-index: 0 !important;
-        }
-
-        .header-left {
-            position: relative !important;
-            z-index: 10002 !important;
-            pointer-events: auto !important;
-        }
-
+        /* Sidebar is completely hidden on mobile - handled in dashboard.css */
+        
+        /* Header adjustments for mobile */
         .dashboard-header {
-            z-index: 10001 !important;
-            position: sticky !important;
+            position: sticky;
+            top: 0;
+            z-index: 999;
         }
 
         .header-content {
-            z-index: 10002 !important;
-            position: relative !important;
+            padding: 1rem;
         }
 
-        /* Move logo downward on mobile for better visibility */
-        .sidebar-content {
-            padding-top: 4rem !important;
+        /* Improved mobile typography */
+        body {
+            font-size: 14px;
+            line-height: 1.5;
         }
 
-        .sidebar-logo {
-            margin-top: 1rem !important;
-            padding-top: 1rem !important;
+        h1, h2, h3, h4, h5, h6 {
+            line-height: 1.3;
+        }
+
+        /* Better spacing for mobile content */
+        .content-area {
+            padding: 1rem;
+            padding-bottom: 1rem;
+        }
+
+        /* Ensure proper scrolling on mobile */
+        .main-content {
+            overflow-x: hidden;
+        }
+    }
+
+    /* Mobile App Interface - Max-width 390px */
+    @media (max-width: 390px) {
+        /* Compact header for mobile app */
+        .dashboard-header {
+            position: sticky;
+            top: 0;
+            z-index: 999;
+            background: rgba(0, 0, 0, 0.98);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(0, 255, 136, 0.1);
+        }
+
+        .header-content {
+            padding: 0.75rem 1rem;
+        }
+
+        /* Mobile app typography */
+        body {
+            font-size: 13px;
+            line-height: 1.4;
+        }
+
+        /* Remove padding from content area on mobile app view */
+        .content-area {
+            padding: 0;
+            padding-bottom: 80px; /* Space for bottom nav */
+        }
+
+        /* Ensure no horizontal scroll */
+        .main-content {
+            overflow-x: hidden;
+            max-width: 100%;
+        }
+
+        /* Compact header elements */
+        .header-logo .logo-text {
+            font-size: 0.875rem;
+        }
+
+        .user-avatar {
+            width: 36px;
+            height: 36px;
+        }
+
+        .notification-icon {
+            font-size: 1rem;
+            padding: 0.375rem;
         }
     }
 </style>

@@ -41,6 +41,9 @@
         </div>
     </div>
 
+    <!-- Mobile Bottom Navigation -->
+    @include('dashboard.layouts.mobile-nav')
+
     @include('dashboard.layouts.script')
 </body>
 </html>

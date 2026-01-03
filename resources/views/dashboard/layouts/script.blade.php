@@ -55,5 +55,22 @@
             sidebarToggle.style.zIndex = '10002';
         }
     });
+
+    // Mobile bottom navigation active state
+    document.addEventListener('DOMContentLoaded', function() {
+        const currentRoute = '{{ request()->route() ? request()->route()->getName() : "" }}';
+        const navItems = document.querySelectorAll('.mobile-nav-item');
+        
+        if (currentRoute && navItems.length > 0) {
+            navItems.forEach(function(item) {
+                const itemRoute = item.getAttribute('data-route');
+                if (itemRoute === currentRoute) {
+                    item.classList.add('active');
+                } else {
+                    item.classList.remove('active');
+                }
+            });
+        }
+    });
 </script>
 <script src="{{ asset('dashboard/js/dashboard.js') }}"></script>

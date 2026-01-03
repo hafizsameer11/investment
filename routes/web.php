@@ -12,6 +12,7 @@ use App\Http\Controllers\Dashboard\TransactionsController;
 use App\Http\Controllers\Dashboard\ProfileController;
 use App\Http\Controllers\Dashboard\SupportController;
 use App\Http\Controllers\Dashboard\WithdrawSecurityController;
+use App\Http\Controllers\Dashboard\SettingsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,6 +41,7 @@ Route::prefix('user/dashboard')->group(function () {
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
     Route::get('/support', [SupportController::class, 'index'])->name('support.index');
     Route::get('/withdraw-security', [WithdrawSecurityController::class, 'index'])->name('withdraw-security.index');
+    Route::get('/settings', [SettingsController::class, 'index'])->name('settings.index');
 });
 
 // Placeholder routes (to be implemented later)
