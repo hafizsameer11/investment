@@ -8,37 +8,276 @@
     .mining-dashboard {
         padding: 2rem;
     }
-    
+
     .mining-hero-section {
-        margin-bottom: 2.5rem;
+        margin-bottom: 0;
     }
-    
-    .mining-hero-card {
+
+    /* Merged Wallet Card - Balance + Actions */
+    .mining-wallet-card {
         background: var(--card-bg);
         border: 1px solid var(--card-border);
         border-radius: 16px;
-        padding: 2.5rem;
-        position: relative;
+        margin-bottom: 1.5rem;
         overflow: hidden;
-        box-shadow: var(--shadow-md);
+        animation: fadeInUp 0.6s ease-out;
     }
-    
-    .mining-hero-card::before {
-        content: '';
-        position: absolute;
-        top: -50%;
-        right: -50%;
-        width: 200%;
-        height: 200%;
-        background: radial-gradient(circle, rgba(0, 255, 136, 0.1) 0%, transparent 70%);
-        animation: pulse 4s ease-in-out infinite;
+
+    /* Balance Section */
+    .wallet-balance-section {
+        padding: 2rem 1.5rem;
+        background: linear-gradient(135deg, rgba(0, 255, 136, 0.08) 0%, rgba(0, 217, 119, 0.05) 100%);
+        border-bottom: 1px solid rgba(0, 255, 136, 0.1);
     }
-    
+
+    .balance-header-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1rem;
+    }
+
+    .balance-label {
+        font-size: 0.8125rem;
+        color: var(--text-secondary);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .balance-label i {
+        font-size: 0.875rem;
+        color: var(--primary-color);
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+
+    .balance-label i:hover {
+        opacity: 0.8;
+        transform: scale(1.1);
+    }
+
+    .balance-actions {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+    }
+
+    .balance-trend-up {
+        font-size: 0.875rem;
+        color: var(--primary-color);
+    }
+
+    .balance-toggle-icon {
+        font-size: 0.875rem;
+        color: var(--text-secondary);
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+
+    .balance-toggle-icon:hover {
+        color: var(--primary-color);
+    }
+
+    .balance-amount-display {
+        margin-bottom: 1.25rem;
+    }
+
+    .balance-amount-large {
+        font-size: 3rem;
+        font-weight: 700;
+        color: var(--primary-color);
+        line-height: 1.2;
+        font-variant-numeric: tabular-nums;
+        text-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
+    }
+
+    .deposit-wallet-info {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding-top: 1rem;
+        border-top: 1px solid rgba(0, 255, 136, 0.1);
+    }
+
+    .deposit-wallet-label {
+        font-size: 0.875rem;
+        color: var(--text-secondary);
+    }
+
+    .deposit-wallet-amount {
+        font-size: 1.125rem;
+        font-weight: 600;
+        color: var(--text-primary);
+        font-variant-numeric: tabular-nums;
+    }
+
+    .deposit-trend-down {
+        font-size: 0.875rem;
+        color: var(--danger-color);
+    }
+
+    /* Action Buttons Section */
+    .wallet-actions-grid {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        padding: 1.5rem 1rem;
+        background: var(--bg-primary);
+        gap: 1rem;
+    }
+
+    .wallet-action-btn {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.5rem;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        flex: 1;
+        max-width: 80px;
+    }
+
+    .wallet-action-btn:active {
+        transform: scale(0.95);
+    }
+
+    .wallet-action-icon {
+        width: 56px;
+        height: 56px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s ease;
+    }
+
+    .wallet-action-btn:hover .wallet-action-icon {
+        background: rgba(0, 255, 136, 0.1);
+        border-color: rgba(0, 255, 136, 0.3);
+        transform: scale(1.05);
+    }
+
+    .wallet-action-icon i {
+        font-size: 1.5rem;
+        color: var(--text-primary);
+    }
+
+    .wallet-action-label {
+        font-size: 0.8125rem;
+        color: var(--text-primary);
+        text-align: center;
+        font-weight: 500;
+        white-space: nowrap;
+        display: block;
+    }
+
     @keyframes pulse {
         0%, 100% { opacity: 0.3; }
         50% { opacity: 0.6; }
     }
-    
+
+    /* Modern Animation Keyframes */
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
+    }
+
+    @keyframes slideInRight {
+        from {
+            opacity: 0;
+            transform: translateX(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+
+    @keyframes scaleIn {
+        from {
+            opacity: 0;
+            transform: scale(0.9);
+        }
+        to {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+
+    @keyframes shimmer {
+        0% {
+            background-position: -1000px 0;
+        }
+        100% {
+            background-position: 1000px 0;
+        }
+    }
+
+    @keyframes float {
+        0%, 100% {
+            transform: translateY(0px);
+        }
+        50% {
+            transform: translateY(-10px);
+        }
+    }
+
+    @keyframes glow {
+        0%, 100% {
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
+        }
+        50% {
+            box-shadow: 0 0 30px rgba(0, 255, 136, 0.6);
+        }
+    }
+
+    /* Smooth scroll behavior */
+    html {
+        scroll-behavior: smooth;
+    }
+
+    /* Animation classes */
+    .animate-fade-in {
+        animation: fadeIn 0.6s ease-out forwards;
+    }
+
+    .animate-fade-in-up {
+        animation: fadeInUp 0.6s ease-out forwards;
+    }
+
+    .animate-slide-in-right {
+        animation: slideInRight 0.6s ease-out forwards;
+    }
+
+    .animate-scale-in {
+        animation: scaleIn 0.5s ease-out forwards;
+    }
+
+    /* Initial hidden state for animations - removed as we're using JavaScript for better control */
+
+    /* Stagger animations handled by JavaScript for better performance */
+
     .mining-logo-header {
         display: flex;
         align-items: center;
@@ -48,7 +287,7 @@
         z-index: 1;
     }
 
-    
+
     .mining-logo-large {
         width: 80px;
         height: 80px;
@@ -59,18 +298,31 @@
         align-items: center;
         justify-content: center;
         box-shadow: 0 0 30px rgba(0, 255, 136, 0.3);
+        animation: scaleIn 0.8s ease-out 0.2s forwards, float 3s ease-in-out infinite 1s;
+        opacity: 0;
+        transition: transform 0.3s ease;
     }
-    
+
+    .mining-logo-large:hover {
+        transform: scale(1.1) rotate(5deg);
+        box-shadow: 0 0 40px rgba(0, 255, 136, 0.5);
+    }
+
     .mining-logo-large svg {
         width: 50px;
         height: 50px;
         filter: drop-shadow(0 0 10px rgba(0, 255, 136, 0.8));
+        transition: transform 0.3s ease;
     }
-    
+
+    .mining-logo-large:hover svg {
+        transform: scale(1.1);
+    }
+
     .mining-brand-info {
         flex: 1;
     }
-    
+
     .mining-brand-title {
         font-size: 2.5rem;
         font-weight: 700;
@@ -82,70 +334,95 @@
         letter-spacing: -1px;
         text-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
     }
-    
+
     .mining-brand-subtitle {
         font-size: 1rem;
         color: var(--text-secondary);
         margin: 0;
         font-weight: 400;
     }
-    
-    .mining-stats-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 1.5rem;
-        margin-top: 2rem;
-        position: relative;
-        z-index: 1;
+
+    /* App-like Stats Row */
+    .mining-stats-row {
+        display: flex;
+        gap: 1rem;
+        padding: 1rem 1.5rem;
+        background: var(--bg-primary);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
     }
-    
-    .mining-stat-card {
-        background: rgba(0, 255, 136, 0.05);
-        border: 1px solid rgba(0, 255, 136, 0.2);
+
+    .mining-stat-item {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 1rem;
+        background: rgba(255, 255, 255, 0.02);
         border-radius: 12px;
-        padding: 1.5rem;
-        transition: var(--transition);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        transition: all 0.2s ease;
     }
-    
-    .mining-stat-card:hover {
+
+    .mining-stat-item:active {
+        background: rgba(255, 255, 255, 0.04);
+        transform: scale(0.98);
+    }
+
+    .stat-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 10px;
         background: rgba(0, 255, 136, 0.1);
-        border-color: rgba(0, 255, 136, 0.4);
-        transform: translateY(-2px);
-        box-shadow: 0 4px 20px rgba(0, 255, 136, 0.2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
     }
-    
-    .mining-stat-label {
-        font-size: 0.875rem;
+
+    .stat-icon i {
+        font-size: 1.125rem;
+        color: var(--primary-color);
+    }
+
+    .stat-content {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .stat-label {
+        font-size: 0.75rem;
         color: var(--text-secondary);
-        margin-bottom: 0.75rem;
+        margin-bottom: 0.25rem;
         text-transform: uppercase;
         letter-spacing: 0.5px;
     }
-    
-    .mining-stat-value {
-        font-size: 2rem;
-        font-weight: 700;
-        color: var(--primary-color);
+
+    .stat-value {
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: var(--text-primary);
         font-variant-numeric: tabular-nums;
     }
-    
-    .mining-actions-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 1.5rem;
-        margin-bottom: 2.5rem;
-    }
-    
+
+
     .mining-action-card {
-        background: var(--card-bg);
-        border: 1px solid var(--card-border);
+        background: rgba(255, 255, 255, 0.02);
+        border: 1px solid rgba(255, 255, 255, 0.05);
         border-radius: 12px;
-        padding: 2rem;
-        transition: var(--transition);
+        padding: 1rem;
+        transition: all 0.2s ease;
         position: relative;
         overflow: hidden;
+        flex: 0 0 auto;
+        min-width: 80px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.5rem;
+        cursor: pointer;
+        -webkit-tap-highlight-color: rgba(0, 255, 136, 0.2);
     }
-    
+
     .mining-action-card::before {
         content: '';
         position: absolute;
@@ -157,46 +434,55 @@
         transform: scaleX(0);
         transition: transform 0.3s ease;
     }
-    
+
     .mining-action-card:hover::before {
         transform: scaleX(1);
     }
-    
+
     .mining-action-card:hover {
-        border-color: var(--primary-color);
-        box-shadow: 0 4px 20px rgba(0, 255, 136, 0.15);
-        transform: translateY(-4px);
+        background: rgba(255, 255, 255, 0.04);
+        border-color: rgba(0, 255, 136, 0.2);
     }
-    
+
+    .mining-action-card:active {
+        transform: scale(0.96);
+        background: rgba(255, 255, 255, 0.06);
+        transition: all 0.1s ease;
+    }
+
     .mining-action-icon {
-        width: 60px;
-        height: 60px;
-        background: linear-gradient(135deg, rgba(0, 255, 136, 0.2) 0%, rgba(0, 217, 119, 0.1) 100%);
+        width: 48px;
+        height: 48px;
+        background: rgba(0, 255, 136, 0.1);
         border-radius: 12px;
         display: flex;
         align-items: center;
         justify-content: center;
-        margin-bottom: 1.5rem;
-        border: 1px solid rgba(0, 255, 136, 0.3);
+        flex-shrink: 0;
+        transition: all 0.2s ease;
     }
-    
+
+    .mining-action-card:active .mining-action-icon {
+        transform: scale(0.95);
+        background: rgba(0, 255, 136, 0.15);
+    }
+
     .mining-action-icon i {
-        font-size: 1.75rem;
+        font-size: 1.5rem;
         color: var(--primary-color);
     }
-    
+
     .mining-action-title {
-        font-size: 1.25rem;
-        font-weight: 600;
+        font-size: 0.8125rem;
+        font-weight: 500;
         color: var(--text-primary);
-        margin-bottom: 0.5rem;
+        text-align: center;
+        margin: 0;
+        white-space: nowrap;
     }
-    
+
     .mining-action-desc {
-        font-size: 0.875rem;
-        color: var(--text-secondary);
-        margin-bottom: 1.5rem;
-        line-height: 1.5;
+        display: none;
     }
 
     /* Hide info icons on desktop */
@@ -208,79 +494,84 @@
     .mining-activity-toggle {
         display: none;
     }
-    
+
     .mining-action-btn {
-        width: 100%;
-        padding: 0.875rem 1.5rem;
-        background: linear-gradient(135deg, var(--primary-gradient-start) 0%, var(--primary-gradient-end) 100%);
-        border: none;
-        border-radius: 8px;
-        color: #000;
-        font-weight: 600;
-        font-size: 0.875rem;
-        cursor: pointer;
-        transition: var(--transition);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 0.5rem;
+        display: none;
     }
-    
-    .mining-action-btn:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 4px 20px rgba(0, 255, 136, 0.4);
-    }
-    
+
     .mining-overview-section {
         margin-bottom: 2.5rem;
     }
-    
+
     .mining-section-header {
         display: flex;
         justify-content: space-between;
         align-items: center;
         margin-bottom: 1.5rem;
     }
-    
+
     .mining-section-title {
         font-size: 1.5rem;
         font-weight: 700;
         color: var(--text-primary);
         margin: 0;
     }
-    
+
     .mining-section-subtitle {
         font-size: 0.875rem;
         color: var(--text-secondary);
         margin: 0.25rem 0 0 0;
     }
-    
+
     .mining-cards-grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
         gap: 1.5rem;
     }
-    
+
     .mining-overview-card {
         background: var(--card-bg);
         border: 1px solid var(--card-border);
         border-radius: 12px;
         padding: 1.75rem;
-        transition: var(--transition);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        overflow: hidden;
     }
-    
+
+    .mining-overview-card::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: linear-gradient(90deg, transparent, var(--primary-color), transparent);
+        transform: scaleX(0);
+        transition: transform 0.3s ease;
+    }
+
+    .mining-overview-card:hover::after {
+        transform: scaleX(1);
+    }
+
     .mining-overview-card:hover {
         border-color: var(--primary-color);
-        box-shadow: 0 4px 20px rgba(0, 255, 136, 0.1);
+        box-shadow: 0 8px 25px rgba(0, 255, 136, 0.2);
+        transform: translateY(-4px) scale(1.02);
     }
-    
+
+    .mining-overview-card:active {
+        transform: translateY(-2px) scale(1.01);
+    }
+
     .mining-card-header {
         display: flex;
         justify-content: space-between;
         align-items: center;
         margin-bottom: 1.25rem;
     }
-    
+
     .mining-card-title {
         font-size: 0.875rem;
         color: var(--text-secondary);
@@ -288,7 +579,7 @@
         letter-spacing: 0.5px;
         margin: 0;
     }
-    
+
     .mining-card-value {
         font-size: 1.75rem;
         font-weight: 700;
@@ -296,24 +587,111 @@
         margin: 0.5rem 0;
         font-variant-numeric: tabular-nums;
     }
-    
+
     .mining-card-change {
         font-size: 0.875rem;
         color: var(--text-secondary);
     }
-    
+
     .mining-card-change.positive {
         color: var(--primary-color);
     }
-    
+
+    /* App-like Graph Section */
+    .mining-graph-section {
+        padding: 1.5rem;
+        background: var(--bg-primary);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .graph-header-app {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1.25rem;
+    }
+
+    .graph-title-app {
+        font-size: 1rem;
+        font-weight: 600;
+        color: var(--text-primary);
+        margin: 0;
+    }
+
+    .graph-legend-app {
+        display: flex;
+        gap: 1rem;
+        align-items: center;
+    }
+
+    .legend-item-app {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.8125rem;
+        color: var(--text-secondary);
+    }
+
+    .legend-dot-app {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+    }
+
+    .legend-dot-app.earnings {
+        background: var(--primary-color);
+    }
+
+    .legend-dot-app.investment {
+        background: #00D977;
+    }
+
+    .graph-wrapper-app {
+        position: relative;
+        height: 250px;
+        width: 100%;
+    }
+
+    .graph-wrapper-app canvas {
+        max-width: 100%;
+        height: auto !important;
+    }
+
+    /* Enhanced Desktop Styling */
+    @media (min-width: 769px) {
+        .mining-wallet-card {
+            margin: 0 1.5rem 1.5rem 1.5rem;
+        }
+
+        .mining-stats-row {
+            margin: 0 1.5rem;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .mining-graph-section {
+            margin: 0 1.5rem 1.5rem 1.5rem;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .wallet-action-btn:hover .wallet-action-icon {
+            background: rgba(0, 255, 136, 0.15);
+            border-color: rgba(0, 255, 136, 0.4);
+            transform: scale(1.08);
+        }
+    }
+
     .mining-activity-section {
         background: var(--card-bg);
         border: 1px solid var(--card-border);
         border-radius: 12px;
         padding: 2rem;
         margin-bottom: 2rem;
+        transition: all 0.3s ease;
     }
-    
+
     .mining-activity-header {
         display: flex;
         justify-content: space-between;
@@ -322,46 +700,55 @@
         flex-wrap: wrap;
         gap: 1rem;
     }
-    
+
     .mining-activity-title {
         font-size: 1.25rem;
         font-weight: 600;
         color: var(--text-primary);
         margin: 0;
     }
-    
+
     .mining-empty-state {
         text-align: center;
         padding: 3rem 2rem;
         color: var(--text-secondary);
     }
-    
+
     .mining-empty-icon {
         font-size: 3rem;
         color: var(--text-muted);
         margin-bottom: 1rem;
         opacity: 0.5;
     }
-    
+
     .mining-empty-text {
         font-size: 0.875rem;
         margin: 0;
     }
-    
+
     @media (max-width: 768px) {
         .mining-dashboard {
             padding: 0.75rem;
         }
-        
+
         .mining-hero-section {
             margin-bottom: 1.5rem;
+        }
+
+        .mining-graph-wrapper {
+            height: 250px;
+        }
+
+        .mining-graph-header {
+            flex-direction: row;
+            justify-content: space-between;
         }
 
         .mining-hero-card {
             padding: 1.5rem;
             border-radius: 12px;
         }
-        
+
         .mining-logo-header {
             gap: 1rem;
             margin-bottom: 1.5rem;
@@ -370,21 +757,21 @@
         .mining-brand-title {
             font-size: 1.5rem;
         }
-        
+
         .mining-brand-subtitle {
             font-size: 0.875rem;
         }
-        
+
         .mining-logo-large {
             width: 56px;
             height: 56px;
         }
-        
+
         .mining-logo-large svg {
             width: 32px;
             height: 32px;
         }
-        
+
         .mining-stats-grid {
             grid-template-columns: 1fr;
             gap: 1rem;
@@ -403,7 +790,7 @@
         .mining-stat-value {
             font-size: 1.5rem;
         }
-        
+
         .mining-actions-grid {
             grid-template-columns: 1fr;
             gap: 1rem;
@@ -437,7 +824,7 @@
             padding: 0.75rem 1.25rem;
             font-size: 0.8125rem;
         }
-        
+
         .mining-cards-grid {
             grid-template-columns: 1fr;
             gap: 1rem;
@@ -482,23 +869,89 @@
             background: var(--bg-primary);
         }
 
-        /* Hero Section - Flat Card Design */
-        .mining-hero-section {
-            margin-bottom: 0.5rem;
-        }
-
-        .mining-hero-card {
-            padding: 1rem;
+        /* Merged Wallet Card - Mobile */
+        .mining-wallet-card {
             border-radius: 0;
-            border: none;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            margin: 0;
-            background: var(--card-bg);
-            box-shadow: none;
+            border-left: none;
+            border-right: none;
+            margin-bottom: 0;
         }
 
-        .mining-hero-card::before {
-            display: none;
+        .wallet-balance-section {
+            padding: 1.5rem 1rem;
+        }
+
+        .balance-header-row {
+            margin-bottom: 0.75rem;
+        }
+
+        .balance-label {
+            font-size: 0.6875rem;
+        }
+
+        .balance-actions {
+            gap: 0.5rem;
+        }
+
+        .balance-trend-up,
+        .balance-toggle-icon {
+            font-size: 0.75rem;
+        }
+
+        .balance-amount-large {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .deposit-wallet-info {
+            padding-top: 0.75rem;
+            gap: 0.375rem;
+        }
+
+        .deposit-wallet-label {
+            font-size: 0.75rem;
+        }
+
+        .deposit-wallet-amount {
+            font-size: 0.9375rem;
+        }
+
+        .deposit-trend-down {
+            font-size: 0.75rem;
+        }
+
+        .wallet-actions-grid {
+            padding: 1.25rem 0.5rem;
+            gap: 0.5rem;
+        }
+
+        .wallet-action-icon {
+            width: 48px;
+            height: 48px;
+        }
+
+        .wallet-action-icon i {
+            font-size: 1.25rem;
+        }
+
+        .wallet-action-label {
+            font-size: 0.75rem;
+        }
+
+        /* Smaller icons on very small mobile screens */
+        @media (max-width: 390px) {
+            .wallet-action-icon {
+                width: 44px;
+                height: 44px;
+            }
+
+            .wallet-action-icon i {
+                font-size: 1.125rem;
+            }
+
+            .wallet-action-label {
+                font-size: 0.6875rem;
+            }
         }
 
         /* Logo Header - Flat Minimal */
@@ -567,56 +1020,6 @@
             color: var(--text-primary);
         }
 
-        /* Action Cards - Icon Above Text, All Inline, No Scroll */
-        .mining-actions-grid {
-            display: flex;
-            flex-direction: row;
-            gap: 0.5rem;
-            margin-bottom: 0.75rem;
-            padding: 0.75rem 1rem;
-            overflow: hidden;
-            justify-content: space-between;
-        }
-
-        .mining-action-card {
-            padding: 0.75rem 0.5rem;
-            border-radius: 12px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            position: relative;
-            background: var(--card-bg);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            box-shadow: none;
-            flex: 1;
-            min-width: 0;
-            cursor: pointer;
-            -webkit-tap-highlight-color: rgba(0, 255, 136, 0.2);
-        }
-
-        .mining-action-card::before {
-            display: none;
-        }
-
-        .mining-action-icon {
-            width: 44px;
-            height: 44px;
-            border-radius: 10px;
-            background: rgba(0, 255, 136, 0.1);
-            border: none;
-            box-shadow: none;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-        }
-
-        .mining-action-icon i {
-            font-size: 1.25rem;
-            color: var(--primary-color);
-        }
 
         /* Hide info icon, descriptions, and buttons */
         .mining-action-info {
@@ -636,10 +1039,6 @@
             display: flex !important;
         }
 
-        .mining-action-title {
-            display: none !important;
-        }
-
         .mining-action-btn span {
             font-size: 0.6875rem;
         }
@@ -648,77 +1047,63 @@
             font-size: 0.6875rem;
         }
 
-        /* Overview Section - Flat Card Design */
+        /* Overview Section - App-like Design */
         .mining-overview-section {
-            margin-bottom: 0.75rem;
-            padding: 0 0.5rem;
+            margin-bottom: 0;
         }
 
-        .mining-section-header {
-            margin-bottom: 0.75rem;
-            padding: 0;
-        }
-
-        .mining-section-subtitle {
-            display: none;
-        }
-
-        .mining-section-title {
-            font-size: 1rem;
-            font-weight: 600;
-            margin: 0;
-            line-height: 1.2;
-            color: var(--text-primary);
-        }
-
-        .mining-cards-grid {
-            grid-template-columns: repeat(2, 1fr);
-            gap: 0.5rem;
-        }
-
-        .mining-overview-card {
+        .mining-stats-row {
             padding: 1rem;
-            border-radius: 12px;
-            background: var(--card-bg);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            box-shadow: none;
+            gap: 0.75rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
 
-        .mining-card-header {
-            margin-bottom: 0.5rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        .mining-stat-item {
+            padding: 0.875rem;
+            border-radius: 10px;
         }
 
-        .mining-card-title {
+        .stat-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+        }
+
+        .stat-icon i {
+            font-size: 1rem;
+        }
+
+        .stat-label {
             font-size: 0.6875rem;
-            margin: 0;
-            opacity: 0.6;
-            font-weight: 500;
-            color: var(--text-secondary);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
         }
 
-        .mining-card-header i {
-            font-size: 0.875rem;
-            opacity: 0.5;
-        }
-
-        .mining-card-value {
+        .stat-value {
             font-size: 1.125rem;
-            font-weight: 600;
-            margin: 0.25rem 0;
-            line-height: 1.2;
-            color: var(--text-primary);
         }
 
-        .mining-card-change {
-            font-size: 0.6875rem;
-            margin: 0;
-            opacity: 0.7;
-            color: var(--text-secondary);
+        .mining-graph-section {
+            padding: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .graph-header-app {
+            margin-bottom: 1rem;
+        }
+
+        .graph-title-app {
+            font-size: 0.9375rem;
+        }
+
+        .graph-legend-app {
+            gap: 0.75rem;
+        }
+
+        .legend-item-app {
+            font-size: 0.75rem;
+        }
+
+        .graph-wrapper-app {
+            height: 180px;
         }
 
         /* Activity Section - Flat Card Design */
@@ -759,20 +1144,31 @@
             justify-content: center;
             cursor: pointer;
             -webkit-tap-highlight-color: rgba(0, 255, 136, 0.2);
+            transition: all 0.2s ease;
+        }
+
+        .mining-activity-toggle:active {
+            transform: scale(0.9);
+            background: rgba(0, 255, 136, 0.2);
         }
 
         .mining-activity-toggle i {
             font-size: 0.75rem;
             color: var(--primary-color);
-            transition: transform 0.2s;
-        }
-
-        .mining-activity-section.collapsed .mining-activity-content {
-            display: none;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .mining-activity-section.collapsed .mining-activity-toggle i {
             transform: rotate(-90deg);
+        }
+
+        .mining-activity-section.collapsed .mining-activity-content {
+            display: none;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .mining-activity-section:not(.collapsed) .mining-activity-content {
+            animation: fadeInUp 0.4s ease-out;
         }
 
         /* Default collapsed state on mobile */
@@ -813,19 +1209,23 @@
             overflow-x: hidden;
         }
 
-        /* Sticky Header - Flat Design */
+        /* Sticky Header - Blended with Page Background */
         .dashboard-header {
             position: sticky;
             top: 0;
             z-index: 999;
-            background: var(--bg-primary);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            background: var(--bg-primary) !important;
+            border-bottom: none;
             box-shadow: none;
+            backdrop-filter: none;
+            -webkit-backdrop-filter: none;
         }
 
         .header-content {
             padding: 0.75rem 1rem;
+            background: transparent;
         }
+
 
         /* Touch-friendly buttons */
         button,
@@ -917,6 +1317,48 @@
             margin-top: 0.75rem;
         }
 
+        /* Mining Graph Mobile Styles */
+        .mining-graph-container {
+            margin-top: 0.75rem;
+            padding: 0 0.5rem;
+        }
+
+        .mining-graph-card {
+            padding: 1rem;
+            border-radius: 12px;
+            background: var(--card-bg);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .mining-graph-header {
+            margin-bottom: 1rem;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.75rem;
+        }
+
+        .mining-graph-title {
+            font-size: 0.9375rem;
+            font-weight: 600;
+        }
+
+        .mining-graph-legend {
+            gap: 1rem;
+        }
+
+        .legend-text {
+            font-size: 0.75rem;
+        }
+
+        .legend-dot {
+            width: 10px;
+            height: 10px;
+        }
+
+        .mining-graph-wrapper {
+            height: 200px;
+        }
+
         /* Remove any desktop-style wide containers */
         .dashboard-page {
             max-width: 100%;
@@ -935,145 +1377,156 @@
         .mining-action-card:active,
         .mining-overview-card:active {
             background: rgba(255, 255, 255, 0.04);
+            transform: scale(0.98);
+            transition: all 0.1s ease;
         }
+
+        /* Mobile touch feedback animations */
+        .mining-action-card {
+            -webkit-tap-highlight-color: rgba(0, 255, 136, 0.2);
+        }
+
+        .mining-action-card:active {
+            transform: scale(0.96);
+            transition: all 0.1s ease;
+        }
+
+        .mining-stat-card:active {
+            transform: scale(0.98);
+        }
+
+        .mining-overview-card:active {
+            transform: scale(0.98);
+        }
+
+        /* Smooth mobile scroll */
+        .mining-dashboard {
+            -webkit-overflow-scrolling: touch;
+            scroll-behavior: smooth;
+        }
+
+        /* Mobile loading shimmer effect */
+        @keyframes shimmerMobile {
+            0% {
+                background-position: -200px 0;
+            }
+            100% {
+                background-position: calc(200px + 100%) 0;
+            }
+        }
+
+        /* Mobile card entrance animations */
+        .mining-hero-card {
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+
+        .mining-stat-card {
+            animation: fadeInUp 0.5s ease-out forwards;
+        }
+
+        .mining-action-card {
+            animation: fadeInUp 0.5s ease-out forwards;
+        }
+
+        .mining-overview-card {
+            animation: fadeInUp 0.5s ease-out forwards;
+        }
+
     }
 </style>
 @endpush
 
 @section('content')
 <div class="mining-dashboard">
-    <!-- Hero Section with Logo -->
-    <div class="mining-hero-section">
-        <div class="mining-hero-card">
-            <div class="mining-logo-header">
-                <div class="mining-logo-large">
-                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M12 2L8 6L10 8L6 12L8 14L12 10L16 14L18 12L14 8L16 6L12 2Z" fill="url(#coreMiningGradient)" stroke="#00FF88" stroke-width="1.5" stroke-linejoin="round"/>
-                        <rect x="4" y="16" width="4" height="4" rx="1" fill="#00FF88" opacity="0.6"/>
-                        <rect x="10" y="18" width="4" height="4" rx="1" fill="#00D977" opacity="0.6"/>
-                        <rect x="16" y="16" width="4" height="4" rx="1" fill="#00FF88" opacity="0.6"/>
-                        <circle cx="12" cy="8" r="8" fill="url(#coreMiningGlow)" opacity="0.3"/>
-                        <defs>
-                            <linearGradient id="coreMiningGradient" x1="12" y1="2" x2="12" y2="14" gradientUnits="userSpaceOnUse">
-                                <stop offset="0%" stop-color="#00FF88"/>
-                                <stop offset="100%" stop-color="#00D977"/>
-                            </linearGradient>
-                            <radialGradient id="coreMiningGlow" cx="50%" cy="50%">
-                                <stop offset="0%" stop-color="#00FF88" stop-opacity="0.8"/>
-                                <stop offset="100%" stop-color="#00FF88" stop-opacity="0"/>
-                            </radialGradient>
-                        </defs>
-                    </svg>
+    <!-- Combined Balance and Actions Card -->
+    <div class="mining-wallet-card">
+        <!-- Balance Section -->
+        <div class="wallet-balance-section">
+            <div class="balance-header-row">
+                <div class="balance-label">
+                    <i class="fas fa-eye"></i>
+                    <span>Total Balance</span>
                 </div>
-                <div class="mining-brand-info">
-                    <h1 class="mining-brand-title">Core Mining</h1>
-                    <p class="mining-brand-subtitle">Advanced Cryptocurrency Mining Platform</p>
+                <div class="balance-actions">
+                    <i class="fas fa-arrow-up balance-trend-up"></i>
+                    <i class="fas fa-eye-slash balance-toggle-icon" id="balanceToggle"></i>
                 </div>
             </div>
-            
-            <div class="mining-stats-grid">
-                <div class="mining-stat-card">
-                    <div class="mining-stat-label">Total Balance</div>
-                    <div class="mining-stat-value" id="totalBalance">$0.00</div>
+            <div class="balance-amount-display">
+                <span class="balance-amount-large" id="totalBalance">$0.00</span>
+            </div>
+            <div class="deposit-wallet-info">
+                <span class="deposit-wallet-label">Deposit Wallet:</span>
+                <span class="deposit-wallet-amount">$0.30</span>
+                <i class="fas fa-arrow-down deposit-trend-down"></i>
+            </div>
+        </div>
+
+        <!-- Action Buttons Section -->
+        <div class="wallet-actions-grid">
+            <div class="wallet-action-btn" data-action="deposit">
+                <div class="wallet-action-icon">
+                    <i class="fas fa-arrow-up"></i>
                 </div>
-                <div class="mining-stat-card">
-                    <div class="mining-stat-label">Daily Earnings</div>
-                    <div class="mining-stat-value" id="dailyEarnings">$0.00</div>
+                <span class="wallet-action-label">Deposit</span>
+            </div>
+            <div class="wallet-action-btn" data-action="withdraw">
+                <div class="wallet-action-icon">
+                    <i class="fas fa-arrow-down"></i>
                 </div>
+                <span class="wallet-action-label">Withdraw</span>
+            </div>
+            <div class="wallet-action-btn" data-action="wallet">
+                <div class="wallet-action-icon">
+                    <i class="fas fa-wallet"></i>
+                </div>
+                <span class="wallet-action-label">Wallet</span>
+            </div>
+            <div class="wallet-action-btn" data-action="refer">
+                <div class="wallet-action-icon">
+                    <i class="fas fa-share-square"></i>
+                </div>
+                <span class="wallet-action-label">Refer</span>
             </div>
         </div>
     </div>
 
-    <!-- Quick Actions -->
-    <div class="mining-actions-grid">
-        <div class="mining-action-card" data-action="start-mining">
-            <div class="mining-action-info" onclick="toggleActionDesc(this)">
-                <i class="fas fa-info"></i>
-                <span class="mining-tooltip">Tap for details</span>
-            </div>
-            <div class="mining-action-icon">
-                <i class="fas fa-rocket"></i>
-            </div>
-            <h3 class="mining-action-title">Start Mining</h3>
-            <p class="mining-action-desc">Activate mining rig and earn rewards instantly.</p>
-            <button class="mining-action-btn">
-                <i class="fas fa-play"></i>
-                <span>Begin</span>
-            </button>
-        </div>
-        
-        <div class="mining-action-card" data-action="deposit">
-            <div class="mining-action-info" onclick="toggleActionDesc(this)">
-                <i class="fas fa-info"></i>
-                <span class="mining-tooltip">Tap for details</span>
-            </div>
-            <div class="mining-action-icon">
-                <i class="fas fa-wallet"></i>
-            </div>
-            <h3 class="mining-action-title">Deposit</h3>
-            <p class="mining-action-desc">Add funds to increase mining capacity.</p>
-            <button class="mining-action-btn">
-                <i class="fas fa-arrow-up"></i>
-                <span>Deposit</span>
-            </button>
-        </div>
-        
-        <div class="mining-action-card" data-action="refer">
-            <div class="mining-action-info" onclick="toggleActionDesc(this)">
-                <i class="fas fa-info"></i>
-                <span class="mining-tooltip">Tap for details</span>
-            </div>
-            <div class="mining-action-icon">
-                <i class="fas fa-users"></i>
-            </div>
-            <h3 class="mining-action-title">Refer & Earn</h3>
-            <p class="mining-action-desc">Invite friends and earn commission.</p>
-            <button class="mining-action-btn">
-                <i class="fas fa-user-plus"></i>
-                <span>Invite</span>
-            </button>
-        </div>
-        
-        <div class="mining-action-card" data-action="plans">
-            <div class="mining-action-info" onclick="toggleActionDesc(this)">
-                <i class="fas fa-info"></i>
-                <span class="mining-tooltip">Tap for details</span>
-            </div>
-            <div class="mining-action-icon">
-                <i class="fas fa-chart-line"></i>
-            </div>
-            <h3 class="mining-action-title">View Plans</h3>
-            <p class="mining-action-desc">Explore mining plans and options.</p>
-            <button class="mining-action-btn">
-                <i class="fas fa-eye"></i>
-                <span>Browse</span>
-            </button>
-        </div>
-    </div>
-
-    <!-- Mining Overview -->
+    <!-- Mining Overview - Combined Stats and Graph -->
     <div class="mining-overview-section">
-        <div class="mining-section-header">
-            <h2 class="mining-section-title">Mining Overview</h2>
-        </div>
-        
-        <div class="mining-cards-grid">
-            <div class="mining-overview-card">
-                <div class="mining-card-header">
-                    <h4 class="mining-card-title">Total Earnings</h4>
-                    <i class="fas fa-chart-line" style="color: var(--primary-color);"></i>
+        <div class="mining-stats-row">
+            <div class="mining-stat-item">
+                <div class="stat-icon"><i class="fas fa-chart-line"></i></div>
+                <div class="stat-content">
+                    <div class="stat-label">Total Earnings</div>
+                    <div class="stat-value">$0.00</div>
                 </div>
-                <div class="mining-card-value">$0.00</div>
-                <div class="mining-card-change positive">+0.00%</div>
             </div>
-            
-            <div class="mining-overview-card">
-                <div class="mining-card-header">
-                    <h4 class="mining-card-title">Total Invested</h4>
-                    <i class="fas fa-coins" style="color: var(--primary-color);"></i>
+            <div class="mining-stat-item">
+                <div class="stat-icon"><i class="fas fa-coins"></i></div>
+                <div class="stat-content">
+                    <div class="stat-label">Total Invested</div>
+                    <div class="stat-value">$0.00</div>
                 </div>
-                <div class="mining-card-value">$0.00</div>
-                <div class="mining-card-change positive">+0.00%</div>
+            </div>
+        </div>
+
+        <!-- Mining Graph - App-like Design -->
+        <div class="mining-graph-section">
+            <div class="graph-header-app">
+                <h3 class="graph-title-app">Performance</h3>
+                <div class="graph-legend-app">
+                    <div class="legend-item-app">
+                        <span class="legend-dot-app earnings"></span>
+                        <span>Earnings</span>
+                    </div>
+                    <div class="legend-item-app">
+                        <span class="legend-dot-app investment"></span>
+                        <span>Investment</span>
+                    </div>
+                </div>
+            </div>
+            <div class="graph-wrapper-app">
+                <canvas id="miningOverviewChart"></canvas>
             </div>
         </div>
     </div>
@@ -1086,7 +1539,7 @@
                 <i class="fas fa-chevron-down"></i>
             </div>
         </div>
-        
+
         <div class="mining-activity-content">
             <div class="mining-empty-state">
                 <div class="mining-empty-icon">
@@ -1104,16 +1557,33 @@
 <script>
     // Balance toggle functionality
     let balanceVisible = true;
-    const balanceElements = document.querySelectorAll('#totalBalance, #dailyEarnings');
-    
-    // Toggle action card description
-    function toggleActionDesc(element) {
-        const card = element.closest('.mining-action-card');
-        if (card) {
-            card.classList.toggle('expanded');
-        }
+    const balanceToggle = document.getElementById('balanceToggle');
+    const totalBalanceEl = document.getElementById('totalBalance');
+    const depositWalletAmount = document.querySelector('.deposit-wallet-amount');
+
+    if (balanceToggle) {
+        balanceToggle.addEventListener('click', function() {
+            balanceVisible = !balanceVisible;
+            if (balanceVisible) {
+                // Show balance
+                totalBalanceEl.textContent = '$0.00';
+                if (depositWalletAmount) {
+                    depositWalletAmount.textContent = '$0.30';
+                }
+                balanceToggle.classList.remove('fa-eye-slash');
+                balanceToggle.classList.add('fa-eye');
+            } else {
+                // Hide balance
+                totalBalanceEl.textContent = '••••••';
+                if (depositWalletAmount) {
+                    depositWalletAmount.textContent = '••••';
+                }
+                balanceToggle.classList.remove('fa-eye');
+                balanceToggle.classList.add('fa-eye-slash');
+            }
+        });
     }
-    
+
     // Toggle activity section
     function toggleActivitySection() {
         const section = document.getElementById('activitySection');
@@ -1121,17 +1591,277 @@
             section.classList.toggle('collapsed');
         }
     }
-    
-    // Close action descriptions when clicking outside (mobile only)
-    if (window.innerWidth <= 390) {
-        document.addEventListener('click', function(e) {
-            if (!e.target.closest('.mining-action-card') && !e.target.closest('.mining-action-info')) {
-                document.querySelectorAll('.mining-action-card.expanded').forEach(card => {
-                    card.classList.remove('expanded');
-                });
+
+    // Smooth scroll behavior
+    document.documentElement.style.scrollBehavior = 'smooth';
+
+    // Intersection Observer for scroll animations
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver(function(entries) {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
             }
         });
-    }
+    }, observerOptions);
+
+    // Observe all animated elements
+    document.addEventListener('DOMContentLoaded', function() {
+        // Observe sections for scroll animations
+        const sections = document.querySelectorAll('.mining-hero-section, .mining-actions-grid, .mining-overview-section, .mining-activity-section');
+        sections.forEach(section => {
+            observer.observe(section);
+        });
+
+        // Animate stat values on load
+        const statValues = document.querySelectorAll('.mining-stat-value, .mining-card-value');
+        statValues.forEach((value, index) => {
+            setTimeout(() => {
+                value.classList.add('animate');
+            }, 300 + (index * 100));
+        });
+
+        // Add smooth entrance animation to cards
+        const cards = document.querySelectorAll('.mining-stat-card, .mining-action-card, .mining-overview-card');
+        cards.forEach((card, index) => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            setTimeout(() => {
+                card.style.transition = 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
+                card.style.opacity = '1';
+                card.style.transform = 'translateY(0)';
+            }, 100 + (index * 50));
+        });
+    });
+
+    // Initialize Mining Overview Chart
+    document.addEventListener('DOMContentLoaded', function() {
+        // Wait a bit to ensure DOM is fully ready and Chart.js is loaded
+        setTimeout(function() {
+            const chartCtx = document.getElementById('miningOverviewChart');
+            if (!chartCtx) {
+                console.error('Canvas element not found');
+                return;
+            }
+
+            if (typeof Chart === 'undefined') {
+                console.error('Chart.js library not loaded');
+                return;
+            }
+
+            // Use green colors only
+            const earningsColor = '#00FF88';
+            const investmentColor = '#00D977';
+            const isMobile = window.innerWidth <= 390;
+
+            new Chart(chartCtx, {
+                type: 'line',
+                data: {
+                    labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                    datasets: [
+                        {
+                            label: 'Earnings',
+                            data: [120, 190, 300, 250, 400, 350, 450],
+                            borderColor: earningsColor,
+                            backgroundColor: 'rgba(0, 255, 136, 0.1)',
+                            borderWidth: 2,
+                            fill: true,
+                            tension: 0.4,
+                            pointRadius: 4,
+                            pointBackgroundColor: earningsColor,
+                            pointBorderColor: '#000',
+                            pointBorderWidth: 2,
+                            pointHoverRadius: 6
+                        },
+                        {
+                            label: 'Investment',
+                            data: [80, 150, 200, 180, 280, 240, 320],
+                            borderColor: investmentColor,
+                            backgroundColor: 'rgba(0, 217, 119, 0.1)',
+                            borderWidth: 2,
+                            fill: true,
+                            tension: 0.4,
+                            pointRadius: 4,
+                            pointBackgroundColor: investmentColor,
+                            pointBorderColor: '#000',
+                            pointBorderWidth: 2,
+                            pointHoverRadius: 6
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            backgroundColor: 'rgba(0, 0, 0, 0.9)',
+                            titleColor: '#fff',
+                            bodyColor: '#fff',
+                            borderColor: '#00FF88',
+                            borderWidth: 1,
+                            padding: 12,
+                            displayColors: true,
+                            callbacks: {
+                                label: function(context) {
+                                    return context.dataset.label + ': $' + context.parsed.y.toFixed(2);
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.05)',
+                                drawBorder: false
+                            },
+                            ticks: {
+                                color: 'rgba(255, 255, 255, 0.6)',
+                                font: {
+                                    size: isMobile ? 10 : 12
+                                }
+                            }
+                        },
+                        y: {
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.05)',
+                                drawBorder: false
+                            },
+                            ticks: {
+                                color: 'rgba(255, 255, 255, 0.6)',
+                                font: {
+                                    size: isMobile ? 10 : 12
+                                },
+                                callback: function(value) {
+                                    return '$' + value;
+                                }
+                            },
+                            beginAtZero: true
+                        }
+                    },
+                    interaction: {
+                        intersect: false,
+                        mode: 'index'
+                    }
+                }
+            });
+
+            console.log('Chart initialized successfully');
+        }, 200);
+
+        // Fallback: Try again after a longer delay if chart didn't initialize
+        setTimeout(function() {
+            const chartCtx = document.getElementById('miningOverviewChart');
+            if (chartCtx && !chartCtx.chart && typeof Chart !== 'undefined') {
+                console.log('Retrying chart initialization...');
+                const earningsColor = '#00FF88';
+                const investmentColor = '#00D977';
+                const isMobile = window.innerWidth <= 390;
+
+                new Chart(chartCtx, {
+                    type: 'line',
+                    data: {
+                        labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                        datasets: [
+                            {
+                                label: 'Earnings',
+                                data: [120, 190, 300, 250, 400, 350, 450],
+                                borderColor: earningsColor,
+                                backgroundColor: 'rgba(0, 255, 136, 0.1)',
+                                borderWidth: 2,
+                                fill: true,
+                                tension: 0.4,
+                                pointRadius: 4,
+                                pointBackgroundColor: earningsColor,
+                                pointBorderColor: '#000',
+                                pointBorderWidth: 2,
+                                pointHoverRadius: 6
+                            },
+                            {
+                                label: 'Investment',
+                                data: [80, 150, 200, 180, 280, 240, 320],
+                                borderColor: investmentColor,
+                                backgroundColor: 'rgba(0, 217, 119, 0.1)',
+                                borderWidth: 2,
+                                fill: true,
+                                tension: 0.4,
+                                pointRadius: 4,
+                                pointBackgroundColor: investmentColor,
+                                pointBorderColor: '#000',
+                                pointBorderWidth: 2,
+                                pointHoverRadius: 6
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                display: false
+                            },
+                            tooltip: {
+                                backgroundColor: 'rgba(0, 0, 0, 0.9)',
+                                titleColor: '#fff',
+                                bodyColor: '#fff',
+                                borderColor: '#00FF88',
+                                borderWidth: 1,
+                                padding: 12,
+                                displayColors: true,
+                                callbacks: {
+                                    label: function(context) {
+                                        return context.dataset.label + ': $' + context.parsed.y.toFixed(2);
+                                    }
+                                }
+                            }
+                        },
+                        scales: {
+                            x: {
+                                grid: {
+                                    color: 'rgba(255, 255, 255, 0.05)',
+                                    drawBorder: false
+                                },
+                                ticks: {
+                                    color: 'rgba(255, 255, 255, 0.6)',
+                                    font: {
+                                        size: isMobile ? 10 : 12
+                                    }
+                                }
+                            },
+                            y: {
+                                grid: {
+                                    color: 'rgba(255, 255, 255, 0.05)',
+                                    drawBorder: false
+                                },
+                                ticks: {
+                                    color: 'rgba(255, 255, 255, 0.6)',
+                                    font: {
+                                        size: isMobile ? 10 : 12
+                                    },
+                                    callback: function(value) {
+                                        return '$' + value;
+                                    }
+                                },
+                                beginAtZero: true
+                            }
+                        },
+                        interaction: {
+                            intersect: false,
+                            mode: 'index'
+                        }
+                    }
+                });
+                console.log('Chart initialized on retry');
+            }
+        }, 1000);
+    });
 </script>
 @endpush
 

@@ -44,15 +44,16 @@
 
     /* Mobile App Interface - Max-width 390px */
     @media (max-width: 390px) {
-        /* Compact header for mobile app */
+        /* Compact header for mobile app - Blended with page background */
         .dashboard-header {
             position: sticky;
             top: 0;
             z-index: 999;
-            background: rgba(0, 0, 0, 0.98);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(0, 255, 136, 0.1);
+            background: var(--bg-primary) !important;
+            backdrop-filter: none !important;
+            -webkit-backdrop-filter: none !important;
+            border-bottom: none !important;
+            box-shadow: none !important;
         }
 
         .header-content {
@@ -77,19 +78,27 @@
             max-width: 100%;
         }
 
-        /* Compact header elements */
-        .header-logo .logo-text {
-            font-size: 0.875rem;
+        /* Mobile user profile styling */
+        .mobile-user-profile {
+            display: flex !important;
         }
-
-        .user-avatar {
+        
+        .mobile-user-avatar {
             width: 36px;
             height: 36px;
         }
+        
+        .mobile-user-name {
+            font-size: 0.8125rem;
+        }
+        
+        .mobile-user-email {
+            font-size: 0.6875rem;
+        }
 
         .notification-icon {
-            font-size: 1rem;
-            padding: 0.375rem;
+            font-size: 1.125rem;
+            padding: 0.5rem;
         }
     }
 </style>

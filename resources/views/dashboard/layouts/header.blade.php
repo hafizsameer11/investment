@@ -4,7 +4,7 @@
             <button class="sidebar-toggle" id="sidebarToggle" onclick="toggleMobileSidebar(event)">
                 <i class="fas fa-bars"></i>
             </button>
-            <!-- Header Logo (shown on mobile) -->
+            <!-- Header Logo (shown on desktop) -->
             <div class="header-logo">
                 <div class="logo">
                     <div class="logo-icon-wrapper">
@@ -32,6 +32,17 @@
                     <span class="logo-text">Core Mining</span>
                 </div>
             </div>
+            
+            <!-- Mobile User Profile (shown only on mobile) -->
+            <div class="mobile-user-profile">
+                <div class="mobile-user-avatar">
+                    <img src="https://ui-avatars.com/api/?name=Rameez+Nazar&background=00FF88&color=000&size=128" alt="User Avatar">
+                </div>
+                <div class="mobile-user-info">
+                    <div class="mobile-user-name">Rameez Nazar</div>
+                    <div class="mobile-user-email">ramiznazar600@gmail.com</div>
+                </div>
+            </div>
         </div>
 
         <div class="header-right">
@@ -41,7 +52,7 @@
                 <span class="notification-badge">3</span>
             </div>
 
-            <!-- User Profile -->
+            <!-- User Profile (shown on desktop) -->
             <div class="user-profile">
                 <div class="user-avatar">
                     <img src="https://ui-avatars.com/api/?name=Rameez+Nazar&background=00FF88&color=000&size=128" alt="User Avatar">
