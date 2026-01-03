@@ -652,15 +652,15 @@
     }
 
     .wallet-status-completed {
-        background: rgba(0, 255, 136, 0.15);
+        /* background: rgba(0, 255, 136, 0.15); */
         color: var(--primary-color);
-        border: 1px solid rgba(0, 255, 136, 0.3);
+        /* border: 1px solid rgba(0, 255, 136, 0.3); */
     }
 
     .wallet-status-pending {
-        background: rgba(255, 170, 0, 0.15);
+        /* background: rgba(255, 170, 0, 0.15); */
         color: #FFAA00;
-        border: 1px solid rgba(255, 170, 0, 0.3);
+        /* border: 1px solid rgba(255, 170, 0, 0.3); */
     }
 
     .wallet-date-cell {
@@ -723,6 +723,17 @@
     .wallet-pagination-current {
         font-weight: 600;
         color: var(--primary-color);
+    }
+
+    /* Hide eye icon and arrow on desktop */
+    @media (min-width: 769px) {
+        .wallet-balance-label-text i {
+            display: none !important;
+        }
+
+        .wallet-balance-header-actions {
+            display: none !important;
+        }
     }
 
     @media (max-width: 768px) {
@@ -1068,6 +1079,54 @@
         }
     }
 
+    /* Mobile-specific styles for wallet balance section */
+    @media (max-width: 480px) {
+        /* Hide mobile visibility button */
+        .wallet-balance-mobile-visibility {
+            display: none !important;
+        }
+
+        /* Hide desktop header visibility button */
+        .wallet-visibility-btn {
+            display: none !important;
+        }
+
+        /* Update balance label to show eye icon inline */
+        .wallet-balance-label {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .wallet-balance-label-text {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .wallet-balance-label-text i {
+            font-size: 0.75rem;
+            color: var(--primary-color);
+        }
+
+        .wallet-balance-header-actions {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .wallet-balance-toggle-icon {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+            display: block !important;
+        }
+
+        .wallet-balance-toggle-icon:hover {
+            color: var(--primary-color);
+        }
+    }
+
     @media (max-width: 400px) {
         .wallet-new-page {
             padding: 0;
@@ -1077,72 +1136,201 @@
             overflow-x: hidden;
         }
 
+        /* Hide title and subtitle on mobile */
         .wallet-new-header {
-            margin-bottom: 1.5rem;
-            gap: 0.75rem;
+            display: none;
         }
 
-        .wallet-new-title {
-            font-size: 1.25rem;
-            margin-bottom: 0.25rem;
-            letter-spacing: -0.5px;
+        /* Show visibility button inside balance section on mobile */
+        .wallet-main-balance-card {
+            position: relative;
         }
 
-        .wallet-new-subtitle {
-            font-size: 0.75rem;
-            line-height: 1.4;
-        }
-
-        .wallet-visibility-btn {
-            width: 38px;
-            height: 38px;
+        .wallet-balance-mobile-visibility {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            background: rgba(0, 255, 136, 0.1);
+            border: 1px solid rgba(0, 255, 136, 0.3);
+            color: var(--primary-color);
+            cursor: pointer;
+            transition: var(--transition);
+            display: none !important;
+            align-items: center;
+            justify-content: center;
             font-size: 0.875rem;
-            border-radius: 10px;
-            flex-shrink: 0;
+            z-index: 10;
+        }
+
+        .wallet-balance-mobile-visibility:active {
+            transform: scale(0.95);
+            background: rgba(0, 255, 136, 0.2);
+        }
+
+        /* Hide desktop visibility button on mobile */
+        .wallet-visibility-btn {
+            display: none !important;
         }
 
         .wallet-main-balance-card {
-            padding: 1rem;
+            padding: 1.5rem 1rem;
             margin-bottom: 1.5rem;
             margin-left: 0;
             margin-right: 0;
-            border-radius: 12px;
+            border-radius: 0;
+            border-left: none;
+            border-right: none;
+            border-top: none;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
             width: 100%;
             max-width: 100%;
             box-sizing: border-box;
+            background: var(--card-bg);
+            box-shadow: none;
         }
 
+        .wallet-main-balance-card::before {
+            display: none;
+        }
+
+        .wallet-main-balance-card::after {
+            display: none;
+        }
+
+        /* Mobile Balance Header - Match image exactly */
         .wallet-balance-label {
             font-size: 0.6875rem;
             margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 500;
+        }
+
+        .wallet-balance-label-text {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .wallet-balance-label-text i {
+            font-size: 0.75rem;
+            color: var(--primary-color);
+            cursor: pointer;
+        }
+
+        .wallet-balance-label-text span {
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .wallet-balance-header-actions {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .wallet-balance-trend-up {
+            font-size: 0.75rem;
+            color: var(--primary-color);
+        }
+
+        .wallet-balance-toggle-icon {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+            opacity: 0.7;
         }
 
         .wallet-balance-amount-wrapper {
-            margin-bottom: 1.5rem;
-            gap: 0.5rem;
+            margin-bottom: 1.25rem;
+            gap: 0;
             flex-wrap: nowrap;
+            display: flex;
+            align-items: baseline;
         }
 
         .wallet-balance-currency {
-            font-size: 1rem;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            line-height: 1;
         }
 
         .wallet-balance-amount {
-            font-size: 1.5rem;
+            font-size: 2.5rem;
+            font-weight: 700;
             letter-spacing: -1px;
-            line-height: 1.1;
+            line-height: 1.2;
+            color: var(--primary-color);
+            margin-left: 0.125rem;
         }
 
+        /* Mobile Balance Details - Simple amount style (not cards) */
         .wallet-balance-details {
-            grid-template-columns: 1fr;
-            gap: 0.625rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
             margin-bottom: 1.5rem;
         }
 
         .wallet-balance-detail-item {
-            padding: 0.625rem;
-            gap: 0.625rem;
-            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0;
+            gap: 0.5rem;
+            background: transparent;
+            border: none;
+            border-radius: 0;
+        }
+
+        .wallet-balance-detail-item .wallet-detail-icon {
+            display: none;
+        }
+
+        .wallet-balance-detail-item .wallet-detail-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            gap: 0.5rem;
+        }
+
+        .wallet-balance-detail-item .wallet-detail-label {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 0.375rem;
+        }
+
+        .wallet-balance-detail-item .wallet-detail-label i {
+            font-size: 0.6875rem;
+        }
+
+        .wallet-balance-detail-item .wallet-detail-value {
+            font-size: 0.9375rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 0.375rem;
+        }
+
+        .wallet-balance-detail-item .wallet-detail-trend {
+            font-size: 0.75rem;
+        }
+
+        .wallet-balance-detail-item .wallet-detail-trend.down {
+            color: var(--danger-color);
         }
 
         .wallet-detail-icon {
@@ -1163,15 +1351,25 @@
         }
 
         .wallet-action-buttons {
-            grid-template-columns: 1fr;
-            gap: 0.625rem;
+            display: flex;
+            flex-direction: row;
+            gap: 0.5rem;
+            grid-template-columns: none;
         }
 
         .wallet-action-button {
-            padding: 0.75rem 1rem;
+            flex: 1;
+            padding: 0.875rem 0.75rem;
             font-size: 0.75rem;
             border-radius: 10px;
             gap: 0.5rem;
+            min-width: 0;
+        }
+
+        .wallet-action-button span {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .wallet-action-button span {
@@ -1229,72 +1427,125 @@
             line-height: 1.4;
         }
 
+        /* Transaction History Section - Mobile App Design */
         .wallet-transactions-section {
-            padding: 1rem;
-            border-radius: 12px;
+            padding: 0;
+            border-radius: 0;
             width: 100%;
             max-width: 100%;
             box-sizing: border-box;
             margin-left: 0;
             margin-right: 0;
+            background: var(--bg-primary);
+            border: none;
+            box-shadow: none;
         }
 
         .wallet-transactions-header {
-            margin-bottom: 1.25rem;
-            gap: 0.875rem;
+            margin-bottom: 1rem;
+            gap: 0.75rem;
+            padding: 1rem;
+            padding-bottom: 0.75rem;
+        }
+
+        .wallet-transactions-title-section {
+            margin-bottom: 0.75rem;
         }
 
         .wallet-transactions-title {
-            font-size: 1rem;
-            margin-bottom: 0.25rem;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin: 0;
+            line-height: 1.2;
         }
 
         .wallet-transactions-subtitle {
-            font-size: 0.6875rem;
-            line-height: 1.4;
+            display: none;
         }
 
+        /* Search and Filter Controls - Mobile App Style */
         .wallet-transactions-controls {
-            flex-direction: column;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 0.5rem;
             width: 100%;
-            gap: 0.625rem;
+            margin-top: 0.75rem;
         }
 
         .wallet-search-box {
-            width: 100%;
+            flex: 1;
+            position: relative;
         }
 
         .wallet-search-box i {
-            left: 1rem;
-            font-size: 0.8125rem;
+            position: absolute;
+            left: 0.875rem;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            z-index: 1;
         }
 
         .wallet-search-input {
-            padding: 0.75rem 1rem 0.75rem 2.5rem;
-            font-size: 0.75rem;
+            padding: 0.75rem 0.875rem 0.75rem 2.5rem;
+            font-size: 0.8125rem;
             width: 100%;
             max-width: 100%;
             border-radius: 10px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-secondary);
         }
 
-        .wallet-filter-button,
-        .wallet-date-select {
-            padding: 0.75rem 1rem;
-            font-size: 0.75rem;
-            border-radius: 10px;
-            width: 100%;
-            justify-content: center;
+        .wallet-search-input::placeholder {
+            color: var(--text-secondary);
+            opacity: 0.6;
         }
 
         .wallet-filter-button {
-            gap: 0.5rem;
+            padding: 0.75rem;
+            font-size: 0.875rem;
+            border-radius: 10px;
+            min-width: 44px;
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-secondary);
+        }
+
+        .wallet-filter-button span {
+            display: none;
+        }
+
+        .wallet-date-select {
+            padding: 0.75rem 0.875rem;
+            font-size: 0.8125rem;
+            border-radius: 10px;
+            min-width: auto;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-primary);
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23ffffff' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 0.75rem center;
+            padding-right: 2.5rem;
         }
 
         .wallet-table-container {
             overflow-x: visible;
             -webkit-overflow-scrolling: touch;
             margin: 0;
-            padding: 0;
+            padding: 0 1rem 1rem 1rem;
             width: 100%;
             max-width: 100%;
         }
@@ -1316,14 +1567,16 @@
         }
 
         .wallet-table tbody tr {
-            display: block;
+            display: flex;
+            flex-direction: column;
             width: 100%;
-            margin-bottom: 1rem;
+            margin-bottom: 0.75rem;
             background: rgba(255, 255, 255, 0.02);
             border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 10px;
+            border-radius: 12px;
             padding: 1rem;
             box-sizing: border-box;
+            gap: 0.75rem;
         }
 
         .wallet-table tbody tr:last-child {
@@ -1331,106 +1584,320 @@
         }
 
         .wallet-table td {
-            display: block;
+            display: flex;
             width: 100%;
-            padding: 0.75rem 0;
+            padding: 0;
             border: none;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
             text-align: left;
-            font-size: 0.75rem;
+            font-size: 0.8125rem;
             box-sizing: border-box;
         }
 
-        .wallet-table td:last-child {
-            border-bottom: none;
-            padding-bottom: 0;
-        }
-
-        .wallet-table td:first-child {
-            padding-top: 0;
-        }
-
-        .wallet-transaction-cell,
-        .wallet-amount-cell,
-        .wallet-date-cell {
-            width: 100%;
-            max-width: 100%;
-            box-sizing: border-box;
-        }
-
+        /* Transaction Cell - Left side with icon and info */
         .wallet-transaction-cell {
-            gap: 0.625rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            width: 100%;
         }
 
         .wallet-transaction-icon {
-            width: 32px;
-            height: 32px;
-            font-size: 0.75rem;
-            border-radius: 8px;
+            width: 40px;
+            height: 40px;
+            font-size: 1.125rem;
+            border-radius: 10px;
             flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .wallet-transaction-icon.success {
+            background: rgba(0, 255, 136, 0.15);
+            color: var(--primary-color);
+        }
+
+        .wallet-transaction-icon.success i.fa-arrow-down {
+            transform: rotate(0deg);
+            color: var(--primary-color);
+        }
+
+        .wallet-transaction-icon.danger {
+            background: rgba(255, 68, 68, 0.15);
+            color: #FF4444;
+        }
+
+        .wallet-transaction-info {
+            flex: 1;
+            min-width: 0;
         }
 
         .wallet-transaction-name {
-            font-size: 0.6875rem;
-            margin-bottom: 0.125rem;
+            font-size: 0.9375rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.25rem;
+            line-height: 1.3;
         }
 
         .wallet-transaction-id {
-            font-size: 0.625rem;
+            display: none;
         }
 
-        .wallet-type-badge,
-        .wallet-status-badge {
-            font-size: 0.625rem;
-            padding: 0.25rem 0.5rem;
-            gap: 0.375rem;
-            border-radius: 6px;
-            white-space: nowrap;
+        /* Type Badge - Hide on mobile */
+        .wallet-type-badge {
+            display: none;
         }
 
+        /* Amount Cell - Right side with amount and wallet */
         .wallet-amount-cell {
-            gap: 0.125rem;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 0.25rem;
+            width: 100%;
         }
 
         .wallet-amount-value {
-            font-size: 0.8125rem;
+            font-size: 1rem;
+            font-weight: 700;
+            font-variant-numeric: tabular-nums;
+            line-height: 1.2;
+        }
+
+        .wallet-amount-positive {
+            color: var(--primary-color);
+        }
+
+        .wallet-amount-negative {
+            color: #FF4444;
         }
 
         .wallet-amount-wallet {
-            font-size: 0.625rem;
+            font-size: 0.8125rem;
+            color: var(--text-primary);
+            font-weight: 500;
         }
 
+        /* Status Badge - Show as text */
+        .wallet-status-badge {
+            display: inline-block;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            padding: 0;
+            background: transparent;
+            border: none;
+            font-weight: 400;
+        }
+
+        .wallet-status-completed {
+            color: var(--text-secondary);
+        }
+
+        .wallet-status-pending {
+            color: var(--text-secondary);
+        }
+
+        /* Date Cell - Show date and time */
         .wallet-date-cell {
-            gap: 0.125rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            width: 100%;
         }
 
         .wallet-date-main {
-            font-size: 0.6875rem;
+            font-size: 0.75rem;
+            font-weight: 400;
+            color: var(--text-secondary);
+            line-height: 1.4;
         }
 
         .wallet-date-time {
-            font-size: 0.625rem;
-        }
-
-        .wallet-pagination {
-            flex-direction: column;
-            gap: 0.875rem;
-            align-items: stretch;
-        }
-
-        .wallet-pagination-button {
-            padding: 0.625rem 1rem;
             font-size: 0.75rem;
-            width: 100%;
-            justify-content: center;
-            border-radius: 10px;
+            color: var(--text-secondary);
+            line-height: 1.4;
+        }
+
+        /* Hide pagination on mobile */
+        .wallet-pagination {
+            display: none;
+        }
+
+        /* Transaction Row Layout - Mobile App Style */
+        .wallet-table tbody tr {
+            display: flex;
+            flex-direction: row;
+            align-items: flex-start;
+            justify-content: space-between;
+            padding: 1rem;
+            gap: 0.75rem;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+        }
+
+        /* First TD - Transaction info (left side) */
+        .wallet-table tbody tr td:first-child {
+            flex: 1;
+            min-width: 0;
+            display: flex;
+        }
+
+        /* Second TD - Type (hidden) */
+        .wallet-table tbody tr td:nth-child(2) {
+            display: none;
+        }
+
+        /* Third TD - Amount (right side) */
+        .wallet-table tbody tr td:nth-child(3) {
+            flex: 0 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            justify-content: flex-start;
             gap: 0.5rem;
         }
 
-        .wallet-pagination-info {
-            font-size: 0.75rem;
-            text-align: center;
-            gap: 0.375rem;
+        /* Fourth TD - Status (hidden on mobile, shown in amount cell) */
+        .wallet-table tbody tr td:nth-child(4) {
+            display: none;
+        }
+
+        /* Fifth TD - Date (hidden - shown in meta) */
+        .wallet-table tbody tr td:nth-child(5) {
+            display: none;
+        }
+
+        /* Enhanced Transaction Info Layout */
+        .wallet-transaction-cell {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            width: 100%;
+        }
+
+        .wallet-transaction-icon {
+            width: 40px;
+            height: 40px;
+            font-size: 1rem;
+            border-radius: 10px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .wallet-transaction-icon.success {
+            background: rgba(0, 255, 136, 0.15);
+            color: var(--primary-color);
+        }
+
+        .wallet-transaction-icon.success i.fa-arrow-down {
+            transform: rotate(0deg);
+            color: var(--primary-color);
+        }
+
+        .wallet-transaction-icon.danger {
+            background: rgba(255, 68, 68, 0.15);
+            color: #FF4444;
+        }
+
+        .wallet-transaction-info {
+            flex: 1;
+            min-width: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+
+        .wallet-transaction-name {
+            font-size: 0.9375rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.25rem;
+            line-height: 1.3;
+        }
+
+        /* Date in single row below transaction name */
+        .wallet-transaction-meta {
+            display: flex;
+            flex-direction: column;
+            gap: 0.125rem;
+            margin-top: 0.125rem;
+        }
+
+        .wallet-transaction-date-time {
+            font-size: 0.6875rem;
+            color: var(--text-secondary);
+            line-height: 1.4;
+            white-space: nowrap;
+        }
+
+        .wallet-transaction-status-text {
+            display: none;
+        }
+
+        /* Amount Cell - Right side styling */
+        .wallet-amount-cell {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 0.25rem;
+            text-align: right;
+        }
+
+        /* Hide status-mobile on desktop */
+        @media (min-width: 401px) {
+            .wallet-status-mobile {
+                display: none;
+            }
+        }
+
+        .wallet-amount-value {
+            font-size: 1rem;
+            font-weight: 700;
+            font-variant-numeric: tabular-nums;
+            line-height: 1.2;
+        }
+
+        .wallet-amount-positive {
+            color: var(--primary-color);
+        }
+
+        .wallet-amount-negative {
+            color: #FF4444;
+        }
+
+        .wallet-amount-wallet {
+            font-size: 0.8125rem;
+            color: var(--text-primary);
+            font-weight: 500;
+            white-space: nowrap;
+            line-height: 1.3;
+        }
+
+        /* Status Badge - Show on right side with colors */
+        .wallet-status-mobile {
+            display: block;
+            font-size: 0.6875rem;
+            font-weight: 600;
+            text-transform: capitalize;
+            margin-top: 0.25rem;
+            text-align: right;
+        }
+
+        .wallet-status-mobile.wallet-status-completed {
+            color: var(--primary-color);
+        }
+
+        .wallet-status-mobile.wallet-status-pending {
+            color: #FFAA00;
+        }
+
+        /* Hide desktop status badge on mobile */
+        .wallet-table tbody tr td:nth-child(4) {
+            display: none;
         }
     }
 </style>
@@ -1452,21 +1919,39 @@
 
     <!-- Main Balance Card -->
     <div class="wallet-main-balance-card">
+        <!-- Mobile Visibility Button (shown only on mobile) -->
+        <button class="wallet-balance-mobile-visibility" id="balanceToggleWalletMobile" title="Toggle balance visibility" style="display: none;">
+            <i class="fas fa-eye" id="eyeIconWalletMobile"></i>
+            <i class="fas fa-eye-slash" id="eyeSlashIconWalletMobile" style="display: none;"></i>
+        </button>
+
         <div class="wallet-balance-content">
-            <div class="wallet-balance-label">Total Mining Balance</div>
+            <div class="wallet-balance-label">
+                <div class="wallet-balance-label-text">
+                    <i class="fas fa-eye" id="balanceLabelEye"></i>
+                    <span>TOTAL BALANCE</span>
+                </div>
+                <div class="wallet-balance-header-actions">
+                    <i class="fas fa-arrow-up wallet-balance-trend-up"></i>
+                    <i class="fas fa-eye-slash wallet-balance-toggle-icon" id="balanceToggleMobile" style="display: none;"></i>
+                </div>
+            </div>
             <div class="wallet-balance-amount-wrapper" id="balanceAmountWallet">
                 <span class="wallet-balance-currency">$</span>
                 <span class="wallet-balance-amount">0.00</span>
-                </div>
-            
+            </div>
+
             <div class="wallet-balance-details">
                 <div class="wallet-balance-detail-item">
                     <div class="wallet-detail-icon">
                         <i class="fas fa-wallet"></i>
                     </div>
                     <div class="wallet-detail-content">
-                        <div class="wallet-detail-label">Deposit Wallet</div>
-                        <div class="wallet-detail-value">$0.30</div>
+                        <div class="wallet-detail-label">Deposit Wallet:</div>
+                        <div class="wallet-detail-value">
+                            $0.30
+                            <i class="fas fa-arrow-down wallet-detail-trend down"></i>
+                        </div>
                     </div>
                 </div>
                 <div class="wallet-balance-detail-item">
@@ -1474,8 +1959,11 @@
                         <i class="fas fa-coins"></i>
                     </div>
                     <div class="wallet-detail-content">
-                        <div class="wallet-detail-label">Mining Earnings</div>
-                        <div class="wallet-detail-value">$0.00</div>
+                        <div class="wallet-detail-label">Mining Earning:</div>
+                        <div class="wallet-detail-value">
+                            $0.00
+                            <i class="fas fa-arrow-down wallet-detail-trend down"></i>
+                        </div>
                     </div>
                 </div>
                 <div class="wallet-balance-detail-item">
@@ -1483,8 +1971,13 @@
                         <i class="fas fa-gift"></i>
                     </div>
                     <div class="wallet-detail-content">
-                        <div class="wallet-detail-label">Referral Bonus</div>
-                        <div class="wallet-detail-value">$0.00</div>
+                        <div class="wallet-detail-label">
+                            Referral Earning:
+                        </div>
+                        <div class="wallet-detail-value">
+                            $0.00
+                            <i class="fas fa-arrow-down wallet-detail-trend down"></i>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1583,7 +2076,7 @@
             <div class="wallet-transactions-controls">
                 <div class="wallet-search-box">
                     <i class="fas fa-search"></i>
-                    <input type="text" class="wallet-search-input" placeholder="Search transactions..." id="walletSearchInput">
+                    <input type="text" class="wallet-search-input" placeholder="Search" id="walletSearchInput">
                 </div>
                 <button class="wallet-filter-button" title="Filter">
                         <i class="fas fa-filter"></i>
@@ -1591,7 +2084,7 @@
                     </button>
                 <select class="wallet-date-select" id="walletDateFilter">
                         <option value="all">All Time</option>
-                        <option value="7">Last 7 Days</option>
+                        <option value="7" selected>1 Week</option>
                         <option value="30">Last 30 Days</option>
                         <option value="90">Last 90 Days</option>
                     </select>
@@ -1614,11 +2107,13 @@
                         <td>
                             <div class="wallet-transaction-cell">
                                 <div class="wallet-transaction-icon success">
-                                    <i class="fas fa-gift"></i>
+                                    <i class="fas fa-arrow-down"></i>
                                 </div>
                                 <div class="wallet-transaction-info">
-                                    <div class="wallet-transaction-name">User Bonus</div>
-                                    <div class="wallet-transaction-id">ID: #12345</div>
+                                    <div class="wallet-transaction-name">Bonus</div>
+                                    <div class="wallet-transaction-meta">
+                                        <div class="wallet-transaction-date-time">Dec 28, 2025, 11:11 PM</div>
+                                    </div>
                                 </div>
                             </div>
                         </td>
@@ -1630,8 +2125,9 @@
                         </td>
                         <td>
                             <div class="wallet-amount-cell">
-                                <div class="wallet-amount-value wallet-amount-positive">+$0.30</div>
-                                <div class="wallet-amount-wallet">Earning Wallet</div>
+                                <div class="wallet-amount-value wallet-amount-positive">+$0.3</div>
+                                <div class="wallet-amount-wallet">Earning Wallet: $0</div>
+                                <div class="wallet-status-mobile wallet-status-completed">Completed</div>
                             </div>
                         </td>
                         <td>
@@ -1654,7 +2150,9 @@
                                 </div>
                                 <div class="wallet-transaction-info">
                                     <div class="wallet-transaction-name">Withdrawal</div>
-                                    <div class="wallet-transaction-id">ID: #12344</div>
+                                    <div class="wallet-transaction-meta">
+                                        <div class="wallet-transaction-date-time">Dec 27, 2025, 03:45 PM</div>
+                                    </div>
                                 </div>
                             </div>
                         </td>
@@ -1667,7 +2165,8 @@
                         <td>
                             <div class="wallet-amount-cell">
                                 <div class="wallet-amount-value wallet-amount-negative">-$50.00</div>
-                                <div class="wallet-amount-wallet">Main Wallet</div>
+                                <div class="wallet-amount-wallet">Main Wallet: $0</div>
+                                <div class="wallet-status-mobile wallet-status-pending">Pending</div>
                             </div>
                         </td>
                         <td>
@@ -1686,11 +2185,13 @@
                         <td>
                             <div class="wallet-transaction-cell">
                                 <div class="wallet-transaction-icon success">
-                                    <i class="fas fa-arrow-up"></i>
+                                    <i class="fas fa-arrow-down"></i>
                                 </div>
                                 <div class="wallet-transaction-info">
                                     <div class="wallet-transaction-name">Deposit</div>
-                                    <div class="wallet-transaction-id">ID: #12343</div>
+                                    <div class="wallet-transaction-meta">
+                                        <div class="wallet-transaction-date-time">Dec 26, 2025, 09:20 AM</div>
+                                    </div>
                                 </div>
                             </div>
                         </td>
@@ -1703,7 +2204,8 @@
                         <td>
                             <div class="wallet-amount-cell">
                                 <div class="wallet-amount-value wallet-amount-positive">+$100.00</div>
-                                <div class="wallet-amount-wallet">Main Wallet</div>
+                                <div class="wallet-amount-wallet">Main Wallet: $0</div>
+                                <div class="wallet-status-mobile wallet-status-completed">Completed</div>
                             </div>
                         </td>
                         <td>
@@ -1746,24 +2248,99 @@
 <script>
     // Balance toggle functionality
     const balanceToggle = document.getElementById('balanceToggleWallet');
+    const balanceToggleMobile = document.getElementById('balanceToggleWalletMobile');
+    const balanceToggleMobileIcon = document.getElementById('balanceToggleMobile');
     const eyeIcon = document.getElementById('eyeIconWallet');
     const eyeSlashIcon = document.getElementById('eyeSlashIconWallet');
+    const eyeIconMobile = document.getElementById('eyeIconWalletMobile');
+    const eyeSlashIconMobile = document.getElementById('eyeSlashIconWalletMobile');
     const balanceAmount = document.getElementById('balanceAmountWallet');
     let balanceVisible = true;
 
-    if (balanceToggle) {
-        balanceToggle.addEventListener('click', function() {
-            balanceVisible = !balanceVisible;
-            if (balanceVisible) {
-                eyeIcon.style.display = 'block';
-                eyeSlashIcon.style.display = 'none';
-                balanceAmount.style.opacity = '1';
-            } else {
-                eyeIcon.style.display = 'none';
-                eyeSlashIcon.style.display = 'block';
-                balanceAmount.style.opacity = '0.3';
+    function toggleBalanceVisibility() {
+        balanceVisible = !balanceVisible;
+        const balanceAmountEl = balanceAmount;
+        const balanceText = balanceAmountEl ? balanceAmountEl.querySelector('.wallet-balance-amount') : null;
+        const balanceLabelEye = document.getElementById('balanceLabelEye');
+
+        if (balanceVisible) {
+            // Show balance - label eye icon always stays green (fa-eye)
+            if (eyeIcon) eyeIcon.style.display = 'block';
+            if (eyeSlashIcon) eyeSlashIcon.style.display = 'none';
+            if (eyeIconMobile) eyeIconMobile.style.display = 'block';
+            if (eyeSlashIconMobile) eyeSlashIconMobile.style.display = 'none';
+            // Label eye icon always stays as fa-eye (green) - never changes
+            if (balanceLabelEye) {
+                balanceLabelEye.classList.remove('fa-eye-slash');
+                balanceLabelEye.classList.add('fa-eye');
             }
-        });
+            // Top-right toggle icon: hide when balance is visible
+            if (balanceToggleMobileIcon) {
+                balanceToggleMobileIcon.classList.remove('fa-eye');
+                balanceToggleMobileIcon.classList.add('fa-eye-slash');
+                balanceToggleMobileIcon.style.display = 'none';
+            }
+            if (balanceAmountEl) balanceAmountEl.style.opacity = '1';
+            if (balanceText) balanceText.textContent = '0.00';
+
+            // Show all detail values
+            const detailValues = document.querySelectorAll('.wallet-detail-value');
+            detailValues.forEach(el => {
+                const originalValue = el.getAttribute('data-original');
+                if (originalValue) {
+                    el.innerHTML = originalValue;
+                    el.removeAttribute('data-original');
+                }
+            });
+        } else {
+            // Hide balance - label eye icon always stays green (fa-eye)
+            if (eyeIcon) eyeIcon.style.display = 'none';
+            if (eyeSlashIcon) eyeSlashIcon.style.display = 'block';
+            if (eyeIconMobile) eyeIconMobile.style.display = 'none';
+            if (eyeSlashIconMobile) eyeSlashIconMobile.style.display = 'block';
+            // Label eye icon always stays as fa-eye (green) - never changes
+            if (balanceLabelEye) {
+                balanceLabelEye.classList.remove('fa-eye-slash');
+                balanceLabelEye.classList.add('fa-eye');
+            }
+            // Top-right toggle icon: show gray eye-slash when balance is hidden
+            if (balanceToggleMobileIcon) {
+                balanceToggleMobileIcon.classList.remove('fa-eye-slash');
+                balanceToggleMobileIcon.classList.add('fa-eye-slash');
+                balanceToggleMobileIcon.style.display = 'block';
+                balanceToggleMobileIcon.style.color = 'var(--text-secondary)';
+                balanceToggleMobileIcon.style.opacity = '0.7';
+            }
+            if (balanceAmountEl) balanceAmountEl.style.opacity = '0.3';
+            if (balanceText) balanceText.textContent = '••••••';
+
+            // Hide all detail values
+            const detailValues = document.querySelectorAll('.wallet-detail-value');
+            detailValues.forEach(el => {
+                if (!el.getAttribute('data-original')) {
+                    el.setAttribute('data-original', el.innerHTML);
+                }
+                el.innerHTML = '••••';
+            });
+        }
+    }
+
+    if (balanceToggle) {
+        balanceToggle.addEventListener('click', toggleBalanceVisibility);
+    }
+
+    if (balanceToggleMobile) {
+        balanceToggleMobile.addEventListener('click', toggleBalanceVisibility);
+    }
+
+    if (balanceToggleMobileIcon) {
+        balanceToggleMobileIcon.addEventListener('click', toggleBalanceVisibility);
+    }
+
+    // Make label eye icon clickable
+    const balanceLabelEye = document.getElementById('balanceLabelEye');
+    if (balanceLabelEye) {
+        balanceLabelEye.addEventListener('click', toggleBalanceVisibility);
     }
 </script>
 @endpush
