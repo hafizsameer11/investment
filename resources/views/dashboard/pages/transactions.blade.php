@@ -30,6 +30,10 @@
         box-sizing: border-box;
     }
 
+    .transactions-hero-new.transactions-hero-desktop {
+        display: block;
+    }
+
     .transactions-hero-new::before {
         content: '';
         position: absolute;
@@ -455,6 +459,13 @@
         color: var(--text-secondary);
     }
 
+    /* Hide mobile status on desktop */
+    @media (min-width: 401px) {
+        .transactions-status-mobile {
+            display: none;
+        }
+    }
+
     .transactions-status-cell-new {
         display: flex;
         flex-direction: column;
@@ -629,51 +640,118 @@
 
     @media (max-width: 768px) {
         .transactions-new-page {
-            padding: 1rem;
+            padding: 0;
             width: 100%;
             max-width: 100%;
             box-sizing: border-box;
             overflow-x: hidden;
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.95) 0%, rgba(10, 10, 10, 0.95) 100%);
+            min-height: 100vh;
         }
 
+        /* Hide hero section on mobile */
         .transactions-hero-new {
-            padding: 2rem 1.5rem;
-            margin-bottom: 2rem;
-            border-radius: 16px;
-            width: 100%;
-            max-width: 100%;
-            box-sizing: border-box;
+            display: none !important;
         }
 
-        .transactions-hero-title-new {
-            font-size: 2rem;
-        }
-
-        .transactions-hero-subtitle-new {
-            font-size: 1rem;
-        }
-
+        /* Financial Summary Cards - Single Card Container with 2x2 Grid for Mobile */
         .transactions-summary-section-new {
-            grid-template-columns: 1fr;
-            gap: 1.5rem;
-            margin-bottom: 2rem;
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            margin-left: 1rem;
+            margin-right: 1rem;
+            width: calc(100% - 2rem);
+            max-width: calc(100% - 2rem);
+            box-sizing: border-box;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.75rem;
         }
 
         .transactions-summary-card-new {
-            padding: 1.5rem;
-            gap: 1.25rem;
-            flex-direction: column;
-            text-align: center;
+            background: transparent;
+            border: none;
+            border-radius: 0;
+            padding: 0.875rem;
+            gap: 0.75rem;
+            flex-direction: row;
+            text-align: left;
+            align-items: center;
+            box-shadow: none;
+            transition: none;
+            position: relative;
+        }
+
+        .transactions-summary-card-new::before {
+            display: none;
+        }
+
+        .transactions-summary-card-new:hover {
+            transform: none;
+            box-shadow: none;
+            border-color: transparent;
         }
 
         .transactions-summary-icon-new {
-            width: 60px;
-            height: 60px;
-            font-size: 1.5rem;
+            width: 48px;
+            height: 48px;
+            font-size: 1.25rem;
+            border-radius: 50%;
+            flex-shrink: 0;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Icon background colors matching the design - Mobile Override */
+        .transactions-summary-icon-earning-new {
+            background: #00FF88 !important;
+        }
+
+        .transactions-summary-icon-referral-new {
+            background: linear-gradient(135deg, #00AAFF 0%, #0088CC 100%) !important;
+        }
+
+        .transactions-summary-icon-deposit-new {
+            background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%) !important;
+        }
+
+        .transactions-summary-icon-withdraw-new {
+            background: linear-gradient(135deg, #FF4444 0%, #DC2626 100%) !important;
+        }
+
+        .transactions-summary-icon-new i {
+            color: #FFFFFF;
+            font-weight: 600;
+        }
+
+        .transactions-summary-content-new {
+            flex: 1;
+            min-width: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+
+        .transactions-summary-label-new {
+            font-size: 0.75rem;
+            margin-bottom: 0;
+            color: var(--text-secondary);
+            font-weight: 500;
+            line-height: 1.3;
+            text-transform: none;
+            letter-spacing: 0;
         }
 
         .transactions-summary-value-new {
-            font-size: 1.75rem;
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            line-height: 1.2;
         }
 
         .transactions-history-section-new {
@@ -843,44 +921,52 @@
             max-width: 100%;
             box-sizing: border-box;
             overflow-x: hidden;
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.95) 0%, rgba(10, 10, 10, 0.95) 100%);
+            min-height: 100vh;
         }
 
+        /* Hide hero section on mobile */
         .transactions-hero-new {
-            padding: 1.5rem 1rem;
-            margin-bottom: 1.5rem;
-            border-radius: 12px;
+            display: none !important;
         }
 
-        .transactions-hero-title-new {
-            font-size: 1.75rem;
-        }
-
-        .transactions-hero-subtitle-new {
-            font-size: 0.9375rem;
-        }
-
+        /* Financial Summary Cards - Single Card Container with 2x2 Grid */
         .transactions-summary-section-new {
-            gap: 1rem;
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 0.875rem;
             margin-bottom: 1.5rem;
+            margin-left: 0.875rem;
+            margin-right: 0.875rem;
+            width: calc(100% - 1.75rem);
+            max-width: calc(100% - 1.75rem);
+            box-sizing: border-box;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.625rem;
         }
 
         .transactions-summary-card-new {
-            padding: 1.25rem;
-            gap: 1rem;
+            background: transparent;
+            border: none;
+            padding: 0.75rem;
+            gap: 0.625rem;
         }
 
         .transactions-summary-icon-new {
-            width: 56px;
-            height: 56px;
-            font-size: 1.375rem;
+            width: 44px;
+            height: 44px;
+            font-size: 1.125rem;
         }
 
         .transactions-summary-label-new {
-            font-size: 0.875rem;
+            font-size: 0.6875rem;
+            margin-bottom: 0;
         }
 
         .transactions-summary-value-new {
-            font-size: 1.5rem;
+            font-size: 1rem;
         }
 
         .transactions-history-card-new {
@@ -929,73 +1015,366 @@
             max-width: 100%;
             box-sizing: border-box;
             overflow-x: hidden;
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.95) 0%, rgba(10, 10, 10, 0.95) 100%);
+            min-height: 100vh;
         }
 
+        /* Hide hero section on mobile */
         .transactions-hero-new {
-            padding: 1.25rem 0.875rem;
-            margin-bottom: 1.25rem;
-            border-radius: 12px;
+            display: none !important;
         }
 
-        .transactions-hero-title-new {
-            font-size: 1.5rem;
-            letter-spacing: -1px;
-        }
-
-        .transactions-hero-subtitle-new {
-            font-size: 0.8125rem;
-        }
-
+        /* Financial Summary Cards - Single Card Container with 2x2 Grid */
         .transactions-summary-section-new {
-            gap: 0.875rem;
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 0.75rem;
+            margin-bottom: 1.25rem;
+            margin-left: 0.75rem;
+            margin-right: 0.75rem;
+            width: calc(100% - 1.5rem);
+            max-width: calc(100% - 1.5rem);
+            box-sizing: border-box;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.5rem;
         }
 
         .transactions-summary-card-new {
-            padding: 1rem;
-            gap: 0.875rem;
+            background: transparent;
+            border: none;
+            padding: 0.625rem;
+            gap: 0.5rem;
         }
 
         .transactions-summary-icon-new {
-            width: 48px;
-            height: 48px;
-            font-size: 1.25rem;
+            width: 40px;
+            height: 40px;
+            font-size: 1rem;
+        }
+
+        .transactions-summary-label-new {
+            font-size: 0.625rem;
+            margin-bottom: 0;
         }
 
         .transactions-summary-value-new {
-            font-size: 1.375rem;
+            font-size: 0.9375rem;
         }
 
-        .transactions-history-card-new {
+        /* Transaction History Section - Mobile App Design */
+        .transactions-history-section-new {
+            padding: 0;
+            border-radius: 0;
+            width: 100%;
+            max-width: 100%;
+            box-sizing: border-box;
+            margin-left: 0;
+            margin-right: 0;
+            background: var(--bg-primary);
+            border: none;
+            box-shadow: none;
+        }
+
+        .transactions-history-header-new {
+            margin-bottom: 1rem;
+            gap: 0.75rem;
             padding: 1rem;
-            border-radius: 12px;
+            padding-bottom: 0.75rem;
+        }
+
+        .transactions-history-title-section-new {
+            margin-bottom: 0.75rem;
         }
 
         .transactions-history-title-new {
-            font-size: 1.375rem;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin: 0;
+            line-height: 1.2;
         }
 
-        .transactions-table-new td {
-            padding: 0.625rem 0;
-            font-size: 0.75rem;
+        .transactions-history-subtitle-new {
+            display: none;
+        }
+
+        /* Search and Filter Controls - Mobile App Style */
+        .transactions-history-controls-new {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 0.5rem;
+            width: 100%;
+            margin-top: 0.75rem;
+        }
+
+        .transactions-search-box-new {
+            flex: 1;
+            position: relative;
+        }
+
+        .transactions-search-box-new i {
+            position: absolute;
+            left: 0.875rem;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            z-index: 1;
+        }
+
+        .transactions-search-input-new {
+            padding: 0.75rem 0.875rem 0.75rem 2.5rem;
+            font-size: 0.8125rem;
+            width: 100%;
+            max-width: 100%;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-secondary);
+        }
+
+        .transactions-search-input-new::placeholder {
+            color: var(--text-secondary);
+            opacity: 0.6;
+        }
+
+        .transactions-filter-btn-new {
+            padding: 0.75rem;
+            font-size: 0.875rem;
+            border-radius: 10px;
+            min-width: 44px;
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-secondary);
+        }
+
+        .transactions-filter-btn-new span {
+            display: none;
+        }
+
+        .transactions-date-filter-new {
+            padding: 0.75rem 0.875rem;
+            font-size: 0.8125rem;
+            border-radius: 10px;
+            min-width: auto;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-primary);
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23ffffff' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 0.75rem center;
+            padding-right: 2.5rem;
+        }
+
+        .transactions-history-card-new {
+            padding: 0;
+            border-radius: 0;
+            width: 100%;
+            max-width: 100%;
+            box-sizing: border-box;
+            background: transparent;
+            border: none;
+            box-shadow: none;
+        }
+
+        .transactions-history-card-new::before {
+            display: none;
+        }
+
+        .transactions-table-wrapper-new {
+            overflow-x: visible;
+            -webkit-overflow-scrolling: touch;
+            margin: 0;
+            padding: 0 1rem 1rem 1rem;
+            width: 100%;
+            max-width: 100%;
+        }
+
+        .transactions-table-new {
+            width: 100%;
+            min-width: 0;
+            display: block;
+            border-collapse: separate;
+        }
+
+        .transactions-table-new thead {
+            display: none;
+        }
+
+        .transactions-table-new tbody {
+            display: block;
+            width: 100%;
+        }
+
+        /* Transaction Row Layout - Mobile App Style */
+        .transactions-table-new tbody tr {
+            display: flex;
+            flex-direction: row;
+            align-items: flex-start;
+            justify-content: space-between;
+            padding: 1rem;
+            gap: 0.75rem;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            margin-bottom: 0.75rem;
+            box-sizing: border-box;
+        }
+
+        .transactions-table-new tbody tr:last-child {
+            margin-bottom: 0;
+        }
+
+        /* First TD - Transaction info (left side) */
+        .transactions-table-new tbody tr td:first-child {
+            flex: 1;
+            min-width: 0;
+            display: flex;
+            padding: 0;
+            border: none;
+        }
+
+        /* Second TD - Amount (right side) */
+        .transactions-table-new tbody tr td:nth-child(2) {
+            flex: 0 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            justify-content: flex-start;
+            gap: 0.5rem;
+            padding: 0;
+            border: none;
+        }
+
+        /* Third TD - Status (hidden on mobile, shown in amount cell) */
+        .transactions-table-new tbody tr td:nth-child(3) {
+            display: none;
+        }
+
+        /* Enhanced Transaction Info Layout */
+        .transactions-type-cell-new {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 0.75rem;
+            width: 100%;
         }
 
         .transactions-type-icon-new {
             width: 40px;
             height: 40px;
             font-size: 1rem;
+            border-radius: 10px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .transactions-type-icon-new.transactions-type-icon-success-new {
+            background: rgba(255, 178, 30, 0.15);
+            color: var(--primary-color);
+        }
+
+        .transactions-type-icon-new.transactions-type-icon-danger-new {
+            background: rgba(255, 68, 68, 0.15);
+            color: #FF4444;
+        }
+
+        .transactions-type-info-new {
+            flex: 1;
+            min-width: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.25rem;
         }
 
         .transactions-type-name-new {
-            font-size: 0.875rem;
+            font-size: 0.9375rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0;
+            line-height: 1.3;
+        }
+
+        /* Date below name */
+        .transactions-type-date-new {
+            font-size: 0.6875rem;
+            color: var(--text-secondary);
+            line-height: 1.4;
+            white-space: nowrap;
+        }
+
+        /* Amount Cell - Right side styling */
+        .transactions-amount-cell-new {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 0.25rem;
+            text-align: right;
         }
 
         .transactions-amount-value-new {
-            font-size: 0.9375rem;
+            font-size: 1rem;
+            font-weight: 700;
+            font-variant-numeric: tabular-nums;
+            line-height: 1.2;
         }
 
-        .transactions-status-badge-new {
-            padding: 0.5rem 0.875rem;
+        .transactions-amount-value-new.transactions-amount-success-new {
+            color: var(--primary-color);
+        }
+
+        .transactions-amount-value-new.transactions-amount-danger-new {
+            color: #FF4444;
+        }
+
+        .transactions-amount-wallet-new {
+            font-size: 0.8125rem;
+            color: var(--text-primary);
+            font-weight: 500;
+            white-space: nowrap;
+            line-height: 1.3;
+        }
+
+        /* Status Mobile - Show on right side with colors */
+        .transactions-status-mobile {
+            display: block;
             font-size: 0.6875rem;
+            font-weight: 600;
+            text-transform: capitalize;
+            margin-top: 0.25rem;
+            text-align: right;
+        }
+
+        .transactions-status-mobile.transactions-status-completed {
+            color: var(--primary-color);
+        }
+
+        .transactions-status-mobile.transactions-status-pending {
+            color: #FFAA00;
+        }
+
+        /* Hide status cell on mobile */
+        .transactions-status-cell-new {
+            display: none;
+        }
+
+        /* Hide pagination on mobile */
+        .transactions-pagination-new {
+            display: none;
         }
     }
 </style>
@@ -1003,8 +1382,8 @@
 
 @section('content')
 <div class="transactions-new-page">
-    <!-- Hero Section -->
-    <div class="transactions-hero-new">
+    <!-- Hero Section (Desktop Only) -->
+    <div class="transactions-hero-new transactions-hero-desktop">
         <div class="transactions-hero-content-new">
             <h1 class="transactions-hero-title-new">Mining Transaction History</h1>
             <p class="transactions-hero-subtitle-new">Track all your mining activities and transactions in one place</p>
@@ -1101,8 +1480,8 @@
                                         <i class="fas fa-gift"></i>
                                     </div>
                                     <div class="transactions-type-info-new">
-                                        <div class="transactions-type-name-new">User-Bonus</div>
-                                        <div class="transactions-type-date-new">Dec 28, 2025 11:11 PM</div>
+                                        <div class="transactions-type-name-new">Bonus</div>
+                                        <div class="transactions-type-date-new">Dec 28, 2025, 11:11 PM</div>
                                     </div>
                                 </div>
                             </td>
@@ -1110,6 +1489,7 @@
                                 <div class="transactions-amount-cell-new">
                                     <div class="transactions-amount-value-new transactions-amount-success-new">+$0.30</div>
                                     <div class="transactions-amount-wallet-new">Earning Wallet: $0</div>
+                                    <div class="transactions-status-mobile transactions-status-completed">Completed</div>
                                 </div>
                             </td>
                             <td>
@@ -1154,7 +1534,7 @@
         searchInput.addEventListener('input', function(e) {
             const searchTerm = e.target.value.toLowerCase();
             const rows = document.querySelectorAll('.transactions-table-new tbody tr');
-            
+
             rows.forEach(row => {
                 const text = row.textContent.toLowerCase();
                 if (text.includes(searchTerm)) {
