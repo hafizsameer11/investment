@@ -108,7 +108,7 @@
     background: linear-gradient(135deg, var(--primary-gradient-start) 0%, var(--primary-gradient-end) 100%);
     border-color: var(--primary-gradient-start);
     color: white;
-    box-shadow: 0 0 20px rgba(0, 255, 136, 0.4);
+    box-shadow: 0 0 20px rgba(255, 178, 30, 0.4);
 }
 
 .security-step.completed .security-step-number {
@@ -185,14 +185,14 @@
     align-items: center;
     justify-content: center;
     border-radius: 50%;
-    background: rgba(0, 255, 136, 0.1);
+    background: rgba(255, 178, 30, 0.1);
     color: var(--primary-gradient-start);
     font-size: 3.5rem;
     transition: var(--transition);
 }
 
 .security-step-icon.success {
-    background: rgba(0, 255, 136, 0.1);
+    background: rgba(255, 178, 30, 0.1);
     color: var(--success-color);
 }
 
@@ -268,7 +268,7 @@
 .security-form-input:focus {
     outline: none;
     border-color: var(--primary-gradient-start);
-    box-shadow: 0 0 0 3px rgba(0, 255, 136, 0.15), 0 4px 12px rgba(0, 255, 136, 0.1);
+    box-shadow: 0 0 0 3px rgba(255, 178, 30, 0.15), 0 4px 12px rgba(255, 178, 30, 0.1);
     background: rgba(255, 255, 255, 0.05);
     transform: translateY(-1px);
 }
@@ -321,8 +321,8 @@
     align-items: center;
     gap: 1rem;
     padding: 2rem;
-    background: rgba(0, 255, 136, 0.1);
-    border: 1px solid rgba(0, 255, 136, 0.2);
+    background: rgba(255, 178, 30, 0.1);
+    border: 1px solid rgba(255, 178, 30, 0.2);
     border-radius: 12px;
     margin-bottom: 2rem;
 }
@@ -355,7 +355,7 @@
     font-weight: 700;
     cursor: pointer;
     transition: var(--transition);
-    box-shadow: 0 4px 16px rgba(0, 255, 136, 0.3);
+    box-shadow: 0 4px 16px rgba(255, 178, 30, 0.3);
     position: relative;
     overflow: hidden;
 }
@@ -380,7 +380,7 @@
 
 .security-continue-btn:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 24px rgba(0, 255, 136, 0.4);
+    box-shadow: 0 6px 24px rgba(255, 178, 30, 0.4);
 }
 
 .security-continue-btn:active {

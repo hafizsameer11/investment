@@ -24,7 +24,7 @@
     text-align: center;
     position: relative;
     overflow: hidden;
-    box-shadow: var(--shadow-sm), inset 0 0 40px rgba(0, 255, 136, 0.05);
+    box-shadow: var(--shadow-sm), inset 0 0 40px rgba(255, 178, 30, 0.05);
 }
 
 .profile-hero-section::before {
@@ -35,7 +35,7 @@
     right: 0;
     height: 4px;
     background: linear-gradient(90deg, var(--primary-gradient-start) 0%, var(--primary-gradient-end) 100%);
-    box-shadow: 0 0 20px rgba(0, 255, 136, 0.5);
+    box-shadow: 0 0 20px rgba(255, 178, 30, 0.5);
 }
 
 .profile-hero-content {
@@ -79,7 +79,7 @@
     right: 0;
     height: 4px;
     background: linear-gradient(90deg, var(--primary-gradient-start) 0%, var(--primary-gradient-end) 100%);
-    box-shadow: 0 0 20px rgba(0, 255, 136, 0.5);
+    box-shadow: 0 0 20px rgba(255, 178, 30, 0.5);
 }
 
 /* ============================================
@@ -110,7 +110,7 @@
     border-radius: 50%;
     overflow: hidden;
     border: 4px solid var(--primary-color);
-    box-shadow: 0 0 30px rgba(0, 255, 136, 0.4);
+    box-shadow: 0 0 30px rgba(255, 178, 30, 0.4);
     flex-shrink: 0;
 }
 
@@ -140,7 +140,7 @@
 
 .profile-avatar-badge:hover {
     transform: scale(1.1);
-    box-shadow: 0 4px 12px rgba(0, 255, 136, 0.5);
+    box-shadow: 0 4px 12px rgba(255, 178, 30, 0.5);
 }
 
 .profile-info-modern {
@@ -166,8 +166,8 @@
     align-items: center;
     gap: 0.5rem;
     padding: 0.5rem 1rem;
-    background: rgba(0, 255, 136, 0.1);
-    border: 1px solid rgba(0, 255, 136, 0.2);
+    background: rgba(255, 178, 30, 0.1);
+    border: 1px solid rgba(255, 178, 30, 0.2);
     border-radius: 20px;
     width: fit-content;
 }
@@ -202,12 +202,12 @@
     display: flex;
     align-items: center;
     gap: 0.75rem;
-    box-shadow: 0 4px 16px rgba(0, 255, 136, 0.3);
+    box-shadow: 0 4px 16px rgba(255, 178, 30, 0.3);
 }
 
 .profile-edit-btn-modern:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 24px rgba(0, 255, 136, 0.4);
+    box-shadow: 0 6px 24px rgba(255, 178, 30, 0.4);
 }
 
 /* ============================================
@@ -334,7 +334,7 @@
 .profile-form-input-modern:focus {
     outline: none;
     border-color: var(--primary-color);
-    box-shadow: 0 0 0 3px rgba(0, 255, 136, 0.1);
+    box-shadow: 0 0 0 3px rgba(255, 178, 30, 0.1);
     background: rgba(255, 255, 255, 0.05);
 }
 
@@ -370,12 +370,12 @@
     display: flex;
     align-items: center;
     gap: 0.75rem;
-    box-shadow: 0 4px 16px rgba(0, 255, 136, 0.3);
+    box-shadow: 0 4px 16px rgba(255, 178, 30, 0.3);
 }
 
 .profile-save-btn-modern:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 24px rgba(0, 255, 136, 0.4);
+    box-shadow: 0 6px 24px rgba(255, 178, 30, 0.4);
 }
 
 .profile-cancel-btn-modern {
@@ -419,7 +419,7 @@
 
 .profile-contact-card-modern:hover {
     border-color: var(--card-border-hover);
-    box-shadow: 0 4px 16px rgba(0, 255, 136, 0.1);
+    box-shadow: 0 4px 16px rgba(255, 178, 30, 0.1);
 }
 
 .profile-contact-icon-modern {
@@ -466,13 +466,72 @@
     display: flex;
     align-items: center;
     gap: 0.75rem;
-    box-shadow: 0 4px 16px rgba(0, 255, 136, 0.3);
+    box-shadow: 0 4px 16px rgba(255, 178, 30, 0.3);
     flex-shrink: 0;
 }
 
 .profile-contact-btn-modern:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 24px rgba(0, 255, 136, 0.4);
+    box-shadow: 0 6px 24px rgba(255, 178, 30, 0.4);
+}
+
+/* ============================================
+   Input Wrapper with Icon
+   ============================================ */
+
+.profile-input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.profile-input-icon {
+    position: absolute;
+    left: 1rem;
+    color: var(--text-secondary);
+    font-size: 1rem;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.profile-form-input-modern {
+    padding-left: 3rem;
+}
+
+/* ============================================
+   Mobile Header
+   ============================================ */
+
+.profile-mobile-header {
+    display: none;
+}
+
+.profile-contact-btn-mobile {
+    display: none;
+}
+
+.profile-mobile-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 0;
+}
+
+.profile-mobile-edit-btn {
+    padding: 0.5rem 1rem;
+    background: transparent;
+    border: 1px solid rgba(255, 178, 30, 0.3);
+    border-radius: 8px;
+    color: var(--text-primary);
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition-fast);
+}
+
+.profile-mobile-edit-btn:hover {
+    border-color: var(--primary-color);
+    background: rgba(255, 178, 30, 0.1);
 }
 
 /* ============================================
@@ -517,18 +576,31 @@
         max-width: 100%;
         box-sizing: border-box;
         overflow-x: hidden;
+        background: linear-gradient(135deg, rgba(0, 0, 0, 0.95) 0%, rgba(10, 10, 10, 0.95) 100%);
+        min-height: 100vh;
     }
 
-    .profile-hero-section {
-        padding: 2rem;
+    /* Hide desktop elements */
+    .profile-hero-desktop,
+    .profile-header-desktop,
+    .profile-tab-header-desktop,
+    .profile-contact-card-desktop {
+        display: none !important;
+    }
+
+    /* Show mobile header */
+    .profile-mobile-header {
+        display: flex !important;
+        justify-content: space-between;
+        align-items: center;
         margin-bottom: 1.5rem;
-        width: 100%;
-        max-width: 100%;
-        box-sizing: border-box;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid var(--card-border);
     }
 
-    .profile-hero-title {
-        font-size: 2rem;
+    /* Show mobile contact button */
+    .profile-contact-btn-mobile {
+        display: flex !important;
     }
 
     .profile-main-card {
@@ -536,48 +608,56 @@
         width: 100%;
         max-width: 100%;
         box-sizing: border-box;
+        background: transparent;
+        border: none;
+        box-shadow: none;
     }
 
-    .profile-header-modern {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 1.5rem;
-        width: 100%;
-        max-width: 100%;
-        box-sizing: border-box;
+    .profile-main-card::before {
+        display: none;
     }
 
-    .profile-header-left-modern {
-        width: 100%;
-    }
-
-    .profile-header-actions-modern {
-        width: 100%;
-    }
-
-    .profile-edit-btn-modern {
-        width: 100%;
-        justify-content: center;
-        padding: 1rem 1.5rem;
-    }
-
+    /* Tabs - Simple text tabs */
     .profile-tabs-modern {
-        flex-direction: column;
+        display: flex;
         gap: 0;
+        margin-bottom: 2rem;
+        border-bottom: 1px solid var(--card-border);
+        padding: 0;
     }
 
     .profile-tab-modern {
-        width: 100%;
-        justify-content: flex-start;
-        border-bottom: 1px solid var(--card-border);
-        border-left: 3px solid transparent;
-        margin-bottom: 0;
-        padding: 1rem 1.5rem;
+        flex: 1;
+        padding: 1rem;
+        background: transparent;
+        border: none;
+        border-bottom: 2px solid transparent;
+        color: var(--text-secondary);
+        font-size: 0.9375rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: var(--transition-fast);
+        text-align: center;
+        position: relative;
+        margin-bottom: -1px;
+    }
+
+    .profile-tab-modern i {
+        display: none;
     }
 
     .profile-tab-modern.active {
-        border-left-color: var(--primary-color);
-        border-bottom-color: var(--card-border);
+        color: var(--text-primary);
+        border-bottom-color: var(--primary-color);
+    }
+
+    .profile-tab-text {
+        display: inline-block;
+    }
+
+    /* Form styling for mobile */
+    .profile-form-modern {
+        gap: 1.5rem;
     }
 
     .profile-form-grid-modern {
@@ -585,18 +665,88 @@
         gap: 1.5rem;
     }
 
-    .profile-contact-card-modern {
-        flex-direction: column;
-        text-align: center;
-        gap: 1rem;
-        width: 100%;
-        max-width: 100%;
-        box-sizing: border-box;
+    .profile-form-group-modern {
+        gap: 0.5rem;
     }
 
-    .profile-contact-btn-modern {
+    .profile-form-label-modern {
+        font-size: 0.8125rem;
+        margin-bottom: 0.25rem;
+    }
+
+    .profile-form-label-modern i {
+        display: none;
+    }
+
+    .profile-form-input-modern {
+        padding: 1rem 1rem 1rem 3rem;
+        background: rgba(20, 20, 20, 0.8);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 12px;
+        color: var(--text-primary);
+        font-size: 0.9375rem;
         width: 100%;
+    }
+
+    .profile-form-input-modern:focus {
+        outline: none;
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 3px rgba(255, 178, 30, 0.1);
+        background: rgba(20, 20, 20, 0.9);
+    }
+
+    .profile-form-input-modern:read-only {
+        background: rgba(20, 20, 20, 0.8);
+        cursor: not-allowed;
+        opacity: 0.9;
+    }
+
+    .profile-input-icon {
+        left: 1rem;
+        color: var(--text-secondary);
+        font-size: 1rem;
+    }
+
+    /* Contact button - full width at bottom */
+    .profile-contact-section-modern {
+        margin-top: 2rem;
+        padding-top: 2rem;
+        border-top: 1px solid var(--card-border);
+    }
+
+    .profile-contact-btn-mobile {
+        width: 100%;
+        padding: 1rem;
+        background: rgba(20, 20, 20, 0.8);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 12px;
+        color: var(--text-primary);
+        font-size: 0.9375rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: var(--transition-fast);
+        display: flex;
+        align-items: center;
         justify-content: center;
+        margin: 0;
+    }
+
+    .profile-contact-btn-mobile:hover {
+        background: rgba(20, 20, 20, 0.9);
+        border-color: var(--card-border-hover);
+    }
+
+    .profile-contact-btn-mobile i {
+        display: none;
+    }
+
+    .profile-form-actions-modern {
+        display: none !important;
+    }
+
+    /* Ensure mobile edit button is visible */
+    .profile-mobile-edit-btn {
+        display: block;
     }
 }
 
@@ -606,17 +756,8 @@
         max-width: 100%;
         box-sizing: border-box;
         overflow-x: hidden;
-    }
-
-    .profile-hero-section {
-        padding: 1.5rem;
-        width: 100%;
-        max-width: 100%;
-        box-sizing: border-box;
-    }
-
-    .profile-hero-title {
-        font-size: 1.75rem;
+        background: linear-gradient(135deg, rgba(0, 0, 0, 0.95) 0%, rgba(10, 10, 10, 0.95) 100%);
+        min-height: 100vh;
     }
 
     .profile-main-card {
@@ -626,50 +767,41 @@
         box-sizing: border-box;
     }
 
-    .profile-avatar-modern {
-        width: 100px;
-        height: 100px;
+    .profile-mobile-title {
+        font-size: 1.375rem;
     }
 
-    .profile-name-modern {
-        font-size: 1.5rem;
-    }
-
-    .profile-form-actions-modern {
-        flex-direction: column;
-        gap: 0.75rem;
-    }
-
-    .profile-save-btn-modern,
-    .profile-cancel-btn-modern {
-        width: 100%;
-        justify-content: center;
-        padding: 1rem 1.5rem;
-        font-size: 0.9375rem;
+    .profile-mobile-edit-btn {
+        padding: 0.5rem 0.875rem;
+        font-size: 0.8125rem;
     }
 
     .profile-tab-modern {
-        padding: 0.875rem 1.25rem;
-        font-size: 0.9375rem;
-    }
-
-    .profile-header-modern {
-        width: 100%;
-        max-width: 100%;
-        box-sizing: border-box;
+        padding: 0.875rem 0.75rem;
+        font-size: 0.875rem;
     }
 
     .profile-form-grid-modern {
         grid-template-columns: 1fr;
+        gap: 1.25rem;
         width: 100%;
         max-width: 100%;
         box-sizing: border-box;
     }
 
-    .profile-contact-card-modern {
-        width: 100%;
-        max-width: 100%;
-        box-sizing: border-box;
+    .profile-form-input-modern {
+        padding: 0.875rem 0.875rem 0.875rem 2.75rem;
+        font-size: 0.875rem;
+    }
+
+    .profile-input-icon {
+        left: 0.875rem;
+        font-size: 0.9375rem;
+    }
+
+    .profile-contact-btn-mobile {
+        padding: 0.875rem;
+        font-size: 0.875rem;
     }
 }
 
@@ -679,21 +811,8 @@
         max-width: 100%;
         box-sizing: border-box;
         overflow-x: hidden;
-    }
-
-    .profile-hero-section {
-        padding: 1.25rem;
-        width: 100%;
-        max-width: 100%;
-        box-sizing: border-box;
-    }
-
-    .profile-hero-title {
-        font-size: 1.5rem;
-    }
-
-    .profile-hero-subtitle {
-        font-size: 0.875rem;
+        background: linear-gradient(135deg, rgba(0, 0, 0, 0.95) 0%, rgba(10, 10, 10, 0.95) 100%);
+        min-height: 100vh;
     }
 
     .profile-main-card {
@@ -703,24 +822,18 @@
         box-sizing: border-box;
     }
 
-    .profile-header-modern {
-        width: 100%;
-        max-width: 100%;
-        box-sizing: border-box;
-        gap: 1rem;
-    }
-
-    .profile-avatar-modern {
-        width: 80px;
-        height: 80px;
-    }
-
-    .profile-name-modern {
+    .profile-mobile-title {
         font-size: 1.25rem;
     }
 
-    .profile-email-modern {
-        font-size: 0.875rem;
+    .profile-mobile-edit-btn {
+        padding: 0.5rem 0.75rem;
+        font-size: 0.75rem;
+    }
+
+    .profile-tab-modern {
+        padding: 0.75rem 0.5rem;
+        font-size: 0.8125rem;
     }
 
     .profile-form-grid-modern {
@@ -741,47 +854,18 @@
         width: 100%;
         max-width: 100%;
         box-sizing: border-box;
-    }
-
-    .profile-tabs-modern {
-        width: 100%;
-        max-width: 100%;
-        box-sizing: border-box;
-    }
-
-    .profile-tab-modern {
-        width: 100%;
-        padding: 0.75rem 1rem;
-        font-size: 0.875rem;
-    }
-
-    .profile-contact-card-modern {
-        padding: 1.5rem;
-        width: 100%;
-        max-width: 100%;
-        box-sizing: border-box;
-    }
-
-    .profile-contact-icon-modern {
-        width: 56px;
-        height: 56px;
-        font-size: 1.5rem;
-    }
-
-    .profile-contact-title-modern {
-        font-size: 1.125rem;
-    }
-
-    .profile-contact-subtitle-modern {
+        padding: 0.875rem 0.875rem 0.875rem 2.5rem;
         font-size: 0.8125rem;
     }
 
-    .profile-edit-btn-modern,
-    .profile-save-btn-modern,
-    .profile-cancel-btn-modern,
-    .profile-contact-btn-modern {
-        width: 100%;
-        padding: 0.875rem 1.25rem;
+    .profile-input-icon {
+        left: 0.75rem;
         font-size: 0.875rem;
+    }
+
+    .profile-contact-btn-mobile {
+        width: 100%;
+        padding: 0.875rem;
+        font-size: 0.8125rem;
     }
 }

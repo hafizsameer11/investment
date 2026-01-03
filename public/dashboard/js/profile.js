@@ -10,6 +10,7 @@
     const tabs = document.querySelectorAll('.profile-tab-modern, .profile-tab');
     const tabContents = document.querySelectorAll('.profile-tab-content-modern, .profile-tab-content');
     const editBtn = document.getElementById('editProfileBtn');
+    const editBtnMobile = document.getElementById('editProfileBtnMobile');
     const saveBtn = document.getElementById('saveProfileBtn');
     const cancelBtn = document.getElementById('cancelProfileBtn');
     const savePasswordBtn = document.getElementById('savePasswordBtn');
@@ -81,31 +82,43 @@
     }
 
     /**
+     * Toggle Edit Mode
+     */
+    function toggleEditMode() {
+        isEditMode = !isEditMode;
+        
+        if (isEditMode) {
+            // Enable edit mode
+            formInputs.forEach(input => {
+                if (input.id !== 'email' && input.closest('#accountTab')) { // Keep email read-only, only edit account tab
+                    input.removeAttribute('readonly');
+                    input.classList.add('editable');
+                }
+            });
+            
+            // Show save and cancel buttons
+            if (saveBtn) saveBtn.style.display = 'flex';
+            if (cancelBtn) cancelBtn.style.display = 'flex';
+            
+            // Hide edit buttons
+            if (editBtn) editBtn.style.display = 'none';
+            if (editBtnMobile) editBtnMobile.style.display = 'none';
+        }
+    }
+
+    /**
      * Initialize Edit Mode
      */
     function initEditMode() {
-        if (!editBtn) return;
+        // Desktop edit button
+        if (editBtn) {
+            editBtn.addEventListener('click', toggleEditMode);
+        }
 
-        editBtn.addEventListener('click', function() {
-            isEditMode = !isEditMode;
-            
-            if (isEditMode) {
-                // Enable edit mode
-                formInputs.forEach(input => {
-                    if (input.id !== 'email' && input.closest('#accountTab')) { // Keep email read-only, only edit account tab
-                        input.removeAttribute('readonly');
-                        input.classList.add('editable');
-                    }
-                });
-                
-                // Show save and cancel buttons
-                if (saveBtn) saveBtn.style.display = 'flex';
-                if (cancelBtn) cancelBtn.style.display = 'flex';
-                
-                // Hide edit button
-                this.style.display = 'none';
-            }
-        });
+        // Mobile edit button
+        if (editBtnMobile) {
+            editBtnMobile.addEventListener('click', toggleEditMode);
+        }
 
         // Save button handler
         if (saveBtn) {
@@ -122,8 +135,9 @@
                 this.style.display = 'none';
                 if (cancelBtn) cancelBtn.style.display = 'none';
                 
-                // Show edit button
+                // Show edit buttons
                 if (editBtn) editBtn.style.display = 'flex';
+                if (editBtnMobile) editBtnMobile.style.display = 'block';
                 
                 isEditMode = false;
                 
@@ -147,8 +161,9 @@
                 this.style.display = 'none';
                 if (saveBtn) saveBtn.style.display = 'none';
                 
-                // Show edit button
+                // Show edit buttons
                 if (editBtn) editBtn.style.display = 'flex';
+                if (editBtnMobile) editBtnMobile.style.display = 'block';
                 
                 isEditMode = false;
             });

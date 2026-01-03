@@ -31,7 +31,7 @@
         left: 0;
         right: 0;
         height: 6px;
-        background: linear-gradient(90deg, #00FF88 0%, #00D977 50%, #00FF88 100%);
+        background: linear-gradient(90deg, #FFB21E 0%, #FF8A1D 50%, #FFB21E 100%);
         background-size: 200% 100%;
         animation: shimmer 3s linear infinite;
     }
@@ -48,7 +48,7 @@
         right: -50%;
         width: 200%;
         height: 200%;
-        background: radial-gradient(circle, rgba(0, 255, 136, 0.08) 0%, transparent 70%);
+        background: radial-gradient(circle, rgba(255, 178, 30, 0.08) 0%, transparent 70%);
         pointer-events: none;
     }
 
@@ -60,7 +60,7 @@
     .goals-hero-title-new {
         font-size: 3rem;
         font-weight: 700;
-        background: linear-gradient(135deg, #00FF88 0%, #00D977 100%);
+        background: linear-gradient(135deg, #FFB21E 0%, #FF8A1D 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
@@ -131,7 +131,7 @@
 
     .goals-status-card-new:hover {
         transform: translateY(-5px);
-        box-shadow: 0 8px 32px rgba(0, 255, 136, 0.2);
+        box-shadow: 0 8px 32px rgba(255, 178, 30, 0.2);
         border-color: var(--primary-color);
     }
 
@@ -148,13 +148,13 @@
         height: 120px;
         margin: 0 auto 1.5rem;
         border-radius: 50%;
-        background: linear-gradient(135deg, rgba(0, 255, 136, 0.2) 0%, rgba(0, 217, 119, 0.1) 100%);
-        border: 3px solid rgba(0, 255, 136, 0.4);
+        background: linear-gradient(135deg, rgba(255, 178, 30, 0.2) 0%, rgba(255, 138, 29, 0.1) 100%);
+        border: 3px solid rgba(255, 178, 30, 0.4);
         display: flex;
         align-items: center;
         justify-content: center;
         position: relative;
-        box-shadow: 0 0 30px rgba(0, 255, 136, 0.3);
+        box-shadow: 0 0 30px rgba(255, 178, 30, 0.3);
     }
 
     .goals-rank-icon-wrapper-new::before {
@@ -164,7 +164,7 @@
         left: -50%;
         width: 200%;
         height: 200%;
-        background: radial-gradient(circle, rgba(0, 255, 136, 0.3) 0%, transparent 70%);
+        background: radial-gradient(circle, rgba(255, 178, 30, 0.3) 0%, transparent 70%);
         animation: pulse 2s ease-in-out infinite;
     }
 
@@ -178,14 +178,14 @@
         color: var(--primary-color);
         position: relative;
         z-index: 1;
-        filter: drop-shadow(0 0 10px rgba(0, 255, 136, 0.8));
+        filter: drop-shadow(0 0 10px rgba(255, 178, 30, 0.8));
     }
 
     .goals-rank-badge-new {
         display: inline-block;
         padding: 0.625rem 1.25rem;
-        background: linear-gradient(135deg, rgba(0, 255, 136, 0.2) 0%, rgba(0, 217, 119, 0.15) 100%);
-        border: 1px solid rgba(0, 255, 136, 0.4);
+        background: linear-gradient(135deg, rgba(255, 178, 30, 0.2) 0%, rgba(255, 138, 29, 0.15) 100%);
+        border: 1px solid rgba(255, 178, 30, 0.4);
         border-radius: 20px;
         font-size: 0.875rem;
         font-weight: 600;
@@ -193,7 +193,7 @@
         text-transform: uppercase;
         letter-spacing: 0.5px;
         margin-bottom: 1rem;
-        box-shadow: 0 0 16px rgba(0, 255, 136, 0.3);
+        box-shadow: 0 0 16px rgba(255, 178, 30, 0.3);
     }
 
     .goals-rank-label-new {
@@ -225,8 +225,8 @@
     .goals-progress-goal-name-new {
         display: inline-block;
         padding: 0.5rem 1rem;
-        background: rgba(0, 255, 136, 0.1);
-        border: 1px solid rgba(0, 255, 136, 0.3);
+        background: rgba(255, 178, 30, 0.1);
+        border: 1px solid rgba(255, 178, 30, 0.3);
         border-radius: 12px;
         font-size: 0.875rem;
         font-weight: 600;
@@ -241,16 +241,16 @@
 
     .goals-progress-bar-wrapper-new {
         position: relative;
-        background: rgba(0, 255, 136, 0.1);
+        background: rgba(255, 178, 30, 0.1);
         border-radius: 20px;
         height: 40px;
         overflow: hidden;
-        border: 1px solid rgba(0, 255, 136, 0.2);
+        border: 1px solid rgba(255, 178, 30, 0.2);
     }
 
     .goals-progress-fill-new {
         height: 100%;
-        background: linear-gradient(90deg, #00FF88 0%, #00D977 100%);
+        background: linear-gradient(90deg, #FFB21E 0%, #FF8A1D 100%);
         border-radius: 20px;
         transition: width 0.5s ease;
         position: relative;
@@ -344,8 +344,8 @@
         align-items: center;
         gap: 0.75rem;
         padding: 1rem;
-        background: rgba(0, 255, 136, 0.05);
-        border: 1px solid rgba(0, 255, 136, 0.2);
+        background: rgba(255, 178, 30, 0.05);
+        border: 1px solid rgba(255, 178, 30, 0.2);
         border-radius: 12px;
         margin-bottom: 0.75rem;
     }
@@ -366,17 +366,17 @@
 
     .goals-next-progress-bar-wrapper-new {
         position: relative;
-        background: rgba(0, 255, 136, 0.1);
+        background: rgba(255, 178, 30, 0.1);
         border-radius: 12px;
         height: 24px;
         overflow: hidden;
         margin-bottom: 0.75rem;
-        border: 1px solid rgba(0, 255, 136, 0.2);
+        border: 1px solid rgba(255, 178, 30, 0.2);
     }
 
     .goals-next-progress-fill-new {
         height: 100%;
-        background: linear-gradient(90deg, #00FF88 0%, #00D977 100%);
+        background: linear-gradient(90deg, #FFB21E 0%, #FF8A1D 100%);
         border-radius: 12px;
         transition: width 0.5s ease;
     }
@@ -441,7 +441,7 @@
 
     .goals-reward-card-new:hover {
         transform: translateY(-5px);
-        box-shadow: 0 8px 32px rgba(0, 255, 136, 0.2);
+        box-shadow: 0 8px 32px rgba(255, 178, 30, 0.2);
         border-color: var(--primary-color);
     }
 
@@ -450,9 +450,9 @@
     }
 
     .goals-reward-card-new.current {
-        background: linear-gradient(135deg, rgba(0, 255, 136, 0.1) 0%, rgba(0, 217, 119, 0.05) 100%);
-        border: 2px solid rgba(0, 255, 136, 0.5);
-        box-shadow: 0 0 40px rgba(0, 255, 136, 0.3);
+        background: linear-gradient(135deg, rgba(255, 178, 30, 0.1) 0%, rgba(255, 138, 29, 0.05) 100%);
+        border: 2px solid rgba(255, 178, 30, 0.5);
+        box-shadow: 0 0 40px rgba(255, 178, 30, 0.3);
     }
 
     .goals-reward-card-new.current::before {
@@ -464,14 +464,14 @@
         top: 1.5rem;
         right: 1.5rem;
         padding: 0.5rem 1rem;
-        background: linear-gradient(135deg, #00FF88 0%, #00D977 100%);
+        background: linear-gradient(135deg, #FFB21E 0%, #FF8A1D 100%);
         color: #000;
         border-radius: 20px;
         font-size: 0.75rem;
         font-weight: 700;
         text-transform: uppercase;
         letter-spacing: 0.5px;
-        box-shadow: 0 4px 16px rgba(0, 255, 136, 0.4);
+        box-shadow: 0 4px 16px rgba(255, 178, 30, 0.4);
         z-index: 10;
     }
 
@@ -545,8 +545,8 @@
     }
 
     .goals-reward-prize-new {
-        background: linear-gradient(135deg, rgba(0, 255, 136, 0.15) 0%, rgba(0, 217, 119, 0.1) 100%);
-        border: 1px solid rgba(0, 255, 136, 0.3);
+        background: linear-gradient(135deg, rgba(255, 178, 30, 0.15) 0%, rgba(255, 138, 29, 0.1) 100%);
+        border: 1px solid rgba(255, 178, 30, 0.3);
         text-align: center;
     }
 
@@ -572,7 +572,7 @@
         font-weight: 700;
         color: var(--primary-color);
         font-variant-numeric: tabular-nums;
-        text-shadow: 0 0 20px rgba(0, 255, 136, 0.5);
+        text-shadow: 0 0 20px rgba(255, 178, 30, 0.5);
     }
 
     .goals-reward-progress-new {
@@ -581,17 +581,17 @@
 
     .goals-reward-progress-bar-wrapper-new {
         position: relative;
-        background: rgba(0, 255, 136, 0.1);
+        background: rgba(255, 178, 30, 0.1);
         border-radius: 12px;
         height: 28px;
         overflow: hidden;
         margin-bottom: 0.5rem;
-        border: 1px solid rgba(0, 255, 136, 0.2);
+        border: 1px solid rgba(255, 178, 30, 0.2);
     }
 
     .goals-reward-progress-fill-new {
         height: 100%;
-        background: linear-gradient(90deg, #00FF88 0%, #00D977 100%);
+        background: linear-gradient(90deg, #FFB21E 0%, #FF8A1D 100%);
         border-radius: 12px;
         transition: width 0.5s ease;
     }
@@ -656,7 +656,7 @@
 
     .goals-level-card-new:hover {
         transform: translateY(-4px);
-        box-shadow: 0 8px 24px rgba(0, 255, 136, 0.2);
+        box-shadow: 0 8px 24px rgba(255, 178, 30, 0.2);
         border-color: var(--primary-color);
     }
 
@@ -665,8 +665,8 @@
     }
 
     .goals-level-card-new.premium {
-        background: linear-gradient(135deg, rgba(0, 255, 136, 0.1) 0%, rgba(0, 217, 119, 0.05) 100%);
-        border: 2px solid rgba(0, 255, 136, 0.4);
+        background: linear-gradient(135deg, rgba(255, 178, 30, 0.1) 0%, rgba(255, 138, 29, 0.05) 100%);
+        border: 2px solid rgba(255, 178, 30, 0.4);
     }
 
     .goals-level-badge-premium-new {
@@ -674,14 +674,14 @@
         top: 1rem;
         right: 1rem;
         padding: 0.375rem 0.875rem;
-        background: linear-gradient(135deg, #00FF88 0%, #00D977 100%);
+        background: linear-gradient(135deg, #FFB21E 0%, #FF8A1D 100%);
         color: #000;
         border-radius: 20px;
         font-size: 0.75rem;
         font-weight: 700;
         text-transform: uppercase;
         letter-spacing: 0.5px;
-        box-shadow: 0 4px 12px rgba(0, 255, 136, 0.4);
+        box-shadow: 0 4px 12px rgba(255, 178, 30, 0.4);
         z-index: 10;
     }
 
@@ -746,7 +746,7 @@
         justify-content: space-between;
         align-items: center;
         padding: 0.75rem;
-        background: rgba(0, 255, 136, 0.05);
+        background: rgba(255, 178, 30, 0.05);
         border-radius: 10px;
     }
 
@@ -773,17 +773,17 @@
 
     .goals-level-progress-bar-wrapper-new {
         position: relative;
-        background: rgba(0, 255, 136, 0.1);
+        background: rgba(255, 178, 30, 0.1);
         border-radius: 10px;
         height: 20px;
         overflow: hidden;
         margin-bottom: 0.5rem;
-        border: 1px solid rgba(0, 255, 136, 0.2);
+        border: 1px solid rgba(255, 178, 30, 0.2);
     }
 
     .goals-level-progress-fill-new {
         height: 100%;
-        background: linear-gradient(90deg, #00FF88 0%, #00D977 100%);
+        background: linear-gradient(90deg, #FFB21E 0%, #FF8A1D 100%);
         border-radius: 10px;
         transition: width 0.5s ease;
     }

@@ -38,7 +38,7 @@
         height: 80px;
         border-radius: 50%;
         object-fit: cover;
-        border: 3px solid rgba(0, 255, 136, 0.3);
+        border: 3px solid rgba(255, 178, 30, 0.3);
     }
 
     .settings-avatar-camera {
@@ -152,7 +152,7 @@
         display: flex;
         align-items: center;
         padding: 1.25rem 1.5rem;
-        border-bottom: 1px solid rgba(0, 255, 136, 0.1);
+        border-bottom: 1px solid rgba(255, 178, 30, 0.1);
         text-decoration: none;
         color: var(--text-primary);
         transition: var(--transition);
@@ -166,14 +166,14 @@
     }
 
     .settings-menu-item:hover {
-        background: rgba(0, 255, 136, 0.05);
+        background: rgba(255, 178, 30, 0.05);
         border-left: 3px solid var(--primary-color);
     }
 
     .settings-menu-icon {
         width: 40px;
         height: 40px;
-        background: rgba(0, 255, 136, 0.1);
+        background: rgba(255, 178, 30, 0.1);
         border-radius: 10px;
         display: flex;
         align-items: center;
@@ -197,8 +197,8 @@
     }
 
     .settings-menu-badge {
-        background: rgba(0, 255, 136, 0.2);
-        border: 1px solid rgba(0, 255, 136, 0.4);
+        background: rgba(255, 178, 30, 0.2);
+        border: 1px solid rgba(255, 178, 30, 0.4);
         border-radius: 6px;
         padding: 0.25rem 0.75rem;
         font-size: 0.75rem;

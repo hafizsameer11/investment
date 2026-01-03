@@ -24,7 +24,7 @@
     text-align: center;
     position: relative;
     overflow: hidden;
-    box-shadow: var(--shadow-sm), inset 0 0 40px rgba(0, 255, 136, 0.05);
+    box-shadow: var(--shadow-sm), inset 0 0 40px rgba(255, 178, 30, 0.05);
 }
 
 .referrals-hero-section::before {
@@ -35,7 +35,7 @@
     right: 0;
     height: 4px;
     background: linear-gradient(90deg, var(--primary-gradient-start) 0%, var(--primary-gradient-end) 100%);
-    box-shadow: 0 0 20px rgba(0, 255, 136, 0.5);
+    box-shadow: 0 0 20px rgba(255, 178, 30, 0.5);
 }
 
 .referrals-hero-content {
@@ -102,7 +102,7 @@
 
 .referrals-stat-card-modern:hover {
     transform: translateY(-4px);
-    box-shadow: var(--shadow-md), 0 0 20px rgba(0, 255, 136, 0.15);
+    box-shadow: var(--shadow-md), 0 0 20px rgba(255, 178, 30, 0.15);
     border-color: var(--card-border-hover);
 }
 
@@ -178,7 +178,7 @@
     right: 0;
     height: 4px;
     background: linear-gradient(90deg, var(--primary-gradient-start) 0%, var(--primary-gradient-end) 100%);
-    box-shadow: 0 0 20px rgba(0, 255, 136, 0.5);
+    box-shadow: 0 0 20px rgba(255, 178, 30, 0.5);
 }
 
 .referrals-earning-wallet-header {
@@ -198,7 +198,7 @@
     justify-content: center;
     font-size: 1.75rem;
     color: #000;
-    box-shadow: 0 4px 16px rgba(0, 255, 136, 0.3);
+    box-shadow: 0 4px 16px rgba(255, 178, 30, 0.3);
     flex-shrink: 0;
 }
 
@@ -301,12 +301,12 @@
     align-items: center;
     justify-content: center;
     gap: 0.75rem;
-    box-shadow: 0 4px 16px rgba(0, 255, 136, 0.3);
+    box-shadow: 0 4px 16px rgba(255, 178, 30, 0.3);
 }
 
 .referrals-claim-btn-modern:hover:not(:disabled) {
     transform: translateY(-2px);
-    box-shadow: 0 6px 24px rgba(0, 255, 136, 0.4);
+    box-shadow: 0 6px 24px rgba(255, 178, 30, 0.4);
 }
 
 .referrals-claim-btn-modern:disabled {
@@ -381,7 +381,7 @@
 
 .referrals-tool-card-modern:hover {
     transform: translateY(-4px);
-    box-shadow: var(--shadow-md), 0 0 20px rgba(0, 255, 136, 0.15);
+    box-shadow: var(--shadow-md), 0 0 20px rgba(255, 178, 30, 0.15);
     border-color: var(--card-border-hover);
 }
 
@@ -406,7 +406,7 @@
     justify-content: center;
     font-size: 1.25rem;
     color: #000;
-    box-shadow: 0 4px 12px rgba(0, 255, 136, 0.3);
+    box-shadow: 0 4px 12px rgba(255, 178, 30, 0.3);
     flex-shrink: 0;
 }
 
@@ -445,7 +445,7 @@
 .referrals-tool-input-modern:focus {
     outline: none;
     border-color: var(--primary-color);
-    box-shadow: 0 0 0 3px rgba(0, 255, 136, 0.1);
+    box-shadow: 0 0 0 3px rgba(255, 178, 30, 0.1);
 }
 
 .referrals-tool-copy-btn-modern {
@@ -460,13 +460,13 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 4px 12px rgba(0, 255, 136, 0.3);
+    box-shadow: 0 4px 12px rgba(255, 178, 30, 0.3);
     flex-shrink: 0;
 }
 
 .referrals-tool-copy-btn-modern:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(0, 255, 136, 0.4);
+    box-shadow: 0 6px 20px rgba(255, 178, 30, 0.4);
 }
 
 .referrals-tool-hint-modern {
@@ -635,7 +635,7 @@
 
 .referrals-commission-card-modern:hover {
     transform: translateY(-4px);
-    box-shadow: var(--shadow-md), 0 0 20px rgba(0, 255, 136, 0.15);
+    box-shadow: var(--shadow-md), 0 0 20px rgba(255, 178, 30, 0.15);
     border-color: var(--card-border-hover);
 }
 
@@ -722,7 +722,7 @@
     font-size: 1.75rem;
     font-weight: 700;
     color: var(--primary-color);
-    text-shadow: 0 0 15px rgba(0, 255, 136, 0.5);
+    text-shadow: 0 0 15px rgba(255, 178, 30, 0.5);
     line-height: 1;
 }
 
@@ -792,7 +792,7 @@
 .referrals-network-filter-select-modern:focus {
     outline: none;
     border-color: var(--primary-color);
-    box-shadow: 0 0 0 3px rgba(0, 255, 136, 0.1);
+    box-shadow: 0 0 0 3px rgba(255, 178, 30, 0.1);
 }
 
 .referrals-network-card-modern {
@@ -823,7 +823,7 @@
 }
 
 .referrals-network-table-modern thead {
-    background: linear-gradient(135deg, rgba(0, 255, 136, 0.1) 0%, rgba(0, 217, 119, 0.08) 100%);
+    background: linear-gradient(135deg, rgba(255, 178, 30, 0.1) 0%, rgba(255, 138, 29, 0.08) 100%);
     border-bottom: 2px solid var(--card-border);
 }
 
@@ -843,7 +843,7 @@
 }
 
 .referrals-network-table-modern tbody tr:hover {
-    background: rgba(0, 255, 136, 0.05);
+    background: rgba(255, 178, 30, 0.05);
 }
 
 .referrals-network-table-modern td {
@@ -952,7 +952,7 @@
     justify-content: center;
     font-size: 1.25rem;
     color: #000;
-    box-shadow: 0 4px 12px rgba(0, 255, 136, 0.3);
+    box-shadow: 0 4px 12px rgba(255, 178, 30, 0.3);
     flex-shrink: 0;
 }
 

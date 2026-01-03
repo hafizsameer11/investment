@@ -23,7 +23,7 @@
     margin-bottom: 2rem;
     position: relative;
     overflow: hidden;
-    box-shadow: var(--shadow-sm), inset 0 0 40px rgba(0, 255, 136, 0.05);
+    box-shadow: var(--shadow-sm), inset 0 0 40px rgba(255, 178, 30, 0.05);
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -38,7 +38,7 @@
     right: 0;
     height: 4px;
     background: linear-gradient(90deg, var(--primary-gradient-start) 0%, var(--primary-gradient-end) 100%);
-    box-shadow: 0 0 20px rgba(0, 255, 136, 0.5);
+    box-shadow: 0 0 20px rgba(255, 178, 30, 0.5);
 }
 
 .transactions-hero-content {
@@ -70,8 +70,8 @@
 .transactions-hero-image-placeholder {
     width: 200px;
     height: 120px;
-    background: linear-gradient(135deg, rgba(0, 255, 136, 0.1) 0%, rgba(0, 217, 119, 0.08) 100%);
-    border: 2px dashed rgba(0, 255, 136, 0.3);
+    background: linear-gradient(135deg, rgba(255, 178, 30, 0.1) 0%, rgba(255, 138, 29, 0.08) 100%);
+    border: 2px dashed rgba(255, 178, 30, 0.3);
     border-radius: 12px;
     display: flex;
     flex-direction: column;
@@ -83,7 +83,7 @@
 
 .transactions-hero-image-placeholder i {
     font-size: 2.5rem;
-    filter: drop-shadow(0 0 10px rgba(0, 255, 136, 0.5));
+    filter: drop-shadow(0 0 10px rgba(255, 178, 30, 0.5));
 }
 
 .transactions-hero-image-placeholder span {
@@ -135,7 +135,7 @@
 
 .transactions-summary-card-modern:hover {
     transform: translateY(-4px);
-    box-shadow: var(--shadow-md), 0 0 20px rgba(0, 255, 136, 0.15);
+    box-shadow: var(--shadow-md), 0 0 20px rgba(255, 178, 30, 0.15);
     border-color: var(--card-border-hover);
 }
 
@@ -265,7 +265,7 @@
 .transactions-search-input-modern:focus {
     outline: none;
     border-color: var(--primary-color);
-    box-shadow: 0 0 0 3px rgba(0, 255, 136, 0.1);
+    box-shadow: 0 0 0 3px rgba(255, 178, 30, 0.1);
     width: 300px;
 }
 
@@ -308,7 +308,7 @@
 .transactions-date-filter-modern:focus {
     outline: none;
     border-color: var(--primary-color);
-    box-shadow: 0 0 0 3px rgba(0, 255, 136, 0.1);
+    box-shadow: 0 0 0 3px rgba(255, 178, 30, 0.1);
 }
 
 .transactions-history-card-modern {
@@ -341,7 +341,7 @@
 }
 
 .transactions-table-modern thead {
-    background: linear-gradient(135deg, rgba(0, 255, 136, 0.1) 0%, rgba(0, 217, 119, 0.08) 100%);
+    background: linear-gradient(135deg, rgba(255, 178, 30, 0.1) 0%, rgba(255, 138, 29, 0.08) 100%);
     border-bottom: 2px solid var(--card-border);
 }
 
@@ -361,7 +361,7 @@
 }
 
 .transactions-table-modern tbody tr:hover {
-    background: rgba(0, 255, 136, 0.05);
+    background: rgba(255, 178, 30, 0.05);
     transform: none;
 }
 
@@ -438,7 +438,7 @@
 
 .transactions-amount-success {
     color: var(--primary-color);
-    text-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
+    text-shadow: 0 0 10px rgba(255, 178, 30, 0.5);
 }
 
 .transactions-amount-danger {
@@ -468,8 +468,8 @@
 }
 
 .transactions-status-completed {
-    background: rgba(0, 255, 136, 0.1);
-    border: 1px solid rgba(0, 255, 136, 0.3);
+    background: rgba(255, 178, 30, 0.1);
+    border: 1px solid rgba(255, 178, 30, 0.3);
     color: var(--primary-color);
 }
 

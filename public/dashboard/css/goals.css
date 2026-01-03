@@ -21,7 +21,7 @@
     text-align: center;
     position: relative;
     overflow: hidden;
-    box-shadow: var(--shadow-sm), inset 0 0 40px rgba(0, 255, 136, 0.05);
+    box-shadow: var(--shadow-sm), inset 0 0 40px rgba(255, 178, 30, 0.05);
 }
 
 .goals-hero-section::before {
@@ -32,7 +32,7 @@
     right: 0;
     height: 4px;
     background: linear-gradient(90deg, var(--primary-gradient-start) 0%, var(--primary-gradient-end) 100%);
-    box-shadow: 0 0 20px rgba(0, 255, 136, 0.5);
+    box-shadow: 0 0 20px rgba(255, 178, 30, 0.5);
 }
 
 .goals-hero-content {
@@ -120,7 +120,7 @@
 .goals-progress-card-modern:hover,
 .goals-next-goal-card-modern:hover {
     transform: translateY(-4px);
-    box-shadow: var(--shadow-md), 0 0 20px rgba(0, 255, 136, 0.15);
+    box-shadow: var(--shadow-md), 0 0 20px rgba(255, 178, 30, 0.15);
     border-color: var(--card-border-hover);
 }
 
@@ -156,8 +156,8 @@
 .goals-rank-badge-modern {
     display: inline-block;
     padding: 0.5rem 1rem;
-    background: rgba(0, 255, 136, 0.1);
-    border: 1px solid rgba(0, 255, 136, 0.2);
+    background: rgba(255, 178, 30, 0.1);
+    border: 1px solid rgba(255, 178, 30, 0.2);
     border-radius: 20px;
     font-size: 0.875rem;
     font-weight: 600;
@@ -201,7 +201,7 @@
     font-size: 1.25rem;
     font-weight: 700;
     color: var(--primary-color);
-    text-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
+    text-shadow: 0 0 10px rgba(255, 178, 30, 0.5);
 }
 
 .goals-progress-display-modern {
@@ -224,7 +224,7 @@
     background: linear-gradient(90deg, var(--primary-gradient-start) 0%, var(--primary-gradient-end) 100%);
     border-radius: 10px;
     transition: width 0.5s ease;
-    box-shadow: 0 0 15px rgba(0, 255, 136, 0.5);
+    box-shadow: 0 0 15px rgba(255, 178, 30, 0.5);
 }
 
 .goals-progress-percentage-modern {
@@ -335,7 +335,7 @@
     background: linear-gradient(90deg, var(--primary-gradient-start) 0%, var(--primary-gradient-end) 100%);
     border-radius: 10px;
     transition: width 0.5s ease;
-    box-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
+    box-shadow: 0 0 10px rgba(255, 178, 30, 0.5);
 }
 
 .goals-next-goal-needed {
@@ -401,7 +401,7 @@
 
 .goals-reward-card-modern:hover {
     transform: translateY(-4px);
-    box-shadow: var(--shadow-md), 0 0 20px rgba(0, 255, 136, 0.15);
+    box-shadow: var(--shadow-md), 0 0 20px rgba(255, 178, 30, 0.15);
     border-color: var(--card-border-hover);
 }
 
@@ -410,9 +410,9 @@
 }
 
 .goals-reward-card-modern.goals-reward-current {
-    background: rgba(0, 255, 136, 0.05);
-    border: 2px solid rgba(0, 255, 136, 0.3);
-    box-shadow: 0 0 30px rgba(0, 255, 136, 0.2), var(--shadow-sm);
+    background: rgba(255, 178, 30, 0.05);
+    border: 2px solid rgba(255, 178, 30, 0.3);
+    box-shadow: 0 0 30px rgba(255, 178, 30, 0.2), var(--shadow-sm);
 }
 
 .goals-reward-card-modern.goals-reward-current::before {
@@ -431,7 +431,7 @@
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.5px;
-    box-shadow: 0 4px 12px rgba(0, 255, 136, 0.4);
+    box-shadow: 0 4px 12px rgba(255, 178, 30, 0.4);
     z-index: 10;
 }
 
@@ -518,9 +518,9 @@
 
 .goals-reward-prize-modern {
     padding: 1rem;
-    background: linear-gradient(135deg, rgba(0, 255, 136, 0.1) 0%, rgba(0, 217, 119, 0.08) 100%);
+    background: linear-gradient(135deg, rgba(255, 178, 30, 0.1) 0%, rgba(255, 138, 29, 0.08) 100%);
     border-radius: 10px;
-    border: 1px solid rgba(0, 255, 136, 0.2);
+    border: 1px solid rgba(255, 178, 30, 0.2);
     text-align: center;
 }
 
@@ -537,7 +537,7 @@
     font-size: 1.75rem;
     font-weight: 700;
     color: var(--primary-color);
-    text-shadow: 0 0 15px rgba(0, 255, 136, 0.5);
+    text-shadow: 0 0 15px rgba(255, 178, 30, 0.5);
     font-variant-numeric: tabular-nums;
 }
 
@@ -560,7 +560,7 @@
     background: linear-gradient(90deg, var(--primary-gradient-start) 0%, var(--primary-gradient-end) 100%);
     border-radius: 10px;
     transition: width 0.5s ease;
-    box-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
+    box-shadow: 0 0 10px rgba(255, 178, 30, 0.5);
 }
 
 .goals-reward-progress-text-modern {
@@ -628,7 +628,7 @@
 
 .goals-level-card-modern:hover {
     transform: translateY(-4px);
-    box-shadow: var(--shadow-md), 0 0 20px rgba(0, 255, 136, 0.15);
+    box-shadow: var(--shadow-md), 0 0 20px rgba(255, 178, 30, 0.15);
     border-color: var(--card-border-hover);
 }
 
@@ -637,9 +637,9 @@
 }
 
 .goals-level-card-modern.goals-level-premium {
-    background: linear-gradient(135deg, rgba(0, 255, 136, 0.08) 0%, rgba(0, 217, 119, 0.05) 100%);
-    border: 2px solid rgba(0, 255, 136, 0.3);
-    box-shadow: 0 0 30px rgba(0, 255, 136, 0.2), var(--shadow-sm);
+    background: linear-gradient(135deg, rgba(255, 178, 30, 0.08) 0%, rgba(255, 138, 29, 0.05) 100%);
+    border: 2px solid rgba(255, 178, 30, 0.3);
+    box-shadow: 0 0 30px rgba(255, 178, 30, 0.2), var(--shadow-sm);
 }
 
 .goals-level-badge-premium {
@@ -654,7 +654,7 @@
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.5px;
-    box-shadow: 0 4px 12px rgba(0, 255, 136, 0.4);
+    box-shadow: 0 4px 12px rgba(255, 178, 30, 0.4);
     z-index: 10;
 }
 
@@ -742,7 +742,7 @@
 
 .goals-level-reward {
     color: var(--primary-color);
-    text-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
+    text-shadow: 0 0 10px rgba(255, 178, 30, 0.5);
     font-size: 1.125rem;
 }
 
@@ -765,7 +765,7 @@
     background: linear-gradient(90deg, var(--primary-gradient-start) 0%, var(--primary-gradient-end) 100%);
     border-radius: 10px;
     transition: width 0.5s ease;
-    box-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
+    box-shadow: 0 0 10px rgba(255, 178, 30, 0.5);
 }
 
 .goals-level-progress-text-modern {

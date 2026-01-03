@@ -31,7 +31,7 @@
         left: 0;
         right: 0;
         height: 6px;
-        background: linear-gradient(90deg, #00FF88 0%, #00D977 50%, #00FF88 100%);
+        background: linear-gradient(90deg, #FFB21E 0%, #FF8A1D 50%, #FFB21E 100%);
         background-size: 200% 100%;
         animation: shimmer 3s linear infinite;
     }
@@ -48,7 +48,7 @@
         right: -50%;
         width: 200%;
         height: 200%;
-        background: radial-gradient(circle, rgba(0, 255, 136, 0.08) 0%, transparent 70%);
+        background: radial-gradient(circle, rgba(255, 178, 30, 0.08) 0%, transparent 70%);
         pointer-events: none;
     }
 
@@ -60,7 +60,7 @@
     .support-hero-title-new {
         font-size: 3rem;
         font-weight: 700;
-        background: linear-gradient(135deg, #00FF88 0%, #00D977 100%);
+        background: linear-gradient(135deg, #FFB21E 0%, #FF8A1D 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
@@ -130,7 +130,7 @@
 
     .support-channel-card-new:hover {
         transform: translateY(-5px);
-        box-shadow: 0 8px 32px rgba(0, 255, 136, 0.2);
+        box-shadow: 0 8px 32px rgba(255, 178, 30, 0.2);
         border-color: var(--primary-color);
     }
 
@@ -186,7 +186,7 @@
     }
 
     .support-channel-icon-phone-new {
-        background: linear-gradient(135deg, #00FF88 0%, #00D977 100%);
+        background: linear-gradient(135deg, #FFB21E 0%, #FF8A1D 100%);
         color: #000;
     }
 
@@ -210,15 +210,15 @@
 
     .support-channel-item-new {
         padding: 1.5rem;
-        background: rgba(0, 255, 136, 0.05);
-        border: 1px solid rgba(0, 255, 136, 0.2);
+        background: rgba(255, 178, 30, 0.05);
+        border: 1px solid rgba(255, 178, 30, 0.2);
         border-radius: 16px;
         transition: var(--transition);
     }
 
     .support-channel-item-new:hover {
-        background: rgba(0, 255, 136, 0.1);
-        border-color: rgba(0, 255, 136, 0.4);
+        background: rgba(255, 178, 30, 0.1);
+        border-color: rgba(255, 178, 30, 0.4);
         transform: translateX(4px);
     }
 
@@ -255,7 +255,7 @@
 
     .support-copy-btn-new {
         padding: 0.75rem 1.25rem;
-        background: linear-gradient(135deg, #00FF88 0%, #00D977 100%);
+        background: linear-gradient(135deg, #FFB21E 0%, #FF8A1D 100%);
         color: #000;
         border: none;
         border-radius: 12px;
@@ -266,17 +266,17 @@
         display: flex;
         align-items: center;
         gap: 0.5rem;
-        box-shadow: 0 4px 16px rgba(0, 255, 136, 0.3);
+        box-shadow: 0 4px 16px rgba(255, 178, 30, 0.3);
         flex-shrink: 0;
     }
 
     .support-copy-btn-new:hover {
         transform: translateY(-2px);
-        box-shadow: 0 6px 24px rgba(0, 255, 136, 0.4);
+        box-shadow: 0 6px 24px rgba(255, 178, 30, 0.4);
     }
 
     .support-copy-btn-new.copied {
-        background: linear-gradient(135deg, #00FF88 0%, #00D977 100%);
+        background: linear-gradient(135deg, #FFB21E 0%, #FF8A1D 100%);
     }
 
     .support-copy-btn-new.copied i::before {
@@ -317,7 +317,7 @@
 
     .support-quick-action-new:hover {
         transform: translateY(-5px);
-        box-shadow: 0 8px 32px rgba(0, 255, 136, 0.2);
+        box-shadow: 0 8px 32px rgba(255, 178, 30, 0.2);
         border-color: var(--primary-color);
     }
 
@@ -329,15 +329,15 @@
         width: 70px;
         height: 70px;
         border-radius: 18px;
-        background: linear-gradient(135deg, rgba(0, 255, 136, 0.2) 0%, rgba(0, 217, 119, 0.1) 100%);
-        border: 2px solid rgba(0, 255, 136, 0.4);
+        background: linear-gradient(135deg, rgba(255, 178, 30, 0.2) 0%, rgba(255, 138, 29, 0.1) 100%);
+        border: 2px solid rgba(255, 178, 30, 0.4);
         display: flex;
         align-items: center;
         justify-content: center;
         font-size: 2rem;
         color: var(--primary-color);
         margin: 0 auto 1.5rem;
-        box-shadow: 0 0 30px rgba(0, 255, 136, 0.3);
+        box-shadow: 0 0 30px rgba(255, 178, 30, 0.3);
     }
 
     .support-quick-action-title-new {
@@ -400,15 +400,15 @@
 
     .support-contact-card-new {
         padding: 2rem;
-        background: rgba(0, 255, 136, 0.05);
-        border: 1px solid rgba(0, 255, 136, 0.2);
+        background: rgba(255, 178, 30, 0.05);
+        border: 1px solid rgba(255, 178, 30, 0.2);
         border-radius: 16px;
         transition: var(--transition);
     }
 
     .support-contact-card-new:hover {
-        background: rgba(0, 255, 136, 0.1);
-        border-color: rgba(0, 255, 136, 0.4);
+        background: rgba(255, 178, 30, 0.1);
+        border-color: rgba(255, 178, 30, 0.4);
         transform: translateY(-3px);
     }
 
@@ -416,15 +416,15 @@
         width: 60px;
         height: 60px;
         border-radius: 16px;
-        background: linear-gradient(135deg, rgba(0, 255, 136, 0.2) 0%, rgba(0, 217, 119, 0.1) 100%);
-        border: 2px solid rgba(0, 255, 136, 0.4);
+        background: linear-gradient(135deg, rgba(255, 178, 30, 0.2) 0%, rgba(255, 138, 29, 0.1) 100%);
+        border: 2px solid rgba(255, 178, 30, 0.4);
         display: flex;
         align-items: center;
         justify-content: center;
         font-size: 1.75rem;
         color: var(--primary-color);
         margin-bottom: 1.25rem;
-        box-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
+        box-shadow: 0 0 20px rgba(255, 178, 30, 0.3);
     }
 
     .support-contact-label-new {

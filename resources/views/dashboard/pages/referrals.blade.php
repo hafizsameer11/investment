@@ -37,7 +37,7 @@
         left: 0;
         right: 0;
         height: 6px;
-        background: linear-gradient(90deg, #00FF88 0%, #00D977 50%, #00FF88 100%);
+        background: linear-gradient(90deg, #FFB21E 0%, #FF8A1D 50%, #FFB21E 100%);
         background-size: 200% 100%;
         animation: shimmer 3s linear infinite;
     }
@@ -54,7 +54,7 @@
         right: -50%;
         width: 200%;
         height: 200%;
-        background: radial-gradient(circle, rgba(0, 255, 136, 0.08) 0%, transparent 70%);
+        background: radial-gradient(circle, rgba(255, 178, 30, 0.08) 0%, transparent 70%);
         pointer-events: none;
     }
 
@@ -66,7 +66,7 @@
     .referrals-hero-title-new {
         font-size: 3rem;
         font-weight: 700;
-        background: linear-gradient(135deg, #00FF88 0%, #00D977 100%);
+        background: linear-gradient(135deg, #FFB21E 0%, #FF8A1D 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
@@ -119,7 +119,7 @@
 
     .referrals-stat-card-new:hover {
         transform: translateY(-5px);
-        box-shadow: 0 8px 32px rgba(0, 255, 136, 0.2);
+        box-shadow: 0 8px 32px rgba(255, 178, 30, 0.2);
         border-color: var(--primary-color);
     }
 
@@ -141,7 +141,7 @@
     }
 
     .referrals-stat-icon-earning-new {
-        background: linear-gradient(135deg, #00FF88 0%, #00D977 100%);
+        background: linear-gradient(135deg, #FFB21E 0%, #FF8A1D 100%);
     }
 
     .referrals-stat-icon-users-new {
@@ -190,7 +190,7 @@
         left: 0;
         right: 0;
         height: 6px;
-        background: linear-gradient(90deg, #00FF88 0%, #00D977 100%);
+        background: linear-gradient(90deg, #FFB21E 0%, #FF8A1D 100%);
     }
 
     .referrals-wallet-header-new {
@@ -204,14 +204,14 @@
         width: 80px;
         height: 80px;
         border-radius: 20px;
-        background: linear-gradient(135deg, rgba(0, 255, 136, 0.2) 0%, rgba(0, 217, 119, 0.1) 100%);
-        border: 2px solid rgba(0, 255, 136, 0.4);
+        background: linear-gradient(135deg, rgba(255, 178, 30, 0.2) 0%, rgba(255, 138, 29, 0.1) 100%);
+        border: 2px solid rgba(255, 178, 30, 0.4);
         display: flex;
         align-items: center;
         justify-content: center;
         font-size: 2rem;
         color: var(--primary-color);
-        box-shadow: 0 0 30px rgba(0, 255, 136, 0.3);
+        box-shadow: 0 0 30px rgba(255, 178, 30, 0.3);
     }
 
     .referrals-wallet-title-section-new {
@@ -240,8 +240,8 @@
     .referrals-balance-display-new {
         text-align: center;
         padding: 2.5rem;
-        background: rgba(0, 255, 136, 0.05);
-        border: 1px solid rgba(0, 255, 136, 0.2);
+        background: rgba(255, 178, 30, 0.05);
+        border: 1px solid rgba(255, 178, 30, 0.2);
         border-radius: 20px;
     }
 
@@ -265,7 +265,7 @@
         font-weight: 700;
         color: var(--primary-color);
         font-variant-numeric: tabular-nums;
-        text-shadow: 0 0 30px rgba(0, 255, 136, 0.6);
+        text-shadow: 0 0 30px rgba(255, 178, 30, 0.6);
     }
 
     .referrals-minimum-info-new {
@@ -280,8 +280,8 @@
         align-items: center;
         gap: 0.5rem;
         padding: 0.875rem 1.5rem;
-        background: rgba(0, 255, 136, 0.1);
-        border: 1px solid rgba(0, 255, 136, 0.3);
+        background: rgba(255, 178, 30, 0.1);
+        border: 1px solid rgba(255, 178, 30, 0.3);
         border-radius: 12px;
         font-size: 0.9375rem;
         color: var(--text-primary);
@@ -298,7 +298,7 @@
 
     .referrals-claim-btn-new {
         padding: 1.25rem 2rem;
-        background: linear-gradient(135deg, #00FF88 0%, #00D977 100%);
+        background: linear-gradient(135deg, #FFB21E 0%, #FF8A1D 100%);
         border: none;
         border-radius: 16px;
         color: #000;
@@ -310,12 +310,12 @@
         align-items: center;
         justify-content: center;
         gap: 0.75rem;
-        box-shadow: 0 4px 20px rgba(0, 255, 136, 0.4);
+        box-shadow: 0 4px 20px rgba(255, 178, 30, 0.4);
     }
 
     .referrals-claim-btn-new:hover:not(:disabled) {
         transform: translateY(-3px);
-        box-shadow: 0 6px 30px rgba(0, 255, 136, 0.6);
+        box-shadow: 0 6px 30px rgba(255, 178, 30, 0.6);
     }
 
     .referrals-claim-btn-new:disabled {
@@ -383,7 +383,7 @@
 
     .referrals-tool-card-new:hover {
         transform: translateY(-5px);
-        box-shadow: 0 8px 32px rgba(0, 255, 136, 0.2);
+        box-shadow: 0 8px 32px rgba(255, 178, 30, 0.2);
         border-color: var(--primary-color);
     }
 
@@ -402,14 +402,14 @@
         width: 64px;
         height: 64px;
         border-radius: 16px;
-        background: linear-gradient(135deg, rgba(0, 255, 136, 0.2) 0%, rgba(0, 217, 119, 0.1) 100%);
-        border: 2px solid rgba(0, 255, 136, 0.4);
+        background: linear-gradient(135deg, rgba(255, 178, 30, 0.2) 0%, rgba(255, 138, 29, 0.1) 100%);
+        border: 2px solid rgba(255, 178, 30, 0.4);
         display: flex;
         align-items: center;
         justify-content: center;
         font-size: 1.75rem;
         color: var(--primary-color);
-        box-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
+        box-shadow: 0 0 20px rgba(255, 178, 30, 0.3);
     }
 
     .referrals-tool-title-new {
@@ -445,13 +445,13 @@
     .referrals-tool-input-new:focus {
         outline: none;
         border-color: var(--primary-color);
-        box-shadow: 0 0 0 3px rgba(0, 255, 136, 0.1), 0 4px 16px rgba(0, 255, 136, 0.1);
+        box-shadow: 0 0 0 3px rgba(255, 178, 30, 0.1), 0 4px 16px rgba(255, 178, 30, 0.1);
         background: rgba(255, 255, 255, 0.05);
     }
 
     .referrals-tool-copy-btn-new {
         padding: 1rem 1.5rem;
-        background: linear-gradient(135deg, #00FF88 0%, #00D977 100%);
+        background: linear-gradient(135deg, #FFB21E 0%, #FF8A1D 100%);
         color: #000;
         border: none;
         border-radius: 12px;
@@ -462,13 +462,13 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        box-shadow: 0 4px 16px rgba(0, 255, 136, 0.3);
+        box-shadow: 0 4px 16px rgba(255, 178, 30, 0.3);
         flex-shrink: 0;
     }
 
     .referrals-tool-copy-btn-new:hover {
         transform: translateY(-2px);
-        box-shadow: 0 6px 24px rgba(0, 255, 136, 0.4);
+        box-shadow: 0 6px 24px rgba(255, 178, 30, 0.4);
     }
 
     .referrals-tool-hint-new {
@@ -538,15 +538,15 @@
 
     .referrals-referrer-info-item-new {
         padding: 1.5rem;
-        background: rgba(0, 255, 136, 0.05);
-        border: 1px solid rgba(0, 255, 136, 0.2);
+        background: rgba(255, 178, 30, 0.05);
+        border: 1px solid rgba(255, 178, 30, 0.2);
         border-radius: 16px;
         transition: var(--transition);
     }
 
     .referrals-referrer-info-item-new:hover {
-        background: rgba(0, 255, 136, 0.1);
-        border-color: rgba(0, 255, 136, 0.4);
+        background: rgba(255, 178, 30, 0.1);
+        border-color: rgba(255, 178, 30, 0.4);
         transform: translateY(-2px);
     }
 
@@ -627,7 +627,7 @@
 
     .referrals-commission-card-new:hover {
         transform: translateY(-5px);
-        box-shadow: 0 8px 32px rgba(0, 255, 136, 0.2);
+        box-shadow: 0 8px 32px rgba(255, 178, 30, 0.2);
         border-color: var(--primary-color);
     }
 
@@ -640,8 +640,8 @@
         top: 1.5rem;
         right: 1.5rem;
         padding: 0.5rem 1rem;
-        background: linear-gradient(135deg, rgba(0, 255, 136, 0.2) 0%, rgba(0, 217, 119, 0.15) 100%);
-        border: 1px solid rgba(0, 255, 136, 0.4);
+        background: linear-gradient(135deg, rgba(255, 178, 30, 0.2) 0%, rgba(255, 138, 29, 0.15) 100%);
+        border: 1px solid rgba(255, 178, 30, 0.4);
         border-radius: 20px;
         font-size: 0.75rem;
         font-weight: 700;
@@ -654,15 +654,15 @@
         width: 100px;
         height: 100px;
         border-radius: 50%;
-        background: linear-gradient(135deg, rgba(0, 255, 136, 0.2) 0%, rgba(0, 217, 119, 0.1) 100%);
-        border: 3px solid rgba(0, 255, 136, 0.4);
+        background: linear-gradient(135deg, rgba(255, 178, 30, 0.2) 0%, rgba(255, 138, 29, 0.1) 100%);
+        border: 3px solid rgba(255, 178, 30, 0.4);
         display: flex;
         align-items: center;
         justify-content: center;
         font-size: 2.5rem;
         color: var(--primary-color);
         margin: 0 auto 1.5rem;
-        box-shadow: 0 0 30px rgba(0, 255, 136, 0.3);
+        box-shadow: 0 0 30px rgba(255, 178, 30, 0.3);
     }
 
     .referrals-commission-level-name-new {
@@ -682,7 +682,7 @@
         font-size: 3rem;
         font-weight: 700;
         color: var(--primary-color);
-        text-shadow: 0 0 20px rgba(0, 255, 136, 0.5);
+        text-shadow: 0 0 20px rgba(255, 178, 30, 0.5);
     }
 
     .referrals-commission-rate-label-new {
@@ -734,7 +734,7 @@
     .referrals-network-filter-new:focus {
         outline: none;
         border-color: var(--primary-color);
-        box-shadow: 0 0 0 3px rgba(0, 255, 136, 0.1);
+        box-shadow: 0 0 0 3px rgba(255, 178, 30, 0.1);
     }
 
     .referrals-network-card-new {
@@ -759,8 +759,8 @@
     }
 
     .referrals-network-table-new thead {
-        background: linear-gradient(180deg, rgba(0, 255, 136, 0.1) 0%, rgba(0, 217, 119, 0.05) 100%);
-        border-bottom: 2px solid rgba(0, 255, 136, 0.2);
+        background: linear-gradient(180deg, rgba(255, 178, 30, 0.1) 0%, rgba(255, 138, 29, 0.05) 100%);
+        border-bottom: 2px solid rgba(255, 178, 30, 0.2);
     }
 
     .referrals-network-table-new th {
@@ -783,7 +783,7 @@
     }
 
     .referrals-network-table-new tbody tr:hover {
-        background: rgba(0, 255, 136, 0.05);
+        background: rgba(255, 178, 30, 0.05);
     }
 
     .referrals-network-empty-new {
@@ -869,15 +869,15 @@
         gap: 1.5rem;
         align-items: flex-start;
         padding: 1.5rem;
-        background: rgba(0, 255, 136, 0.05);
-        border: 1px solid rgba(0, 255, 136, 0.2);
+        background: rgba(255, 178, 30, 0.05);
+        border: 1px solid rgba(255, 178, 30, 0.2);
         border-radius: 16px;
         transition: var(--transition);
     }
 
     .referrals-rule-item-new:hover {
-        background: rgba(0, 255, 136, 0.1);
-        border-color: rgba(0, 255, 136, 0.4);
+        background: rgba(255, 178, 30, 0.1);
+        border-color: rgba(255, 178, 30, 0.4);
         transform: translateX(4px);
     }
 
@@ -885,8 +885,8 @@
         width: 48px;
         height: 48px;
         border-radius: 12px;
-        background: linear-gradient(135deg, rgba(0, 255, 136, 0.2) 0%, rgba(0, 217, 119, 0.1) 100%);
-        border: 1px solid rgba(0, 255, 136, 0.3);
+        background: linear-gradient(135deg, rgba(255, 178, 30, 0.2) 0%, rgba(255, 138, 29, 0.1) 100%);
+        border: 1px solid rgba(255, 178, 30, 0.3);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -1631,7 +1631,7 @@
                 // Visual feedback
                 const originalHTML = this.innerHTML;
                 this.innerHTML = '<i class="fas fa-check"></i>';
-                this.style.background = 'linear-gradient(135deg, #00FF88 0%, #00D977 100%)';
+                this.style.background = 'linear-gradient(135deg, #FFB21E 0%, #FF8A1D 100%)';
                 
                 setTimeout(() => {
                     this.innerHTML = originalHTML;

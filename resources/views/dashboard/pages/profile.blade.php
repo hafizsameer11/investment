@@ -8,8 +8,8 @@
 
 @section('content')
 <div class="profile-page-modern">
-    <!-- Hero Section -->
-    <div class="profile-hero-section">
+    <!-- Hero Section (Desktop Only) -->
+    <div class="profile-hero-section profile-hero-desktop">
         <div class="profile-hero-content">
             <h1 class="profile-hero-title">My Profile</h1>
             <p class="profile-hero-subtitle">Manage your account settings and personal information</p>
@@ -18,8 +18,8 @@
 
     <!-- Profile Card -->
     <div class="profile-main-card">
-        <!-- Profile Header -->
-        <div class="profile-header-modern">
+        <!-- Profile Header (Desktop Only) -->
+        <div class="profile-header-modern profile-header-desktop">
             <div class="profile-header-left-modern">
                 <div class="profile-avatar-modern">
                     <img src="https://ui-avatars.com/api/?name=Rameez+Nazar&background=00FF88&color=000&size=200" alt="Profile Avatar">
@@ -46,21 +46,27 @@
             </div>
         </div>
 
+        <!-- Mobile Header -->
+        <div class="profile-mobile-header">
+            <h2 class="profile-mobile-title">Account</h2>
+            <button class="profile-mobile-edit-btn" id="editProfileBtnMobile">
+                Edit
+            </button>
+        </div>
+
         <!-- Navigation Tabs -->
         <div class="profile-tabs-modern">
             <button class="profile-tab-modern active" data-tab="account">
-                <i class="fas fa-user"></i>
-                <span>Account Information</span>
+                <span class="profile-tab-text">Account</span>
             </button>
             <button class="profile-tab-modern" data-tab="password">
-                <i class="fas fa-lock"></i>
-                <span>Change Password</span>
+                <span class="profile-tab-text">Change Password</span>
             </button>
         </div>
 
         <!-- Account Tab Content -->
         <div class="profile-tab-content-modern active" id="accountTab">
-            <div class="profile-tab-header-modern">
+            <div class="profile-tab-header-modern profile-tab-header-desktop">
                 <h3 class="profile-tab-title-modern">Account Information</h3>
                 <p class="profile-tab-subtitle-modern">Update your personal details and contact information</p>
             </div>
@@ -69,34 +75,42 @@
                 <div class="profile-form-grid-modern">
                     <div class="profile-form-group-modern">
                         <label class="profile-form-label-modern">
-                            <i class="fas fa-user"></i>
                             <span>First Name</span>
                         </label>
-                        <input type="text" class="profile-form-input-modern" id="firstName" value="Rameez Nazar" readonly>
+                        <div class="profile-input-wrapper">
+                            <i class="fas fa-user profile-input-icon"></i>
+                            <input type="text" class="profile-form-input-modern" id="firstName" value="Rameez Nazar" placeholder="Enter your First Name" readonly>
+                        </div>
                     </div>
 
                     <div class="profile-form-group-modern">
                         <label class="profile-form-label-modern">
-                            <i class="fas fa-user"></i>
                             <span>Last Name</span>
                         </label>
-                        <input type="text" class="profile-form-input-modern" id="lastName" placeholder="Enter your Last Name" readonly>
+                        <div class="profile-input-wrapper">
+                            <i class="fas fa-user profile-input-icon"></i>
+                            <input type="text" class="profile-form-input-modern" id="lastName" placeholder="Enter your Last Name" readonly>
+                        </div>
                     </div>
 
                     <div class="profile-form-group-modern">
                         <label class="profile-form-label-modern">
-                            <i class="fas fa-envelope"></i>
-                            <span>Email Address</span>
+                            <span>Email</span>
                         </label>
-                        <input type="email" class="profile-form-input-modern" id="email" value="ramiznazar600@gmail.com" readonly>
+                        <div class="profile-input-wrapper">
+                            <i class="fas fa-envelope profile-input-icon"></i>
+                            <input type="email" class="profile-form-input-modern" id="email" value="ramiznazar600@gmail.com" readonly>
+                        </div>
                     </div>
 
                     <div class="profile-form-group-modern">
                         <label class="profile-form-label-modern">
-                            <i class="fas fa-phone"></i>
-                            <span>Phone Number</span>
+                            <span>Phone</span>
                         </label>
-                        <input type="tel" class="profile-form-input-modern" id="phone" value="+923262853600" readonly>
+                        <div class="profile-input-wrapper">
+                            <i class="fas fa-phone profile-input-icon"></i>
+                            <input type="tel" class="profile-form-input-modern" id="phone" value="+923262853600" readonly>
+                        </div>
                     </div>
                 </div>
 
@@ -114,7 +128,7 @@
 
         <!-- Change Password Tab Content -->
         <div class="profile-tab-content-modern" id="passwordTab">
-            <div class="profile-tab-header-modern">
+            <div class="profile-tab-header-modern profile-tab-header-desktop">
                 <h3 class="profile-tab-title-modern">Change Password</h3>
                 <p class="profile-tab-subtitle-modern">Update your password to keep your account secure</p>
             </div>
@@ -157,7 +171,11 @@
 
         <!-- Contact Upliner Section -->
         <div class="profile-contact-section-modern">
-            <div class="profile-contact-card-modern">
+            <button class="profile-contact-btn-modern profile-contact-btn-mobile">
+                <span>Contact with upliner</span>
+            </button>
+            <!-- Desktop Contact Card -->
+            <div class="profile-contact-card-modern profile-contact-card-desktop">
                 <div class="profile-contact-icon-modern">
                     <i class="fas fa-user-tie"></i>
                 </div>

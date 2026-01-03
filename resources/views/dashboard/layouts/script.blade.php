@@ -72,5 +72,23 @@
             });
         }
     });
+
+    // Back navigation function for mobile header
+    function goBack() {
+        // Check if there's history to go back to
+        if (window.history.length > 1) {
+            // Check if we can go back within the dashboard
+            const referrer = document.referrer;
+            if (referrer && referrer.includes('/user/dashboard')) {
+                window.history.back();
+            } else {
+                // If coming from outside, go to dashboard home
+                window.location.href = '{{ route("dashboard.index") }}';
+            }
+        } else {
+            // No history, go to dashboard home
+            window.location.href = '{{ route("dashboard.index") }}';
+        }
+    }
 </script>
 <script src="{{ asset('dashboard/js/dashboard.js') }}"></script>

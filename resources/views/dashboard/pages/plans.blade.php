@@ -37,7 +37,7 @@
         left: 0;
         right: 0;
         height: 6px;
-        background: linear-gradient(90deg, #00FF88 0%, #00D977 50%, #00FF88 100%);
+        background: linear-gradient(90deg, #FFB21E 0%, #FF8A1D 50%, #FFB21E 100%);
         background-size: 200% 100%;
         animation: shimmer 3s linear infinite;
     }
@@ -54,7 +54,7 @@
         right: -50%;
         width: 200%;
         height: 200%;
-        background: radial-gradient(circle, rgba(0, 255, 136, 0.08) 0%, transparent 70%);
+        background: radial-gradient(circle, rgba(255, 178, 30, 0.08) 0%, transparent 70%);
         pointer-events: none;
     }
 
@@ -66,7 +66,7 @@
     .plans-hero-title-new {
         font-size: 3rem;
         font-weight: 700;
-        background: linear-gradient(135deg, #00FF88 0%, #00D977 100%);
+        background: linear-gradient(135deg, #FFB21E 0%, #FF8A1D 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
@@ -93,17 +93,17 @@
 
     .plans-hero-stat-new {
         padding: 1.5rem;
-        background: rgba(0, 255, 136, 0.05);
-        border: 1px solid rgba(0, 255, 136, 0.2);
+        background: rgba(255, 178, 30, 0.05);
+        border: 1px solid rgba(255, 178, 30, 0.2);
         border-radius: 16px;
         transition: var(--transition);
     }
 
     .plans-hero-stat-new:hover {
-        background: rgba(0, 255, 136, 0.1);
-        border-color: rgba(0, 255, 136, 0.4);
+        background: rgba(255, 178, 30, 0.1);
+        border-color: rgba(255, 178, 30, 0.4);
         transform: translateY(-4px);
-        box-shadow: 0 8px 24px rgba(0, 255, 136, 0.2);
+        box-shadow: 0 8px 24px rgba(255, 178, 30, 0.2);
     }
 
     .plans-hero-stat-value-new {
@@ -111,7 +111,7 @@
         font-weight: 700;
         color: var(--primary-color);
         margin-bottom: 0.5rem;
-        text-shadow: 0 0 20px rgba(0, 255, 136, 0.5);
+        text-shadow: 0 0 20px rgba(255, 178, 30, 0.5);
     }
 
     .plans-hero-stat-label-new {
@@ -144,7 +144,7 @@
         left: 0;
         right: 0;
         height: 6px;
-        background: linear-gradient(90deg, #00FF88 0%, #00D977 100%);
+        background: linear-gradient(90deg, #FFB21E 0%, #FF8A1D 100%);
     }
 
     .plan-main-card-new::after {
@@ -154,7 +154,7 @@
         right: -50%;
         width: 200%;
         height: 200%;
-        background: radial-gradient(circle, rgba(0, 255, 136, 0.05) 0%, transparent 70%);
+        background: radial-gradient(circle, rgba(255, 178, 30, 0.05) 0%, transparent 70%);
         pointer-events: none;
     }
 
@@ -183,12 +183,12 @@
         width: 120px;
         height: 120px;
         border-radius: 24px;
-        background: linear-gradient(135deg, rgba(0, 255, 136, 0.2) 0%, rgba(0, 217, 119, 0.1) 100%);
-        border: 3px solid rgba(0, 255, 136, 0.4);
+        background: linear-gradient(135deg, rgba(255, 178, 30, 0.2) 0%, rgba(255, 138, 29, 0.1) 100%);
+        border: 3px solid rgba(255, 178, 30, 0.4);
         display: flex;
         align-items: center;
         justify-content: center;
-        box-shadow: 0 8px 32px rgba(0, 255, 136, 0.3);
+        box-shadow: 0 8px 32px rgba(255, 178, 30, 0.3);
         position: relative;
         overflow: hidden;
     }
@@ -200,7 +200,7 @@
         left: -50%;
         width: 200%;
         height: 200%;
-        background: radial-gradient(circle, rgba(0, 255, 136, 0.3) 0%, transparent 70%);
+        background: radial-gradient(circle, rgba(255, 178, 30, 0.3) 0%, transparent 70%);
         animation: rotate 4s linear infinite;
     }
 
@@ -214,7 +214,7 @@
         z-index: 1;
         width: 60px;
         height: 60px;
-        filter: drop-shadow(0 0 10px rgba(0, 255, 136, 0.8));
+        filter: drop-shadow(0 0 10px rgba(255, 178, 30, 0.8));
     }
 
     .plan-title-section-new {
@@ -226,14 +226,14 @@
         align-items: center;
         gap: 0.5rem;
         padding: 0.625rem 1.25rem;
-        background: linear-gradient(135deg, rgba(0, 255, 136, 0.2) 0%, rgba(0, 217, 119, 0.15) 100%);
-        border: 1px solid rgba(0, 255, 136, 0.4);
+        background: linear-gradient(135deg, rgba(255, 178, 30, 0.2) 0%, rgba(255, 138, 29, 0.15) 100%);
+        border: 1px solid rgba(255, 178, 30, 0.4);
         border-radius: 20px;
         font-size: 0.8125rem;
         font-weight: 600;
         color: var(--primary-color);
         margin-bottom: 1rem;
-        box-shadow: 0 0 16px rgba(0, 255, 136, 0.3);
+        box-shadow: 0 0 16px rgba(255, 178, 30, 0.3);
     }
 
     .plan-name-new {
@@ -255,8 +255,8 @@
         align-items: center;
         gap: 1rem;
         padding: 1.25rem 1.5rem;
-        background: rgba(0, 255, 136, 0.08);
-        border: 1px solid rgba(0, 255, 136, 0.25);
+        background: rgba(255, 178, 30, 0.08);
+        border: 1px solid rgba(255, 178, 30, 0.25);
         border-radius: 16px;
         margin-bottom: 2.5rem;
     }
@@ -265,7 +265,7 @@
         width: 48px;
         height: 48px;
         border-radius: 12px;
-        background: linear-gradient(135deg, rgba(0, 255, 136, 0.2) 0%, rgba(0, 217, 119, 0.1) 100%);
+        background: linear-gradient(135deg, rgba(255, 178, 30, 0.2) 0%, rgba(255, 138, 29, 0.1) 100%);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -298,8 +298,8 @@
     }
 
     .plan-feature-card-new {
-        background: rgba(0, 255, 136, 0.05);
-        border: 1px solid rgba(0, 255, 136, 0.2);
+        background: rgba(255, 178, 30, 0.05);
+        border: 1px solid rgba(255, 178, 30, 0.2);
         border-radius: 16px;
         padding: 2rem;
         transition: var(--transition);
@@ -320,10 +320,10 @@
     }
 
     .plan-feature-card-new:hover {
-        background: rgba(0, 255, 136, 0.1);
-        border-color: rgba(0, 255, 136, 0.4);
+        background: rgba(255, 178, 30, 0.1);
+        border-color: rgba(255, 178, 30, 0.4);
         transform: translateY(-4px);
-        box-shadow: 0 8px 24px rgba(0, 255, 136, 0.2);
+        box-shadow: 0 8px 24px rgba(255, 178, 30, 0.2);
     }
 
     .plan-feature-card-new:hover::before {
@@ -331,17 +331,17 @@
     }
 
     .plan-feature-card-new.highlight {
-        background: linear-gradient(135deg, rgba(0, 255, 136, 0.15) 0%, rgba(0, 217, 119, 0.1) 100%);
-        border-color: rgba(0, 255, 136, 0.5);
-        box-shadow: 0 0 30px rgba(0, 255, 136, 0.3);
+        background: linear-gradient(135deg, rgba(255, 178, 30, 0.15) 0%, rgba(255, 138, 29, 0.1) 100%);
+        border-color: rgba(255, 178, 30, 0.5);
+        box-shadow: 0 0 30px rgba(255, 178, 30, 0.3);
     }
 
     .plan-feature-icon-new {
         width: 64px;
         height: 64px;
         border-radius: 16px;
-        background: linear-gradient(135deg, rgba(0, 255, 136, 0.2) 0%, rgba(0, 217, 119, 0.1) 100%);
-        border: 1px solid rgba(0, 255, 136, 0.3);
+        background: linear-gradient(135deg, rgba(255, 178, 30, 0.2) 0%, rgba(255, 138, 29, 0.1) 100%);
+        border: 1px solid rgba(255, 178, 30, 0.3);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -353,13 +353,13 @@
 
     .plan-feature-card-new:hover .plan-feature-icon-new {
         transform: scale(1.1) rotate(5deg);
-        box-shadow: 0 4px 20px rgba(0, 255, 136, 0.4);
+        box-shadow: 0 4px 20px rgba(255, 178, 30, 0.4);
     }
 
     .plan-feature-card-new.highlight .plan-feature-icon-new {
-        background: linear-gradient(135deg, #00FF88 0%, #00D977 100%);
+        background: linear-gradient(135deg, #FFB21E 0%, #FF8A1D 100%);
         color: #000;
-        box-shadow: 0 4px 20px rgba(0, 255, 136, 0.5);
+        box-shadow: 0 4px 20px rgba(255, 178, 30, 0.5);
     }
 
     .plan-feature-label-new {
@@ -381,7 +381,7 @@
 
     .plan-feature-card-new.highlight .plan-feature-value-new {
         color: var(--primary-color);
-        text-shadow: 0 0 20px rgba(0, 255, 136, 0.5);
+        text-shadow: 0 0 20px rgba(255, 178, 30, 0.5);
     }
 
     .plan-feature-hint-new {
@@ -391,8 +391,8 @@
 
     /* Calculator Section */
     .plan-calculator-section-new {
-        background: rgba(0, 255, 136, 0.05);
-        border: 1px solid rgba(0, 255, 136, 0.2);
+        background: rgba(255, 178, 30, 0.05);
+        border: 1px solid rgba(255, 178, 30, 0.2);
         border-radius: 20px;
         padding: 2.5rem;
         margin-bottom: 2.5rem;
@@ -430,7 +430,7 @@
     }
 
     .plan-calculator-toggle-new:hover {
-        background: rgba(0, 255, 136, 0.1);
+        background: rgba(255, 178, 30, 0.1);
         border-color: var(--primary-color);
         color: var(--primary-color);
     }
@@ -519,14 +519,14 @@
     }
 
     .plan-action-primary-new {
-        background: linear-gradient(135deg, #00FF88 0%, #00D977 100%);
+        background: linear-gradient(135deg, #FFB21E 0%, #FF8A1D 100%);
         color: #000;
-        box-shadow: 0 4px 20px rgba(0, 255, 136, 0.4);
+        box-shadow: 0 4px 20px rgba(255, 178, 30, 0.4);
     }
 
     .plan-action-primary-new:hover {
         transform: translateY(-3px);
-        box-shadow: 0 6px 30px rgba(0, 255, 136, 0.6);
+        box-shadow: 0 6px 30px rgba(255, 178, 30, 0.6);
     }
 
     .plan-action-secondary-new {
@@ -536,9 +536,9 @@
     }
 
     .plan-action-secondary-new:hover {
-        background: rgba(0, 255, 136, 0.1);
+        background: rgba(255, 178, 30, 0.1);
         border-color: var(--primary-color);
-        box-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
+        box-shadow: 0 0 20px rgba(255, 178, 30, 0.3);
     }
 
     /* Benefits Section */
@@ -555,15 +555,15 @@
         align-items: center;
         gap: 1rem;
         padding: 1rem;
-        background: rgba(0, 255, 136, 0.05);
-        border: 1px solid rgba(0, 255, 136, 0.15);
+        background: rgba(255, 178, 30, 0.05);
+        border: 1px solid rgba(255, 178, 30, 0.15);
         border-radius: 12px;
         transition: var(--transition);
     }
 
     .plan-benefit-item-new:hover {
-        background: rgba(0, 255, 136, 0.1);
-        border-color: rgba(0, 255, 136, 0.3);
+        background: rgba(255, 178, 30, 0.1);
+        border-color: rgba(255, 178, 30, 0.3);
         transform: translateX(4px);
     }
 
@@ -571,7 +571,7 @@
         width: 40px;
         height: 40px;
         border-radius: 10px;
-        background: linear-gradient(135deg, rgba(0, 255, 136, 0.2) 0%, rgba(0, 217, 119, 0.1) 100%);
+        background: linear-gradient(135deg, rgba(255, 178, 30, 0.2) 0%, rgba(255, 138, 29, 0.1) 100%);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -621,8 +621,8 @@
     }
 
     .coming-soon-card-new {
-        background: rgba(0, 255, 136, 0.05);
-        border: 1px solid rgba(0, 255, 136, 0.2);
+        background: rgba(255, 178, 30, 0.05);
+        border: 1px solid rgba(255, 178, 30, 0.2);
         border-radius: 20px;
         padding: 2.5rem;
         transition: var(--transition);
@@ -645,16 +645,16 @@
     .coming-soon-card-new:hover {
         opacity: 1;
         transform: translateY(-5px);
-        box-shadow: 0 8px 24px rgba(0, 255, 136, 0.2);
-        border-color: rgba(0, 255, 136, 0.4);
+        box-shadow: 0 8px 24px rgba(255, 178, 30, 0.2);
+        border-color: rgba(255, 178, 30, 0.4);
     }
 
     .coming-soon-icon-new {
         width: 80px;
         height: 80px;
         border-radius: 20px;
-        background: linear-gradient(135deg, rgba(0, 255, 136, 0.2) 0%, rgba(0, 217, 119, 0.1) 100%);
-        border: 2px solid rgba(0, 255, 136, 0.3);
+        background: linear-gradient(135deg, rgba(255, 178, 30, 0.2) 0%, rgba(255, 138, 29, 0.1) 100%);
+        border: 2px solid rgba(255, 178, 30, 0.3);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -1111,14 +1111,14 @@
                 <div class="plan-header-left-new">
                     <div class="plan-icon-large-new">
                         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M12 2L8 6L10 8L6 12L8 14L12 10L16 14L18 12L14 8L16 6L12 2Z" fill="url(#planGradient)" stroke="#00FF88" stroke-width="1.5" stroke-linejoin="round"/>
-                            <rect x="4" y="16" width="4" height="4" rx="1" fill="#00FF88" opacity="0.6"/>
-                            <rect x="10" y="18" width="4" height="4" rx="1" fill="#00D977" opacity="0.6"/>
-                            <rect x="16" y="16" width="4" height="4" rx="1" fill="#00FF88" opacity="0.6"/>
+                            <path d="M12 2L8 6L10 8L6 12L8 14L12 10L16 14L18 12L14 8L16 6L12 2Z" fill="url(#planGradient)" stroke="#FFB21E" stroke-width="1.5" stroke-linejoin="round"/>
+                            <rect x="4" y="16" width="4" height="4" rx="1" fill="#FFB21E" opacity="0.6"/>
+                            <rect x="10" y="18" width="4" height="4" rx="1" fill="#FF8A1D" opacity="0.6"/>
+                            <rect x="16" y="16" width="4" height="4" rx="1" fill="#FFB21E" opacity="0.6"/>
                             <defs>
                                 <linearGradient id="planGradient" x1="12" y1="2" x2="12" y2="14" gradientUnits="userSpaceOnUse">
-                                    <stop offset="0%" stop-color="#00FF88"/>
-                                    <stop offset="100%" stop-color="#00D977"/>
+                                    <stop offset="0%" stop-color="#FFB21E"/>
+                                    <stop offset="100%" stop-color="#FF8A1D"/>
                                 </linearGradient>
                             </defs>
                         </svg>

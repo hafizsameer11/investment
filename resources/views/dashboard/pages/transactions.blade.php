@@ -37,7 +37,7 @@
         left: 0;
         right: 0;
         height: 6px;
-        background: linear-gradient(90deg, #00FF88 0%, #00D977 50%, #00FF88 100%);
+        background: linear-gradient(90deg, #FFB21E 0%, #FF8A1D 50%, #FFB21E 100%);
         background-size: 200% 100%;
         animation: shimmer 3s linear infinite;
     }
@@ -54,7 +54,7 @@
         right: -50%;
         width: 200%;
         height: 200%;
-        background: radial-gradient(circle, rgba(0, 255, 136, 0.08) 0%, transparent 70%);
+        background: radial-gradient(circle, rgba(255, 178, 30, 0.08) 0%, transparent 70%);
         pointer-events: none;
     }
 
@@ -66,7 +66,7 @@
     .transactions-hero-title-new {
         font-size: 3rem;
         font-weight: 700;
-        background: linear-gradient(135deg, #00FF88 0%, #00D977 100%);
+        background: linear-gradient(135deg, #FFB21E 0%, #FF8A1D 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
@@ -119,7 +119,7 @@
 
     .transactions-summary-card-new:hover {
         transform: translateY(-5px);
-        box-shadow: 0 8px 32px rgba(0, 255, 136, 0.2);
+        box-shadow: 0 8px 32px rgba(255, 178, 30, 0.2);
         border-color: var(--primary-color);
     }
 
@@ -141,7 +141,7 @@
     }
 
     .transactions-summary-icon-earning-new {
-        background: linear-gradient(135deg, #00FF88 0%, #00D977 100%);
+        background: linear-gradient(135deg, #FFB21E 0%, #FF8A1D 100%);
     }
 
     .transactions-summary-icon-referral-new {
@@ -245,7 +245,7 @@
     .transactions-search-input-new:focus {
         outline: none;
         border-color: var(--primary-color);
-        box-shadow: 0 0 0 3px rgba(0, 255, 136, 0.1), 0 4px 16px rgba(0, 255, 136, 0.1);
+        box-shadow: 0 0 0 3px rgba(255, 178, 30, 0.1), 0 4px 16px rgba(255, 178, 30, 0.1);
         background: rgba(255, 255, 255, 0.05);
     }
 
@@ -264,7 +264,7 @@
     }
 
     .transactions-filter-btn-new:hover {
-        background: rgba(0, 255, 136, 0.1);
+        background: rgba(255, 178, 30, 0.1);
         border-color: var(--primary-color);
         color: var(--primary-color);
     }
@@ -283,7 +283,7 @@
     .transactions-date-filter-new:focus {
         outline: none;
         border-color: var(--primary-color);
-        box-shadow: 0 0 0 3px rgba(0, 255, 136, 0.1);
+        box-shadow: 0 0 0 3px rgba(255, 178, 30, 0.1);
     }
 
     .transactions-history-card-new {
@@ -327,8 +327,8 @@
     }
 
     .transactions-table-new thead {
-        background: linear-gradient(180deg, rgba(0, 255, 136, 0.1) 0%, rgba(0, 217, 119, 0.05) 100%);
-        border-bottom: 2px solid rgba(0, 255, 136, 0.2);
+        background: linear-gradient(180deg, rgba(255, 178, 30, 0.1) 0%, rgba(255, 138, 29, 0.05) 100%);
+        border-bottom: 2px solid rgba(255, 178, 30, 0.2);
     }
 
     .transactions-table-new th {
@@ -351,7 +351,7 @@
     }
 
     .transactions-table-new tbody tr:hover {
-        background: rgba(0, 255, 136, 0.05);
+        background: rgba(255, 178, 30, 0.05);
     }
 
     .transactions-type-cell-new {
@@ -392,7 +392,7 @@
     }
 
     .transactions-type-icon-success-new {
-        background: linear-gradient(135deg, #00FF88 0%, #00D977 100%);
+        background: linear-gradient(135deg, #FFB21E 0%, #FF8A1D 100%);
     }
 
     .transactions-type-icon-warning-new {
@@ -443,7 +443,7 @@
 
     .transactions-amount-success-new {
         color: var(--primary-color);
-        text-shadow: 0 0 15px rgba(0, 255, 136, 0.5);
+        text-shadow: 0 0 15px rgba(255, 178, 30, 0.5);
     }
 
     .transactions-amount-danger-new {
@@ -475,10 +475,10 @@
     }
 
     .transactions-status-completed-new {
-        background: rgba(0, 255, 136, 0.15);
-        border: 1px solid rgba(0, 255, 136, 0.3);
+        background: rgba(255, 178, 30, 0.15);
+        border: 1px solid rgba(255, 178, 30, 0.3);
         color: var(--primary-color);
-        box-shadow: 0 0 12px rgba(0, 255, 136, 0.2);
+        box-shadow: 0 0 12px rgba(255, 178, 30, 0.2);
     }
 
     .transactions-status-pending-new {
@@ -532,10 +532,10 @@
     }
 
     .transactions-pagination-btn-new:hover:not(:disabled) {
-        background: rgba(0, 255, 136, 0.1);
+        background: rgba(255, 178, 30, 0.1);
         border-color: var(--primary-color);
         color: var(--primary-color);
-        box-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
+        box-shadow: 0 0 20px rgba(255, 178, 30, 0.3);
     }
 
     .transactions-pagination-btn-new:disabled {
