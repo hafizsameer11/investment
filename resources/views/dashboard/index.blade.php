@@ -1553,7 +1553,7 @@
                 </div>
             </div>
             <div class="balance-amount-display">
-                <span class="balance-amount-large" id="totalBalance">$0.00</span>
+                <span class="balance-amount-large" id="totalBalance">$0</span>
             </div>
             <div class="deposit-wallet-info">
                 <span class="deposit-wallet-label">Deposit Wallet:</span>
@@ -1598,14 +1598,14 @@
                 <div class="stat-icon"><i class="fas fa-chart-line"></i></div>
                 <div class="stat-content">
                     <div class="stat-label">Total Earnings</div>
-                    <div class="stat-value">$0.00</div>
+                    <div class="stat-value">$0</div>
                 </div>
             </div>
             <div class="mining-stat-item">
                 <div class="stat-icon"><i class="fas fa-coins"></i></div>
                 <div class="stat-content">
                     <div class="stat-label">Total Invested</div>
-                    <div class="stat-value">$0.00</div>
+                    <div class="stat-value">$0</div>
                 </div>
             </div>
         </div>
@@ -1666,7 +1666,7 @@
             balanceVisible = !balanceVisible;
             if (balanceVisible) {
                 // Show balance
-                totalBalanceEl.textContent = '$0.00';
+                totalBalanceEl.textContent = '$0';
                 if (depositWalletAmount) {
                     depositWalletAmount.textContent = '$0.30';
                 }
