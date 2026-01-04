@@ -12,6 +12,22 @@
         width: 100%;
         box-sizing: border-box;
         overflow-x: hidden;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    /* App-like touch interactions */
+    @media (max-width: 768px) {
+        * {
+            -webkit-tap-highlight-color: rgba(255, 178, 30, 0.1);
+        }
+
+        button, a, [role="button"] {
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        button:active, a:active, [role="button"]:active {
+            opacity: 0.8;
+        }
     }
 
     /* Hero Section */
@@ -146,6 +162,165 @@
 
     .referrals-stat-icon-users-new {
         background: linear-gradient(135deg, #00AAFF 0%, #0088CC 100%);
+    }
+
+    /* Mobile Stats Cards - Improved Design */
+    @media (max-width: 768px) {
+        .referrals-hero-new {
+            display: none !important;
+        }
+
+        .referrals-stats-section-new {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+            width: 100%;
+            align-items: stretch;
+        }
+
+        .referrals-stat-card-new {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 1.25rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            min-height: 100px;
+            height: 100%;
+            width: 100%;
+            box-sizing: border-box;
+            transition: all 0.2s ease;
+        }
+
+        .referrals-stat-card-new::before {
+            display: none;
+        }
+
+        .referrals-stat-card-new:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+
+        .referrals-stat-icon-new {
+            width: 56px;
+            height: 56px;
+            min-width: 56px;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .referrals-stat-icon-earning-new {
+            background: linear-gradient(135deg, #9333EA 0%, #7C3AED 100%);
+            color: #fff;
+        }
+
+        .referrals-stat-icon-users-new {
+            background: linear-gradient(135deg, #F97316 0%, #EA580C 100%);
+            color: #fff;
+        }
+
+        .referrals-stat-content-new {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            min-width: 0;
+            overflow: hidden;
+        }
+
+        .referrals-stat-label-new {
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.7);
+            text-transform: none;
+            letter-spacing: 0;
+            font-weight: 400;
+            margin: 0;
+            line-height: 1.3;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .referrals-stat-value-new {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            line-height: 1.2;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .referrals-stats-section-new {
+            gap: 0.625rem;
+        }
+
+        .referrals-stat-card-new {
+            padding: 1rem;
+            min-height: 90px;
+            gap: 0.875rem;
+        }
+
+        .referrals-stat-icon-new {
+            width: 52px;
+            height: 52px;
+            min-width: 52px;
+            font-size: 1.375rem;
+        }
+
+        .referrals-stat-content-new {
+            gap: 0.375rem;
+        }
+
+        .referrals-stat-label-new {
+            font-size: 0.6875rem;
+        }
+
+        .referrals-stat-value-new {
+            font-size: 1.375rem;
+        }
+    }
+
+    @media (max-width: 400px) {
+        .referrals-stats-section-new {
+            gap: 0.5rem;
+        }
+
+        .referrals-stat-card-new {
+            padding: 0.875rem;
+            min-height: 85px;
+            gap: 0.75rem;
+        }
+
+        .referrals-stat-icon-new {
+            width: 48px;
+            height: 48px;
+            min-width: 48px;
+            font-size: 1.25rem;
+        }
+
+        .referrals-stat-content-new {
+            gap: 0.375rem;
+        }
+
+        .referrals-stat-label-new {
+            font-size: 0.625rem;
+        }
+
+        .referrals-stat-value-new {
+            font-size: 1.25rem;
+        }
     }
 
     .referrals-stat-content-new {
@@ -330,6 +505,141 @@
         margin: 0;
     }
 
+    /* Mobile Wallet Design - Match Image */
+    @media (max-width: 768px) {
+        .referrals-wallet-section-new {
+            padding: 1.5rem;
+            border-radius: 16px;
+            margin-bottom: 1.5rem;
+        }
+
+        .referrals-wallet-section-new::before {
+            display: none;
+        }
+
+        .referrals-wallet-header-new {
+            margin-bottom: 1.5rem;
+        }
+
+        .referrals-wallet-icon-new {
+            display: none;
+        }
+
+        .referrals-wallet-title-new {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin: 0 0 0.5rem 0;
+        }
+
+        .referrals-wallet-subtitle-new {
+            font-size: 0.875rem;
+            color: rgba(255, 255, 255, 0.7);
+            margin: 0;
+        }
+
+        .referrals-wallet-body-new {
+            gap: 1.25rem;
+        }
+
+        .referrals-balance-display-new {
+            background: transparent;
+            border: none;
+            padding: 0;
+            text-align: left;
+        }
+
+        .referrals-balance-amount-wrapper-new {
+            display: flex;
+            align-items: baseline;
+            gap: 0.75rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .referrals-balance-amount-new {
+            display: flex;
+            align-items: baseline;
+            gap: 0;
+            margin-bottom: 0;
+        }
+
+        .referrals-balance-value-new {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            text-shadow: none;
+        }
+
+        .referrals-balance-currency-new {
+            display: none;
+        }
+
+        .referrals-minimum-badge-new {
+            padding: 0.375rem 0.75rem;
+            background: #8B4513;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #fff;
+            white-space: nowrap;
+        }
+
+        .referrals-minimum-info-new {
+            display: none;
+        }
+
+        .referrals-minimum-requirement-new {
+            display: none;
+        }
+
+        .referrals-minimum-needed-new {
+            font-size: 0.875rem;
+            color: rgba(255, 255, 255, 0.7);
+            margin: 0;
+            text-align: left;
+        }
+
+        .referrals-claim-note-new {
+            font-size: 0.875rem;
+            color: #F97316;
+            text-align: left;
+            margin: 0;
+        }
+
+        .referrals-claim-btn-new {
+            padding: 0.875rem 1.5rem;
+            background: #F97316;
+            border: none;
+            border-radius: 12px;
+            color: #fff;
+            font-weight: 600;
+            font-size: 0.9375rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            box-shadow: none;
+            width: 100%;
+        }
+
+        .referrals-claim-btn-new:hover:not(:disabled) {
+            background: #EA580C;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .referrals-claim-btn-new:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .referrals-claim-btn-new i {
+            font-size: 0.875rem;
+        }
+    }
+
     /* Referral Tools Section */
     .referrals-tools-section-new {
         margin-bottom: 3rem;
@@ -478,6 +788,111 @@
         margin: 0;
     }
 
+    /* Mobile View - Simple Design */
+    @media (max-width: 768px) {
+        .referrals-tools-header-new {
+            display: none;
+        }
+
+        .referrals-tools-grid-new {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .referrals-tool-card-new {
+            background: transparent;
+            border: none;
+            border-radius: 0;
+            padding: 0;
+            box-shadow: none;
+        }
+
+        .referrals-tool-card-new::before {
+            display: none;
+        }
+
+        .referrals-tool-card-new:hover {
+            transform: none;
+            box-shadow: none;
+            border-color: transparent;
+        }
+
+        .referrals-tool-header-new {
+            margin-bottom: 0.75rem;
+        }
+
+        .referrals-tool-icon-new {
+            display: none;
+        }
+
+        .referrals-tool-title-new {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin: 0;
+        }
+
+        .referrals-tool-body-new {
+            gap: 0.75rem;
+        }
+
+        .referrals-tool-hint-new {
+            display: none;
+        }
+
+        .referrals-tool-input-wrapper-new {
+            gap: 0.75rem;
+        }
+
+        .referrals-tool-input-new {
+            flex: 1;
+            padding: 0.875rem 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.875rem;
+        }
+
+        .referrals-tool-input-new:focus {
+            outline: none;
+            border-color: rgba(255, 255, 255, 0.2);
+            box-shadow: none;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .referrals-tool-copy-btn-new {
+            padding: 0;
+            width: 44px;
+            height: 44px;
+            min-width: 44px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-primary);
+            border-radius: 8px;
+            box-shadow: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .referrals-tool-copy-btn-new:hover {
+            transform: none;
+            box-shadow: none;
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .referrals-tool-copy-btn-new:active {
+            transform: scale(0.95);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .referrals-tool-copy-btn-new i {
+            font-size: 1rem;
+        }
+    }
+
     /* Referrer Info Section */
     .referrals-referrer-section-new {
         margin-bottom: 3rem;
@@ -595,6 +1010,28 @@
         margin: 0;
     }
 
+    /* Mobile Header Inside Card */
+    .referrals-commission-mobile-header-new {
+        grid-column: 1 / -1;
+        text-align: center;
+        padding-bottom: 1rem;
+        margin-bottom: 0.5rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .referrals-commission-mobile-title-new {
+        font-size: 1rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin: 0 0 0.375rem 0;
+    }
+
+    .referrals-commission-mobile-subtitle-new {
+        font-size: 0.75rem;
+        color: var(--text-secondary);
+        margin: 0;
+    }
+
     .referrals-commission-grid-new {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -691,6 +1128,239 @@
         text-transform: uppercase;
         letter-spacing: 0.5px;
         font-weight: 600;
+    }
+
+    .referrals-commission-earning-label-new {
+        position: absolute;
+        bottom: 1rem;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 0.75rem;
+        color: var(--text-secondary);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        font-weight: 600;
+    }
+
+    /* Level-specific colors */
+    .referrals-commission-level-1 .referrals-commission-level-icon-new {
+        background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+        border-color: rgba(16, 185, 129, 0.5);
+        color: #000;
+        box-shadow: 0 0 30px rgba(16, 185, 129, 0.4);
+    }
+
+    .referrals-commission-level-1 .referrals-commission-rate-value-new {
+        color: #10B981;
+        text-shadow: 0 0 20px rgba(16, 185, 129, 0.5);
+    }
+
+    .referrals-commission-level-2 .referrals-commission-level-icon-new {
+        background: linear-gradient(135deg, #3B82F6 0%, #2563EB 100%);
+        border-color: rgba(59, 130, 246, 0.5);
+        color: #000;
+        box-shadow: 0 0 30px rgba(59, 130, 246, 0.4);
+    }
+
+    .referrals-commission-level-2 .referrals-commission-rate-value-new {
+        color: #3B82F6;
+        text-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+    }
+
+    .referrals-commission-level-3 .referrals-commission-level-icon-new {
+        background: linear-gradient(135deg, #EC4899 0%, #DB2777 100%);
+        border-color: rgba(236, 72, 153, 0.5);
+        color: #000;
+        box-shadow: 0 0 30px rgba(236, 72, 153, 0.4);
+    }
+
+    .referrals-commission-level-3 .referrals-commission-rate-value-new {
+        color: #EC4899;
+        text-shadow: 0 0 20px rgba(236, 72, 153, 0.5);
+    }
+
+    .referrals-commission-level-4 .referrals-commission-level-icon-new {
+        background: linear-gradient(135deg, #F97316 0%, #EA580C 100%);
+        border-color: rgba(249, 115, 22, 0.5);
+        color: #000;
+        box-shadow: 0 0 30px rgba(249, 115, 22, 0.4);
+    }
+
+    .referrals-commission-level-4 .referrals-commission-rate-value-new {
+        color: #F97316;
+        text-shadow: 0 0 20px rgba(249, 115, 22, 0.5);
+    }
+
+    .referrals-commission-level-5 .referrals-commission-level-icon-new {
+        background: linear-gradient(135deg, #EC4899 0%, #DB2777 100%);
+        border-color: rgba(236, 72, 153, 0.5);
+        color: #000;
+        box-shadow: 0 0 30px rgba(236, 72, 153, 0.4);
+    }
+
+    .referrals-commission-level-5 .referrals-commission-rate-value-new {
+        color: #EC4899;
+        text-shadow: 0 0 20px rgba(236, 72, 153, 0.5);
+    }
+
+    /* Mobile Icon-Based Commission Structure */
+    .referrals-commission-mobile-new {
+        display: none;
+    }
+
+    /* Show desktop view by default */
+    .referrals-commission-desktop {
+        display: grid;
+    }
+
+    .referrals-commission-mobile-container-new {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.75rem;
+        padding: 1rem;
+        background: var(--card-bg);
+        border: 1px solid var(--card-border);
+        border-radius: 20px;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+    }
+
+    .referrals-commission-mobile-item-new {
+        width: 100%;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 16px;
+        padding: 1.25rem 1rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+        position: relative;
+        transition: all 0.2s ease;
+        cursor: pointer;
+        box-sizing: border-box;
+    }
+
+    .referrals-commission-mobile-item-new:active {
+        transform: scale(0.96);
+        background: rgba(255, 255, 255, 0.05);
+    }
+
+    .referrals-commission-mobile-item-new:hover {
+        border-color: rgba(255, 255, 255, 0.2);
+        background: rgba(255, 255, 255, 0.04);
+    }
+
+    .referrals-commission-mobile-icon-wrapper-new {
+        position: relative;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+
+    .referrals-commission-mobile-icon-new {
+        width: 64px;
+        height: 64px;
+        border-radius: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.75rem;
+        color: #000;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+        transition: var(--transition);
+    }
+
+    .referrals-commission-mobile-badge-new {
+        position: absolute;
+        top: -8px;
+        right: -8px;
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background: var(--card-bg);
+        border: 2px solid var(--card-border);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.625rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        text-transform: uppercase;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    .referrals-commission-mobile-content-new {
+        width: 100%;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .referrals-commission-mobile-name-new {
+        font-size: 0.75rem;
+        font-weight: 600;
+        color: var(--text-secondary);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        line-height: 1.2;
+    }
+
+    .referrals-commission-mobile-rate-new {
+        font-size: 1.75rem;
+        font-weight: 700;
+        line-height: 1;
+    }
+
+    /* Mobile Level Colors */
+    .referrals-commission-mobile-level-1 .referrals-commission-mobile-icon-new {
+        background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+        box-shadow: 0 4px 16px rgba(16, 185, 129, 0.4);
+    }
+
+    .referrals-commission-mobile-level-1 .referrals-commission-mobile-rate-new {
+        color: #10B981;
+        text-shadow: 0 0 15px rgba(16, 185, 129, 0.5);
+    }
+
+    .referrals-commission-mobile-level-2 .referrals-commission-mobile-icon-new {
+        background: linear-gradient(135deg, #3B82F6 0%, #2563EB 100%);
+        box-shadow: 0 4px 16px rgba(59, 130, 246, 0.4);
+    }
+
+    .referrals-commission-mobile-level-2 .referrals-commission-mobile-rate-new {
+        color: #3B82F6;
+        text-shadow: 0 0 15px rgba(59, 130, 246, 0.5);
+    }
+
+    .referrals-commission-mobile-level-3 .referrals-commission-mobile-icon-new {
+        background: linear-gradient(135deg, #EC4899 0%, #DB2777 100%);
+        box-shadow: 0 4px 16px rgba(236, 72, 153, 0.4);
+    }
+
+    .referrals-commission-mobile-level-3 .referrals-commission-mobile-rate-new {
+        color: #EC4899;
+        text-shadow: 0 0 15px rgba(236, 72, 153, 0.5);
+    }
+
+    .referrals-commission-mobile-level-4 .referrals-commission-mobile-icon-new {
+        background: linear-gradient(135deg, #F97316 0%, #EA580C 100%);
+        box-shadow: 0 4px 16px rgba(249, 115, 22, 0.4);
+    }
+
+    .referrals-commission-mobile-level-4 .referrals-commission-mobile-rate-new {
+        color: #F97316;
+        text-shadow: 0 0 15px rgba(249, 115, 22, 0.5);
+    }
+
+    .referrals-commission-mobile-level-5 .referrals-commission-mobile-icon-new {
+        background: linear-gradient(135deg, #EC4899 0%, #DB2777 100%);
+        box-shadow: 0 4px 16px rgba(236, 72, 153, 0.4);
+    }
+
+    .referrals-commission-mobile-level-5 .referrals-commission-mobile-rate-new {
+        color: #EC4899;
+        text-shadow: 0 0 15px rgba(236, 72, 153, 0.5);
     }
 
     /* Network Section */
@@ -798,10 +1468,25 @@
         gap: 1rem;
     }
 
-    .referrals-network-empty-content-new i {
+    .referrals-network-empty-icon-mobile {
+        display: none;
+    }
+
+    .referrals-network-empty-icon-desktop {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto;
+    }
+
+    .referrals-network-empty-icon-desktop i {
         font-size: 4rem;
         color: var(--text-secondary);
         opacity: 0.3;
+    }
+
+    .referrals-network-empty-content-new > i {
+        display: none;
     }
 
     .referrals-network-empty-content-new p {
@@ -816,8 +1501,41 @@
         color: var(--text-secondary);
     }
 
+    .referrals-network-invite-btn-new {
+        padding: 0.875rem 1.75rem;
+        background: linear-gradient(135deg, #9333EA 0%, #EC4899 100%);
+        border: none;
+        border-radius: 12px;
+        color: #fff;
+        font-weight: 700;
+        font-size: 0.9375rem;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        box-shadow: 0 4px 16px rgba(147, 51, 234, 0.3);
+        margin-top: 0.5rem;
+    }
+
+    .referrals-network-invite-btn-new:hover {
+        background: linear-gradient(135deg, #7C3AED 0%, #DB2777 100%);
+        box-shadow: 0 6px 20px rgba(147, 51, 234, 0.4);
+        transform: translateY(-2px);
+    }
+
+    .referrals-network-invite-btn-new:active {
+        transform: translateY(0);
+    }
+
+    .referrals-network-invite-btn-new i {
+        font-size: 0.875rem;
+    }
+
     /* Rules Section */
     .referrals-rules-section-new {
+        margin-top: 2rem;
         margin-bottom: 2rem;
     }
 
@@ -915,96 +1633,138 @@
 
     @media (max-width: 768px) {
         .referrals-new-page {
-            padding: 1rem;
+            padding: 0.75rem;
             width: 100%;
             max-width: 100%;
             box-sizing: border-box;
             overflow-x: hidden;
+            -webkit-overflow-scrolling: touch;
         }
 
-        .referrals-hero-new {
-            padding: 2rem 1.5rem;
-            margin-bottom: 2rem;
-            border-radius: 16px;
-        }
+        /* Hero and stats styles moved to dedicated mobile section above */
 
-        .referrals-hero-title-new {
-            font-size: 2rem;
-        }
-
-        .referrals-hero-subtitle-new {
-            font-size: 1rem;
-        }
-
-        .referrals-stats-section-new {
-            grid-template-columns: 1fr;
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
-
-        .referrals-stat-card-new {
-            padding: 2rem;
-            flex-direction: column;
-            text-align: center;
-        }
-
-        .referrals-wallet-section-new {
-            padding: 2rem 1.5rem;
-            margin-bottom: 2rem;
-            border-radius: 16px;
-        }
-
-        .referrals-wallet-header-new {
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            gap: 1.5rem;
-        }
-
-        .referrals-balance-value-new {
-            font-size: 3rem;
-        }
+        /* Wallet styles moved to dedicated mobile section above */
 
         .referrals-tools-section-new {
-            margin-bottom: 2rem;
-        }
-
-        .referrals-tools-grid-new {
-            grid-template-columns: 1fr;
-            gap: 1.5rem;
-        }
-
-        .referrals-tool-input-wrapper-new {
-            flex-direction: column;
-        }
-
-        .referrals-tool-copy-btn-new {
-            width: 100%;
+            margin-bottom: 1.5rem;
         }
 
         .referrals-referrer-section-new {
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .referrals-referrer-card-new {
+            padding: 1.5rem;
+            border-radius: 16px;
+        }
+
+        .referrals-referrer-card-new::before {
+            display: none;
         }
 
         .referrals-referrer-header-new {
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            gap: 1rem;
+            margin-bottom: 1.25rem;
+            display: block;
+        }
+
+        .referrals-referrer-icon-new {
+            display: none;
+        }
+
+        .referrals-referrer-title-new {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin: 0 0 1.25rem 0;
+        }
+
+        .referrals-referrer-title-new::after {
+            content: ':';
         }
 
         .referrals-referrer-info-grid-new {
-            grid-template-columns: 1fr;
-            gap: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.875rem;
+        }
+
+        .referrals-referrer-info-item-new {
+            padding: 0;
+            background: transparent;
+            border: none;
+            border-radius: 0;
+            display: flex;
+            align-items: baseline;
+            gap: 0;
+            flex-wrap: wrap;
+        }
+
+        .referrals-referrer-info-item-new:hover {
+            background: transparent;
+            border: none;
+            transform: none;
+        }
+
+        .referrals-referrer-info-label-new {
+            display: inline-flex;
+            align-items: center;
+            gap: 0;
+        }
+
+        .referrals-referrer-info-label-new i {
+            display: none;
+        }
+
+        .referrals-referrer-info-label-new span {
+            font-size: 0.875rem;
+            font-weight: 400;
+            color: rgba(255, 255, 255, 0.7);
+            text-transform: none;
+            letter-spacing: 0;
+        }
+
+        .referrals-referrer-info-label-new span::after {
+            content: ':';
+            margin-left: 0.25rem;
+            margin-right: 0.5rem;
+        }
+
+        .referrals-referrer-info-value-new {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-primary);
         }
 
         .referrals-commission-section-new {
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
         }
 
-        .referrals-commission-grid-new {
-            grid-template-columns: 1fr;
-            gap: 1.5rem;
+        /* Hide desktop commission grid on mobile */
+        .referrals-commission-desktop {
+            display: none !important;
+        }
+
+        /* Hide external header on mobile */
+        .referrals-commission-header-new {
+            display: none !important;
+        }
+
+        /* Show mobile commission structure on mobile */
+        .referrals-commission-mobile-new {
+            display: block !important;
+        }
+
+        .referrals-commission-mobile-header-new {
+            padding-bottom: 0.875rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .referrals-commission-mobile-title-new {
+            font-size: 0.9375rem;
+        }
+
+        .referrals-commission-mobile-subtitle-new {
+            font-size: 0.6875rem;
         }
 
         .referrals-network-section-new {
@@ -1012,13 +1772,152 @@
         }
 
         .referrals-network-header-new {
-            flex-direction: column;
-            align-items: stretch;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-top: 0.5rem;
             gap: 1rem;
         }
 
+        .referrals-network-header-new > div {
+            flex: 1;
+        }
+
+        .referrals-network-subtitle-new {
+            display: none;
+        }
+
+        .referrals-network-title-new {
+            font-size: 1.25rem;
+            margin: 0;
+        }
+
         .referrals-network-filter-new {
-            width: 100%;
+            padding: 0.625rem 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            color: var(--text-primary);
+            font-size: 0.875rem;
+            min-width: 80px;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23fff' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 0.75rem center;
+            padding-right: 2.5rem;
+        }
+
+        .referrals-network-card-new {
+            padding: 1.5rem;
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            position: relative;
+        }
+
+        /* Move header inside card on mobile using CSS */
+        .referrals-network-section-new {
+            position: relative;
+        }
+
+        .referrals-network-header-new {
+            position: absolute;
+            top: 1.5rem;
+            left: 1.5rem;
+            right: 1.5rem;
+            z-index: 10;
+            margin: 0;
+            padding: 0;
+        }
+
+        .referrals-network-table-wrapper-new {
+            padding-top: 4.5rem;
+        }
+
+        .referrals-network-empty-icon-desktop {
+            display: none !important;
+        }
+
+        .referrals-network-empty-new {
+            padding: 3rem 1.5rem;
+        }
+
+        .referrals-network-empty-content-new {
+            gap: 1.5rem;
+        }
+
+        .referrals-network-empty-icon-desktop {
+            display: none !important;
+        }
+
+        .referrals-network-empty-icon-mobile {
+            display: flex !important;
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto;
+            flex-shrink: 0;
+        }
+
+        .referrals-network-empty-icon-mobile i {
+            font-size: 3.5rem;
+            color: rgba(255, 255, 255, 0.7);
+            opacity: 1;
+            display: block !important;
+            visibility: visible !important;
+        }
+
+        .referrals-network-empty-content-new > i {
+            display: none !important;
+        }
+
+        .referrals-network-empty-message-new {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin: 0;
+        }
+
+        .referrals-network-empty-hint-new {
+            display: none;
+        }
+
+        .referrals-network-invite-btn-new {
+            padding: 0.875rem 1.75rem;
+            background: linear-gradient(135deg, #9333EA 0%, #EC4899 100%);
+            border: none;
+            border-radius: 12px;
+            color: #fff;
+            font-weight: 700;
+            font-size: 0.9375rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            box-shadow: 0 4px 16px rgba(147, 51, 234, 0.3);
+            margin-top: 0.5rem;
+        }
+
+        .referrals-network-invite-btn-new:hover {
+            background: linear-gradient(135deg, #7C3AED 0%, #DB2777 100%);
+            box-shadow: 0 6px 20px rgba(147, 51, 234, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .referrals-network-invite-btn-new:active {
+            transform: translateY(0);
+        }
+
+        .referrals-network-invite-btn-new i {
+            font-size: 0.875rem;
         }
 
         .referrals-network-table-wrapper-new {
@@ -1081,100 +1980,230 @@
         .referrals-rules-section-new {
             margin-bottom: 2rem;
         }
+
+        .referrals-rules-card-new {
+            padding: 1.5rem;
+        }
+
+        .referrals-rules-header-new {
+            margin-bottom: 1.5rem;
+            padding-top: 0.5rem;
+        }
+
+        .referrals-rules-subtitle-new {
+            display: none;
+        }
+
+        .referrals-rules-title-new {
+            font-size: 1.25rem;
+            margin: 0 0 1.25rem 0;
+        }
+
+        .referrals-rules-list-new {
+            gap: 1rem;
+        }
+
+        .referrals-rule-item-new {
+            padding: 0;
+            background: transparent;
+            border: none;
+            align-items: flex-start;
+            gap: 0.75rem;
+        }
+
+        .referrals-rule-item-new:hover {
+            background: transparent;
+            transform: none;
+        }
+
+        .referrals-rule-icon-new {
+            display: none;
+        }
+
+        .referrals-rule-content-new {
+            flex: 1;
+        }
+
+        .referrals-rule-title-new {
+            display: none;
+        }
+
+        .referrals-rule-text-new {
+            font-size: 0.875rem;
+            color: var(--text-primary);
+            margin: 0;
+            line-height: 1.5;
+            padding-left: 1.25rem;
+            position: relative;
+        }
+
+        .referrals-rule-text-new::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: var(--text-primary);
+            font-size: 1.25rem;
+            line-height: 1.2;
+        }
+
+        .referrals-rules-warning-new {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.5rem;
+            margin-top: 1.25rem;
+            padding-top: 1.25rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .referrals-rules-warning-new i {
+            color: #F97316;
+            font-size: 1rem;
+            margin-top: 0.125rem;
+            flex-shrink: 0;
+        }
+
+        .referrals-rules-warning-new span {
+            font-size: 0.875rem;
+            color: #F97316;
+            line-height: 1.5;
+        }
     }
 
     @media (max-width: 480px) {
         .referrals-new-page {
-            padding: 0;
+            padding: 0.5rem;
             width: 100%;
             max-width: 100%;
             box-sizing: border-box;
             overflow-x: hidden;
+            -webkit-overflow-scrolling: touch;
         }
 
         .referrals-hero-new {
             padding: 1.5rem 1rem;
-            margin-bottom: 1.5rem;
-            border-radius: 12px;
+            margin-bottom: 1.25rem;
+            border-radius: 18px;
         }
 
         .referrals-hero-title-new {
-            font-size: 1.75rem;
+            font-size: 1.5rem;
         }
 
         .referrals-hero-subtitle-new {
-            font-size: 0.875rem;
+            font-size: 0.8125rem;
         }
 
         .referrals-stats-section-new {
-            gap: 1rem;
-            margin-bottom: 1.5rem;
+            gap: 0.875rem;
+            margin-bottom: 1.25rem;
         }
 
         .referrals-stat-card-new {
-            padding: 1.5rem;
+            padding: 1.25rem;
+            border-radius: 14px;
         }
 
         .referrals-stat-icon-new {
-            width: 64px;
-            height: 64px;
-            font-size: 1.5rem;
+            width: 56px;
+            height: 56px;
+            font-size: 1.375rem;
         }
 
         .referrals-stat-value-new {
-            font-size: 2rem;
+            font-size: 1.75rem;
         }
 
         .referrals-wallet-section-new {
-            padding: 1.5rem 1rem;
-            margin-bottom: 1.5rem;
-            border-radius: 12px;
+            padding: 1.25rem 1rem;
+            margin-bottom: 1.25rem;
+            border-radius: 18px;
         }
 
         .referrals-wallet-header-new {
-            margin-bottom: 1.5rem;
+            margin-bottom: 1.25rem;
         }
 
         .referrals-wallet-icon-new {
-            width: 64px;
-            height: 64px;
-            font-size: 1.5rem;
+            width: 56px;
+            height: 56px;
+            font-size: 1.375rem;
         }
 
         .referrals-wallet-title-new {
-            font-size: 1.5rem;
+            font-size: 1.375rem;
         }
 
         .referrals-balance-value-new {
-            font-size: 2.5rem;
+            font-size: 2.25rem;
         }
 
         .referrals-balance-currency-new {
-            font-size: 1.5rem;
+            font-size: 1.375rem;
+        }
+
+        .referrals-claim-btn-new {
+            padding: 1rem 1.5rem;
+            font-size: 0.9375rem;
+            border-radius: 14px;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .referrals-claim-btn-new:active {
+            transform: scale(0.98);
         }
 
         .referrals-tools-grid-new {
-            gap: 1rem;
-        }
-
-        .referrals-tool-card-new {
-            padding: 1.5rem;
+            gap: 1.25rem;
         }
 
         .referrals-referrer-card-new {
-            padding: 1.5rem;
+            padding: 1.25rem;
+            border-radius: 14px;
         }
 
-        .referrals-commission-grid-new {
-            gap: 1rem;
+        .referrals-commission-mobile-header-new {
+            padding-bottom: 0.75rem;
+            margin-bottom: 0.625rem;
         }
 
-        .referrals-commission-card-new {
-            padding: 1.5rem;
+        .referrals-commission-mobile-title-new {
+            font-size: 0.875rem;
         }
 
-        .referrals-commission-rate-value-new {
-            font-size: 2.5rem;
+        .referrals-commission-mobile-subtitle-new {
+            font-size: 0.625rem;
+        }
+
+        .referrals-commission-mobile-container-new {
+            padding: 0.875rem;
+            border-radius: 18px;
+            gap: 0.625rem;
+        }
+
+        .referrals-commission-mobile-item-new {
+            padding: 1rem 0.875rem;
+            border-radius: 14px;
+        }
+
+        .referrals-commission-mobile-icon-new {
+            width: 56px;
+            height: 56px;
+            font-size: 1.5rem;
+            border-radius: 14px;
+        }
+
+        .referrals-commission-mobile-badge-new {
+            width: 28px;
+            height: 28px;
+            font-size: 0.5625rem;
+        }
+
+        .referrals-commission-mobile-name-new {
+            font-size: 0.6875rem;
+        }
+
+        .referrals-commission-mobile-rate-new {
+            font-size: 1.5rem;
         }
 
         .referrals-network-card-new {
@@ -1192,60 +2221,62 @@
 
     @media (max-width: 400px) {
         .referrals-new-page {
-            padding: 0;
+            padding: 0.5rem;
             width: 100%;
             max-width: 100%;
             box-sizing: border-box;
             overflow-x: hidden;
+            -webkit-overflow-scrolling: touch;
         }
 
         .referrals-hero-new {
             padding: 1.25rem 0.875rem;
-            margin-bottom: 1.25rem;
-            border-radius: 12px;
+            margin-bottom: 1rem;
+            border-radius: 16px;
         }
 
         .referrals-hero-title-new {
-            font-size: 1.5rem;
-            letter-spacing: -1px;
+            font-size: 1.375rem;
+            letter-spacing: -0.5px;
         }
 
         .referrals-hero-subtitle-new {
-            font-size: 0.8125rem;
+            font-size: 0.75rem;
         }
 
         .referrals-stats-section-new {
-            gap: 0.875rem;
+            gap: 0.75rem;
         }
 
         .referrals-stat-card-new {
-            padding: 1.25rem;
+            padding: 1.125rem;
+            border-radius: 12px;
         }
 
         .referrals-stat-icon-new {
-            width: 56px;
-            height: 56px;
+            width: 52px;
+            height: 52px;
             font-size: 1.25rem;
         }
 
         .referrals-stat-value-new {
-            font-size: 1.75rem;
+            font-size: 1.625rem;
         }
 
         .referrals-wallet-section-new {
-            padding: 1.25rem 0.875rem;
-            margin-bottom: 1.25rem;
-            border-radius: 12px;
+            padding: 1.125rem 0.875rem;
+            margin-bottom: 1rem;
+            border-radius: 16px;
         }
 
         .referrals-wallet-icon-new {
-            width: 56px;
-            height: 56px;
+            width: 52px;
+            height: 52px;
             font-size: 1.25rem;
         }
 
         .referrals-wallet-title-new {
-            font-size: 1.375rem;
+            font-size: 1.25rem;
         }
 
         .referrals-balance-value-new {
@@ -1257,50 +2288,84 @@
         }
 
         .referrals-claim-btn-new {
-            padding: 1rem 1.5rem;
-            font-size: 0.9375rem;
+            padding: 0.9375rem 1.25rem;
+            font-size: 0.875rem;
+            border-radius: 12px;
         }
 
         .referrals-tool-card-new {
-            padding: 1.25rem;
+            padding: 1.125rem;
+            border-radius: 12px;
         }
 
         .referrals-tool-icon-new {
-            width: 56px;
-            height: 56px;
-            font-size: 1.5rem;
+            width: 52px;
+            height: 52px;
+            font-size: 1.375rem;
         }
 
         .referrals-tool-title-new {
-            font-size: 1.25rem;
+            font-size: 1.125rem;
         }
 
         .referrals-referrer-card-new {
-            padding: 1.25rem;
+            padding: 1.125rem;
+            border-radius: 12px;
         }
 
         .referrals-referrer-icon-new {
-            width: 56px;
-            height: 56px;
-            font-size: 1.5rem;
+            width: 52px;
+            height: 52px;
+            font-size: 1.375rem;
         }
 
         .referrals-referrer-title-new {
-            font-size: 1.25rem;
+            font-size: 1.125rem;
         }
 
-        .referrals-commission-card-new {
-            padding: 1.25rem;
+        .referrals-commission-mobile-header-new {
+            padding-bottom: 0.625rem;
+            margin-bottom: 0.5rem;
         }
 
-        .referrals-commission-level-icon-new {
-            width: 80px;
-            height: 80px;
-            font-size: 2rem;
+        .referrals-commission-mobile-title-new {
+            font-size: 0.8125rem;
         }
 
-        .referrals-commission-rate-value-new {
-            font-size: 2rem;
+        .referrals-commission-mobile-subtitle-new {
+            font-size: 0.5625rem;
+        }
+
+        .referrals-commission-mobile-container-new {
+            padding: 0.75rem;
+            border-radius: 16px;
+            gap: 0.5rem;
+        }
+
+        .referrals-commission-mobile-item-new {
+            padding: 0.875rem 0.75rem;
+            border-radius: 12px;
+        }
+
+        .referrals-commission-mobile-icon-new {
+            width: 52px;
+            height: 52px;
+            font-size: 1.375rem;
+            border-radius: 12px;
+        }
+
+        .referrals-commission-mobile-badge-new {
+            width: 26px;
+            height: 26px;
+            font-size: 0.5rem;
+        }
+
+        .referrals-commission-mobile-name-new {
+            font-size: 0.625rem;
+        }
+
+        .referrals-commission-mobile-rate-new {
+            font-size: 1.375rem;
         }
 
         .referrals-rules-card-new {
@@ -1357,33 +2422,24 @@
     <!-- Earning Wallet Card -->
     <div class="referrals-wallet-section-new">
         <div class="referrals-wallet-header-new">
-            <div class="referrals-wallet-icon-new">
-                <i class="fas fa-wallet"></i>
-            </div>
             <div class="referrals-wallet-title-section-new">
-                <h3 class="referrals-wallet-title-new">Mining Referral Wallet</h3>
-                <p class="referrals-wallet-subtitle-new">Available mining referral earnings for withdrawal</p>
+                <h3 class="referrals-wallet-title-new">Referral Earning Wallet</h3>
+                <p class="referrals-wallet-subtitle-new">Your current available balance</p>
             </div>
         </div>
         <div class="referrals-wallet-body-new">
             <div class="referrals-balance-display-new">
-                <div class="referrals-balance-amount-new">
-                    <span class="referrals-balance-currency-new">$</span>
-                    <span class="referrals-balance-value-new">0.00</span>
+                <div class="referrals-balance-amount-wrapper-new">
+                    <span class="referrals-balance-value-new">$0</span>
+                    <div class="referrals-minimum-badge-new">Minimum $1</div>
                 </div>
-                <div class="referrals-minimum-info-new">
-                    <div class="referrals-minimum-requirement-new">
-                        <i class="fas fa-info-circle"></i>
-                        <span>Minimum withdrawal: <strong>$1.00</strong></span>
-                    </div>
-                    <div class="referrals-minimum-needed-new">$1.00 more needed to claim</div>
-                </div>
+                <div class="referrals-minimum-needed-new">$1.00 more needed to claim</div>
             </div>
+            <p class="referrals-claim-note-new">You can claim referral earnings when balance reaches $1 or more</p>
             <button class="referrals-claim-btn-new" disabled>
-                <i class="fas fa-hand-holding-usd"></i>
+                <i class="fas fa-gift"></i>
                 <span>Claim Earnings</span>
             </button>
-            <p class="referrals-claim-note-new">You can claim referral earnings when balance reaches $1 or more</p>
         </div>
     </div>
 
@@ -1404,7 +2460,7 @@
                 </div>
                 <div class="referrals-tool-body-new">
                     <div class="referrals-tool-input-wrapper-new">
-                        <input type="text" class="referrals-tool-input-new" id="referralLink" value="https://licrown.ai/auth/sign-u" readonly>
+                        <input type="text" class="referrals-tool-input-new" id="referralLink" value="https://licrown.ai/auth/sign-up?ref=" readonly>
                         <button class="referrals-tool-copy-btn-new" data-copy="referralLink" title="Copy Link">
                             <i class="fas fa-copy"></i>
                         </button>
@@ -1472,25 +2528,28 @@
     <!-- Commission Structure Section -->
     <div class="referrals-commission-section-new">
         <div class="referrals-commission-header-new">
-            <h2 class="referrals-commission-title-new">Commission Structure</h2>
+            <h2 class="referrals-commission-title-new">Earning Commission Structure</h2>
             <p class="referrals-commission-subtitle-new">Earn up to 18% commission across 5 levels</p>
         </div>
-        <div class="referrals-commission-grid-new">
+        
+        <!-- Desktop Grid View -->
+        <div class="referrals-commission-grid-new referrals-commission-desktop">
             <!-- Level 1 -->
-            <div class="referrals-commission-card-new">
+            <div class="referrals-commission-card-new referrals-commission-level-1">
                 <div class="referrals-commission-level-badge-new">Level 1</div>
                 <div class="referrals-commission-level-icon-new">
                     <i class="fas fa-star"></i>
                 </div>
-                <div class="referrals-commission-level-name-new">Direct Referrals</div>
+                <div class="referrals-commission-level-name-new">Direct Referral</div>
                 <div class="referrals-commission-rate-new">
                     <span class="referrals-commission-rate-value-new">6%</span>
-                    <span class="referrals-commission-rate-label-new">Commission</span>
+                    <span class="referrals-commission-rate-label-new">Commission Rate</span>
                 </div>
+                <div class="referrals-commission-earning-label-new">Earning</div>
             </div>
 
             <!-- Level 2 -->
-            <div class="referrals-commission-card-new">
+            <div class="referrals-commission-card-new referrals-commission-level-2">
                 <div class="referrals-commission-level-badge-new">Level 2</div>
                 <div class="referrals-commission-level-icon-new">
                     <i class="fas fa-star"></i>
@@ -1498,12 +2557,13 @@
                 <div class="referrals-commission-level-name-new">Second Level</div>
                 <div class="referrals-commission-rate-new">
                     <span class="referrals-commission-rate-value-new">3%</span>
-                    <span class="referrals-commission-rate-label-new">Commission</span>
+                    <span class="referrals-commission-rate-label-new">Commission Rate</span>
                 </div>
+                <div class="referrals-commission-earning-label-new">Earning</div>
             </div>
 
             <!-- Level 3 -->
-            <div class="referrals-commission-card-new">
+            <div class="referrals-commission-card-new referrals-commission-level-3">
                 <div class="referrals-commission-level-badge-new">Level 3</div>
                 <div class="referrals-commission-level-icon-new">
                     <i class="fas fa-star"></i>
@@ -1511,12 +2571,13 @@
                 <div class="referrals-commission-level-name-new">Third Level</div>
                 <div class="referrals-commission-rate-new">
                     <span class="referrals-commission-rate-value-new">3%</span>
-                    <span class="referrals-commission-rate-label-new">Commission</span>
+                    <span class="referrals-commission-rate-label-new">Commission Rate</span>
                 </div>
+                <div class="referrals-commission-earning-label-new">Earning</div>
             </div>
 
             <!-- Level 4 -->
-            <div class="referrals-commission-card-new">
+            <div class="referrals-commission-card-new referrals-commission-level-4">
                 <div class="referrals-commission-level-badge-new">Level 4</div>
                 <div class="referrals-commission-level-icon-new">
                     <i class="fas fa-star"></i>
@@ -1524,12 +2585,13 @@
                 <div class="referrals-commission-level-name-new">Fourth Level</div>
                 <div class="referrals-commission-rate-new">
                     <span class="referrals-commission-rate-value-new">3%</span>
-                    <span class="referrals-commission-rate-label-new">Commission</span>
+                    <span class="referrals-commission-rate-label-new">Commission Rate</span>
                 </div>
+                <div class="referrals-commission-earning-label-new">Earning</div>
             </div>
 
             <!-- Level 5 -->
-            <div class="referrals-commission-card-new">
+            <div class="referrals-commission-card-new referrals-commission-level-5">
                 <div class="referrals-commission-level-badge-new">Level 5</div>
                 <div class="referrals-commission-level-icon-new">
                     <i class="fas fa-star"></i>
@@ -1537,7 +2599,89 @@
                 <div class="referrals-commission-level-name-new">Fifth Level</div>
                 <div class="referrals-commission-rate-new">
                     <span class="referrals-commission-rate-value-new">3%</span>
-                    <span class="referrals-commission-rate-label-new">Commission</span>
+                    <span class="referrals-commission-rate-label-new">Commission Rate</span>
+                </div>
+                <div class="referrals-commission-earning-label-new">Earning</div>
+            </div>
+        </div>
+
+        <!-- Mobile Icon-Based View -->
+        <div class="referrals-commission-mobile-new referrals-commission-mobile">
+            <div class="referrals-commission-mobile-container-new">
+                <!-- Mobile Header Inside Card -->
+                <div class="referrals-commission-mobile-header-new">
+                    <h2 class="referrals-commission-mobile-title-new">Earning Commission Structure</h2>
+                    <p class="referrals-commission-mobile-subtitle-new">Earn up to 18% commission across 5 levels</p>
+                </div>
+                
+                <!-- Level 1 -->
+                <div class="referrals-commission-mobile-item-new referrals-commission-mobile-level-1">
+                    <div class="referrals-commission-mobile-icon-wrapper-new">
+                        <div class="referrals-commission-mobile-icon-new">
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <div class="referrals-commission-mobile-badge-new">L1</div>
+                    </div>
+                    <div class="referrals-commission-mobile-content-new">
+                        <div class="referrals-commission-mobile-name-new">Direct Referral</div>
+                        <div class="referrals-commission-mobile-rate-new">6%</div>
+                    </div>
+                </div>
+
+                <!-- Level 2 -->
+                <div class="referrals-commission-mobile-item-new referrals-commission-mobile-level-2">
+                    <div class="referrals-commission-mobile-icon-wrapper-new">
+                        <div class="referrals-commission-mobile-icon-new">
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <div class="referrals-commission-mobile-badge-new">L2</div>
+                    </div>
+                    <div class="referrals-commission-mobile-content-new">
+                        <div class="referrals-commission-mobile-name-new">Second Level</div>
+                        <div class="referrals-commission-mobile-rate-new">3%</div>
+                    </div>
+                </div>
+
+                <!-- Level 3 -->
+                <div class="referrals-commission-mobile-item-new referrals-commission-mobile-level-3">
+                    <div class="referrals-commission-mobile-icon-wrapper-new">
+                        <div class="referrals-commission-mobile-icon-new">
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <div class="referrals-commission-mobile-badge-new">L3</div>
+                    </div>
+                    <div class="referrals-commission-mobile-content-new">
+                        <div class="referrals-commission-mobile-name-new">Third Level</div>
+                        <div class="referrals-commission-mobile-rate-new">3%</div>
+                    </div>
+                </div>
+
+                <!-- Level 4 -->
+                <div class="referrals-commission-mobile-item-new referrals-commission-mobile-level-4">
+                    <div class="referrals-commission-mobile-icon-wrapper-new">
+                        <div class="referrals-commission-mobile-icon-new">
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <div class="referrals-commission-mobile-badge-new">L4</div>
+                    </div>
+                    <div class="referrals-commission-mobile-content-new">
+                        <div class="referrals-commission-mobile-name-new">Fourth Level</div>
+                        <div class="referrals-commission-mobile-rate-new">3%</div>
+                    </div>
+                </div>
+
+                <!-- Level 5 -->
+                <div class="referrals-commission-mobile-item-new referrals-commission-mobile-level-5">
+                    <div class="referrals-commission-mobile-icon-wrapper-new">
+                        <div class="referrals-commission-mobile-icon-new">
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <div class="referrals-commission-mobile-badge-new">L5</div>
+                    </div>
+                    <div class="referrals-commission-mobile-content-new">
+                        <div class="referrals-commission-mobile-name-new">Fifth Level</div>
+                        <div class="referrals-commission-mobile-rate-new">3%</div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1573,9 +2717,18 @@
                         <tr>
                             <td colspan="3" class="referrals-network-empty-new">
                                 <div class="referrals-network-empty-content-new">
-                                    <i class="fas fa-inbox"></i>
-                                    <p>No referrals yet</p>
-                                    <span>Start sharing your referral link to build your network</span>
+                                    <div class="referrals-network-empty-icon-new referrals-network-empty-icon-desktop">
+                                        <i class="fas fa-inbox"></i>
+                                    </div>
+                                    <div class="referrals-network-empty-icon-new referrals-network-empty-icon-mobile">
+                                        <i class="fas fa-inbox"></i>
+                                    </div>
+                                    <p class="referrals-network-empty-message-new">No referrals yet</p>
+                                    <span class="referrals-network-empty-hint-new">Start sharing your referral link to build your network</span>
+                                    <button class="referrals-network-invite-btn-new">
+                                        <i class="fas fa-share-alt"></i>
+                                        <span>Invite Now</span>
+                                    </button>
                                 </div>
                             </td>
                         </tr>
@@ -1587,11 +2740,11 @@
 
     <!-- Program Rules Section -->
     <div class="referrals-rules-section-new">
-        <div class="referrals-rules-header-new">
-            <h2 class="referrals-rules-title-new">Program Rules</h2>
-            <p class="referrals-rules-subtitle-new">Important information about the referral program</p>
-        </div>
         <div class="referrals-rules-card-new">
+            <div class="referrals-rules-header-new">
+                <h2 class="referrals-rules-title-new">Program Rules</h2>
+                <p class="referrals-rules-subtitle-new">Important information about the referral program</p>
+            </div>
             <div class="referrals-rules-list-new">
                 <div class="referrals-rule-item-new">
                     <div class="referrals-rule-icon-new">
@@ -1611,6 +2764,10 @@
                         <p class="referrals-rule-text-new">The highest rebate ratio is 18%, and the settlement is in USDT. Rebates can be withdrawn to your trading account anytime.</p>
                     </div>
                 </div>
+            </div>
+            <div class="referrals-rules-warning-new">
+                <i class="fas fa-info-circle"></i>
+                <span>If abnormal behavior the platform reserves the right to freeze promotion qualifications</span>
             </div>
         </div>
     </div>
