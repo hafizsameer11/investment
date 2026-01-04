@@ -350,7 +350,6 @@
                 <i class="fas fa-wallet"></i>
             </div>
             <span class="settings-menu-text">Wallet</span>
-            <span class="settings-menu-badge">We are online!</span>
             <i class="fas fa-chevron-right settings-menu-arrow"></i>
         </a>
 
@@ -359,9 +358,6 @@
                 <i class="fas fa-arrow-up"></i>
             </div>
             <span class="settings-menu-text">Deposit</span>
-            <div class="settings-menu-notification">
-                <i class="fas fa-circle"></i>
-            </div>
             <i class="fas fa-chevron-right settings-menu-arrow"></i>
         </a>
 

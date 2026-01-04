@@ -1632,7 +1632,7 @@
             margin-bottom: 1.5rem;
         }
 
-        .referrals-referrer-section-new {
+ls-referrer-section-new {
             margin-bottom: 1.5rem;
         }
 
@@ -2722,39 +2722,6 @@
         </div>
     </div>
 
-    <!-- Program Rules Section -->
-    <div class="referrals-rules-section-new">
-        <div class="referrals-rules-card-new">
-            <div class="referrals-rules-header-new">
-                <h2 class="referrals-rules-title-new">Program Rules</h2>
-                <p class="referrals-rules-subtitle-new">Important information about the referral program</p>
-            </div>
-            <div class="referrals-rules-list-new">
-                <div class="referrals-rule-item-new">
-                    <div class="referrals-rule-icon-new">
-                        <i class="fas fa-check-circle"></i>
-                    </div>
-                    <div class="referrals-rule-content-new">
-                        <h4 class="referrals-rule-title-new">Commission Earnings</h4>
-                        <p class="referrals-rule-text-new">After a friend registers, each rebate transaction earns you a corresponding percentage of commission.</p>
-                    </div>
-                </div>
-                <div class="referrals-rule-item-new">
-                    <div class="referrals-rule-icon-new">
-                        <i class="fas fa-check-circle"></i>
-                    </div>
-                    <div class="referrals-rule-content-new">
-                        <h4 class="referrals-rule-title-new">Maximum Commission</h4>
-                        <p class="referrals-rule-text-new">The highest rebate ratio is 18%, and the settlement is in USDT. Rebates can be withdrawn to your trading account anytime.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="referrals-rules-warning-new">
-                <i class="fas fa-info-circle"></i>
-                <span>If abnormal behavior the platform reserves the right to freeze promotion qualifications</span>
-            </div>
-        </div>
-    </div>
 </div>
 
 @push('scripts')
