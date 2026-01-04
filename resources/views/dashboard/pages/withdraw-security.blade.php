@@ -37,7 +37,7 @@
             <!-- Step 1: Enter Email -->
             <div class="security-step-content active" id="step1Content">
                 <div class="security-step-icon">
-                    <i class="fas fa-envelope"></i>
+                    <i class="far fa-envelope"></i>
                 </div>
                 <h2 class="security-step-title">Enter Your Email</h2>
                 <p class="security-step-subtitle">Enter your email to set up withdrawal security</p>
@@ -45,7 +45,7 @@
                 <div class="security-form">
                     <label class="security-form-label">Email Address</label>
                     <div class="security-input-wrapper">
-                        <i class="fas fa-envelope security-input-icon"></i>
+                        <i class="far fa-envelope security-input-icon"></i>
                         <input type="email" class="security-form-input" id="securityEmail" value="ramiznazar600@gmail.com" placeholder="Enter your email address">
                     </div>
                 </div>

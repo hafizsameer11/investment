@@ -171,28 +171,25 @@
         }
 
         .referrals-stats-section-new {
-            display: grid;
-            grid-template-columns: 1fr;
+            display: flex;
             gap: 0.75rem;
             margin-bottom: 1.5rem;
             width: 100%;
-            align-items: stretch;
         }
 
         .referrals-stat-card-new {
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
-            border-radius: 16px;
-            padding: 1.25rem;
+            flex: 1;
             display: flex;
             align-items: center;
-            gap: 1rem;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-            min-height: 100px;
-            height: 100%;
-            width: 100%;
-            box-sizing: border-box;
+            gap: 0.75rem;
+            padding: 0.875rem;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
             transition: all 0.2s ease;
+            box-shadow: none;
+            min-height: auto;
+            height: auto;
         }
 
         .referrals-stat-card-new::before {
@@ -200,97 +197,83 @@
         }
 
         .referrals-stat-card-new:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-            border-color: rgba(255, 255, 255, 0.15);
+            transform: none;
+            box-shadow: none;
+            border-color: rgba(255, 255, 255, 0.05);
+        }
+
+        .referrals-stat-card-new:active {
+            background: rgba(255, 255, 255, 0.04);
+            transform: scale(0.98);
         }
 
         .referrals-stat-icon-new {
-            width: 56px;
-            height: 56px;
-            min-width: 56px;
-            border-radius: 50%;
-            font-size: 1.5rem;
-            flex-shrink: 0;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+            width: 36px;
+            height: 36px;
+            min-width: 36px;
+            border-radius: 8px;
+            background: rgba(255, 178, 30, 0.1);
             display: flex;
             align-items: center;
             justify-content: center;
+            flex-shrink: 0;
+            box-shadow: none;
+        }
+
+        .referrals-stat-icon-new i {
+            font-size: 1rem;
+            color: var(--primary-color);
         }
 
         .referrals-stat-icon-earning-new {
-            background: linear-gradient(135deg, #9333EA 0%, #7C3AED 100%);
-            color: #fff;
+            background: rgba(255, 178, 30, 0.1);
+        }
+
+        .referrals-stat-icon-earning-new i {
+            color: var(--primary-color);
         }
 
         .referrals-stat-icon-users-new {
-            background: linear-gradient(135deg, #F97316 0%, #EA580C 100%);
-            color: #fff;
+            background: rgba(255, 178, 30, 0.1);
+        }
+
+        .referrals-stat-icon-users-new i {
+            color: var(--primary-color);
         }
 
         .referrals-stat-content-new {
             flex: 1;
+            min-width: 0;
             display: flex;
             flex-direction: column;
-            gap: 0.5rem;
-            min-width: 0;
-            overflow: hidden;
-        }
-
-        .referrals-stat-label-new {
-            font-size: 0.75rem;
-            color: rgba(255, 255, 255, 0.7);
-            text-transform: none;
-            letter-spacing: 0;
-            font-weight: 400;
-            margin: 0;
-            line-height: 1.3;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .referrals-stat-value-new {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--text-primary);
-            line-height: 1.2;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-    }
-
-    @media (max-width: 480px) {
-        .referrals-stats-section-new {
-            gap: 0.625rem;
-        }
-
-        .referrals-stat-card-new {
-            padding: 1rem;
-            min-height: 90px;
-            gap: 0.875rem;
-        }
-
-        .referrals-stat-icon-new {
-            width: 52px;
-            height: 52px;
-            min-width: 52px;
-            font-size: 1.375rem;
-        }
-
-        .referrals-stat-content-new {
-            gap: 0.375rem;
+            gap: 0;
         }
 
         .referrals-stat-label-new {
             font-size: 0.6875rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.25rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 400;
+            line-height: 1.3;
+            white-space: normal;
+            overflow: visible;
+            text-overflow: clip;
         }
 
         .referrals-stat-value-new {
-            font-size: 1.375rem;
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            font-variant-numeric: tabular-nums;
+            line-height: 1.2;
+            white-space: normal;
+            overflow: visible;
+            text-overflow: clip;
         }
     }
+
 
     @media (max-width: 400px) {
         .referrals-stats-section-new {
@@ -311,7 +294,7 @@
         }
 
         .referrals-stat-content-new {
-            gap: 0.375rem;
+            /* gap: -0.375rem !important; */
         }
 
         .referrals-stat-label-new {
@@ -328,7 +311,7 @@
     }
 
     .referrals-stat-label-new {
-        font-size: 0.875rem;
+        font-size:0.6875rem;
         color: var(--text-secondary);
         text-transform: uppercase;
         letter-spacing: 0.5px;
@@ -2254,13 +2237,14 @@
         }
 
         .referrals-stat-icon-new {
-            width: 52px;
-            height: 52px;
+            width: 36px;
+            height: 36px;
             font-size: 1.25rem;
         }
 
         .referrals-stat-value-new {
-            font-size: 1.625rem;
+            font-size: 1.125rem;
+            margin-top: -10px;
         }
 
         .referrals-wallet-section-new {
@@ -2531,7 +2515,7 @@
             <h2 class="referrals-commission-title-new">Earning Commission Structure</h2>
             <p class="referrals-commission-subtitle-new">Earn up to 18% commission across 5 levels</p>
         </div>
-        
+
         <!-- Desktop Grid View -->
         <div class="referrals-commission-grid-new referrals-commission-desktop">
             <!-- Level 1 -->
@@ -2613,7 +2597,7 @@
                     <h2 class="referrals-commission-mobile-title-new">Earning Commission Structure</h2>
                     <p class="referrals-commission-mobile-subtitle-new">Earn up to 18% commission across 5 levels</p>
                 </div>
-                
+
                 <!-- Level 1 -->
                 <div class="referrals-commission-mobile-item-new referrals-commission-mobile-level-1">
                     <div class="referrals-commission-mobile-icon-wrapper-new">
@@ -2784,12 +2768,12 @@
             if (input) {
                 input.select();
                 document.execCommand('copy');
-                
+
                 // Visual feedback
                 const originalHTML = this.innerHTML;
                 this.innerHTML = '<i class="fas fa-check"></i>';
                 this.style.background = 'linear-gradient(135deg, #FFB21E 0%, #FF8A1D 100%)';
-                
+
                 setTimeout(() => {
                     this.innerHTML = originalHTML;
                     this.style.background = '';
