@@ -460,6 +460,7 @@
     }
 
     .goals-reward-badge-new {
+        display: none;
         position: absolute;
         top: 1.5rem;
         right: 1.5rem;
@@ -795,17 +796,249 @@
         font-weight: 600;
     }
 
+    /* Mobile Redesign Styles */
+    .goals-combined-card-new {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+    }
+
+    .goals-rank-section-mobile-new {
+        text-align: center;
+    }
+
+    .goals-rank-badge-container-new {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 1rem;
+    }
+
+    .goals-rank-pentagon-badge-new {
+        width: 80px;
+        height: 80px;
+        position: relative;
+        background: linear-gradient(135deg, var(--primary-gradient-start) 0%, var(--primary-gradient-end) 100%);
+        clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 0 20px rgba(255, 178, 30, 0.5);
+    }
+
+    .goals-rank-pentagon-inner-new {
+        width: 65px;
+        height: 65px;
+        background: rgba(20, 30, 40, 0.95);
+        clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .goals-rank-chevron-new {
+        color: var(--primary-color);
+        font-size: 1.5rem;
+        transform: translateY(2px);
+    }
+
+    .goals-rank-text-new {
+        text-align: center;
+        font-size: 1rem;
+        font-weight: 600;
+        color: var(--text-primary);
+    }
+
+    .goals-progress-title-row-new {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1rem;
+    }
+
+    .goals-progress-title-new {
+        font-size: 0.9375rem;
+        font-weight: 500;
+        color: var(--text-primary);
+        margin: 0;
+    }
+
+    .goals-progress-percent-new {
+        font-size: 0.9375rem;
+        font-weight: 600;
+        color: var(--text-primary);
+    }
+
+    .goals-progress-goal-row-new {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1rem;
+    }
+
+    .goals-progress-goal-name-new {
+        font-size: 0.9375rem;
+        font-weight: 500;
+        color: var(--text-primary);
+    }
+
+    .goals-progress-status-new {
+        font-size: 0.8125rem;
+        font-weight: 600;
+        color: var(--success-color);
+    }
+
+    .goals-progress-bar-mobile-new {
+        width: 100%;
+        height: 8px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 4px;
+        overflow: hidden;
+    }
+
+    .goals-progress-fill-mobile-new {
+        height: 100%;
+        background: linear-gradient(90deg, var(--primary-gradient-start) 0%, var(--primary-gradient-end) 100%);
+        border-radius: 4px;
+        transition: width 0.5s ease;
+    }
+
+    .goals-next-goal-card-inner-new {
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 12px;
+        padding: 1.5rem;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .goals-next-goal-title-mobile-new {
+        font-size: 0.9375rem;
+        font-weight: 600;
+        color: var(--text-primary);
+        margin-bottom: 1.25rem;
+    }
+
+    .goals-next-goal-progress-row-new {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 0.75rem;
+    }
+
+    .goals-next-goal-progress-label-new {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.8125rem;
+        color: var(--text-primary);
+    }
+
+    .goals-next-goal-progress-label-new i {
+        font-size: 0.875rem;
+        color: var(--text-secondary);
+    }
+
+    .goals-next-goal-current-new {
+        font-size: 0.875rem;
+        font-weight: 600;
+        color: var(--success-color);
+    }
+
+    .goals-next-progress-bar-mobile-new {
+        width: 100%;
+        height: 8px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 4px;
+        overflow: hidden;
+        margin-bottom: 0.75rem;
+    }
+
+    .goals-next-progress-fill-mobile-new {
+        height: 100%;
+        background: linear-gradient(90deg, var(--primary-gradient-start) 0%, var(--primary-gradient-end) 100%);
+        border-radius: 4px;
+        transition: width 0.5s ease;
+    }
+
+    .goals-next-goal-target-row-new {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .goals-next-goal-needed-mobile-new {
+        font-size: 0.8125rem;
+        font-weight: 600;
+        color: var(--success-color);
+    }
+
+    .goals-next-goal-target-new {
+        font-size: 0.875rem;
+        font-weight: 600;
+        color: var(--text-primary);
+    }
+
+    .goals-progress-section-mobile-new {
+        width: 100%;
+    }
+
+    .goals-next-goal-section-mobile-new {
+        width: 100%;
+    }
+
+    /* Desktop: Show separate cards, hide combined card */
+    .goals-mobile-card-new {
+        display: none;
+    }
+
+    .goals-desktop-card-new {
+        display: block;
+    }
+
     @media (max-width: 768px) {
         .goals-new-page {
             padding: 1rem;
         }
 
-        .goals-hero-title-new {
-            font-size: 2rem;
+        .goals-hero-new {
+            display: none;
+        }
+
+        .goals-status-header-new {
+            display: none;
+        }
+
+        /* Mobile: Hide desktop cards, show combined card */
+        .goals-desktop-card-new {
+            display: none;
+        }
+
+        .goals-mobile-card-new {
+            display: flex;
         }
 
         .goals-status-cards-new {
             grid-template-columns: 1fr;
+            gap: 0;
+        }
+
+        .goals-combined-card-new {
+            flex-direction: column;
+            gap: 2rem;
+            padding: 1.5rem;
+            border-radius: 16px;
+        }
+
+        .goals-rank-section-mobile-new {
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .goals-progress-section-mobile-new {
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .goals-next-goal-section-mobile-new {
+            padding-bottom: 0;
         }
 
         .goals-rewards-grid-new {
@@ -818,6 +1051,85 @@
 
         .goals-all-levels-grid-new {
             grid-template-columns: 1fr;
+        }
+
+        /* Mobile: Apply consistent smaller font sizes throughout the page */
+        .goals-rewards-title-new {
+            font-size: 1.25rem;
+        }
+
+        .goals-rewards-subtitle-new {
+            font-size: 0.875rem;
+        }
+
+        .goals-reward-card-new {
+            padding: 1.25rem;
+        }
+
+        .goals-reward-name-new {
+            font-size: 1.125rem;
+        }
+
+        .goals-reward-level-number-new {
+            font-size: 0.75rem;
+        }
+
+        .goals-reward-req-label-new,
+        .goals-reward-prize-label-new {
+            font-size: 0.75rem;
+        }
+
+        .goals-reward-req-value-new,
+        .goals-reward-prize-value-new {
+            font-size: 1rem;
+        }
+
+        .goals-reward-progress-text-new {
+            font-size: 0.75rem;
+        }
+
+        .goals-all-levels-title-new {
+            font-size: 1.25rem;
+        }
+
+        .goals-all-levels-subtitle-new {
+            font-size: 0.875rem;
+        }
+
+        .goals-level-card-new {
+            padding: 1.25rem;
+        }
+
+        .goals-level-name-new {
+            font-size: 1.125rem;
+        }
+
+        .goals-level-number-new {
+            font-size: 0.75rem;
+        }
+
+        .goals-level-detail-label-new {
+            font-size: 0.75rem;
+        }
+
+        .goals-level-detail-value-new {
+            font-size: 1rem;
+        }
+
+        .goals-level-progress-text-new {
+            font-size: 0.75rem;
+        }
+
+        .goals-rank-label-new {
+            font-size: 0.8125rem;
+        }
+
+        .goals-rank-hint-new {
+            font-size: 0.75rem;
+        }
+
+        .goals-rank-badge-new {
+            font-size: 0.8125rem;
         }
     }
 </style>
@@ -841,8 +1153,9 @@
         </div>
 
         <div class="goals-status-cards-new">
+            <!-- Desktop: Three Separate Cards -->
             <!-- Rank Card -->
-            <div class="goals-status-card-new goals-rank-card-new">
+            <div class="goals-status-card-new goals-rank-card-new goals-desktop-card-new">
                 <div class="goals-rank-icon-wrapper-new">
                     <i class="fas fa-star goals-rank-icon-new"></i>
                 </div>
@@ -852,7 +1165,7 @@
             </div>
 
             <!-- Progress Card -->
-            <div class="goals-status-card-new goals-progress-card-new">
+            <div class="goals-status-card-new goals-progress-card-new goals-desktop-card-new">
                 <div class="goals-progress-header-new">
                     <h3 class="goals-progress-title-new">Progress to Next Goal</h3>
                     <div class="goals-progress-goal-name-new">Team Builder</div>
@@ -872,21 +1185,68 @@
             </div>
 
             <!-- Next Goal Preview -->
-            <div class="goals-status-card-new goals-next-goal-card-new">
+            <div class="goals-status-card-new goals-next-goal-card-new goals-desktop-card-new">
                 <div class="goals-next-goal-header-new">
                     <h3 class="goals-next-goal-title-new">Next Goal</h3>
                 </div>
                 <div class="goals-next-goal-name-new">Team Builder</div>
                 <div class="goals-next-goal-requirements-new">
                     <div class="goals-requirement-item-new">
-                            <i class="fas fa-users"></i>
-                            <span>Team Progress: <strong>$0</strong></span>
-                        </div>
+                        <i class="fas fa-users"></i>
+                        <span>Team Progress: <strong>$0</strong></span>
                     </div>
+                </div>
                 <div class="goals-next-progress-bar-wrapper-new">
                     <div class="goals-next-progress-fill-new" style="width: 0%"></div>
                 </div>
                 <div class="goals-next-goal-needed-new">$10 more needed</div>
+            </div>
+
+            <!-- Mobile: Combined Single Card -->
+            <div class="goals-status-card-new goals-combined-card-new goals-mobile-card-new">
+                <!-- Rank Section -->
+                <div class="goals-rank-section-mobile-new">
+                    <div class="goals-rank-icon-wrapper-new">
+                        <i class="fas fa-star goals-rank-icon-new"></i>
+                    </div>
+                    <div class="goals-rank-text-new">No Rank</div>
+                </div>
+
+                <!-- Progress Section -->
+                <div class="goals-progress-section-mobile-new">
+                    <div class="goals-progress-title-row-new">
+                        <span class="goals-progress-title-new">Progress to next goal</span>
+                        <span class="goals-progress-percent-new">0%</span>
+                    </div>
+                    <div class="goals-progress-goal-row-new">
+                        <span class="goals-progress-goal-name-new">Team Builder</span>
+                        <span class="goals-progress-status-new">Almost there!</span>
+                    </div>
+                    <div class="goals-progress-bar-mobile-new">
+                        <div class="goals-progress-fill-mobile-new" style="width: 0%"></div>
+                    </div>
+                </div>
+
+                <!-- Next Goal Section -->
+                <div class="goals-next-goal-section-mobile-new">
+                    <div class="goals-next-goal-card-inner-new">
+                        <div class="goals-next-goal-title-mobile-new">Next Goal Team Builder</div>
+                        <div class="goals-next-goal-progress-row-new">
+                            <div class="goals-next-goal-progress-label-new">
+                                <i class="fas fa-bullseye"></i>
+                                <span>Team Progress</span>
+                            </div>
+                            <span class="goals-next-goal-current-new">$0</span>
+                        </div>
+                        <div class="goals-next-progress-bar-mobile-new">
+                            <div class="goals-next-progress-fill-mobile-new" style="width: 0%"></div>
+                        </div>
+                        <div class="goals-next-goal-target-row-new">
+                            <span class="goals-next-goal-needed-mobile-new">$10 more needed</span>
+                            <span class="goals-next-goal-target-new">$10</span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
