@@ -340,6 +340,11 @@
         box-shadow: 0 0 30px rgba(255, 178, 30, 0.3);
     }
 
+    .support-quick-action-content-new {
+        flex: 1;
+        text-align: left;
+    }
+
     .support-quick-action-title-new {
         font-size: 1.125rem;
         font-weight: 700;
@@ -356,6 +361,7 @@
 
     /* Contact Info Section */
     .support-contact-section-new {
+        display: none;
         background: var(--card-bg);
         border: 1px solid var(--card-border);
         border-radius: 20px;
@@ -448,8 +454,8 @@
             padding: 1rem;
         }
 
-        .support-hero-title-new {
-            font-size: 2rem;
+        .support-hero-new {
+            display: none;
         }
 
         .support-channels-grid-new {
@@ -472,6 +478,109 @@
         .support-item-value-new {
             text-align: left;
         }
+
+        /* Mobile: Quick Action Cards - Horizontal Layout */
+        .support-quick-action-new {
+            display: flex;
+            align-items: center;
+            gap: 1.25rem;
+            text-align: left;
+            padding: 1.5rem;
+        }
+
+        .support-quick-action-icon-new {
+            margin: 0;
+            flex-shrink: 0;
+            width: 60px;
+            height: 60px;
+            font-size: 1.75rem;
+        }
+
+        .support-quick-action-content-new {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .support-quick-action-title-new {
+            font-size: 1rem;
+            margin-bottom: 0.375rem;
+        }
+
+        .support-quick-action-desc-new {
+            font-size: 0.8125rem;
+            line-height: 1.4;
+        }
+
+        /* Mobile: Contact Channels Section */
+        .support-channels-header-new {
+            display: none;
+        }
+
+        .support-channels-grid-new {
+            gap: 1.5rem;
+        }
+
+        .support-channel-card-new {
+            padding: 1.25rem;
+            border-radius: 16px;
+        }
+
+        .support-channel-header-new {
+            margin-bottom: 1.25rem;
+        }
+
+        .support-channel-icon-wrapper-new {
+            width: 56px;
+            height: 56px;
+            border-radius: 14px;
+            font-size: 1.5rem;
+        }
+
+        .support-channel-name-new {
+            font-size: 1.125rem;
+        }
+
+        .support-channel-items-new {
+            gap: 0.875rem;
+        }
+
+        .support-channel-item-new {
+            padding: 1rem;
+            border-radius: 12px;
+            background: rgba(255, 178, 30, 0.05);
+            border: 1px solid rgba(255, 178, 30, 0.15);
+        }
+
+        .support-item-header-new {
+            margin-bottom: 0.625rem;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .support-item-label-new {
+            font-size: 0.6875rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .support-item-value-new {
+            font-size: 0.8125rem;
+            margin-bottom: 0.875rem;
+            word-break: break-word;
+            text-align: left;
+            line-height: 1.4;
+        }
+
+        .support-item-actions-new {
+            width: 100%;
+        }
+
+        .support-copy-btn-new {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            font-size: 0.8125rem;
+            justify-content: center;
+            border-radius: 10px;
+        }
     }
 </style>
 @endpush
@@ -492,22 +601,28 @@
             <div class="support-quick-action-icon-new">
                 <i class="fas fa-headset"></i>
             </div>
-            <h3 class="support-quick-action-title-new">24/7 Support</h3>
-            <p class="support-quick-action-desc-new">Round-the-clock assistance for all your queries</p>
+            <div class="support-quick-action-content-new">
+                <h3 class="support-quick-action-title-new">24/7 Support</h3>
+                <p class="support-quick-action-desc-new">Round-the-clock assistance for all your queries</p>
+            </div>
         </div>
         <div class="support-quick-action-new">
             <div class="support-quick-action-icon-new">
                 <i class="fas fa-comments"></i>
             </div>
-            <h3 class="support-quick-action-title-new">Live Chat</h3>
-            <p class="support-quick-action-desc-new">Instant responses via WhatsApp and Facebook</p>
+            <div class="support-quick-action-content-new">
+                <h3 class="support-quick-action-title-new">Live Chat</h3>
+                <p class="support-quick-action-desc-new">Instant responses via WhatsApp and Facebook</p>
+            </div>
         </div>
         <div class="support-quick-action-new">
             <div class="support-quick-action-icon-new">
                 <i class="fas fa-phone-alt"></i>
             </div>
-            <h3 class="support-quick-action-title-new">Phone Support</h3>
-            <p class="support-quick-action-desc-new">Direct phone line for urgent matters</p>
+            <div class="support-quick-action-content-new">
+                <h3 class="support-quick-action-title-new">Phone Support</h3>
+                <p class="support-quick-action-desc-new">Direct phone line for urgent matters</p>
+            </div>
         </div>
     </div>
 
