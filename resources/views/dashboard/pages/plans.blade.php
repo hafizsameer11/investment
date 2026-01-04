@@ -97,6 +97,7 @@
         border: 1px solid rgba(255, 178, 30, 0.2);
         border-radius: 16px;
         transition: var(--transition);
+        text-align: center;
     }
 
     .plans-hero-stat-new:hover {
@@ -106,20 +107,20 @@
         box-shadow: 0 8px 24px rgba(255, 178, 30, 0.2);
     }
 
-    .plans-hero-stat-value-new {
-        font-size: 2.5rem;
-        font-weight: 700;
-        color: var(--primary-color);
-        margin-bottom: 0.5rem;
-        text-shadow: 0 0 20px rgba(255, 178, 30, 0.5);
-    }
-
     .plans-hero-stat-label-new {
         font-size: 0.875rem;
         color: var(--text-secondary);
         text-transform: uppercase;
         letter-spacing: 1px;
         font-weight: 600;
+        margin-bottom: 0.5rem;
+    }
+
+    .plans-hero-stat-value-new {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: var(--primary-color);
+        text-shadow: 0 0 20px rgba(255, 178, 30, 0.5);
     }
 
     /* Main Plan Card */
@@ -289,6 +290,15 @@
         color: var(--text-secondary);
     }
 
+    /* Mobile Layout Styles */
+    .plan-mobile-layout-new {
+        display: none;
+    }
+
+    .plan-desktop-layout-new {
+        display: block;
+    }
+
     /* Features Grid */
     .plan-features-grid-new {
         display: grid;
@@ -396,6 +406,11 @@
         border-radius: 20px;
         padding: 2.5rem;
         margin-bottom: 2.5rem;
+        display: block;
+    }
+
+    .plan-calculator-section-new .plan-calculator-grid-new {
+        display: grid;
     }
 
     .plan-calculator-header-new {
@@ -629,6 +644,11 @@
         opacity: 0.7;
         position: relative;
         overflow: hidden;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 1.5rem;
+        text-align: left;
     }
 
     .coming-soon-card-new::before {
@@ -658,9 +678,17 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        margin: 0 auto 1.5rem;
         font-size: 2rem;
         color: var(--primary-color);
+        flex-shrink: 0;
+    }
+
+    .coming-soon-text-wrapper-new {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+        flex: 1;
     }
 
     .coming-soon-name-new {
@@ -701,9 +729,65 @@
             font-size: 1rem;
         }
 
+        /* Mobile: Single Card with Horizontal Layout */
         .plans-hero-stats-new {
-            grid-template-columns: 1fr;
-            gap: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 1.5rem;
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+        }
+
+        .plans-hero-stat-new {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            background: transparent;
+            border: none;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 0;
+            text-align: left;
+        }
+
+        .plans-hero-stat-new:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .plans-hero-stat-new:first-child {
+            padding-top: 0;
+        }
+
+        .plans-hero-stat-new:hover {
+            background: transparent;
+            border-color: transparent;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .plans-hero-stat-label-new {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+            margin-bottom: 0;
+            text-align: left;
+            flex: 1;
+        }
+
+        .plans-hero-stat-value-new {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-shadow: 0 0 20px rgba(255, 178, 30, 0.5);
+            text-align: right;
+            margin-left: 1rem;
         }
 
         .plan-main-card-new {
@@ -791,16 +875,17 @@
         }
 
         .plans-hero-stats-new {
-            grid-template-columns: 1fr;
-            gap: 1rem;
+            flex-direction: column;
+            gap: 0.75rem;
+            padding: 1rem;
         }
 
         .plans-hero-stat-new {
-            padding: 1.25rem;
+            padding: 0.875rem 0;
         }
 
         .plans-hero-stat-value-new {
-            font-size: 2rem;
+            font-size: 1.5rem;
         }
 
         .plan-main-card-new {
@@ -921,15 +1006,19 @@
         }
 
         .plans-hero-stats-new {
-            gap: 0.875rem;
-        }
-
-        .plans-hero-stat-new {
             padding: 1rem;
         }
 
+        .plans-hero-stat-new {
+            padding: 0.75rem 0;
+        }
+
         .plans-hero-stat-value-new {
-            font-size: 1.75rem;
+            font-size: 1.25rem;
+        }
+
+        .plans-hero-stat-label-new {
+            font-size: 0.6875rem;
         }
 
         .plans-hero-stat-label-new {
@@ -1065,16 +1154,170 @@
 
         .coming-soon-card-new {
             padding: 1.25rem;
+            flex-direction: row;
+            align-items: center;
+            text-align: left;
+            gap: 1rem;
         }
 
         .coming-soon-icon-new {
             width: 56px;
             height: 56px;
             font-size: 1.25rem;
+            flex-shrink: 0;
+            margin: 0;
+            border-radius: 16px;
+            align-self: flex-start;
+        }
+
+        .coming-soon-text-wrapper-new {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: center;
         }
 
         .coming-soon-name-new {
             font-size: 1.125rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin: 0 0 0.25rem 0;
+        }
+
+        .coming-soon-status-new {
+            margin: 0;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 600;
+        }
+
+        /* Mobile: Show mobile layout, hide desktop layout */
+        .plan-mobile-layout-new {
+            display: block;
+        }
+
+        .plan-desktop-layout-new {
+            display: none;
+        }
+
+        .plan-mobile-header-new {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .plan-mobile-icon-wrapper-new {
+            flex-shrink: 0;
+        }
+
+        .plan-mobile-icon-wrapper-new .plan-icon-large-new {
+            width: 56px;
+            height: 56px;
+            border-radius: 16px;
+        }
+
+        .plan-mobile-icon-wrapper-new .plan-icon-large-new svg {
+            width: 32px;
+            height: 32px;
+        }
+
+        .plan-mobile-title-section-new {
+            flex: 1;
+        }
+
+        .plan-mobile-name-new {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin: 0 0 0.25rem 0;
+        }
+
+        .plan-mobile-subtitle-new {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin: 0;
+        }
+
+        .plan-mobile-policy-new {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--success-color);
+            margin-bottom: 1.25rem;
+            padding: 0.75rem 0;
+        }
+
+        .plan-mobile-details-new {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.25rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .plan-mobile-detail-col-new {
+            flex: 1;
+        }
+
+        .plan-mobile-detail-label-new {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .plan-mobile-detail-value-new {
+            font-size: 0.9375rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        /* Mobile: Hide calculator section by default, show when toggled */
+        .plan-calculator-section-new {
+            display: none;
+            margin-top: 1.5rem;
+            padding: 1.25rem;
+        }
+
+        .plan-calculator-section-new.show {
+            display: block;
+        }
+
+        .plan-calculator-section-new.show .plan-calculator-grid-new {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        /* Mobile: Button styles */
+        .plan-actions-new {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .plan-action-btn-new {
+            flex: 1;
+            padding: 1rem;
+            font-size: 0.875rem;
+        }
+
+        .plan-action-secondary-new {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: var(--text-primary);
+        }
+
+        /* Hide benefits section on mobile */
+        .plan-benefits-desktop-new {
+            display: none;
+        }
+
+        /* Hide desktop header section on mobile */
+        .plan-header-new {
+            display: none;
         }
     }
 </style>
@@ -1089,16 +1332,16 @@
             <p class="plans-hero-subtitle-new">Choose your mining plan and start earning cryptocurrency rewards with automated 24/7 mining operations</p>
             <div class="plans-hero-stats-new">
                 <div class="plans-hero-stat-new">
-                    <div class="plans-hero-stat-value-new">3/3.5%</div>
                     <div class="plans-hero-stat-label-new">Daily ROI</div>
+                    <div class="plans-hero-stat-value-new">3/3.5%</div>
                 </div>
                 <div class="plans-hero-stat-new">
-                    <div class="plans-hero-stat-value-new">$2</div>
                     <div class="plans-hero-stat-label-new">Minimum Investment</div>
+                    <div class="plans-hero-stat-value-new">$2</div>
                 </div>
                 <div class="plans-hero-stat-new">
-                    <div class="plans-hero-stat-value-new">24/7</div>
                     <div class="plans-hero-stat-label-new">Active Mining</div>
+                    <div class="plans-hero-stat-value-new">24/7</div>
                 </div>
             </div>
         </div>
@@ -1130,11 +1373,57 @@
                         </div>
                         <h2 class="plan-name-new">Lithium</h2>
                         <p class="plan-tagline-new">Advanced Mining Plan for Maximum Returns</p>
+                    </div>
+            </div>
+        </div>
+
+        <!-- Mobile Layout for Lithium Card -->
+        <div class="plan-mobile-layout-new">
+            <!-- Mobile Header: Icon + Title + Subtitle -->
+            <div class="plan-mobile-header-new">
+                <div class="plan-mobile-icon-wrapper-new">
+                    <div class="plan-icon-large-new">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 2L8 6L10 8L6 12L8 14L12 10L16 14L18 12L14 8L16 6L12 2Z" fill="url(#planGradient)" stroke="#FFB21E" stroke-width="1.5" stroke-linejoin="round"/>
+                            <rect x="4" y="16" width="4" height="4" rx="1" fill="#FFB21E" opacity="0.6"/>
+                            <rect x="10" y="18" width="4" height="4" rx="1" fill="#FF8A1D" opacity="0.6"/>
+                            <rect x="16" y="16" width="4" height="4" rx="1" fill="#FFB21E" opacity="0.6"/>
+                            <defs>
+                                <linearGradient id="planGradient" x1="12" y1="2" x2="12" y2="14" gradientUnits="userSpaceOnUse">
+                                    <stop offset="0%" stop-color="#FFB21E"/>
+                                    <stop offset="100%" stop-color="#FF8A1D"/>
+                                </linearGradient>
+                            </defs>
+                        </svg>
+                    </div>
+                </div>
+                <div class="plan-mobile-title-section-new">
+                    <h2 class="plan-mobile-name-new">Lithium</h2>
+                    <p class="plan-mobile-subtitle-new">Earn through lithium mining</p>
+                </div>
+            </div>
+
+            <!-- Policy Text -->
+            <div class="plan-mobile-policy-new">
+                Principal Return Policy Will Be Returned
+            </div>
+
+            <!-- Investment Details: Two Columns -->
+            <div class="plan-mobile-details-new">
+                <div class="plan-mobile-detail-col-new">
+                    <div class="plan-mobile-detail-label-new">Range</div>
+                    <div class="plan-mobile-detail-value-new">$2 - $100000 Min</div>
+                </div>
+                <div class="plan-mobile-detail-col-new">
+                    <div class="plan-mobile-detail-label-new">ROI 3/3.5% Daily</div>
+                    <div class="plan-mobile-detail-value-new">0.127% / Hourly</div>
                 </div>
             </div>
         </div>
 
-        <!-- Security Badge -->
+        <!-- Desktop: Original Layout -->
+        <div class="plan-desktop-layout-new">
+            <!-- Security Badge -->
             <div class="plan-security-badge-new">
                 <div class="plan-security-icon-new">
                 <i class="fas fa-shield-alt"></i>
@@ -1174,9 +1463,10 @@
                     <div class="plan-feature-hint-new">Per hour earnings</div>
                 </div>
             </div>
+        </div>
 
-            <!-- Calculator Section -->
-            <div class="plan-calculator-section-new">
+            <!-- Calculator Section (Hidden by default on mobile, shown when button clicked) -->
+            <div class="plan-calculator-section-new" id="calculatorSection">
                 <div class="plan-calculator-header-new">
                     <h3 class="plan-calculator-title-new">Estimated Returns</h3>
                     <button class="plan-calculator-toggle-new" id="calculatorToggle">
@@ -1184,7 +1474,7 @@
                         <span>Open Calculator</span>
                     </button>
                 </div>
-                <div class="plan-calculator-grid-new">
+                <div class="plan-calculator-grid-new" id="calculatorContent">
                     <div class="plan-calculator-item-new">
                         <div class="plan-calculator-label-new">Daily Earnings</div>
                         <div class="plan-calculator-value-new">$0.00</div>
@@ -1202,16 +1492,16 @@
             <div class="plan-actions-new">
                 <button class="plan-action-btn-new plan-action-primary-new">
                     <i class="fas fa-rocket"></i>
-                    <span>Start Mining Now</span>
+                    <span>Start Investing</span>
                 </button>
                 <button class="plan-action-btn-new plan-action-secondary-new" id="openCalculatorBtn">
                     <i class="fas fa-calculator"></i>
-                    <span>Mining Calculator</span>
+                    <span>Investment Calculator</span>
                 </button>
             </div>
 
-            <!-- Benefits Section -->
-            <div class="plan-benefits-new">
+            <!-- Benefits Section (Desktop only) -->
+            <div class="plan-benefits-new plan-benefits-desktop-new">
                 <div class="plan-benefit-item-new">
                     <div class="plan-benefit-icon-new">
                         <i class="fas fa-check-circle"></i>
@@ -1249,15 +1539,19 @@
                 <div class="coming-soon-icon-new">
                     <i class="fas fa-gem"></i>
                 </div>
-                <div class="coming-soon-name-new">Platinum</div>
-                <div class="coming-soon-status-new">Coming Soon</div>
+                <div class="coming-soon-text-wrapper-new">
+                    <div class="coming-soon-name-new">Platinum</div>
+                    <div class="coming-soon-status-new">COMING SOON</div>
+                </div>
             </div>
             <div class="coming-soon-card-new">
                 <div class="coming-soon-icon-new">
                     <i class="fas fa-crown"></i>
                 </div>
-                <div class="coming-soon-name-new">Diamond</div>
-                <div class="coming-soon-status-new">Coming Soon</div>
+                <div class="coming-soon-text-wrapper-new">
+                    <div class="coming-soon-name-new">Diamond</div>
+                    <div class="coming-soon-status-new">COMING SOON</div>
+                </div>
             </div>
         </div>
     </div>

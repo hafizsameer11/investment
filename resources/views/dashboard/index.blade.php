@@ -755,21 +755,105 @@
         }
 
         .mining-brand-title {
-            font-size: 1.5rem;
+            font-size: 1.25rem;
         }
 
         .mining-brand-subtitle {
-            font-size: 0.875rem;
+            font-size: 0.8125rem;
         }
 
         .mining-logo-large {
-            width: 56px;
-            height: 56px;
+            width: 48px;
+            height: 48px;
         }
 
         .mining-logo-large svg {
-            width: 32px;
-            height: 32px;
+            width: 28px;
+            height: 28px;
+        }
+
+        /* Mobile App View - Reduced Font Sizes */
+        .wallet-balance-section {
+            padding: 1.25rem 1rem;
+        }
+
+        .balance-label {
+            font-size: 0.75rem;
+        }
+
+        .balance-amount-large {
+            font-size: 2rem;
+        }
+
+        .deposit-wallet-label {
+            font-size: 0.75rem;
+        }
+
+        .deposit-wallet-amount {
+            font-size: 0.9375rem;
+        }
+
+        .deposit-trend-down,
+        .balance-trend-up {
+            font-size: 0.75rem;
+        }
+
+        .wallet-actions-grid {
+            padding: 1.25rem 0.75rem;
+        }
+
+        .wallet-action-icon {
+            width: 48px;
+            height: 48px;
+        }
+
+        .wallet-action-icon i {
+            font-size: 1.25rem;
+        }
+
+        .wallet-action-label {
+            font-size: 0.75rem;
+        }
+
+        .mining-stats-row {
+            padding: 0.75rem 1rem;
+        }
+
+        .mining-stat-item {
+            padding: 0.75rem;
+        }
+
+        .stat-icon {
+            width: 36px;
+            height: 36px;
+        }
+
+        .stat-icon i {
+            font-size: 1rem;
+        }
+
+        .stat-label {
+            font-size: 0.6875rem;
+        }
+
+        .stat-value {
+            font-size: 0.9375rem;
+        }
+
+        .graph-header-app {
+            margin-bottom: 1rem;
+        }
+
+        .graph-title-app {
+            font-size: 0.875rem;
+        }
+
+        .legend-item-app {
+            font-size: 0.75rem;
+        }
+
+        .graph-wrapper-app {
+            height: 200px;
         }
 
         .mining-stats-grid {
@@ -779,22 +863,38 @@
         }
 
         .mining-stat-card {
-            padding: 1.25rem;
+            padding: 1rem;
         }
 
         .mining-stat-label {
-            font-size: 0.8125rem;
+            font-size: 0.75rem;
             margin-bottom: 0.5rem;
         }
 
         .mining-stat-value {
-            font-size: 1.5rem;
+            font-size: 1.25rem;
         }
 
         .mining-actions-grid {
             grid-template-columns: 1fr;
             gap: 1rem;
             margin-bottom: 1.5rem;
+        }
+
+        .mining-activity-section {
+            padding: 1.25rem;
+        }
+
+        .mining-activity-title {
+            font-size: 1rem;
+        }
+
+        .mining-empty-icon {
+            font-size: 2rem;
+        }
+
+        .mining-empty-text {
+            font-size: 0.8125rem;
         }
 
         .mining-action-card {

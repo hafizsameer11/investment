@@ -68,14 +68,47 @@
      * Initialize Investment Calculator
      */
     function initCalculator() {
-        const calculatorBtns = document.querySelectorAll('#openCalculatorBtn, .plan-action-secondary-modern, .plan-btn-secondary, .calculator-toggle-btn');
+        const calculatorBtns = document.querySelectorAll('#openCalculatorBtn, .plan-action-secondary-new, .plan-calculator-toggle-new, #calculatorToggle');
+        const calculatorSection = document.getElementById('calculatorSection');
+        const calculatorContent = document.getElementById('calculatorContent');
         
         calculatorBtns.forEach(btn => {
             btn.addEventListener('click', function(e) {
                 e.preventDefault();
-                // Placeholder for calculator modal
-                console.log('Investment Calculator clicked');
-                // You can add calculator modal logic here
+                
+                if (calculatorSection) {
+                    const isOpen = calculatorSection.classList.contains('show');
+                    
+                    if (isOpen) {
+                        // Close calculator
+                        calculatorSection.classList.remove('show');
+                        if (calculatorContent) {
+                            calculatorContent.style.display = 'none';
+                        }
+                        // Update toggle button text
+                        const toggleBtn = document.getElementById('calculatorToggle');
+                        if (toggleBtn) {
+                            const span = toggleBtn.querySelector('span');
+                            if (span) span.textContent = 'Open Calculator';
+                            const icon = toggleBtn.querySelector('i');
+                            if (icon) icon.className = 'fas fa-calculator';
+                        }
+                    } else {
+                        // Open calculator
+                        calculatorSection.classList.add('show');
+                        if (calculatorContent) {
+                            calculatorContent.style.display = 'grid';
+                        }
+                        // Update toggle button text
+                        const toggleBtn = document.getElementById('calculatorToggle');
+                        if (toggleBtn) {
+                            const span = toggleBtn.querySelector('span');
+                            if (span) span.textContent = 'Close Calculator';
+                            const icon = toggleBtn.querySelector('i');
+                            if (icon) icon.className = 'fas fa-times';
+                        }
+                    }
+                }
             });
         });
     }
