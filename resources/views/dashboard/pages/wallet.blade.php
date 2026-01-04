@@ -1938,7 +1938,7 @@
             </div>
             <div class="wallet-balance-amount-wrapper" id="balanceAmountWallet">
                 <span class="wallet-balance-currency">$</span>
-                <span class="wallet-balance-amount">0.00</span>
+                <span class="wallet-balance-amount">0</span>
             </div>
 
             <div class="wallet-balance-details">
@@ -1961,7 +1961,7 @@
                     <div class="wallet-detail-content">
                         <div class="wallet-detail-label">Mining Earning:</div>
                         <div class="wallet-detail-value">
-                            $0.00
+                            $0
                             <i class="fas fa-arrow-down wallet-detail-trend down"></i>
                         </div>
                     </div>
@@ -1975,7 +1975,7 @@
                             Referral Earning:
                         </div>
                         <div class="wallet-detail-value">
-                            $0.00
+                            $0
                             <i class="fas fa-arrow-down wallet-detail-trend down"></i>
                         </div>
                     </div>
@@ -2012,7 +2012,7 @@
             </div>
             <div class="wallet-card-body">
                 <div class="wallet-card-label">Referral Earnings</div>
-                <div class="wallet-card-value">$0.00</div>
+                <div class="wallet-card-value">$0</div>
                 <div class="wallet-card-description">Commissions from your referral network</div>
             </div>
         </div>
@@ -2028,7 +2028,7 @@
             </div>
             <div class="wallet-card-body">
                 <div class="wallet-card-label">Mining Earnings</div>
-                <div class="wallet-card-value">$0.00</div>
+                <div class="wallet-card-value">$0</div>
                 <div class="wallet-card-description">Active mining returns and profits</div>
             </div>
         </div>
@@ -2060,7 +2060,7 @@
             </div>
             <div class="wallet-card-body">
                 <div class="wallet-card-label">Total Withdrawals</div>
-                <div class="wallet-card-value">$0.00</div>
+                <div class="wallet-card-value">$0</div>
                 <div class="wallet-card-description">All-time withdrawal amount</div>
             </div>
         </div>
@@ -2281,7 +2281,7 @@
                 balanceToggleMobileIcon.style.display = 'none';
             }
             if (balanceAmountEl) balanceAmountEl.style.opacity = '1';
-            if (balanceText) balanceText.textContent = '0.00';
+            if (balanceText) balanceText.textContent = '0';
 
             // Show all detail values
             const detailValues = document.querySelectorAll('.wallet-detail-value');
