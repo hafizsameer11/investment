@@ -35,27 +35,27 @@
                 <li class="nav-item">
                     <a href="{{ route('dashboard.index') }}" class="nav-link">
                         <span class="nav-icon-wrapper">
-                            <i class="fas fa-home"></i>
+                            <i class="fas fa-th-large"></i>
                         </span>
-                        <span class="nav-text">Dashboard</span>
+                        <span class="nav-text">Quick View</span>
                         <span class="nav-indicator"></span>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a href="{{ route('wallet.index') }}" class="nav-link">
                         <span class="nav-icon-wrapper">
-                            <i class="fas fa-wallet"></i>
+                            <i class="fas fa-coins"></i>
                         </span>
-                        <span class="nav-text">My Wallet</span>
+                        <span class="nav-text">Core Wallet</span>
                         <span class="nav-indicator"></span>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a href="{{ route('plans.index') }}" class="nav-link">
                         <span class="nav-icon-wrapper">
-                            <i class="fas fa-chart-line"></i>
+                            <i class="fas fa-gem"></i>
                         </span>
-                        <span class="nav-text">Investment Plans</span>
+                        <span class="nav-text">Mining Plan</span>
                         <span class="nav-indicator"></span>
                     </a>
                 </li>
@@ -71,9 +71,9 @@
                 <li class="nav-item">
                     <a href="{{ route('referrals.index') }}" class="nav-link">
                         <span class="nav-icon-wrapper">
-                            <i class="fas fa-users"></i>
+                            <i class="fas fa-user-plus"></i>
                         </span>
-                        <span class="nav-text">Referrals</span>
+                        <span class="nav-text">Invite System</span>
                         <span class="nav-indicator"></span>
                     </a>
                 </li>
