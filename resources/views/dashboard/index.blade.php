@@ -1566,27 +1566,27 @@
         <div class="wallet-actions-grid">
             <div class="wallet-action-btn" data-action="deposit">
                 <div class="wallet-action-icon">
-                    <i class="fas fa-arrow-up"></i>
+                    <i class="fas fa-money-bill-wave"></i>
                 </div>
-                <span class="wallet-action-label">Deposit</span>
+                <span class="wallet-action-label">Add Funds</span>
             </div>
             <div class="wallet-action-btn" data-action="withdraw">
                 <div class="wallet-action-icon">
-                    <i class="fas fa-arrow-down"></i>
+                    <i class="fas fa-hand-holding-usd"></i>
                 </div>
-                <span class="wallet-action-label">Withdraw</span>
+                <span class="wallet-action-label">Cash Out</span>
             </div>
             <div class="wallet-action-btn" data-action="wallet">
                 <div class="wallet-action-icon">
-                    <i class="fas fa-wallet"></i>
+                    <i class="fas fa-coins"></i>
                 </div>
-                <span class="wallet-action-label">Wallet</span>
+                <span class="wallet-action-label">Balance</span>
             </div>
             <div class="wallet-action-btn" data-action="refer">
                 <div class="wallet-action-icon">
-                    <i class="fas fa-share-square"></i>
+                    <i class="fas fa-user-plus"></i>
                 </div>
-                <span class="wallet-action-label">Refer</span>
+                <span class="wallet-action-label">Invite</span>
             </div>
         </div>
     </div>
@@ -1691,6 +1691,22 @@
             section.classList.toggle('collapsed');
         }
     }
+
+    // Wallet action buttons
+    document.querySelectorAll('.wallet-action-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const action = this.getAttribute('data-action');
+            if (action === 'deposit') {
+                window.location.href = '{{ route("deposit.index") }}';
+            } else if (action === 'withdraw') {
+                window.location.href = '{{ route("withdraw-security.index") }}';
+            } else if (action === 'wallet') {
+                window.location.href = '{{ route("wallet.index") }}';
+            } else if (action === 'refer') {
+                window.location.href = '{{ route("referrals.index") }}';
+            }
+        });
+    });
 
     // Smooth scroll behavior
     document.documentElement.style.scrollBehavior = 'smooth';

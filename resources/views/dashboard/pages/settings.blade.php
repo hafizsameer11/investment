@@ -339,39 +339,39 @@
 
         <a href="{{ route('plans.index') }}" class="settings-menu-item">
             <div class="settings-menu-icon">
-                <i class="fas fa-chart-line"></i>
+                <i class="fas fa-gem"></i>
             </div>
-            <span class="settings-menu-text">Investment Plans</span>
+            <span class="settings-menu-text">Mining Plans</span>
             <i class="fas fa-chevron-right settings-menu-arrow"></i>
         </a>
 
         <a href="{{ route('wallet.index') }}" class="settings-menu-item">
             <div class="settings-menu-icon">
-                <i class="fas fa-wallet"></i>
+                <i class="fas fa-coins"></i>
             </div>
-            <span class="settings-menu-text">Wallet</span>
+            <span class="settings-menu-text">Core Wallet</span>
             <i class="fas fa-chevron-right settings-menu-arrow"></i>
         </a>
 
-        <a href="{{ route('wallet.index') }}#deposit" class="settings-menu-item">
+        <a href="{{ route('deposit.index') }}" class="settings-menu-item">
             <div class="settings-menu-icon">
-                <i class="fas fa-arrow-up"></i>
+                <i class="fas fa-money-bill-wave"></i>
             </div>
-            <span class="settings-menu-text">Deposit</span>
+            <span class="settings-menu-text">Add Money</span>
             <i class="fas fa-chevron-right settings-menu-arrow"></i>
         </a>
 
         <a href="{{ route('withdraw-security.index') }}" class="settings-menu-item">
             <div class="settings-menu-icon">
-                <i class="fas fa-arrow-down"></i>
+                <i class="fas fa-hand-holding-usd"></i>
             </div>
-            <span class="settings-menu-text">Withdraw</span>
+            <span class="settings-menu-text">Get Money</span>
             <i class="fas fa-chevron-right settings-menu-arrow"></i>
         </a>
 
         <a href="{{ route('goals.index') }}" class="settings-menu-item">
             <div class="settings-menu-icon">
-                <i class="fas fa-bullseye"></i>
+                <i class="fas fa-trophy"></i>
             </div>
             <span class="settings-menu-text">Goals</span>
             <i class="fas fa-chevron-right settings-menu-arrow"></i>
@@ -379,7 +379,7 @@
 
         <a href="{{ route('targets.index') }}" class="settings-menu-item">
             <div class="settings-menu-icon">
-                <i class="fas fa-bullseye"></i>
+                <i class="fas fa-flag"></i>
             </div>
             <span class="settings-menu-text">Targets</span>
             <i class="fas fa-chevron-right settings-menu-arrow"></i>

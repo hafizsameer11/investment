@@ -195,6 +195,11 @@
         color: white;
     }
 
+    .support-channel-icon-telegram-new {
+        background: linear-gradient(135deg, #0088cc 0%, #0066aa 100%);
+        color: white;
+    }
+
     .support-channel-name-new {
         font-size: 1.5rem;
         font-weight: 700;
@@ -615,7 +620,7 @@
                 <p class="support-quick-action-desc-new">Instant responses via WhatsApp and Facebook</p>
             </div>
         </div>
-        <div class="support-quick-action-new">
+        {{-- <div class="support-quick-action-new">
             <div class="support-quick-action-icon-new">
                 <i class="fas fa-phone-alt"></i>
             </div>
@@ -623,7 +628,7 @@
                 <h3 class="support-quick-action-title-new">Phone Support</h3>
                 <p class="support-quick-action-desc-new">Direct phone line for urgent matters</p>
             </div>
-        </div>
+        </div> --}}
     </div>
 
     <!-- Support Channels Section -->
@@ -655,7 +660,7 @@
                             </button>
                         </div>
                     </div>
-                    <div class="support-channel-item-new">
+                    {{-- <div class="support-channel-item-new">
                         <div class="support-item-header-new">
                             <div class="support-item-label-new">WhatsApp Number</div>
                         </div>
@@ -666,62 +671,26 @@
                                 <span>Copy</span>
                             </button>
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
 
-            <!-- Phone Card -->
+            <!-- Telegram Card -->
             <div class="support-channel-card-new">
                 <div class="support-channel-header-new">
-                    <div class="support-channel-icon-wrapper-new support-channel-icon-phone-new">
-                            <i class="fas fa-headset"></i>
+                    <div class="support-channel-icon-wrapper-new support-channel-icon-telegram-new">
+                            <i class="fab fa-telegram"></i>
                     </div>
-                    <h3 class="support-channel-name-new">Phone</h3>
+                    <h3 class="support-channel-name-new">Telegram</h3>
                 </div>
                 <div class="support-channel-items-new">
                     <div class="support-channel-item-new">
                         <div class="support-item-header-new">
-                            <div class="support-item-label-new">Support Call</div>
+                            <div class="support-item-label-new">Telegram Channel</div>
                         </div>
-                        <div class="support-item-value-new" id="supportPhone">+16474986701</div>
+                        <div class="support-item-value-new" id="telegramChannel">https://t.me/yourchannel</div>
                         <div class="support-item-actions-new">
-                            <button class="support-copy-btn-new" data-copy="supportPhone" title="Copy">
-                                <i class="fas fa-copy"></i>
-                                <span>Copy</span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Facebook Card -->
-            <div class="support-channel-card-new">
-                <div class="support-channel-header-new">
-                    <div class="support-channel-icon-wrapper-new support-channel-icon-facebook-new">
-                            <i class="fab fa-facebook-f"></i>
-                    </div>
-                    <h3 class="support-channel-name-new">Facebook</h3>
-                </div>
-                <div class="support-channel-items-new">
-                    <div class="support-channel-item-new">
-                        <div class="support-item-header-new">
-                            <div class="support-item-label-new">Facebook Channel</div>
-                        </div>
-                        <div class="support-item-value-new" id="facebookChannel">https://www.facebook.com/Licrownpvt/</div>
-                        <div class="support-item-actions-new">
-                            <button class="support-copy-btn-new" data-copy="facebookChannel" title="Copy">
-                                <i class="fas fa-copy"></i>
-                                <span>Copy</span>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="support-channel-item-new">
-                        <div class="support-item-header-new">
-                            <div class="support-item-label-new">Facebook Contact</div>
-                        </div>
-                        <div class="support-item-value-new" id="facebookContact">licrownltd</div>
-                        <div class="support-item-actions-new">
-                            <button class="support-copy-btn-new" data-copy="facebookContact" title="Copy">
+                            <button class="support-copy-btn-new" data-copy="telegramChannel" title="Copy">
                                 <i class="fas fa-copy"></i>
                                 <span>Copy</span>
                             </button>

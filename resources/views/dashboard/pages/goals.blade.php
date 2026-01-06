@@ -1157,7 +1157,7 @@
             <!-- Rank Card -->
             <div class="goals-status-card-new goals-rank-card-new goals-desktop-card-new">
                 <div class="goals-rank-icon-wrapper-new">
-                    <i class="fas fa-star goals-rank-icon-new"></i>
+                    <i class="fas fa-trophy goals-rank-icon-new"></i>
                 </div>
                 <div class="goals-rank-badge-new">No Rank</div>
                 <div class="goals-rank-label-new">Current Rank</div>
@@ -1192,7 +1192,7 @@
                 <div class="goals-next-goal-name-new">Team Builder</div>
                 <div class="goals-next-goal-requirements-new">
                     <div class="goals-requirement-item-new">
-                        <i class="fas fa-users"></i>
+                        <i class="fas fa-users-cog"></i>
                         <span>Team Progress: <strong>$0</strong></span>
                     </div>
                 </div>
@@ -1207,7 +1207,7 @@
                 <!-- Rank Section -->
                 <div class="goals-rank-section-mobile-new">
                     <div class="goals-rank-icon-wrapper-new">
-                        <i class="fas fa-star goals-rank-icon-new"></i>
+                        <i class="fas fa-trophy goals-rank-icon-new"></i>
                     </div>
                     <div class="goals-rank-text-new">No Rank</div>
                 </div>
@@ -1233,7 +1233,7 @@
                         <div class="goals-next-goal-title-mobile-new">Next Goal Team Builder</div>
                         <div class="goals-next-goal-progress-row-new">
                             <div class="goals-next-goal-progress-label-new">
-                                <i class="fas fa-bullseye"></i>
+                                <i class="fas fa-chart-line"></i>
                                 <span>Team Progress</span>
                             </div>
                             <span class="goals-next-goal-current-new">$0</span>
@@ -1264,7 +1264,7 @@
                 <div class="goals-reward-badge-new">Current</div>
                 <div class="goals-reward-header-new">
                     <div class="goals-reward-icon-new goals-reward-icon-gold-new">
-                        <i class="fas fa-shield-alt"></i>
+                        <i class="fas fa-user-tie"></i>
                     </div>
                     <div class="goals-reward-level-new">
                         <h3 class="goals-reward-name-new">Team Builder</h3>
@@ -1293,7 +1293,7 @@
             <div class="goals-reward-card-new">
                 <div class="goals-reward-header-new">
                     <div class="goals-reward-icon-new goals-reward-icon-orange-new">
-                        <i class="fas fa-shield-alt"></i>
+                        <i class="fas fa-user-graduate"></i>
                     </div>
                     <div class="goals-reward-level-new">
                         <h3 class="goals-reward-name-new">Team Leader</h3>
@@ -1322,7 +1322,7 @@
             <div class="goals-reward-card-new">
                 <div class="goals-reward-header-new">
                     <div class="goals-reward-icon-new goals-reward-icon-blue-new">
-                        <i class="fas fa-shield-alt"></i>
+                        <i class="fas fa-briefcase"></i>
                     </div>
                     <div class="goals-reward-level-new">
                         <h3 class="goals-reward-name-new">Team Director</h3>
@@ -1360,7 +1360,7 @@
             <!-- Level 4: Team Master -->
             <div class="goals-level-card-new">
                 <div class="goals-level-icon-new goals-level-icon-gold-new">
-                    <i class="fas fa-star"></i>
+                    <i class="fas fa-medal"></i>
                 </div>
                 <div class="goals-level-content-new">
                     <h3 class="goals-level-name-new">Team Master</h3>
@@ -1387,7 +1387,7 @@
             <!-- Level 5: Team Chief -->
             <div class="goals-level-card-new">
                 <div class="goals-level-icon-new goals-level-icon-silver-new">
-                    <i class="fas fa-medal"></i>
+                    <i class="fas fa-award"></i>
                 </div>
                 <div class="goals-level-content-new">
                     <h3 class="goals-level-name-new">Team Chief</h3>
@@ -1441,7 +1441,7 @@
             <!-- Level 7: Team Captain -->
             <div class="goals-level-card-new">
                 <div class="goals-level-icon-new goals-level-icon-red-new">
-                    <i class="fas fa-star-half-alt"></i>
+                    <i class="fas fa-star"></i>
                 </div>
                 <div class="goals-level-content-new">
                     <h3 class="goals-level-name-new">Team Captain</h3>
@@ -1468,7 +1468,7 @@
             <!-- Level 8: Team Commander -->
             <div class="goals-level-card-new">
                 <div class="goals-level-icon-new goals-level-icon-red-new">
-                    <i class="fas fa-star-half-alt"></i>
+                    <i class="fas fa-chess-king"></i>
                 </div>
                 <div class="goals-level-content-new">
                     <h3 class="goals-level-name-new">Team Commander</h3>
@@ -1495,7 +1495,7 @@
             <!-- Level 9: Team Head -->
             <div class="goals-level-card-new">
                 <div class="goals-level-icon-new goals-level-icon-red-new">
-                    <i class="fas fa-star-half-alt"></i>
+                    <i class="fas fa-chess-queen"></i>
                 </div>
                 <div class="goals-level-content-new">
                     <h3 class="goals-level-name-new">Team Head</h3>

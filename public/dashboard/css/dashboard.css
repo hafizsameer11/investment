@@ -3550,7 +3550,7 @@ body {
     .mobile-user-profile.mobile-user-profile-visible {
         display: flex !important;
         gap: 0.375rem !important;
-        margin-left: -0.5rem !important;
+        margin-left: -1.5rem !important;
     }
 
     /* Ensure mobile user profile is hidden when mobile-nav-header is visible (non-home pages) */
@@ -3643,6 +3643,7 @@ body {
         display: flex !important;
         align-items: center;
         gap: 0.5rem;
+        margin-right: -1rem !important;
     }
 
     /* Main content adjustments for mobile */
@@ -3664,10 +3665,10 @@ body {
         border-top: 1px solid rgba(255, 178, 30, 0.2);
         box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.8);
         z-index: 1000;
-        padding: 0.5rem 0;
+        padding: 0.375rem 0;
         justify-content: space-around;
         align-items: center;
-        height: 70px;
+        height: 72px;
         box-sizing: border-box;
     }
 
@@ -3681,10 +3682,12 @@ body {
         transition: var(--transition);
         flex: 1;
         min-height: 60px;
-        padding: 0.5rem;
+        padding: 0.25rem 0.25rem;
         position: relative;
         -webkit-tap-highlight-color: rgba(255, 178, 30, 0.2);
         cursor: pointer;
+        max-width: 100%;
+        min-width: 0;
     }
 
     .mobile-nav-item.active {
@@ -3705,30 +3708,40 @@ body {
     }
 
     .mobile-nav-icon {
-        width: 44px;
-        height: 44px;
+        width: 40px;
+        height: 40px;
         display: flex;
         align-items: center;
         justify-content: center;
         border-radius: 12px;
         background: transparent;
         border: 1px solid transparent;
-        margin-bottom: 0.25rem;
+        margin-bottom: 0.125rem;
         transition: var(--transition);
+        flex-shrink: 0;
     }
 
     .mobile-nav-icon i {
-        font-size: 1.25rem;
+        font-size: 1.125rem;
         color: var(--text-secondary);
         transition: var(--transition);
     }
 
     .mobile-nav-label {
-        font-size: 0.6875rem;
+        font-size: 0.55rem;
         font-weight: 500;
         color: var(--text-secondary);
         transition: var(--transition);
         text-align: center;
+        line-height: 1.1;
+        word-spacing: -0.8px;
+        letter-spacing: -0.3px;
+        max-width: 100%;
+        width: 100%;
+        padding: 0 0.1rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 
     .mobile-nav-item:active .mobile-nav-icon {
@@ -3796,6 +3809,32 @@ body {
     .btn {
         min-height: 44px;
         min-width: 44px;
+    }
+
+    /* Mobile navigation adjustments for smaller screens */
+    .mobile-nav-item {
+        padding: 0.25rem 0.25rem;
+    }
+
+    .mobile-nav-icon {
+        width: 38px;
+        height: 38px;
+        margin-bottom: 0.1rem;
+    }
+
+    .mobile-nav-icon i {
+        font-size: 1rem;
+    }
+
+    .mobile-nav-label {
+        font-size: 0.525rem;
+        line-height: 1.1;
+        padding: 0 0.05rem;
+        word-spacing: -1px;
+        letter-spacing: -0.4px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 
     /* Better spacing for mobile cards */

@@ -1531,7 +1531,7 @@
     </div>
 
     <!-- Coming Soon Section -->
-    <div class="plans-coming-soon-new">
+    {{-- <div class="plans-coming-soon-new">
         <h3 class="coming-soon-title-new">More Plans Coming Soon</h3>
         <p class="coming-soon-subtitle-new">We're working on additional mining plan options for you</p>
         <div class="coming-soon-cards-new">
@@ -1554,7 +1554,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 </div>
 
 @push('scripts')

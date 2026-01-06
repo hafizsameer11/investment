@@ -1176,7 +1176,7 @@
         }
 
         .wallet-main-balance-card {
-            padding: 1.5rem 1rem;
+            padding: 8px 1rem;
             margin-bottom: 1.5rem;
             margin-left: 0;
             margin-right: 0;
@@ -1983,10 +1983,10 @@
             </div>
 
             <div class="wallet-action-buttons">
-                <button class="wallet-action-button wallet-btn-primary">
+                <a href="{{ route('deposit.index') }}" class="wallet-action-button wallet-btn-primary">
                     <i class="fas fa-arrow-up"></i>
                     <span>Deposit Funds</span>
-                </button>
+                </a>
                 <a href="{{ route('withdraw-security.index') }}" class="wallet-action-button wallet-btn-secondary">
                     <i class="fas fa-arrow-down"></i>
                     <span>Withdraw Funds</span>

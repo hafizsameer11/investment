@@ -57,7 +57,7 @@
         }
 
         .header-content {
-            padding: 0.75rem 1rem;
+            padding: 4px 1rem;
         }
 
         /* Mobile app typography */
@@ -83,6 +83,10 @@
             display: flex !important;
         }
         
+        .mobile-user-profile.mobile-user-profile-visible {
+            margin-left: -1.5rem !important;
+        }
+        
         .mobile-user-avatar {
             width: 36px;
             height: 36px;
@@ -99,6 +103,10 @@
         .notification-icon {
             font-size: 1.125rem;
             padding: 0.5rem;
+        }
+        
+        .header-right {
+            margin-right: -1rem !important;
         }
     }
 </style>

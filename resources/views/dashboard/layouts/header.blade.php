@@ -5,6 +5,7 @@
     // Page title mapping
     $pageTitles = [
         'wallet.index' => 'Wallet',
+        'deposit.index' => 'Deposit',
         'plans.index' => 'Mining Plans',
         'goals.index' => 'Goals',
         'targets.index' => 'Targets',

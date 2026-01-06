@@ -971,6 +971,144 @@
         color: var(--text-primary);
     }
 
+    /* Investment Commission Structure Section */
+    .referrals-investment-commission-section-new {
+        margin-bottom: 3rem;
+    }
+
+    /* Investment Commission Cards - Same design for desktop and mobile */
+    .referrals-investment-commission-mobile {
+        display: none;
+    }
+
+    .referrals-investment-commission-desktop {
+        display: block;
+    }
+
+    .referrals-investment-mobile-grid-new {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.75rem;
+        padding: 1rem;
+        background: var(--card-bg);
+        border: 1px solid var(--card-border);
+        border-radius: 20px;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Mobile Header Inside Card for Investment Commission */
+    .referrals-investment-mobile-header-new {
+        grid-column: 1 / -1;
+        text-align: center;
+        padding-bottom: 1rem;
+        margin-bottom: 0.5rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .referrals-investment-mobile-header-title-new {
+        font-size: 1rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin: 0 0 0.375rem 0;
+    }
+
+    .referrals-investment-mobile-header-subtitle-new {
+        font-size: 0.75rem;
+        color: var(--text-secondary);
+        margin: 0;
+    }
+
+    .referrals-investment-mobile-card-new {
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 16px;
+        padding: 1.25rem 1rem;
+        text-align: center;
+        transition: var(--transition);
+    }
+
+    .referrals-investment-mobile-card-new:hover {
+        border-color: rgba(255, 255, 255, 0.2);
+        background: rgba(255, 255, 255, 0.04);
+        transform: translateY(-2px);
+    }
+
+    .referrals-investment-mobile-title-new {
+        font-size: 0.875rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin: 0 0 0.5rem 0;
+    }
+
+    .referrals-investment-mobile-label-new {
+        font-size: 0.75rem;
+        color: var(--text-secondary);
+        margin: 0 0 0.75rem 0;
+    }
+
+    .referrals-investment-mobile-percentage-new {
+        font-size: 1.75rem;
+        font-weight: 700;
+        margin: 0 0 0.75rem 0;
+    }
+
+    /* Desktop: 5 columns grid */
+    @media (min-width: 769px) {
+        .referrals-investment-mobile-grid-new {
+            grid-template-columns: repeat(5, 1fr);
+            gap: 1rem;
+            padding: 1.5rem;
+        }
+
+        .referrals-investment-mobile-card-new {
+            padding: 1.5rem 1.25rem;
+        }
+
+        .referrals-investment-mobile-title-new {
+            font-size: 1rem;
+        }
+
+        .referrals-investment-mobile-label-new {
+            font-size: 0.8125rem;
+        }
+
+        .referrals-investment-mobile-percentage-new {
+            font-size: 2rem;
+        }
+    }
+
+    .referrals-investment-mobile-footer-new {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 0.75rem;
+        color: var(--text-secondary);
+        margin-top: 0.75rem;
+        padding-top: 0.75rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    /* Investment Commission Level Colors */
+    .referrals-investment-level-1 .referrals-investment-mobile-percentage-new {
+        color: #10B981;
+    }
+
+    .referrals-investment-level-2 .referrals-investment-mobile-percentage-new {
+        color: #3B82F6;
+    }
+
+    .referrals-investment-level-3 .referrals-investment-mobile-percentage-new {
+        color: #EC4899;
+    }
+
+    .referrals-investment-level-4 .referrals-investment-mobile-percentage-new {
+        color: #F97316;
+    }
+
+    .referrals-investment-level-5 .referrals-investment-mobile-percentage-new {
+        color: #EC4899;
+    }
+
     /* Commission Structure Section */
     .referrals-commission-section-new {
         margin-bottom: 3rem;
@@ -1716,6 +1854,23 @@ ls-referrer-section-new {
             font-size: 1rem;
             font-weight: 600;
             color: var(--text-primary);
+        }
+
+        .referrals-investment-commission-section-new {
+            margin-bottom: 1.5rem;
+        }
+
+        .referrals-investment-commission-desktop {
+            display: none;
+        }
+
+        .referrals-investment-commission-mobile {
+            display: block;
+        }
+
+        /* Hide external header on mobile for Investment Commission */
+        .referrals-investment-commission-section-new .referrals-commission-header-new {
+            display: none !important;
         }
 
         .referrals-commission-section-new {
@@ -2504,6 +2659,140 @@ ls-referrer-section-new {
                         <span>Phone</span>
                     </div>
                     <div class="referrals-referrer-info-value-new">03375453962</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Investment Commission Structure Section -->
+    <div class="referrals-investment-commission-section-new">
+        <div class="referrals-commission-header-new">
+            <h2 class="referrals-commission-title-new">Investment Commission Structure</h2>
+            <p class="referrals-commission-subtitle-new">Earn commissions on investments across 5 levels</p>
+        </div>
+
+        <!-- Desktop Grid View (Same card design as mobile) -->
+        <div class="referrals-investment-commission-desktop">
+            <div class="referrals-investment-mobile-grid-new">
+                <!-- Level 1 -->
+                <div class="referrals-investment-mobile-card-new referrals-investment-level-1">
+                    <h3 class="referrals-investment-mobile-title-new">Direct Referral</h3>
+                    <p class="referrals-investment-mobile-label-new">Commission Rate</p>
+                    <div class="referrals-investment-mobile-percentage-new">6%</div>
+                    <div class="referrals-investment-mobile-footer-new">
+                        <span>Earning</span>
+                        <span>Level 1</span>
+                    </div>
+                </div>
+
+                <!-- Level 2 -->
+                <div class="referrals-investment-mobile-card-new referrals-investment-level-2">
+                    <h3 class="referrals-investment-mobile-title-new">Second Level</h3>
+                    <p class="referrals-investment-mobile-label-new">Commission Rate</p>
+                    <div class="referrals-investment-mobile-percentage-new">3%</div>
+                    <div class="referrals-investment-mobile-footer-new">
+                        <span>Earning</span>
+                        <span>Level 2</span>
+                    </div>
+                </div>
+
+                <!-- Level 3 -->
+                <div class="referrals-investment-mobile-card-new referrals-investment-level-3">
+                    <h3 class="referrals-investment-mobile-title-new">Third Level</h3>
+                    <p class="referrals-investment-mobile-label-new">Commission Rate</p>
+                    <div class="referrals-investment-mobile-percentage-new">3%</div>
+                    <div class="referrals-investment-mobile-footer-new">
+                        <span>Earning</span>
+                        <span>Level 3</span>
+                    </div>
+                </div>
+
+                <!-- Level 4 -->
+                <div class="referrals-investment-mobile-card-new referrals-investment-level-4">
+                    <h3 class="referrals-investment-mobile-title-new">Fourth Level</h3>
+                    <p class="referrals-investment-mobile-label-new">Commission Rate</p>
+                    <div class="referrals-investment-mobile-percentage-new">3%</div>
+                    <div class="referrals-investment-mobile-footer-new">
+                        <span>Earning</span>
+                        <span>Level 4</span>
+                    </div>
+                </div>
+
+                <!-- Level 5 -->
+                <div class="referrals-investment-mobile-card-new referrals-investment-level-5">
+                    <h3 class="referrals-investment-mobile-title-new">Fifth Level</h3>
+                    <p class="referrals-investment-mobile-label-new">Commission Rate</p>
+                    <div class="referrals-investment-mobile-percentage-new">3%</div>
+                    <div class="referrals-investment-mobile-footer-new">
+                        <span>Earning</span>
+                        <span>Level 5</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Card-Based View -->
+        <div class="referrals-investment-commission-mobile">
+            <div class="referrals-investment-mobile-grid-new">
+                <!-- Mobile Header Inside Card -->
+                <div class="referrals-investment-mobile-header-new">
+                    <h2 class="referrals-investment-mobile-header-title-new">Investment Commission Structure</h2>
+                    <p class="referrals-investment-mobile-header-subtitle-new">Earn commissions on investments across 5 levels</p>
+                </div>
+
+                <!-- Level 1 -->
+                <div class="referrals-investment-mobile-card-new referrals-investment-level-1">
+                    <h3 class="referrals-investment-mobile-title-new">Direct Referral</h3>
+                    <p class="referrals-investment-mobile-label-new">Commission Rate</p>
+                    <div class="referrals-investment-mobile-percentage-new">6%</div>
+                    <div class="referrals-investment-mobile-footer-new">
+                        <span>Earning</span>
+                        <span>Level 1</span>
+                    </div>
+                </div>
+
+                <!-- Level 2 -->
+                <div class="referrals-investment-mobile-card-new referrals-investment-level-2">
+                    <h3 class="referrals-investment-mobile-title-new">Second Level</h3>
+                    <p class="referrals-investment-mobile-label-new">Commission Rate</p>
+                    <div class="referrals-investment-mobile-percentage-new">3%</div>
+                    <div class="referrals-investment-mobile-footer-new">
+                        <span>Earning</span>
+                        <span>Level 2</span>
+                    </div>
+                </div>
+
+                <!-- Level 3 -->
+                <div class="referrals-investment-mobile-card-new referrals-investment-level-3">
+                    <h3 class="referrals-investment-mobile-title-new">Third Level</h3>
+                    <p class="referrals-investment-mobile-label-new">Commission Rate</p>
+                    <div class="referrals-investment-mobile-percentage-new">3%</div>
+                    <div class="referrals-investment-mobile-footer-new">
+                        <span>Earning</span>
+                        <span>Level 3</span>
+                    </div>
+                </div>
+
+                <!-- Level 4 -->
+                <div class="referrals-investment-mobile-card-new referrals-investment-level-4">
+                    <h3 class="referrals-investment-mobile-title-new">Fourth Level</h3>
+                    <p class="referrals-investment-mobile-label-new">Commission Rate</p>
+                    <div class="referrals-investment-mobile-percentage-new">3%</div>
+                    <div class="referrals-investment-mobile-footer-new">
+                        <span>Earning</span>
+                        <span>Level 4</span>
+                    </div>
+                </div>
+
+                <!-- Level 5 -->
+                <div class="referrals-investment-mobile-card-new referrals-investment-level-5">
+                    <h3 class="referrals-investment-mobile-title-new">Fifth Level</h3>
+                    <p class="referrals-investment-mobile-label-new">Commission Rate</p>
+                    <div class="referrals-investment-mobile-percentage-new">3%</div>
+                    <div class="referrals-investment-mobile-footer-new">
+                        <span>Earning</span>
+                        <span>Level 5</span>
+                    </div>
                 </div>
             </div>
         </div>

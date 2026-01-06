@@ -13,5 +13,13 @@ class WalletController extends Controller
     {
         return view('dashboard.pages.wallet');
     }
+
+    /**
+     * Show the deposit page.
+     */
+    public function deposit()
+    {
+        return view('dashboard.pages.deposit');
+    }
 }
 
