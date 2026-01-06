@@ -1020,6 +1020,7 @@
 @media (max-width: 768px) {
     .referrals-page-modern {
         padding: 0;
+        padding-bottom: 10px;
     }
 
     .referrals-hero-section {
@@ -1124,6 +1125,7 @@
 @media (max-width: 400px) {
     .referrals-page-modern {
         padding: 0;
+        padding-bottom: 10px;
         width: 100%;
         max-width: 100%;
         box-sizing: border-box;

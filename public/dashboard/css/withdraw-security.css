@@ -2,10 +2,32 @@
    Withdraw Security Page - Premium Design
    ============================================ */
 
+/* Ensure content-area doesn't cause horizontal overflow */
+.content-area:has(.withdraw-security-page) {
+    overflow-x: hidden;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+/* Fallback for browsers without :has() support */
+.content-area .withdraw-security-page {
+    max-width: calc(100% - 4rem);
+}
+
+@media (max-width: 768px) {
+    .content-area .withdraw-security-page {
+        max-width: 100%;
+    }
+}
+
 .withdraw-security-page {
     max-width: 800px;
     margin: 0 auto;
     padding: 0;
+    width: 100%;
+    box-sizing: border-box;
+    overflow-x: hidden;
+    position: relative;
 }
 
 /* ============================================
@@ -38,6 +60,9 @@
 .withdraw-security-section {
     display: flex;
     justify-content: center;
+    width: 100%;
+    box-sizing: border-box;
+    overflow-x: hidden;
 }
 
 .withdraw-security-card {
@@ -53,6 +78,7 @@
     overflow: hidden;
     width: 100%;
     max-width: 600px;
+    box-sizing: border-box;
 }
 
 .withdraw-security-card::before {
@@ -77,6 +103,9 @@
     justify-content: space-between;
     margin-bottom: 3rem;
     position: relative;
+    width: 100%;
+    box-sizing: border-box;
+    overflow-x: hidden;
 }
 
 .security-step {
@@ -87,6 +116,9 @@
     flex: 1;
     position: relative;
     z-index: 2;
+    min-width: 0;
+    max-width: 100%;
+    box-sizing: border-box;
 }
 
 .security-step-number {
@@ -136,6 +168,10 @@
     color: var(--text-secondary);
     text-align: center;
     transition: var(--transition);
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .security-step.active .security-step-label {
@@ -154,6 +190,9 @@
     position: relative;
     top: -24px;
     z-index: 1;
+    min-width: 0;
+    max-width: 100%;
+    box-sizing: border-box;
 }
 
 .security-step-line.active {
@@ -167,6 +206,9 @@
 .security-step-content {
     display: none;
     text-align: center;
+    width: 100%;
+    box-sizing: border-box;
+    overflow-x: hidden;
 }
 
 .security-step-content.active {
@@ -236,6 +278,8 @@
 .security-form {
     margin-bottom: 2rem;
     text-align: left;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .security-form-label {
@@ -250,6 +294,8 @@
     position: relative;
     display: flex;
     align-items: center;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .security-input-icon {
@@ -274,6 +320,7 @@
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     position: relative;
+    box-sizing: border-box;
 }
 
 .security-form-input::placeholder {
@@ -374,6 +421,7 @@
     box-shadow: 0 4px 16px rgba(255, 178, 30, 0.3);
     position: relative;
     overflow: hidden;
+    box-sizing: border-box;
 }
 
 @media (min-width: 769px) {
@@ -423,6 +471,9 @@
     .withdraw-security-page {
         max-width: 100%;
         padding: 0 1rem;
+        width: 100%;
+        box-sizing: border-box;
+        overflow-x: hidden;
     }
 }
 
@@ -457,6 +508,9 @@
         justify-content: center;
         padding: 1.5rem 1.25rem;
         min-height: calc(100vh - 0px);
+        width: 100%;
+        box-sizing: border-box;
+        overflow-x: hidden;
     }
 
     .withdraw-security-card {
@@ -470,6 +524,8 @@
         width: 100%;
         display: flex;
         flex-direction: column;
+        box-sizing: border-box;
+        overflow-x: hidden;
     }
 
     .withdraw-security-card::before {
@@ -485,6 +541,8 @@
         padding: 0 0.5rem;
         position: relative;
         width: 100%;
+        box-sizing: border-box;
+        overflow-x: hidden;
     }
 
     .security-step {
@@ -636,6 +694,7 @@
         font-size: 1rem;
         transition: all 0.3s ease;
         font-family: inherit;
+        box-sizing: border-box;
     }
 
     .security-form-input::placeholder {
@@ -679,10 +738,16 @@
 @media (max-width: 480px) {
     .withdraw-security-section {
         padding: 1rem 1rem;
+        width: 100%;
+        box-sizing: border-box;
+        overflow-x: hidden;
     }
 
     .withdraw-security-card {
         padding: 1.5rem 1rem;
+        width: 100%;
+        box-sizing: border-box;
+        overflow-x: hidden;
     }
 
     .security-progress-steps {

@@ -840,6 +840,7 @@
 @media (max-width: 768px) {
     .wallet-page-modern {
         padding: 0;
+        padding-bottom: 10px;
     }
 
     .wallet-hero-section {
@@ -961,6 +962,7 @@
 @media (max-width: 480px) {
     .wallet-page-modern {
         padding: 0;
+        padding-bottom: 10px;
         width: 100%;
         max-width: 100%;
         box-sizing: border-box;
@@ -1100,6 +1102,7 @@
 @media (max-width: 400px) {
     .wallet-page-modern {
         padding: 0;
+        padding-bottom: 10px;
     }
 
     .wallet-hero-section {

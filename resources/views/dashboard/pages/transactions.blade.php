@@ -645,7 +645,7 @@
             max-width: 100%;
             box-sizing: border-box;
             overflow-x: hidden;
-            background: linear-gradient(135deg, rgba(0, 0, 0, 0.95) 0%, rgba(10, 10, 10, 0.95) 100%);
+            background: var(--bg-primary);
             min-height: 100vh;
         }
 
@@ -921,7 +921,7 @@
             max-width: 100%;
             box-sizing: border-box;
             overflow-x: hidden;
-            background: linear-gradient(135deg, rgba(0, 0, 0, 0.95) 0%, rgba(10, 10, 10, 0.95) 100%);
+            background: var(--bg-primary);
             min-height: 100vh;
         }
 
@@ -1015,7 +1015,7 @@
             max-width: 100%;
             box-sizing: border-box;
             overflow-x: hidden;
-            background: linear-gradient(135deg, rgba(0, 0, 0, 0.95) 0%, rgba(10, 10, 10, 0.95) 100%);
+            background: var(--bg-primary);
             min-height: 100vh;
         }
 

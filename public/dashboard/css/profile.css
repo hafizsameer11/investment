@@ -812,7 +812,7 @@
         box-sizing: border-box;
         overflow-x: hidden;
         background: linear-gradient(135deg, rgba(24, 27, 39, 0.95) 0%, rgba(24, 27, 39, 0.95) 100%);
-        min-height: 100vh;
+        min-height: 90vh;
     }
 
     .profile-main-card {

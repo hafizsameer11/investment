@@ -783,7 +783,29 @@ body {
 .dashboard-page {
     max-width: 1400px;
     margin: 0 auto;
+    margin-bottom: 2rem;
 }
+
+/* Consistent footer spacing for all page containers */
+.mining-dashboard,
+.referrals-new-page,
+.wallet-new-page,
+.transactions-new-page,
+.transactions-page-modern,
+.settings-page-modern,
+.plans-new-page,
+.plans-page-modern,
+.goals-new-page,
+.goals-page-modern,
+.support-new-page,
+.support-page-modern,
+.withdraw-security-page,
+.targets-page,
+.targets-page-modern,
+.profile-page-modern {
+    margin-bottom: 0px;
+}
+
 
 /* ============================================
    Dashboard Cards & Widgets
@@ -3626,7 +3648,7 @@ body {
     /* Main content adjustments for mobile */
     .main-content {
         margin-left: 0;
-        padding-bottom: 80px; /* Space for bottom nav */
+        padding-bottom: 10px; /* Space for bottom nav */
     }
 
     /* Mobile Bottom Navigation */
@@ -3740,7 +3762,24 @@ body {
 
     /* Improved mobile content spacing */
     .content-area {
-        padding-bottom: 1rem;
+        padding-bottom: 10px;
+    }
+
+    /* Universal bottom spacing for all page containers on mobile */
+    .dashboard-page,
+    .profile-page-modern,
+    .wallet-page-modern,
+    .transactions-page-modern,
+    .goals-page-modern,
+    .plans-page-modern,
+    .referrals-page-modern,
+    .withdraw-security-page,
+    .targets-page,
+    .targets-page-modern,
+    .support-page,
+    .support-page-modern,
+    .settings-page-modern {
+        padding-bottom: 10px;
     }
 
     /* Better font sizes for mobile readability */
