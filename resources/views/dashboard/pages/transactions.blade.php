@@ -1399,7 +1399,7 @@
                 </div>
             <div class="transactions-summary-content-new">
                 <div class="transactions-summary-label-new">Total Earning</div>
-                <div class="transactions-summary-value-new">$0.00</div>
+                <div class="transactions-summary-value-new">$0</div>
                 </div>
             </div>
 
@@ -1410,7 +1410,7 @@
                 </div>
             <div class="transactions-summary-content-new">
                 <div class="transactions-summary-label-new">Referral Earning</div>
-                <div class="transactions-summary-value-new">$0.00</div>
+                <div class="transactions-summary-value-new">$0</div>
                 </div>
             </div>
 
@@ -1421,7 +1421,7 @@
                 </div>
             <div class="transactions-summary-content-new">
                 <div class="transactions-summary-label-new">Total Deposit</div>
-                <div class="transactions-summary-value-new">$0.30</div>
+                <div class="transactions-summary-value-new">$0</div>
                 </div>
             </div>
 
@@ -1432,7 +1432,7 @@
                 </div>
             <div class="transactions-summary-content-new">
                 <div class="transactions-summary-label-new">Total Withdrawn</div>
-                <div class="transactions-summary-value-new">$0.00</div>
+                <div class="transactions-summary-value-new">$0</div>
             </div>
         </div>
     </div>
@@ -1487,7 +1487,7 @@
                             </td>
                             <td>
                                 <div class="transactions-amount-cell-new">
-                                    <div class="transactions-amount-value-new transactions-amount-success-new">+$0.30</div>
+                                    <div class="transactions-amount-value-new transactions-amount-success-new">+$0</div>
                                     <div class="transactions-amount-wallet-new">Earning Wallet: $0</div>
                                     <div class="transactions-status-mobile transactions-status-completed">Completed</div>
                                 </div>

@@ -1557,7 +1557,7 @@
             </div>
             <div class="deposit-wallet-info">
                 <span class="deposit-wallet-label">Deposit Wallet:</span>
-                <span class="deposit-wallet-amount">$0.30</span>
+                <span class="deposit-wallet-amount">$0</span>
                 <i class="fas fa-arrow-down deposit-trend-down"></i>
             </div>
         </div>
@@ -1668,7 +1668,7 @@
                 // Show balance
                 totalBalanceEl.textContent = '$0';
                 if (depositWalletAmount) {
-                    depositWalletAmount.textContent = '$0.30';
+                    depositWalletAmount.textContent = '$0';
                 }
                 balanceToggle.classList.remove('fa-eye-slash');
                 balanceToggle.classList.add('fa-eye');
@@ -1811,7 +1811,7 @@
                             displayColors: true,
                             callbacks: {
                                 label: function(context) {
-                                    return context.dataset.label + ': $' + context.parsed.y.toFixed(2);
+                                    return context.dataset.label + ': $' + Math.round(context.parsed.y);
                                 }
                             }
                         }
@@ -1917,7 +1917,7 @@
                                 displayColors: true,
                                 callbacks: {
                                     label: function(context) {
-                                        return context.dataset.label + ': $' + context.parsed.y.toFixed(2);
+                                        return context.dataset.label + ': $' + Math.round(context.parsed.y);
                                     }
                                 }
                             }

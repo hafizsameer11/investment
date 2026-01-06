@@ -1333,7 +1333,7 @@
             <div class="plans-hero-stats-new">
                 <div class="plans-hero-stat-new">
                     <div class="plans-hero-stat-label-new">Daily ROI</div>
-                    <div class="plans-hero-stat-value-new">3/3.5%</div>
+                    <div class="plans-hero-stat-value-new">3/4%</div>
                 </div>
                 <div class="plans-hero-stat-new">
                     <div class="plans-hero-stat-label-new">Minimum Investment</div>
@@ -1415,8 +1415,8 @@
                     <div class="plan-mobile-detail-value-new">$2 - $100000 Min</div>
                 </div>
                 <div class="plan-mobile-detail-col-new">
-                    <div class="plan-mobile-detail-label-new">ROI 3/3.5% Daily</div>
-                    <div class="plan-mobile-detail-value-new">0.127% / Hourly</div>
+                    <div class="plan-mobile-detail-label-new">ROI 3/4% Daily</div>
+                    <div class="plan-mobile-detail-value-new">0% / Hourly</div>
                 </div>
             </div>
         </div>
@@ -1450,7 +1450,7 @@
                     <i class="fas fa-chart-line"></i>
                     </div>
                     <div class="plan-feature-label-new">Daily ROI</div>
-                    <div class="plan-feature-value-new">3% - 3.5%</div>
+                    <div class="plan-feature-value-new">3% - 4%</div>
                     <div class="plan-feature-hint-new">Fixed daily returns guaranteed</div>
                 </div>
 
@@ -1459,7 +1459,7 @@
                         <i class="fas fa-clock"></i>
                     </div>
                     <div class="plan-feature-label-new">Hourly Rate</div>
-                    <div class="plan-feature-value-new">0.122%</div>
+                    <div class="plan-feature-value-new">0%</div>
                     <div class="plan-feature-hint-new">Per hour earnings</div>
                 </div>
             </div>
@@ -1477,12 +1477,12 @@
                 <div class="plan-calculator-grid-new" id="calculatorContent">
                     <div class="plan-calculator-item-new">
                         <div class="plan-calculator-label-new">Daily Earnings</div>
-                        <div class="plan-calculator-value-new">$0.00</div>
+                        <div class="plan-calculator-value-new">$0</div>
                         <div class="plan-calculator-note-new">Based on $100 investment</div>
                     </div>
                     <div class="plan-calculator-item-new">
                         <div class="plan-calculator-label-new">Monthly Earnings</div>
-                        <div class="plan-calculator-value-new">$0.00</div>
+                        <div class="plan-calculator-value-new">$0</div>
                         <div class="plan-calculator-note-new">30 days projection</div>
                 </div>
             </div>

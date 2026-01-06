@@ -318,11 +318,11 @@
         <div class="settings-earnings-grid">
             <div class="settings-earnings-item">
                 <div class="settings-earnings-label">USD Earnings</div>
-                <div class="settings-earnings-value">$0.00</div>
+                <div class="settings-earnings-value">$0</div>
             </div>
             <div class="settings-earnings-item">
                 <div class="settings-earnings-label">PKR Earnings</div>
-                <div class="settings-earnings-value">Rs0.00</div>
+                <div class="settings-earnings-value">Rs0</div>
             </div>
         </div>
     </div>

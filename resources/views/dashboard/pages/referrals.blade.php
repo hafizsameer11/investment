@@ -2388,7 +2388,7 @@ ls-referrer-section-new {
             </div>
             <div class="referrals-stat-content-new">
                 <div class="referrals-stat-label-new">Total Referral Earning</div>
-                <div class="referrals-stat-value-new">$0.00</div>
+                <div class="referrals-stat-value-new">$0</div>
             </div>
         </div>
 
@@ -2417,7 +2417,7 @@ ls-referrer-section-new {
                     <span class="referrals-balance-value-new">$0</span>
                     <div class="referrals-minimum-badge-new">Minimum $1</div>
                 </div>
-                <div class="referrals-minimum-needed-new">$1.00 more needed to claim</div>
+                <div class="referrals-minimum-needed-new">$1 more needed to claim</div>
             </div>
             <p class="referrals-claim-note-new">You can claim referral earnings when balance reaches $1 or more</p>
             <button class="referrals-claim-btn-new" disabled>

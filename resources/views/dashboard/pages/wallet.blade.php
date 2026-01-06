@@ -1949,7 +1949,7 @@
                     <div class="wallet-detail-content">
                         <div class="wallet-detail-label">Deposit Wallet:</div>
                         <div class="wallet-detail-value">
-                            $0.30
+                            $0
                             <i class="fas fa-arrow-down wallet-detail-trend down"></i>
                         </div>
                     </div>
@@ -2044,7 +2044,7 @@
             </div>
             <div class="wallet-card-body">
                 <div class="wallet-card-label">Total Deposits</div>
-                <div class="wallet-card-value">$0.30</div>
+                <div class="wallet-card-value">$0</div>
                 <div class="wallet-card-description">All-time deposit amount</div>
             </div>
         </div>
@@ -2125,7 +2125,7 @@
                         </td>
                         <td>
                             <div class="wallet-amount-cell">
-                                <div class="wallet-amount-value wallet-amount-positive">+$0.3</div>
+                                <div class="wallet-amount-value wallet-amount-positive">+$0</div>
                                 <div class="wallet-amount-wallet">Earning Wallet: $0</div>
                                 <div class="wallet-status-mobile wallet-status-completed">Completed</div>
                             </div>
@@ -2164,7 +2164,7 @@
                         </td>
                         <td>
                             <div class="wallet-amount-cell">
-                                <div class="wallet-amount-value wallet-amount-negative">-$50.00</div>
+                                <div class="wallet-amount-value wallet-amount-negative">-$50</div>
                                 <div class="wallet-amount-wallet">Main Wallet: $0</div>
                                 <div class="wallet-status-mobile wallet-status-pending">Pending</div>
                             </div>
@@ -2203,7 +2203,7 @@
                         </td>
                         <td>
                             <div class="wallet-amount-cell">
-                                <div class="wallet-amount-value wallet-amount-positive">+$100.00</div>
+                                <div class="wallet-amount-value wallet-amount-positive">+$100</div>
                                 <div class="wallet-amount-wallet">Main Wallet: $0</div>
                                 <div class="wallet-status-mobile wallet-status-completed">Completed</div>
                             </div>
