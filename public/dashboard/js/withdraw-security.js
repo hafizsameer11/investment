@@ -19,9 +19,15 @@
     const otpInput = document.getElementById('otpCode');
     const continueStep2Btn = document.getElementById('continueToStep2');
     const continueStep3Btn = document.getElementById('continueToStep3');
+    const continueStep4Btn = document.getElementById('continueToStep4');
     const resendOtpBtn = document.getElementById('resendOtp');
     const finishBtn = document.getElementById('finishSetup');
     const otpTimerElement = document.getElementById('otpTimer');
+    const submitWithdrawalBtn = document.getElementById('submitWithdrawal');
+    const withdrawalAccountNumber = document.getElementById('withdrawalAccountNumber');
+    const withdrawalAccountName = document.getElementById('withdrawalAccountName');
+    const withdrawalAmount = document.getElementById('withdrawalAmount');
+    const withdrawalPaymentMethods = document.querySelectorAll('.withdrawal-payment-method');
 
     // Initialize
     document.addEventListener('DOMContentLoaded', function() {
@@ -29,6 +35,7 @@
         initStepNavigation();
         initFormValidation();
         initOTPTimer();
+        initWithdrawalForm();
     });
 
     /**
@@ -84,13 +91,17 @@
             });
         }
 
-        if (finishBtn) {
-            finishBtn.addEventListener('click', function() {
-                // Redirect to wallet page or show success
-                showNotification('Withdrawal security has been successfully set up!', 'success');
-                setTimeout(() => {
-                    window.location.href = '/user/dashboard/wallet';
-                }, 2000);
+        if (continueStep4Btn) {
+            continueStep4Btn.addEventListener('click', function() {
+                goToStep(4);
+            });
+        }
+
+        if (submitWithdrawalBtn) {
+            submitWithdrawalBtn.addEventListener('click', function() {
+                if (validateWithdrawalForm()) {
+                    submitWithdrawal();
+                }
             });
         }
 
@@ -117,6 +128,24 @@
                 // Only allow numbers
                 this.value = this.value.replace(/[^0-9]/g, '');
                 validateOTP();
+            });
+        }
+
+        if (withdrawalAccountNumber) {
+            withdrawalAccountNumber.addEventListener('input', function() {
+                validateWithdrawalForm();
+            });
+        }
+
+        if (withdrawalAccountName) {
+            withdrawalAccountName.addEventListener('input', function() {
+                validateWithdrawalForm();
+            });
+        }
+
+        if (withdrawalAmount) {
+            withdrawalAmount.addEventListener('input', function() {
+                validateWithdrawalForm();
             });
         }
     }
@@ -182,10 +211,111 @@
     }
 
     /**
+     * Initialize Withdrawal Form
+     */
+    function initWithdrawalForm() {
+        if (!withdrawalPaymentMethods || withdrawalPaymentMethods.length === 0) return;
+
+        withdrawalPaymentMethods.forEach(method => {
+            method.addEventListener('click', function() {
+                withdrawalPaymentMethods.forEach(m => m.classList.remove('active'));
+                this.classList.add('active');
+                validateWithdrawalForm();
+            });
+        });
+    }
+
+    /**
+     * Validate Withdrawal Form
+     */
+    function validateWithdrawalForm() {
+        if (!withdrawalAccountNumber || !withdrawalAccountName || !withdrawalAmount) return false;
+
+        const accountNumber = withdrawalAccountNumber.value.trim();
+        const accountName = withdrawalAccountName.value.trim();
+        const amount = withdrawalAmount.value.trim();
+        const selectedMethod = document.querySelector('.withdrawal-payment-method.active');
+
+        let isValid = true;
+
+        if (!accountNumber) {
+            isValid = false;
+        }
+
+        if (!accountName) {
+            isValid = false;
+        }
+
+        if (!selectedMethod) {
+            isValid = false;
+        }
+
+        if (!amount || parseFloat(amount) <= 0) {
+            isValid = false;
+        }
+
+        if (submitWithdrawalBtn) {
+            submitWithdrawalBtn.disabled = !isValid;
+        }
+
+        return isValid;
+    }
+
+    /**
+     * Submit Withdrawal
+     */
+    function submitWithdrawal() {
+        if (!validateWithdrawalForm()) {
+            showNotification('Please fill in all required fields', 'error');
+            return;
+        }
+
+        const accountNumber = withdrawalAccountNumber.value.trim();
+        const accountName = withdrawalAccountName.value.trim();
+        const amount = withdrawalAmount.value.trim();
+        const selectedMethod = document.querySelector('.withdrawal-payment-method.active');
+
+        if (!selectedMethod) {
+            showNotification('Please select a payment method', 'error');
+            return;
+        }
+
+        const method = selectedMethod.dataset.method;
+
+        // Disable button during submission
+        if (submitWithdrawalBtn) {
+            submitWithdrawalBtn.disabled = true;
+            submitWithdrawalBtn.innerHTML = '<span>Processing...</span>';
+        }
+
+        // Simulate API call
+        setTimeout(() => {
+            showNotification('Withdrawal request submitted successfully!', 'success');
+            
+            // Reset form
+            if (withdrawalAccountNumber) withdrawalAccountNumber.value = '';
+            if (withdrawalAccountName) withdrawalAccountName.value = '';
+            if (withdrawalAmount) withdrawalAmount.value = '';
+            withdrawalPaymentMethods.forEach(m => m.classList.remove('active'));
+
+            // Re-enable button
+            if (submitWithdrawalBtn) {
+                submitWithdrawalBtn.disabled = false;
+                submitWithdrawalBtn.innerHTML = '<span>Submit Withdrawal Request</span>';
+            }
+
+            // Redirect to transactions or wallet page after 2 seconds
+            setTimeout(() => {
+                window.location.href = '/user/dashboard/transactions';
+            }, 2000);
+        }, 1500);
+    }
+
+    /**
      * Go to Specific Step
      */
     function goToStep(step) {
-        if (step < 1 || step > 3) return;
+        if (step < 1 || step > 4) return;
         
         currentStep = step;
         
@@ -229,6 +359,14 @@
         // Focus on input
         if (currentStep === 2 && otpInput) {
             setTimeout(() => otpInput.focus(), 300);
+        }
+
+        // Initialize withdrawal form when step 4 is reached
+        if (currentStep === 4) {
+            validateWithdrawalForm();
+            if (withdrawalAccountNumber) {
+                setTimeout(() => withdrawalAccountNumber.focus(), 300);
+            }
         }
     }
 

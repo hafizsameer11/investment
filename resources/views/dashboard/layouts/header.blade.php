@@ -5,7 +5,8 @@
     // Page title mapping
     $pageTitles = [
         'wallet.index' => 'Core Wallet',
-        'deposit.index' => 'Deposit',
+        'deposit.index' => 'Add Money',
+        'withdraw.index' => 'Withdraw Funds',
         'plans.index' => 'Mining Plans',
         'goals.index' => 'Victory Rewards',
         'targets.index' => 'Targets',
@@ -13,7 +14,7 @@
         'transactions.index' => 'Financial Records',
         'profile.index' => 'Profile',
         'support.index' => 'Technical Support',
-        'withdraw-security.index' => 'Withdraw Security',
+        'withdraw-security.index' => 'Get Money',
         'settings.index' => 'Account Studio',
     ];
     

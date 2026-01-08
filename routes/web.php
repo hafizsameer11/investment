@@ -34,6 +34,7 @@ Route::prefix('user/dashboard')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard.index');
     Route::get('/wallet', [WalletController::class, 'index'])->name('wallet.index');
     Route::get('/deposit', [WalletController::class, 'deposit'])->name('deposit.index');
+    Route::get('/withdraw', [WalletController::class, 'withdraw'])->name('withdraw.index');
     Route::get('/plans', [PlansController::class, 'index'])->name('plans.index');
     Route::get('/goals', [GoalsController::class, 'index'])->name('goals.index');
     Route::get('/targets', [TargetsController::class, 'index'])->name('targets.index');

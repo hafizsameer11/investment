@@ -32,6 +32,11 @@
                     <div class="security-step-number">3</div>
                     <div class="security-step-label">Verify OTP</div>
                 </div>
+                <div class="security-step-line"></div>
+                <div class="security-step" data-step="4">
+                    <div class="security-step-number">4</div>
+                    <div class="security-step-label">Withdraw</div>
+                </div>
             </div>
 
             <!-- Step 1: Enter Email -->
@@ -96,9 +101,82 @@
                     <p>Your email has been verified and withdrawal security is now active.</p>
                 </div>
 
-                <button class="security-continue-btn" id="finishSetup">
-                    <span>Done</span>
+                <button class="security-continue-btn" id="continueToStep4">
+                    <span>Continue to Withdrawal</span>
                 </button>
+            </div>
+
+            <!-- Step 4: Withdrawal Form -->
+            <div class="security-step-content" id="step4Content">
+                <div class="security-step-icon">
+                    <i class="fas fa-money-bill-wave"></i>
+                </div>
+                <h2 class="security-step-title">Withdraw Funds</h2>
+                <p class="security-step-subtitle">Enter your account details to withdraw funds</p>
+
+                <div class="withdrawal-form">
+                    <!-- Account Number -->
+                    <div class="security-form">
+                        <label class="security-form-label">Account Number</label>
+                        <div class="security-input-wrapper">
+                            <i class="fas fa-hashtag security-input-icon"></i>
+                            <input type="text" class="security-form-input" id="withdrawalAccountNumber" placeholder="Enter your account number" maxlength="50">
+                        </div>
+                    </div>
+
+                    <!-- Account Name -->
+                    <div class="security-form">
+                        <label class="security-form-label">Account Name</label>
+                        <div class="security-input-wrapper">
+                            <i class="fas fa-user security-input-icon"></i>
+                            <input type="text" class="security-form-input" id="withdrawalAccountName" placeholder="Enter account holder name" maxlength="100">
+                        </div>
+                    </div>
+
+                    <!-- Payment Method -->
+                    <div class="security-form">
+                        <label class="security-form-label">Payment Method</label>
+                        <div class="withdrawal-payment-methods">
+                            <div class="withdrawal-payment-method easypaisa" data-method="easypaisa">
+                                <div class="withdrawal-payment-icon">
+                                    <i class="fas fa-mobile-alt"></i>
+                                </div>
+                                <p class="withdrawal-payment-name">Easypaisa</p>
+                            </div>
+                            <div class="withdrawal-payment-method jazzcash" data-method="jazzcash">
+                                <div class="withdrawal-payment-icon">
+                                    <i class="fas fa-mobile-alt"></i>
+                                </div>
+                                <p class="withdrawal-payment-name">Jazzcash</p>
+                            </div>
+                            <div class="withdrawal-payment-method crypto" data-method="crypto">
+                                <div class="withdrawal-payment-icon">
+                                    <i class="fab fa-bitcoin"></i>
+                                </div>
+                                <p class="withdrawal-payment-name">Crypto</p>
+                            </div>
+                            <div class="withdrawal-payment-method bank" data-method="bank">
+                                <div class="withdrawal-payment-icon">
+                                    <i class="fas fa-university"></i>
+                                </div>
+                                <p class="withdrawal-payment-name">Bank</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Withdrawal Amount -->
+                    <div class="security-form">
+                        <label class="security-form-label">Withdrawal Amount</label>
+                        <div class="withdrawal-amount-wrapper">
+                            <span class="withdrawal-amount-symbol">$</span>
+                            <input type="number" class="security-form-input withdrawal-amount-input" id="withdrawalAmount" placeholder="Enter withdrawal amount" min="1" step="0.01">
+                        </div>
+                    </div>
+
+                    <button class="security-continue-btn withdrawal-submit-btn" id="submitWithdrawal">
+                        <span>Submit Withdrawal Request</span>
+                    </button>
+                </div>
             </div>
         </div>
     </div>

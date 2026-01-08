@@ -21,5 +21,13 @@ class WalletController extends Controller
     {
         return view('dashboard.pages.deposit');
     }
+
+    /**
+     * Show the withdrawal page.
+     */
+    public function withdraw()
+    {
+        return view('dashboard.pages.withdraw');
+    }
 }
 
