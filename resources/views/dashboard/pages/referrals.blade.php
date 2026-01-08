@@ -1088,25 +1088,30 @@
         border-top: 1px solid rgba(255, 255, 255, 0.1);
     }
 
+    .referrals-investment-mobile-footer-new span:last-child {
+        color: #EF4444;
+        font-weight: 600;
+    }
+
     /* Investment Commission Level Colors */
     .referrals-investment-level-1 .referrals-investment-mobile-percentage-new {
-        color: #10B981;
+        color: #EF4444;
     }
 
     .referrals-investment-level-2 .referrals-investment-mobile-percentage-new {
-        color: #3B82F6;
+        color: #EF4444;
     }
 
     .referrals-investment-level-3 .referrals-investment-mobile-percentage-new {
-        color: #EC4899;
+        color: #EF4444;
     }
 
     .referrals-investment-level-4 .referrals-investment-mobile-percentage-new {
-        color: #F97316;
+        color: #EF4444;
     }
 
     .referrals-investment-level-5 .referrals-investment-mobile-percentage-new {
-        color: #EC4899;
+        color: #EF4444;
     }
 
     /* Commission Structure Section */
@@ -1198,12 +1203,12 @@
         top: 1.5rem;
         right: 1.5rem;
         padding: 0.5rem 1rem;
-        background: linear-gradient(135deg, rgba(255, 178, 30, 0.2) 0%, rgba(255, 138, 29, 0.15) 100%);
-        border: 1px solid rgba(255, 178, 30, 0.4);
+        background: linear-gradient(135deg, rgba(239, 68, 68, 0.2) 0%, rgba(220, 38, 38, 0.15) 100%);
+        border: 1px solid rgba(239, 68, 68, 0.4);
         border-radius: 20px;
         font-size: 0.75rem;
         font-weight: 700;
-        color: var(--primary-color);
+        color: #EF4444;
         text-transform: uppercase;
         letter-spacing: 0.5px;
     }
@@ -1265,63 +1270,63 @@
 
     /* Level-specific colors */
     .referrals-commission-level-1 .referrals-commission-level-icon-new {
-        background: linear-gradient(135deg, #10B981 0%, #059669 100%);
-        border-color: rgba(16, 185, 129, 0.5);
+        background: linear-gradient(135deg, #EF4444 0%, #DC2626 100%);
+        border-color: rgba(239, 68, 68, 0.5);
         color: #000;
-        box-shadow: 0 0 30px rgba(16, 185, 129, 0.4);
+        box-shadow: 0 0 30px rgba(239, 68, 68, 0.4);
     }
 
     .referrals-commission-level-1 .referrals-commission-rate-value-new {
-        color: #10B981;
-        text-shadow: 0 0 20px rgba(16, 185, 129, 0.5);
+        color: #EF4444;
+        text-shadow: 0 0 20px rgba(239, 68, 68, 0.5);
     }
 
     .referrals-commission-level-2 .referrals-commission-level-icon-new {
-        background: linear-gradient(135deg, #3B82F6 0%, #2563EB 100%);
-        border-color: rgba(59, 130, 246, 0.5);
+        background: linear-gradient(135deg, #EF4444 0%, #DC2626 100%);
+        border-color: rgba(239, 68, 68, 0.5);
         color: #000;
-        box-shadow: 0 0 30px rgba(59, 130, 246, 0.4);
+        box-shadow: 0 0 30px rgba(239, 68, 68, 0.4);
     }
 
     .referrals-commission-level-2 .referrals-commission-rate-value-new {
-        color: #3B82F6;
-        text-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+        color: #EF4444;
+        text-shadow: 0 0 20px rgba(239, 68, 68, 0.5);
     }
 
     .referrals-commission-level-3 .referrals-commission-level-icon-new {
-        background: linear-gradient(135deg, #EC4899 0%, #DB2777 100%);
-        border-color: rgba(236, 72, 153, 0.5);
+        background: linear-gradient(135deg, #EF4444 0%, #DC2626 100%);
+        border-color: rgba(239, 68, 68, 0.5);
         color: #000;
-        box-shadow: 0 0 30px rgba(236, 72, 153, 0.4);
+        box-shadow: 0 0 30px rgba(239, 68, 68, 0.4);
     }
 
     .referrals-commission-level-3 .referrals-commission-rate-value-new {
-        color: #EC4899;
-        text-shadow: 0 0 20px rgba(236, 72, 153, 0.5);
+        color: #EF4444;
+        text-shadow: 0 0 20px rgba(239, 68, 68, 0.5);
     }
 
     .referrals-commission-level-4 .referrals-commission-level-icon-new {
-        background: linear-gradient(135deg, #F97316 0%, #EA580C 100%);
-        border-color: rgba(249, 115, 22, 0.5);
+        background: linear-gradient(135deg, #EF4444 0%, #DC2626 100%);
+        border-color: rgba(239, 68, 68, 0.5);
         color: #000;
-        box-shadow: 0 0 30px rgba(249, 115, 22, 0.4);
+        box-shadow: 0 0 30px rgba(239, 68, 68, 0.4);
     }
 
     .referrals-commission-level-4 .referrals-commission-rate-value-new {
-        color: #F97316;
-        text-shadow: 0 0 20px rgba(249, 115, 22, 0.5);
+        color: #EF4444;
+        text-shadow: 0 0 20px rgba(239, 68, 68, 0.5);
     }
 
     .referrals-commission-level-5 .referrals-commission-level-icon-new {
-        background: linear-gradient(135deg, #EC4899 0%, #DB2777 100%);
-        border-color: rgba(236, 72, 153, 0.5);
+        background: linear-gradient(135deg, #EF4444 0%, #DC2626 100%);
+        border-color: rgba(239, 68, 68, 0.5);
         color: #000;
-        box-shadow: 0 0 30px rgba(236, 72, 153, 0.4);
+        box-shadow: 0 0 30px rgba(239, 68, 68, 0.4);
     }
 
     .referrals-commission-level-5 .referrals-commission-rate-value-new {
-        color: #EC4899;
-        text-shadow: 0 0 20px rgba(236, 72, 153, 0.5);
+        color: #EF4444;
+        text-shadow: 0 0 20px rgba(239, 68, 68, 0.5);
     }
 
     /* Mobile Icon-Based Commission Structure */
@@ -1405,7 +1410,7 @@
         justify-content: center;
         font-size: 0.625rem;
         font-weight: 700;
-        color: var(--text-primary);
+        color: #EF4444;
         text-transform: uppercase;
         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
     }
@@ -1435,53 +1440,53 @@
 
     /* Mobile Level Colors */
     .referrals-commission-mobile-level-1 .referrals-commission-mobile-icon-new {
-        background: linear-gradient(135deg, #10B981 0%, #059669 100%);
-        box-shadow: 0 4px 16px rgba(16, 185, 129, 0.4);
+        background: linear-gradient(135deg, #EF4444 0%, #DC2626 100%);
+        box-shadow: 0 4px 16px rgba(239, 68, 68, 0.4);
     }
 
     .referrals-commission-mobile-level-1 .referrals-commission-mobile-rate-new {
-        color: #10B981;
-        text-shadow: 0 0 15px rgba(16, 185, 129, 0.5);
+        color: #EF4444;
+        text-shadow: 0 0 15px rgba(239, 68, 68, 0.5);
     }
 
     .referrals-commission-mobile-level-2 .referrals-commission-mobile-icon-new {
-        background: linear-gradient(135deg, #3B82F6 0%, #2563EB 100%);
-        box-shadow: 0 4px 16px rgba(59, 130, 246, 0.4);
+        background: linear-gradient(135deg, #EF4444 0%, #DC2626 100%);
+        box-shadow: 0 4px 16px rgba(239, 68, 68, 0.4);
     }
 
     .referrals-commission-mobile-level-2 .referrals-commission-mobile-rate-new {
-        color: #3B82F6;
-        text-shadow: 0 0 15px rgba(59, 130, 246, 0.5);
+        color: #EF4444;
+        text-shadow: 0 0 15px rgba(239, 68, 68, 0.5);
     }
 
     .referrals-commission-mobile-level-3 .referrals-commission-mobile-icon-new {
-        background: linear-gradient(135deg, #EC4899 0%, #DB2777 100%);
-        box-shadow: 0 4px 16px rgba(236, 72, 153, 0.4);
+        background: linear-gradient(135deg, #EF4444 0%, #DC2626 100%);
+        box-shadow: 0 4px 16px rgba(239, 68, 68, 0.4);
     }
 
     .referrals-commission-mobile-level-3 .referrals-commission-mobile-rate-new {
-        color: #EC4899;
-        text-shadow: 0 0 15px rgba(236, 72, 153, 0.5);
+        color: #EF4444;
+        text-shadow: 0 0 15px rgba(239, 68, 68, 0.5);
     }
 
     .referrals-commission-mobile-level-4 .referrals-commission-mobile-icon-new {
-        background: linear-gradient(135deg, #F97316 0%, #EA580C 100%);
-        box-shadow: 0 4px 16px rgba(249, 115, 22, 0.4);
+        background: linear-gradient(135deg, #EF4444 0%, #DC2626 100%);
+        box-shadow: 0 4px 16px rgba(239, 68, 68, 0.4);
     }
 
     .referrals-commission-mobile-level-4 .referrals-commission-mobile-rate-new {
-        color: #F97316;
-        text-shadow: 0 0 15px rgba(249, 115, 22, 0.5);
+        color: #EF4444;
+        text-shadow: 0 0 15px rgba(239, 68, 68, 0.5);
     }
 
     .referrals-commission-mobile-level-5 .referrals-commission-mobile-icon-new {
-        background: linear-gradient(135deg, #EC4899 0%, #DB2777 100%);
-        box-shadow: 0 4px 16px rgba(236, 72, 153, 0.4);
+        background: linear-gradient(135deg, #EF4444 0%, #DC2626 100%);
+        box-shadow: 0 4px 16px rgba(239, 68, 68, 0.4);
     }
 
     .referrals-commission-mobile-level-5 .referrals-commission-mobile-rate-new {
-        color: #EC4899;
-        text-shadow: 0 0 15px rgba(236, 72, 153, 0.5);
+        color: #EF4444;
+        text-shadow: 0 0 15px rgba(239, 68, 68, 0.5);
     }
 
     /* Network Section */

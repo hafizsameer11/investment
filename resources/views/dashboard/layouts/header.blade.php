@@ -4,17 +4,17 @@
     
     // Page title mapping
     $pageTitles = [
-        'wallet.index' => 'Wallet',
+        'wallet.index' => 'Core Wallet',
         'deposit.index' => 'Deposit',
         'plans.index' => 'Mining Plans',
-        'goals.index' => 'Goals',
+        'goals.index' => 'Victory Rewards',
         'targets.index' => 'Targets',
-        'referrals.index' => 'Referrals',
-        'transactions.index' => 'Transactions',
+        'referrals.index' => 'Invite System',
+        'transactions.index' => 'Financial Records',
         'profile.index' => 'Profile',
-        'support.index' => 'Support',
+        'support.index' => 'Technical Support',
         'withdraw-security.index' => 'Withdraw Security',
-        'settings.index' => 'Settings',
+        'settings.index' => 'Account Studio',
     ];
     
     $pageTitle = $pageTitles[$currentRoute] ?? 'Dashboard';

@@ -1947,7 +1947,7 @@
                         <i class="fas fa-wallet"></i>
                     </div>
                     <div class="wallet-detail-content">
-                        <div class="wallet-detail-label">Deposit Wallet:</div>
+                        <div class="wallet-detail-label">Fund Wallet:</div>
                         <div class="wallet-detail-value">
                             $0
                             <i class="fas fa-arrow-down wallet-detail-trend down"></i>

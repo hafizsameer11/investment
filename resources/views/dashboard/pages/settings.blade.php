@@ -373,23 +373,23 @@
             <div class="settings-menu-icon">
                 <i class="fas fa-trophy"></i>
             </div>
-            <span class="settings-menu-text">Goals</span>
+            <span class="settings-menu-text">Victory Rewards</span>
             <i class="fas fa-chevron-right settings-menu-arrow"></i>
         </a>
 
-        <a href="{{ route('targets.index') }}" class="settings-menu-item">
+        {{-- <a href="{{ route('targets.index') }}" class="settings-menu-item">
             <div class="settings-menu-icon">
                 <i class="fas fa-flag"></i>
             </div>
             <span class="settings-menu-text">Targets</span>
             <i class="fas fa-chevron-right settings-menu-arrow"></i>
-        </a>
+        </a> --}}
 
         <a href="{{ route('transactions.index') }}" class="settings-menu-item">
             <div class="settings-menu-icon">
                 <i class="fas fa-exchange-alt"></i>
             </div>
-            <span class="settings-menu-text">Transactions</span>
+            <span class="settings-menu-text">Financial Records</span>
             <i class="fas fa-chevron-right settings-menu-arrow"></i>
         </a>
 
@@ -397,7 +397,7 @@
             <div class="settings-menu-icon">
                 <i class="fas fa-headset"></i>
             </div>
-            <span class="settings-menu-text">Help & Support</span>
+            <span class="settings-menu-text">Technical Support</span>
             <i class="fas fa-chevron-right settings-menu-arrow"></i>
         </a>
 
@@ -405,7 +405,7 @@
             <div class="settings-menu-icon">
                 <i class="fas fa-sign-out-alt"></i>
             </div>
-            <span class="settings-menu-text">Logout</span>
+            <span class="settings-menu-text">Quick Exit</span>
             <i class="fas fa-chevron-right settings-menu-arrow"></i>
         </a>
     </div>
