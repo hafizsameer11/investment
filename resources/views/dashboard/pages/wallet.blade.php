@@ -1929,7 +1929,7 @@
             <div class="wallet-balance-label">
                 <div class="wallet-balance-label-text">
                     <i class="fas fa-eye" id="balanceLabelEye"></i>
-                    <span>TOTAL BALANCE</span>
+                    <span>Net BALANCE</span>
                 </div>
                 <div class="wallet-balance-header-actions">
                     <i class="fas fa-arrow-up wallet-balance-trend-up"></i>
@@ -1982,7 +1982,7 @@
                 </div>
             </div>
 
-            <div class="wallet-action-buttons">
+            {{-- <div class="wallet-action-buttons">
                 <a href="{{ route('deposit.index') }}" class="wallet-action-button wallet-btn-primary">
                     <i class="fas fa-arrow-up"></i>
                     <span>Deposit Funds</span>
@@ -1995,7 +1995,7 @@
                     <i class="fas fa-exchange-alt"></i>
                     <span>Transfer</span>
                 </button>
-            </div>
+            </div> --}}
         </div>
     </div>
 

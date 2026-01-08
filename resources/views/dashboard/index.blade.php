@@ -95,12 +95,21 @@
         text-shadow: 0 0 20px rgba(255, 178, 30, 0.3);
     }
 
+    /* Wallet Info Row - Container for Fund Wallet and WhatsApp */
+    .wallet-info-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        padding-top: 1rem;
+        border-top: 1px solid rgba(255, 178, 30, 0.1);
+    }
+
     .deposit-wallet-info {
         display: flex;
         align-items: center;
         gap: 0.5rem;
-        padding-top: 1rem;
-        border-top: 1px solid rgba(255, 178, 30, 0.1);
+        flex: 1;
     }
 
     .deposit-wallet-label {
@@ -118,6 +127,177 @@
     .deposit-trend-down {
         font-size: 0.875rem;
         color: var(--danger-color);
+    }
+
+    /* WhatsApp Support Box */
+    .whatsapp-support-box {
+        flex-shrink: 0;
+    }
+
+    .whatsapp-link-box {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        background: linear-gradient(135deg, rgba(37, 211, 102, 0.15) 0%, rgba(37, 211, 102, 0.08) 100%);
+        border: 1.5px solid rgba(37, 211, 102, 0.3);
+        border-radius: 12px;
+        padding: 0.75rem 1rem;
+        text-decoration: none;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        overflow: hidden;
+        white-space: nowrap;
+    }
+
+    .whatsapp-link-box::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(37, 211, 102, 0.2), transparent);
+        transition: left 0.5s ease;
+    }
+
+    .whatsapp-link-box:hover::before {
+        left: 100%;
+    }
+
+    .whatsapp-link-box:hover {
+        background: linear-gradient(135deg, rgba(37, 211, 102, 0.25) 0%, rgba(37, 211, 102, 0.15) 100%);
+        border-color: rgba(37, 211, 102, 0.5);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 16px rgba(37, 211, 102, 0.3);
+    }
+
+    .whatsapp-icon-wrapper {
+        width: 40px;
+        height: 40px;
+        background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        box-shadow: 0 4px 12px rgba(37, 211, 102, 0.4);
+        transition: all 0.3s ease;
+    }
+
+    .whatsapp-link-box:hover .whatsapp-icon-wrapper {
+        transform: scale(1.1) rotate(5deg);
+        box-shadow: 0 6px 20px rgba(37, 211, 102, 0.5);
+    }
+
+    .whatsapp-icon-wrapper i {
+        font-size: 1.25rem;
+        color: #FFFFFF;
+    }
+
+    .whatsapp-content {
+        display: flex;
+        flex-direction: column;
+        gap: 0.125rem;
+        min-width: 0;
+    }
+
+    .whatsapp-title {
+        font-size: 0.8125rem;
+        font-weight: 600;
+        color: var(--text-primary);
+        line-height: 1.2;
+        white-space: nowrap;
+    }
+
+    .whatsapp-subtitle {
+        font-size: 0.6875rem;
+        color: var(--text-secondary);
+        line-height: 1.3;
+        white-space: nowrap;
+    }
+
+    .whatsapp-arrow {
+        color: #25D366;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        flex-shrink: 0;
+    }
+
+    .whatsapp-link-box:hover .whatsapp-arrow {
+        transform: translateX(4px);
+        color: #128C7E;
+    }
+
+    /* Mobile Responsive for WhatsApp Box */
+    @media (max-width: 768px) {
+        .wallet-info-row {
+            gap: 0.75rem;
+            flex-wrap: nowrap;
+        }
+
+        .whatsapp-link-box {
+            padding: 0.75rem 1rem;
+            gap: 0.75rem;
+        }
+
+        .whatsapp-icon-wrapper {
+            width: 40px;
+            height: 40px;
+        }
+
+        .whatsapp-icon-wrapper i {
+            font-size: 1.25rem;
+        }
+
+        .whatsapp-content {
+            min-width: 0;
+        }
+
+        .whatsapp-title {
+            font-size: 0.8125rem;
+            white-space: nowrap;
+        }
+
+        .whatsapp-subtitle {
+            font-size: 0.6875rem;
+            white-space: nowrap;
+        }
+
+        .whatsapp-arrow {
+            font-size: 0.875rem;
+        }
+    }
+
+    @media (max-width: 390px) {
+        .wallet-info-row {
+            gap: 0.5rem;
+        }
+
+        .whatsapp-link-box {
+            padding: 0.625rem 0.75rem;
+            gap: 0.625rem;
+        }
+
+        .whatsapp-icon-wrapper {
+            width: 36px;
+            height: 36px;
+        }
+
+        .whatsapp-icon-wrapper i {
+            font-size: 1.125rem;
+        }
+
+        .whatsapp-title {
+            font-size: 0.75rem;
+        }
+
+        .whatsapp-subtitle {
+            font-size: 0.625rem;
+        }
+
+        .whatsapp-arrow {
+            display: none;
+        }
     }
 
     /* Action Buttons Section */
@@ -1545,7 +1725,7 @@
             <div class="balance-header-row">
                 <div class="balance-label">
                     <i class="fas fa-eye"></i>
-                    <span>Total Balance</span>
+                    <span>Net Balance</span>
                 </div>
                 <div class="balance-actions">
                     <i class="fas fa-arrow-up balance-trend-up"></i>
@@ -1555,10 +1735,28 @@
             <div class="balance-amount-display">
                 <span class="balance-amount-large" id="totalBalance">$0</span>
             </div>
-            <div class="deposit-wallet-info">
-                <span class="deposit-wallet-label">Deposit Wallet:</span>
-                <span class="deposit-wallet-amount">$0</span>
-                <i class="fas fa-arrow-down deposit-trend-down"></i>
+            <div class="wallet-info-row">
+                <div class="deposit-wallet-info">
+                    <span class="deposit-wallet-label">Fund Wallet:</span>
+                    <span class="deposit-wallet-amount">$0</span>
+                    <i class="fas fa-arrow-down deposit-trend-down"></i>
+                </div>
+                
+                <!-- WhatsApp Support Box -->
+                <div class="whatsapp-support-box">
+                    <a href="https://wa.me/16474986701" target="_blank" rel="noopener noreferrer" class="whatsapp-link-box">
+                        <div class="whatsapp-icon-wrapper">
+                            <i class="fab fa-whatsapp"></i>
+                        </div>
+                        <div class="whatsapp-content">
+                            <div class="whatsapp-title">Need Help?</div>
+                            <div class="whatsapp-subtitle">Contact us on WhatsApp</div>
+                        </div>
+                        <div class="whatsapp-arrow">
+                            <i class="fas fa-arrow-right"></i>
+                        </div>
+                    </a>
+                </div>
             </div>
         </div>
 
