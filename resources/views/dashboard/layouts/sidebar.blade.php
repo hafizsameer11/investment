@@ -51,6 +51,15 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a href="{{ route('deposit.index') }}" class="nav-link">
+                        <span class="nav-icon-wrapper">
+                            <i class="fas fa-money-bill-wave"></i>
+                        </span>
+                        <span class="nav-text">Add Money</span>
+                        <span class="nav-indicator"></span>
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a href="{{ route('plans.index') }}" class="nav-link">
                         <span class="nav-icon-wrapper">
                             <i class="fas fa-gem"></i>

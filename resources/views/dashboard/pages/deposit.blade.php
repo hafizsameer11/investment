@@ -1,6 +1,6 @@
 @extends('dashboard.layouts.main')
 
-@section('title', 'Core Mining - Deposit')
+@section('title', 'Core Mining - Add Money')
 
 @push('styles')
 <link rel="stylesheet" href="{{ asset('dashboard/css/dashboard.css') }}">
@@ -972,7 +972,7 @@
 <div class="deposit-page">
     <!-- Deposit Header -->
     <div class="deposit-header">
-        <h1 class="deposit-title">Deposit</h1>
+        <h1 class="deposit-title">Add Money</h1>
     </div>
 
     <!-- Banner Image -->
