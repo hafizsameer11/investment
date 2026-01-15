@@ -1,12 +1,16 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\Admin\HomeController;
-use App\Http\Controllers\Admin\AuthController as AdminAuthController;
+use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\DepositController;
 use App\Http\Controllers\Dashboard\AuthController;
 use App\Http\Controllers\Dashboard\GoalsController;
 use App\Http\Controllers\Dashboard\PlansController;
+use App\Http\Controllers\Admin\MiningPlanController;
 use App\Http\Controllers\Dashboard\WalletController;
+use App\Http\Controllers\Admin\RewardLevelController;
 use App\Http\Controllers\Dashboard\ProfileController;
 use App\Http\Controllers\Dashboard\SupportController;
 use App\Http\Controllers\Dashboard\TargetsController;
@@ -14,15 +18,12 @@ use App\Http\Controllers\Dashboard\SettingsController;
 use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\Dashboard\ReferralsController;
 use App\Http\Controllers\Dashboard\TransactionsController;
-use App\Http\Controllers\Dashboard\WithdrawSecurityController;
-use App\Http\Controllers\Admin\InvestmentCommissionController;
 use App\Http\Controllers\Admin\EarningCommissionController;
-use App\Http\Controllers\Admin\MiningPlanController;
-use App\Http\Controllers\Admin\RewardLevelController;
-use App\Http\Controllers\Admin\UserController;
-use App\Http\Controllers\Admin\DepositPaymentMethodController;
 use App\Http\Controllers\Admin\CurrencyConversionController;
-use App\Http\Controllers\Admin\DepositController;
+use App\Http\Controllers\Admin\DepositPaymentMethodController;
+use App\Http\Controllers\Admin\InvestmentCommissionController;
+use App\Http\Controllers\Dashboard\WithdrawSecurityController;
+use App\Http\Controllers\Admin\AuthController as AdminAuthController;
 
 /*
 |--------------------------------------------------------------------------
