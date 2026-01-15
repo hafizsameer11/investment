@@ -3,7 +3,7 @@
 @section('title', 'Core Mining - Mining Plans')
 
 @push('styles')
-<link rel="stylesheet" href="{{ asset('dashboard/css/plans.css') }}">
+<link rel="stylesheet" href="{{ asset('assets/dashboard/css/plans.css') }}">
 <style>
     .plans-new-page {
         padding: 2rem;
@@ -1558,6 +1558,6 @@
 </div>
 
 @push('scripts')
-<script src="{{ asset('dashboard/js/plans.js') }}"></script>
+<script src="{{ asset('assets/dashboard/js/plans.js') }}"></script>
 @endpush
 @endsection

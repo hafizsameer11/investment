@@ -3,7 +3,7 @@
 @section('title', 'Core Mining - Transactions')
 
 @push('styles')
-<link rel="stylesheet" href="{{ asset('dashboard/css/transactions.css') }}">
+<link rel="stylesheet" href="{{ asset('assets/dashboard/css/transactions.css') }}">
 <style>
     .transactions-new-page {
         padding: 2rem;
@@ -1526,7 +1526,7 @@
 </div>
 
 @push('scripts')
-<script src="{{ asset('dashboard/js/transactions.js') }}"></script>
+<script src="{{ asset('assets/dashboard/js/transactions.js') }}"></script>
 <script>
     // Search functionality
     const searchInput = document.getElementById('transactionSearch');

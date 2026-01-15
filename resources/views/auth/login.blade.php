@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Login - Dashboard</title>
-    <link rel="stylesheet" href="{{ asset('dashboard/css/login.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/dashboard/css/login.css') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -20,15 +20,26 @@
         <div class="logo-container">
             <div class="logo">
                 <svg class="logo-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M3 3h8v8H3V3zm10 0h8v8h-8V3zM3 13h8v8H3v-8zm10 0h8v8h-8v-8z" fill="url(#dashboardGradient)" stroke="#9333EA" stroke-width="1.5"/>
+                    <!-- Mining Pickaxe Icon -->
+                    <path d="M12 2L8 6L10 8L6 12L8 14L12 10L16 14L18 12L14 8L16 6L12 2Z" fill="url(#coreMiningGradient)" stroke="#FFB21E" stroke-width="1.5" stroke-linejoin="round"/>
+                    <!-- Mining Blocks -->
+                    <rect x="4" y="16" width="4" height="4" rx="1" fill="#FFB21E" opacity="0.6"/>
+                    <rect x="10" y="18" width="4" height="4" rx="1" fill="#FF8A1D" opacity="0.6"/>
+                    <rect x="16" y="16" width="4" height="4" rx="1" fill="#FFB21E" opacity="0.6"/>
+                    <!-- Glow Effect -->
+                    <circle cx="12" cy="8" r="8" fill="url(#coreMiningGlow)" opacity="0.3"/>
                     <defs>
-                        <linearGradient id="dashboardGradient" x1="12" y1="3" x2="12" y2="21" gradientUnits="userSpaceOnUse">
-                            <stop offset="0%" stop-color="#9333EA"/>
-                            <stop offset="100%" stop-color="#EC4899"/>
+                        <linearGradient id="coreMiningGradient" x1="12" y1="2" x2="12" y2="14" gradientUnits="userSpaceOnUse">
+                            <stop offset="0%" stop-color="#FFB21E"/>
+                            <stop offset="100%" stop-color="#FF8A1D"/>
                         </linearGradient>
+                        <radialGradient id="coreMiningGlow" cx="50%" cy="50%">
+                            <stop offset="0%" stop-color="#FFB21E" stop-opacity="0.8"/>
+                            <stop offset="100%" stop-color="#FFB21E" stop-opacity="0"/>
+                        </radialGradient>
                     </defs>
                 </svg>
-                <span class="logo-text">Dashboard</span>
+                <span class="logo-text">Core Mining</span>
             </div>
         </div>
 
@@ -38,14 +49,37 @@
                 <h1 class="welcome-title">Welcome Back</h1>
                 <p class="welcome-subtitle">Login to your account</p>
 
-                <form id="loginForm" class="login-form">
-                    <!-- Error Messages (Frontend Only) -->
-                    <div class="alert alert-error" id="loginError" style="display: none;">
-                        <svg class="alert-icon" viewBox="0 0 20 20" fill="currentColor">
-                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/>
-                        </svg>
-                        <span id="loginErrorText"></span>
-                    </div>
+                <form id="loginForm" class="login-form" method="POST" action="{{ route('login.post') }}">
+                    @csrf
+                    <!-- Error Messages -->
+                    @if($errors->any())
+                        <div class="alert alert-error" id="loginError" style="display: block;">
+                            <svg class="alert-icon" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/>
+                            </svg>
+                            <span id="loginErrorText">
+                                @foreach($errors->all() as $error)
+                                    {{ $error }}<br>
+                                @endforeach
+                            </span>
+                        </div>
+                    @else
+                        <div class="alert alert-error" id="loginError" style="display: none;">
+                            <svg class="alert-icon" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/>
+                            </svg>
+                            <span id="loginErrorText"></span>
+                        </div>
+                    @endif
+
+                    @if(session('success'))
+                        <div class="alert alert-success" style="display: block;">
+                            <svg class="alert-icon" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                            </svg>
+                            <span>{{ session('success') }}</span>
+                        </div>
+                    @endif
 
                     <!-- Email Field -->
                     <div class="form-group">
@@ -56,11 +90,12 @@
                                 <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/>
                             </svg>
                             <input
-                                type="email"
+                                type="text"
                                 id="email"
                                 name="email"
-                                class="form-input"
-                                placeholder="Enter your email"
+                                class="form-input @error('email') is-invalid @enderror"
+                                placeholder="Enter your email or username"
+                                value="{{ old('email') }}"
                                 required
                                 autocomplete="email"
                                 autofocus
@@ -79,7 +114,7 @@
                                 type="password"
                                 id="password"
                                 name="password"
-                                class="form-input"
+                                class="form-input @error('password') is-invalid @enderror"
                                 placeholder="Enter your password"
                                 required
                                 autocomplete="current-password"
@@ -91,6 +126,9 @@
                                 </svg>
                             </button>
                         </div>
+                        @error('email')
+                            <div class="text-danger small mt-1">{{ $message }}</div>
+                        @enderror
                     </div>
 
                     <!-- Remember Me & Forgot Password -->
@@ -118,13 +156,6 @@
                     </div>
                 </form>
 
-                <!-- Dashboard Access Button -->
-                <div class="dashboard-access">
-                    <a href="{{ route('dashboard.index') }}" class="dashboard-button">
-                        <i class="fas fa-tachometer-alt"></i>
-                        <span>Go to Dashboard</span>
-                    </a>
-                </div>
             </div>
         </div>
 
@@ -139,7 +170,7 @@
         </div>
     </div>
 
-    <script src="{{ asset('dashboard/js/login.js') }}"></script>
+    <script src="{{ asset('assets/dashboard/js/login.js') }}"></script>
 </body>
 </html>
 

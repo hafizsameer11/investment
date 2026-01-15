@@ -3,7 +3,7 @@
 @section('title', 'Core Mining - Profile')
 
 @push('styles')
-<link rel="stylesheet" href="{{ asset('dashboard/css/profile.css') }}">
+<link rel="stylesheet" href="{{ asset('assets/dashboard/css/profile.css') }}">
 @endpush
 
 @section('content')
@@ -193,6 +193,6 @@
 </div>
 
 @push('scripts')
-<script src="{{ asset('dashboard/js/profile.js') }}"></script>
+<script src="{{ asset('assets/dashboard/js/profile.js') }}"></script>
 @endpush
 @endsection

@@ -3,7 +3,7 @@
 @section('title', 'Core Mining - Settings')
 
 @push('styles')
-<link rel="stylesheet" href="{{ asset('dashboard/css/profile.css') }}">
+<link rel="stylesheet" href="{{ asset('assets/dashboard/css/profile.css') }}">
 <style>
     .settings-page-modern {
         padding: 0;

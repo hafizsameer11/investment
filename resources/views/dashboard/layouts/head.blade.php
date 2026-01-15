@@ -2,7 +2,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="csrf-token" content="{{ csrf_token() }}">
 <title>@yield('title', 'Core Mining - Dashboard')</title>
-<link rel="stylesheet" href="{{ asset('dashboard/css/dashboard.css') }}">
+<link rel="stylesheet" href="{{ asset('assets/dashboard/css/dashboard.css') }}">
 @stack('styles')
 <style>
     /* Mobile-first improvements - Sidebar is hidden on mobile, using bottom nav instead */

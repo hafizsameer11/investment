@@ -3,7 +3,7 @@
 @section('title', 'Core Mining - Goals')
 
 @push('styles')
-<link rel="stylesheet" href="{{ asset('dashboard/css/goals.css') }}">
+<link rel="stylesheet" href="{{ asset('assets/dashboard/css/goals.css') }}">
 <style>
     .goals-new-page {
         padding: 2rem;
@@ -1251,112 +1251,94 @@
         </div>
     </div>
 
-    <!-- Reward Levels Section -->
-    <div class="goals-rewards-section-new">
-        <div class="goals-rewards-header-new">
-            <h2 class="goals-rewards-title-new">Reward Levels</h2>
-            <p class="goals-rewards-subtitle-new">Earn exciting rewards by referring users and building your team</p>
-        </div>
-
-        <div class="goals-rewards-grid-new">
-            <!-- Level 1: Team Builder -->
-            <div class="goals-reward-card-new current">
-                <div class="goals-reward-badge-new">Current</div>
-                <div class="goals-reward-header-new">
-                    <div class="goals-reward-icon-new goals-reward-icon-gold-new">
-                        <i class="fas fa-user-tie"></i>
-                    </div>
-                    <div class="goals-reward-level-new">
-                        <h3 class="goals-reward-name-new">Team Builder</h3>
-                        <div class="goals-reward-level-number-new">Level 1</div>
-                    </div>
-                </div>
-                <div class="goals-reward-body-new">
-                    <div class="goals-reward-requirement-new">
-                        <div class="goals-reward-req-label-new">Investment Required</div>
-                        <div class="goals-reward-req-value-new">$10</div>
-                    </div>
-                    <div class="goals-reward-prize-new">
-                        <div class="goals-reward-prize-label-new">Reward</div>
-                        <div class="goals-reward-prize-value-new">$2</div>
-                    </div>
-                        </div>
-                <div class="goals-reward-progress-new">
-                    <div class="goals-reward-progress-bar-wrapper-new">
-                        <div class="goals-reward-progress-fill-new" style="width: 0%"></div>
-                    </div>
-                    <div class="goals-reward-progress-text-new">0% Complete</div>
-                </div>
-            </div>
-
-            <!-- Level 2: Team Leader -->
-            <div class="goals-reward-card-new">
-                <div class="goals-reward-header-new">
-                    <div class="goals-reward-icon-new goals-reward-icon-orange-new">
-                        <i class="fas fa-user-graduate"></i>
-                    </div>
-                    <div class="goals-reward-level-new">
-                        <h3 class="goals-reward-name-new">Team Leader</h3>
-                        <div class="goals-reward-level-number-new">Level 2</div>
-                    </div>
-                </div>
-                <div class="goals-reward-body-new">
-                    <div class="goals-reward-requirement-new">
-                        <div class="goals-reward-req-label-new">Investment Required</div>
-                        <div class="goals-reward-req-value-new">$40</div>
-                    </div>
-                    <div class="goals-reward-prize-new">
-                        <div class="goals-reward-prize-label-new">Reward</div>
-                        <div class="goals-reward-prize-value-new">$5</div>
-                    </div>
-                        </div>
-                <div class="goals-reward-progress-new">
-                    <div class="goals-reward-progress-bar-wrapper-new">
-                        <div class="goals-reward-progress-fill-new" style="width: 0%"></div>
-                    </div>
-                    <div class="goals-reward-progress-text-new">0% Complete</div>
-                </div>
-            </div>
-
-            <!-- Level 3: Team Director -->
-            <div class="goals-reward-card-new">
-                <div class="goals-reward-header-new">
-                    <div class="goals-reward-icon-new goals-reward-icon-blue-new">
-                        <i class="fas fa-briefcase"></i>
-                    </div>
-                    <div class="goals-reward-level-new">
-                        <h3 class="goals-reward-name-new">Team Director</h3>
-                        <div class="goals-reward-level-number-new">Level 3</div>
-                    </div>
-                </div>
-                <div class="goals-reward-body-new">
-                    <div class="goals-reward-requirement-new">
-                        <div class="goals-reward-req-label-new">Investment Required</div>
-                        <div class="goals-reward-req-value-new">$120</div>
-                    </div>
-                    <div class="goals-reward-prize-new">
-                        <div class="goals-reward-prize-label-new">Reward</div>
-                        <div class="goals-reward-prize-value-new">$8</div>
-                    </div>
-                        </div>
-                <div class="goals-reward-progress-new">
-                    <div class="goals-reward-progress-bar-wrapper-new">
-                        <div class="goals-reward-progress-fill-new" style="width: 0%"></div>
-                    </div>
-                    <div class="goals-reward-progress-text-new">0% Complete</div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- All Levels Section -->
+    <!-- Rewards Level Section -->
     <div class="goals-all-levels-section-new">
         <div class="goals-all-levels-header-new">
-            <h2 class="goals-all-levels-title-new">All Team Levels</h2>
+            <h2 class="goals-all-levels-title-new">Rewards Level</h2>
             <p class="goals-all-levels-subtitle-new">Explore all available levels and their exclusive rewards</p>
         </div>
 
         <div class="goals-all-levels-grid-new">
+            <!-- Level 1: Team Builder -->
+            <div class="goals-level-card-new">
+                <div class="goals-level-icon-new goals-level-icon-gold-new">
+                    <i class="fas fa-user-tie"></i>
+                </div>
+                <div class="goals-level-content-new">
+                    <h3 class="goals-level-name-new">Team Builder</h3>
+                    <div class="goals-level-number-new">Level 1</div>
+                    <div class="goals-level-details-new">
+                        <div class="goals-level-detail-item-new">
+                            <span class="goals-level-detail-label-new">Total Referral Investment</span>
+                            <span class="goals-level-detail-value-new">$10</span>
+                        </div>
+                        <div class="goals-level-detail-item-new">
+                            <span class="goals-level-detail-label-new">Reward</span>
+                            <span class="goals-level-detail-value-new goals-level-reward-new">$2</span>
+                        </div>
+                    </div>
+                    <div class="goals-level-progress-new">
+                        <div class="goals-level-progress-bar-wrapper-new">
+                            <div class="goals-level-progress-fill-new" style="width: 0%"></div>
+                        </div>
+                        <div class="goals-level-progress-text-new">0%</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Level 2: Team Leader -->
+            <div class="goals-level-card-new">
+                <div class="goals-level-icon-new goals-level-icon-gold-new">
+                    <i class="fas fa-user-graduate"></i>
+                </div>
+                <div class="goals-level-content-new">
+                    <h3 class="goals-level-name-new">Team Leader</h3>
+                    <div class="goals-level-number-new">Level 2</div>
+                    <div class="goals-level-details-new">
+                        <div class="goals-level-detail-item-new">
+                            <span class="goals-level-detail-label-new">Total Referral Investment</span>
+                            <span class="goals-level-detail-value-new">$40</span>
+                        </div>
+                        <div class="goals-level-detail-item-new">
+                            <span class="goals-level-detail-label-new">Reward</span>
+                            <span class="goals-level-detail-value-new goals-level-reward-new">$5</span>
+                        </div>
+                    </div>
+                    <div class="goals-level-progress-new">
+                        <div class="goals-level-progress-bar-wrapper-new">
+                            <div class="goals-level-progress-fill-new" style="width: 0%"></div>
+                        </div>
+                        <div class="goals-level-progress-text-new">0%</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Level 3: Team Director -->
+            <div class="goals-level-card-new">
+                <div class="goals-level-icon-new goals-level-icon-gold-new">
+                    <i class="fas fa-briefcase"></i>
+                </div>
+                <div class="goals-level-content-new">
+                    <h3 class="goals-level-name-new">Team Director</h3>
+                    <div class="goals-level-number-new">Level 3</div>
+                    <div class="goals-level-details-new">
+                        <div class="goals-level-detail-item-new">
+                            <span class="goals-level-detail-label-new">Total Referral Investment</span>
+                            <span class="goals-level-detail-value-new">$120</span>
+                        </div>
+                        <div class="goals-level-detail-item-new">
+                            <span class="goals-level-detail-label-new">Reward</span>
+                            <span class="goals-level-detail-value-new goals-level-reward-new">$8</span>
+                        </div>
+                    </div>
+                    <div class="goals-level-progress-new">
+                        <div class="goals-level-progress-bar-wrapper-new">
+                            <div class="goals-level-progress-fill-new" style="width: 0%"></div>
+                        </div>
+                        <div class="goals-level-progress-text-new">0%</div>
+                    </div>
+                </div>
+            </div>
             <!-- Level 4: Team Master -->
             <div class="goals-level-card-new">
                 <div class="goals-level-icon-new goals-level-icon-gold-new">
@@ -1367,7 +1349,7 @@
                     <div class="goals-level-number-new">Level 4</div>
                     <div class="goals-level-details-new">
                         <div class="goals-level-detail-item-new">
-                            <span class="goals-level-detail-label-new">Investment</span>
+                            <span class="goals-level-detail-label-new">Total Referral Investment</span>
                             <span class="goals-level-detail-value-new">$200</span>
                         </div>
                         <div class="goals-level-detail-item-new">
@@ -1394,7 +1376,7 @@
                     <div class="goals-level-number-new">Level 5</div>
                     <div class="goals-level-details-new">
                         <div class="goals-level-detail-item-new">
-                            <span class="goals-level-detail-label-new">Investment</span>
+                            <span class="goals-level-detail-label-new">Total Referral Investment</span>
                             <span class="goals-level-detail-value-new">$600</span>
                         </div>
                         <div class="goals-level-detail-item-new">
@@ -1421,7 +1403,7 @@
                     <div class="goals-level-number-new">Level 6</div>
                     <div class="goals-level-details-new">
                         <div class="goals-level-detail-item-new">
-                            <span class="goals-level-detail-label-new">Investment</span>
+                            <span class="goals-level-detail-label-new">Total Referral Investment</span>
                             <span class="goals-level-detail-value-new">$1,000</span>
                         </div>
                         <div class="goals-level-detail-item-new">
@@ -1448,7 +1430,7 @@
                     <div class="goals-level-number-new">Level 7</div>
                     <div class="goals-level-details-new">
                         <div class="goals-level-detail-item-new">
-                            <span class="goals-level-detail-label-new">Investment</span>
+                            <span class="goals-level-detail-label-new">Total Referral Investment</span>
                             <span class="goals-level-detail-value-new">$2,500</span>
                         </div>
                         <div class="goals-level-detail-item-new">
@@ -1475,7 +1457,7 @@
                     <div class="goals-level-number-new">Level 8</div>
                     <div class="goals-level-details-new">
                         <div class="goals-level-detail-item-new">
-                            <span class="goals-level-detail-label-new">Investment</span>
+                            <span class="goals-level-detail-label-new">Total Referral Investment</span>
                             <span class="goals-level-detail-value-new">$8,000</span>
                         </div>
                         <div class="goals-level-detail-item-new">
@@ -1502,7 +1484,7 @@
                     <div class="goals-level-number-new">Level 9</div>
                     <div class="goals-level-details-new">
                         <div class="goals-level-detail-item-new">
-                            <span class="goals-level-detail-label-new">Investment</span>
+                            <span class="goals-level-detail-label-new">Total Referral Investment</span>
                             <span class="goals-level-detail-value-new">$15,000</span>
                         </div>
                         <div class="goals-level-detail-item-new">
@@ -1530,7 +1512,7 @@
                     <div class="goals-level-number-new">Level 10</div>
                     <div class="goals-level-details-new">
                         <div class="goals-level-detail-item-new">
-                            <span class="goals-level-detail-label-new">Investment</span>
+                            <span class="goals-level-detail-label-new">Total Referral Investment</span>
                             <span class="goals-level-detail-value-new">$25,000</span>
                         </div>
                         <div class="goals-level-detail-item-new">
@@ -1551,6 +1533,6 @@
 </div>
 
 @push('scripts')
-<script src="{{ asset('dashboard/js/goals.js') }}"></script>
+<script src="{{ asset('assets/dashboard/js/goals.js') }}"></script>
 @endpush
 @endsection

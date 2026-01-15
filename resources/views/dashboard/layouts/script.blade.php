@@ -91,4 +91,4 @@
         }
     }
 </script>
-<script src="{{ asset('dashboard/js/dashboard.js') }}"></script>
+<script src="{{ asset('assets/dashboard/js/dashboard.js') }}"></script>

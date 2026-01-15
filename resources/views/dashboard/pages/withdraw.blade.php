@@ -3,7 +3,7 @@
 @section('title', 'Core Mining - Withdraw')
 
 @push('styles')
-<link rel="stylesheet" href="{{ asset('dashboard/css/dashboard.css') }}">
+<link rel="stylesheet" href="{{ asset('assets/dashboard/css/dashboard.css') }}">
 <style>
     .withdraw-page {
         padding: 0;
@@ -739,7 +739,7 @@
 
     <!-- Banner Image -->
     <div class="withdraw-banner">
-        <img src="{{ asset('dashboard/images/payment-method/bank.png') }}" alt="Withdraw Banner">
+        <img src="{{ asset('assets/dashboard/images/payment-method/bank.png') }}" alt="Withdraw Banner">
     </div>
 
     <!-- Main Content Grid -->
@@ -773,13 +773,13 @@
                 <div class="withdraw-payment-methods">
                     <div class="withdraw-payment-method easypaisa" data-method="easypaisa">
                         <div class="withdraw-payment-icon">
-                            <img src="{{ asset('dashboard/images/payment-method/easypaisa.png') }}" alt="Easypaisa">
+                            <img src="{{ asset('assets/dashboard/images/payment-method/easypaisa.png') }}" alt="Easypaisa">
                         </div>
                         <p class="withdraw-payment-name">Easypaisa</p>
                     </div>
                     <div class="withdraw-payment-method jazzcash" data-method="jazzcash">
                         <div class="withdraw-payment-icon">
-                            <img src="{{ asset('dashboard/images/payment-method/jazzcash.png') }}" alt="Jazzcash">
+                            <img src="{{ asset('assets/dashboard/images/payment-method/jazzcash.png') }}" alt="Jazzcash">
                         </div>
                         <p class="withdraw-payment-name">Jazzcash</p>
                     </div>
@@ -791,7 +791,7 @@
                     </div>
                     <div class="withdraw-payment-method bank" data-method="bank">
                         <div class="withdraw-payment-icon">
-                            <img src="{{ asset('dashboard/images/payment-method/bank.png') }}" alt="Bank">
+                            <img src="{{ asset('assets/dashboard/images/payment-method/bank.png') }}" alt="Bank">
                         </div>
                         <p class="withdraw-payment-name">Bank</p>
                     </div>

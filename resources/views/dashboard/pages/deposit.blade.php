@@ -3,7 +3,7 @@
 @section('title', 'Core Mining - Add Money')
 
 @push('styles')
-<link rel="stylesheet" href="{{ asset('dashboard/css/dashboard.css') }}">
+<link rel="stylesheet" href="{{ asset('assets/dashboard/css/dashboard.css') }}">
 <style>
     .deposit-page {
         padding: 0;
@@ -139,7 +139,8 @@
 
     .deposit-payment-method.active {
         background: rgba(255, 178, 30, 0.18);
-        border-color: var(--primary-color);
+        border-color: #ffffff;
+        border-width: 2px;
         box-shadow: 0 0 25px rgba(255, 178, 30, 0.5);
         transform: scale(1.02);
     }
@@ -204,9 +205,57 @@
         color: var(--primary-color);
     }
 
+    /* Deposit Amount Section */
+    .deposit-amount-section {
+        display: none !important;
+        opacity: 0;
+        transition: opacity 0.3s ease-in-out;
+    }
+
+    .deposit-amount-section.show {
+        display: block !important;
+        opacity: 1;
+    }
+
+    /* Preset Amount Buttons */
+    .deposit-preset-amounts {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0.875rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .deposit-preset-btn {
+        padding: 1rem 1.25rem;
+        background: rgba(24, 27, 39, 0.9);
+        border: 2px solid rgba(255, 178, 30, 0.2);
+        border-radius: 12px;
+        color: var(--text-primary);
+        font-size: 1.0625rem;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        text-align: center;
+    }
+
+    .deposit-preset-btn:hover {
+        background: rgba(255, 178, 30, 0.1);
+        border-color: rgba(255, 178, 30, 0.4);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(255, 178, 30, 0.2);
+    }
+
+    .deposit-preset-btn.active {
+        background: rgba(255, 178, 30, 0.18);
+        border-color: var(--primary-color);
+        color: var(--primary-color);
+        box-shadow: 0 0 20px rgba(255, 178, 30, 0.3);
+    }
+
     /* Deposit Amount Input */
     .deposit-amount-wrapper {
         position: relative;
+        margin-bottom: 1.25rem;
     }
 
     .deposit-amount-input {
@@ -504,7 +553,7 @@
     }
 
     .deposit-transaction-date {
-        font-size: 0.875rem;
+        font-size: 0.8rem;
         color: var(--text-secondary);
         margin: 0;
     }
@@ -520,7 +569,6 @@
     .deposit-transaction-amount {
         font-size: 1.25rem;
         font-weight: 700;
-        color: var(--primary-color);
         margin: 0;
     }
 
@@ -533,8 +581,60 @@
     .deposit-transaction-status {
         font-size: 0.875rem;
         font-weight: 600;
-        color: var(--primary-color);
         margin: 0;
+    }
+
+    /* Status Colors */
+    .deposit-transaction-status.status-success {
+        color: #4CAF50;
+    }
+
+    .deposit-transaction-status.status-warning {
+        color: #FFA500;
+    }
+
+    .deposit-transaction-status.status-danger {
+        color: #FF4444;
+    }
+
+    /* Amount Colors */
+    .deposit-transaction-amount.amount-success {
+        color: #4CAF50;
+    }
+
+    .deposit-transaction-amount.amount-warning {
+        color: #FFA500;
+    }
+
+    .deposit-transaction-amount.amount-danger {
+        color: #FF4444;
+    }
+
+    .deposit-transaction-icon-wrapper.icon-approved {
+        background: rgba(76, 175, 80, 0.12);
+        border-color: rgba(76, 175, 80, 0.25);
+    }
+
+    .deposit-transaction-icon-wrapper.icon-approved i {
+        color: #4CAF50;
+    }
+
+    .deposit-transaction-icon-wrapper.icon-pending {
+        background: rgba(255, 178, 30, 0.12);
+        border-color: rgba(255, 178, 30, 0.25);
+    }
+
+    .deposit-transaction-icon-wrapper.icon-pending i {
+        color: var(--primary-color);
+    }
+
+    .deposit-transaction-icon-wrapper.icon-rejected {
+        background: rgba(255, 68, 68, 0.12);
+        border-color: rgba(255, 68, 68, 0.25);
+    }
+
+    .deposit-transaction-icon-wrapper.icon-rejected i {
+        color: #FF4444;
     }
 
     /* Search bar for mobile */
@@ -845,7 +945,6 @@
         .deposit-transaction-amount {
             font-size: 1.25rem;
             font-weight: 700;
-            color: var(--primary-color);
             margin: 0;
         }
 
@@ -858,7 +957,6 @@
         .deposit-transaction-status {
             font-size: 0.875rem;
             font-weight: 600;
-            color: var(--primary-color);
             margin: 0;
         }
 
@@ -886,6 +984,17 @@
         .deposit-section-title {
             font-size: 1.125rem;
             margin-bottom: 1.25rem;
+        }
+
+        .deposit-preset-amounts {
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.75rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .deposit-preset-btn {
+            padding: 0.875rem 1rem;
+            font-size: 0.9375rem;
         }
 
         .deposit-amount-input {
@@ -950,6 +1059,17 @@
             margin: 0;
         }
 
+        .deposit-preset-amounts {
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.625rem;
+            margin-bottom: 1rem;
+        }
+
+        .deposit-preset-btn {
+            padding: 0.75rem 0.875rem;
+            font-size: 0.875rem;
+        }
+
         .deposit-amount-input {
             padding: 0.875rem 1rem 0.875rem 2.25rem;
             font-size: 1rem;
@@ -977,7 +1097,7 @@
 
     <!-- Banner Image -->
     {{-- <div class="deposit-banner">
-        <img src="{{ asset('dashboard/images/payment-method/bank.png') }}" alt="Deposit Banner">
+        <img src="{{ asset('assets/dashboard/images/payment-method/bank.png') }}" alt="Deposit Banner">
     </div> --}}
 
     <!-- Main Content Grid -->
@@ -986,43 +1106,56 @@
         <div class="deposit-form-section">
             <!-- Payment Method Selection -->
             <div class="deposit-section-card">
-                <h2 class="deposit-section-title">Select Payment Method</h2>
+                <h2 class="deposit-section-title">Selected Payment Method</h2>
                 <div class="deposit-payment-methods">
-                    <div class="deposit-payment-method easypaisa" data-method="easypaisa">
-                        <div class="deposit-payment-icon">
-                            <img src="{{ asset('dashboard/images/payment-method/easypaisa.png') }}" alt="Easypaisa">
+                    @forelse($paymentMethods as $paymentMethod)
+                        <div class="deposit-payment-method" 
+                             data-method-id="{{ $paymentMethod->id }}"
+                             data-method-name="{{ $paymentMethod->account_type }}"
+                             data-min-deposit="{{ $paymentMethod->minimum_deposit ?? 0 }}"
+                             data-max-deposit="{{ $paymentMethod->maximum_deposit ?? 0 }}">
+                            <div class="deposit-payment-icon">
+                                @if($paymentMethod->image)
+                                    <img src="{{ asset($paymentMethod->image) }}" alt="{{ $paymentMethod->account_type }}">
+                                @else
+                                    <i class="fab fa-bitcoin"></i>
+                                @endif
+                            </div>
+                            <p class="deposit-payment-name">{{ $paymentMethod->account_type }}</p>
                         </div>
-                        <p class="deposit-payment-name">Easypaisa</p>
-                    </div>
-                    <div class="deposit-payment-method jazzcash" data-method="jazzcash">
-                        <div class="deposit-payment-icon">
-                            <img src="{{ asset('dashboard/images/payment-method/jazzcash.png') }}" alt="Jazzcash">
-                        </div>
-                        <p class="deposit-payment-name">Jazzcash</p>
-                    </div>
-                    <div class="deposit-payment-method crypto" data-method="crypto">
-                        <div class="deposit-payment-icon">
-                            <i class="fab fa-bitcoin"></i>
-                        </div>
-                        <p class="deposit-payment-name">Crypto</p>
-                    </div>
-                    <div class="deposit-payment-method bank" data-method="bank">
-                        <div class="deposit-payment-icon">
-                            <img src="{{ asset('dashboard/images/payment-method/bank.png') }}" alt="Bank">
-                        </div>
-                        <p class="deposit-payment-name">Bank</p>
-                    </div>
+                    @empty
+                        <p style="color: var(--text-secondary); padding: 1rem; text-align: center;">
+                            No payment methods available at the moment.
+                        </p>
+                    @endforelse
                 </div>
             </div>
 
             <!-- Deposit Amount -->
-            <div class="deposit-section-card">
+            <div class="deposit-section-card deposit-amount-section">
                 <h2 class="deposit-section-title">Deposit Amount</h2>
+                
+                <!-- Preset Amount Buttons -->
+                <div class="deposit-preset-amounts">
+                    <button type="button" class="deposit-preset-btn" data-amount="5">$5</button>
+                    <button type="button" class="deposit-preset-btn" data-amount="25">$25</button>
+                    <button type="button" class="deposit-preset-btn" data-amount="50">$50</button>
+                    <button type="button" class="deposit-preset-btn" data-amount="100">$100</button>
+                    <button type="button" class="deposit-preset-btn" data-amount="500">$500</button>
+                    <button type="button" class="deposit-preset-btn" data-amount="1000">$1K</button>
+                </div>
+                
+                <!-- Custom Amount Input -->
                 <div class="deposit-amount-wrapper">
                     <span class="deposit-amount-symbol">$</span>
-                    <input type="number" class="deposit-amount-input" placeholder="Enter custom amount" min="2" step="0.01">
+                    <input type="number" 
+                           class="deposit-amount-input" 
+                           id="deposit-amount-input"
+                           placeholder="Enter custom amount" 
+                           min="2" 
+                           step="0.01">
                 </div>
-                <button class="deposit-continue-btn">
+                <button class="deposit-continue-btn" id="deposit-continue-btn">
                     Continue Deposit
                 </button>
             </div>
@@ -1061,7 +1194,7 @@
                     <div class="deposit-search-bar">
                         <div class="deposit-search-wrapper">
                             <i class="fas fa-search deposit-search-icon"></i>
-                            <input type="text" class="deposit-search-input" placeholder="Search transactions...">
+                            <input type="text" class="deposit-search-input" id="deposit-search-input" placeholder="Search transactions...">
                             <button class="deposit-search-filter-btn" type="button">
                                 <i class="fas fa-filter"></i>
                             </button>
@@ -1071,32 +1204,68 @@
                         <div class="deposit-filter-icon">
                             <i class="fas fa-filter"></i>
                         </div>
-                        <select class="deposit-filter-dropdown">
-                            <option>3 Days</option>
-                            <option>7 Days</option>
-                            <option>30 Days</option>
-                            <option>All Time</option>
+                        <select class="deposit-filter-dropdown" id="deposit-date-filter">
+                            <option value="3">3 Days</option>
+                            <option value="7">7 Days</option>
+                            <option value="30">30 Days</option>
+                            <option value="all" selected>All Time</option>
                         </select>
                     </div>
                 </div>
                 <!-- Transaction Cards (for desktop and mobile) -->
-                <div class="deposit-transactions-list">
-                    <div class="deposit-transaction-card">
-                        <div class="deposit-transaction-icon-wrapper">
-                            <i class="fas fa-gift"></i>
+                <div class="deposit-transactions-list" id="deposit-transactions-list">
+                    @forelse($deposits as $deposit)
+                        <div class="deposit-transaction-card" data-date="{{ $deposit->created_at->timestamp }}" data-status="{{ $deposit->status }}" data-amount="{{ $deposit->amount }}" data-transaction-id="{{ $deposit->transaction_id }}">
+                            <div class="deposit-transaction-icon-wrapper 
+                                @if($deposit->status === 'approved') icon-approved
+                                @elseif($deposit->status === 'rejected') icon-rejected
+                                @else icon-pending
+                                @endif">
+                                @if($deposit->status === 'approved')
+                                    <i class="fas fa-check-circle"></i>
+                                @elseif($deposit->status === 'rejected')
+                                    <i class="fas fa-times-circle"></i>
+                                @else
+                                    <i class="fas fa-clock"></i>
+                                @endif
+                            </div>
+                            <div class="deposit-transaction-content">
+                                <h3 class="deposit-transaction-title">
+                                    {{ $deposit->paymentMethod->account_type ?? 'Deposit' }}
+                                </h3>
+                                <p class="deposit-transaction-date">{{ $deposit->created_at->format('M d, Y, h:i A') }}</p>
+                            </div>
+                            <div class="deposit-transaction-right">
+                                <div class="deposit-transaction-amount 
+                                    @if($deposit->status === 'approved') amount-success
+                                    @elseif($deposit->status === 'rejected') amount-danger
+                                    @else amount-warning
+                                    @endif">+${{ number_format($deposit->amount, 2) }}</div>
+                                @if($deposit->status === 'approved')
+                                    <p class="deposit-transaction-wallet">Fund Wallet: ${{ number_format(auth()->user()->fund_wallet ?? 0, 2) }}</p>
+                                @else
+                                    <p class="deposit-transaction-wallet">Fund Wallet: -</p>
+                                @endif
+                                <span class="deposit-transaction-status 
+                                    @if($deposit->status === 'approved') status-success
+                                    @elseif($deposit->status === 'rejected') status-danger
+                                    @else status-warning
+                                    @endif">
+                                    @if($deposit->status === 'approved')
+                                        Completed
+                                    @elseif($deposit->status === 'rejected')
+                                        Rejected
+                                    @else
+                                        Pending
+                                    @endif
+                                </span>
+                            </div>
                         </div>
-                        <div class="deposit-transaction-content">
-                            <h3 class="deposit-transaction-title">Bonus</h3>
-                            <p class="deposit-transaction-date">Dec 28, 2025, 11:11 PM</p>
-                        </div>
-                        <div class="deposit-transaction-right">
-                            <div class="deposit-transaction-amount">+$0</div>
-                            <p class="deposit-transaction-wallet">Earning Wallet: $0</p>
-                            <span class="deposit-transaction-status">Completed</span>
-                        </div>
-                    </div>
+                    @empty
+                        <!-- Empty state will be shown by CSS -->
+                    @endforelse
                 </div>
-                <div class="deposit-history-empty">
+                <div class="deposit-history-empty" id="deposit-history-empty" style="{{ $deposits->count() > 0 ? 'display: none;' : '' }}">
                     No transaction history found!
                 </div>
             </div>
@@ -1115,35 +1284,201 @@
 </div>
 
 <script>
+    let selectedPaymentMethod = null;
+
     // Payment method selection
     document.querySelectorAll('.deposit-payment-method').forEach(method => {
         method.addEventListener('click', function() {
+            // Remove active class from all methods
             document.querySelectorAll('.deposit-payment-method').forEach(m => m.classList.remove('active'));
+            
+            // Add active class to clicked method
             this.classList.add('active');
+            
+            // Store selected payment method data
+            selectedPaymentMethod = {
+                id: this.dataset.methodId,
+                name: this.dataset.methodName,
+                minDeposit: parseFloat(this.dataset.minDeposit) || 2,
+                maxDeposit: parseFloat(this.dataset.maxDeposit) || null
+            };
+            
+            // Show deposit amount section with animation
+            const depositAmountSection = document.querySelector('.deposit-amount-section');
+            if (depositAmountSection) {
+                depositAmountSection.classList.add('show');
+            }
+            
+            // Update continue button text
+            const continueBtn = document.getElementById('deposit-continue-btn');
+            if (continueBtn && selectedPaymentMethod) {
+                continueBtn.textContent = `Continue Deposit with ${selectedPaymentMethod.name}`;
+            }
+            
+            // Update input min/max attributes
+            const amountInput = document.getElementById('deposit-amount-input');
+            if (amountInput) {
+                amountInput.setAttribute('min', selectedPaymentMethod.minDeposit);
+                if (selectedPaymentMethod.maxDeposit) {
+                    amountInput.setAttribute('max', selectedPaymentMethod.maxDeposit);
+                } else {
+                    amountInput.removeAttribute('max');
+                }
+                // Clear previous amount and preset selections
+                amountInput.value = '';
+                document.querySelectorAll('.deposit-preset-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+            }
         });
     });
+
+    // Preset amount buttons
+    document.querySelectorAll('.deposit-preset-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            // Remove active class from all preset buttons
+            document.querySelectorAll('.deposit-preset-btn').forEach(b => b.classList.remove('active'));
+            
+            // Add active class to clicked button
+            this.classList.add('active');
+            
+            // Set the amount in the input field
+            const amount = this.dataset.amount;
+            const amountInput = document.getElementById('deposit-amount-input');
+            if (amountInput) {
+                amountInput.value = amount;
+                // Trigger input event to validate
+                amountInput.dispatchEvent(new Event('input'));
+            }
+        });
+    });
+
+    // Clear preset selection when user types custom amount
+    const amountInput = document.getElementById('deposit-amount-input');
+    if (amountInput) {
+        amountInput.addEventListener('input', function() {
+            // Check if the value matches any preset
+            const value = parseFloat(this.value);
+            const presetButtons = document.querySelectorAll('.deposit-preset-btn');
+            let matchesPreset = false;
+            
+            presetButtons.forEach(btn => {
+                const presetAmount = parseFloat(btn.dataset.amount);
+                if (value === presetAmount) {
+                    btn.classList.add('active');
+                    matchesPreset = true;
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+            
+            // If doesn't match any preset, clear all active states
+            if (!matchesPreset && this.value !== '') {
+                presetButtons.forEach(btn => btn.classList.remove('active'));
+            }
+        });
+    }
 
     // Continue deposit button
-    document.querySelector('.deposit-continue-btn').addEventListener('click', function() {
-        const selectedMethod = document.querySelector('.deposit-payment-method.active');
-        const amount = document.querySelector('.deposit-amount-input').value;
+    const continueBtn = document.getElementById('deposit-continue-btn');
+    if (continueBtn) {
+        continueBtn.addEventListener('click', function() {
+            const amountInput = document.getElementById('deposit-amount-input');
+            const amount = amountInput ? parseFloat(amountInput.value) : 0;
 
-        if (!selectedMethod) {
-            alert('Please select a payment method');
-            return;
-        }
+            if (!selectedPaymentMethod) {
+                alert('Please select a payment method');
+                return;
+            }
 
-        if (!amount || parseFloat(amount) < 2) {
-            alert('Please enter a valid amount (minimum $2)');
-            return;
-        }
+            if (!amount || isNaN(amount) || amount < selectedPaymentMethod.minDeposit) {
+                alert(`Please enter a valid amount (minimum $${selectedPaymentMethod.minDeposit})`);
+                return;
+            }
 
-        // Here you would typically submit the form or navigate to payment gateway
-        console.log('Deposit:', {
-            method: selectedMethod.dataset.method,
-            amount: amount
+            if (selectedPaymentMethod.maxDeposit && amount > selectedPaymentMethod.maxDeposit) {
+                alert(`Maximum deposit amount is $${selectedPaymentMethod.maxDeposit}`);
+                return;
+            }
+
+            // Redirect to deposit confirmation page
+            const confirmUrl = '{{ route("deposit.confirm") }}' + 
+                '?method_id=' + encodeURIComponent(selectedPaymentMethod.id) + 
+                '&amount=' + encodeURIComponent(amount);
+            
+            window.location.href = confirmUrl;
         });
-    });
+    }
+
+    // Deposit History Filtering and Search
+    const depositSearchInput = document.getElementById('deposit-search-input');
+    const depositDateFilter = document.getElementById('deposit-date-filter');
+    const depositTransactionsList = document.getElementById('deposit-transactions-list');
+    const depositHistoryEmpty = document.getElementById('deposit-history-empty');
+
+    function filterDeposits() {
+        const searchTerm = depositSearchInput ? depositSearchInput.value.toLowerCase().trim() : '';
+        const dateFilter = depositDateFilter ? depositDateFilter.value : 'all';
+        const transactionCards = depositTransactionsList ? depositTransactionsList.querySelectorAll('.deposit-transaction-card') : [];
+        
+        let visibleCount = 0;
+        const now = Math.floor(Date.now() / 1000);
+        const daysInSeconds = {
+            '3': 3 * 24 * 60 * 60,
+            '7': 7 * 24 * 60 * 60,
+            '30': 30 * 24 * 60 * 60
+        };
+
+        transactionCards.forEach(card => {
+            const transactionDate = parseInt(card.dataset.date);
+            const transactionStatus = card.dataset.status.toLowerCase();
+            const transactionAmount = card.dataset.amount;
+            const transactionId = (card.dataset.transactionId || '').toLowerCase();
+            const cardText = card.textContent.toLowerCase();
+
+            // Date filter
+            let dateMatch = true;
+            if (dateFilter !== 'all') {
+                const daysAgo = daysInSeconds[dateFilter];
+                const cutoffDate = now - daysAgo;
+                dateMatch = transactionDate >= cutoffDate;
+            }
+
+            // Search filter
+            let searchMatch = true;
+            if (searchTerm) {
+                searchMatch = cardText.includes(searchTerm) || 
+                             transactionId.includes(searchTerm) ||
+                             transactionAmount.includes(searchTerm);
+            }
+
+            // Show/hide card
+            if (dateMatch && searchMatch) {
+                card.style.display = 'flex';
+                visibleCount++;
+            } else {
+                card.style.display = 'none';
+            }
+        });
+
+        // Show/hide empty state
+        if (depositHistoryEmpty) {
+            if (visibleCount === 0) {
+                depositHistoryEmpty.style.display = 'block';
+            } else {
+                depositHistoryEmpty.style.display = 'none';
+            }
+        }
+    }
+
+    // Add event listeners
+    if (depositSearchInput) {
+        depositSearchInput.addEventListener('input', filterDeposits);
+    }
+
+    if (depositDateFilter) {
+        depositDateFilter.addEventListener('change', filterDeposits);
+    }
 </script>
 @endsection
 

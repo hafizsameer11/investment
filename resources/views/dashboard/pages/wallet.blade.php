@@ -3,7 +3,7 @@
 @section('title', 'Core Mining - Wallet')
 
 @push('styles')
-<link rel="stylesheet" href="{{ asset('dashboard/css/wallet.css') }}">
+<link rel="stylesheet" href="{{ asset('assets/dashboard/css/wallet.css') }}">
 <style>
     .wallet-new-page {
         padding: 0;
@@ -2244,7 +2244,7 @@
 </div>
 
 @push('scripts')
-<script src="{{ asset('dashboard/js/wallet.js') }}"></script>
+<script src="{{ asset('assets/dashboard/js/wallet.js') }}"></script>
 <script>
     // Balance toggle functionality
     const balanceToggle = document.getElementById('balanceToggleWallet');

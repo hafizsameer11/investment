@@ -3,7 +3,7 @@
 @section('title', 'Core Mining - Support')
 
 @push('styles')
-<link rel="stylesheet" href="{{ asset('dashboard/css/support.css') }}">
+<link rel="stylesheet" href="{{ asset('assets/dashboard/css/support.css') }}">
 <style>
     .support-new-page {
         padding: 2rem;
@@ -748,7 +748,7 @@
 </div>
 
 @push('scripts')
-<script src="{{ asset('dashboard/js/support.js') }}"></script>
+<script src="{{ asset('assets/dashboard/js/support.js') }}"></script>
 <script>
     // Copy functionality with visual feedback
     document.querySelectorAll('[data-copy]').forEach(button => {

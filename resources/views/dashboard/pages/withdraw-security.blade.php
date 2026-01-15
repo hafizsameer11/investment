@@ -3,7 +3,7 @@
 @section('title', 'Core Mining - Withdraw Security')
 
 @push('styles')
-<link rel="stylesheet" href="{{ asset('dashboard/css/withdraw-security.css') }}">
+<link rel="stylesheet" href="{{ asset('assets/dashboard/css/withdraw-security.css') }}">
 @endpush
 
 @section('content')
@@ -183,7 +183,7 @@
 </div>
 
 @push('scripts')
-<script src="{{ asset('dashboard/js/withdraw-security.js') }}"></script>
+<script src="{{ asset('assets/dashboard/js/withdraw-security.js') }}"></script>
 @endpush
 @endsection
 

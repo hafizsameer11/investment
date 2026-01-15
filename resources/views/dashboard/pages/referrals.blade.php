@@ -3,7 +3,7 @@
 @section('title', 'Core Mining - Referrals')
 
 @push('styles')
-<link rel="stylesheet" href="{{ asset('dashboard/css/referrals.css') }}">
+<link rel="stylesheet" href="{{ asset('assets/dashboard/css/referrals.css') }}">
 <style>
     .referrals-new-page {
         padding: 2rem;
@@ -2091,9 +2091,11 @@ ls-referrer-section-new {
             margin-bottom: 1rem;
             background: rgba(255, 255, 255, 0.02);
             border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 10px;
+            border-radius: 12px;
             padding: 1rem;
             box-sizing: border-box;
+            position: relative;
+            min-height: 100px;
         }
 
         .referrals-network-table-new tbody tr:last-child {
@@ -2103,21 +2105,123 @@ ls-referrer-section-new {
         .referrals-network-table-new td {
             display: block;
             width: 100%;
-            padding: 0.75rem 0;
+            padding: 0;
             border: none;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            text-align: left;
-            font-size: 0.875rem;
             box-sizing: border-box;
         }
 
-        .referrals-network-table-new td:last-child {
-            border-bottom: none;
-            padding-bottom: 0;
+        .referrals-network-table-new td:first-child {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 0;
         }
 
+        .referrals-network-table-new td:first-child .referrals-network-mobile-value {
+            display: flex !important;
+            flex-direction: column;
+            align-items: flex-end;
+            text-align: right;
+        }
+
+        .referrals-network-table-new td:nth-child(2) {
+            display: none;
+        }
+
+        .referrals-network-table-new td:last-child {
+            position: absolute;
+            bottom: 1rem;
+            right: 1rem;
+            width: auto;
+            text-align: right;
+            padding: 0;
+        }
+
+        .referrals-network-table-new td:last-child .desktop-earning {
+            display: none;
+        }
+
+        .referrals-network-table-new td:first-child .referrals-network-mobile-user-info {
+            flex: 1;
+        }
+
+        .referrals-network-table-new td:first-child .referrals-network-mobile-value {
+            flex-shrink: 0;
+            margin-left: 1rem;
+        }
+    }
+
+    /* Desktop view - hide mobile elements */
+    @media (min-width: 769px) {
         .referrals-network-table-new td:first-child {
-            padding-top: 0;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .referrals-network-table-new td:first-child .referrals-network-mobile-value {
+            display: none !important;
+        }
+
+        .referrals-network-table-new td:nth-child(2) {
+            display: table-cell;
+        }
+
+        .referrals-network-table-new td:last-child {
+            position: static;
+            width: auto;
+        }
+
+        .referrals-network-table-new td:last-child .desktop-earning {
+            display: block;
+        }
+
+        .referrals-network-table-new td:last-child .referrals-network-mobile-date {
+            display: none;
+        }
+
+        /* Mobile card layout - user info on left */
+        .referrals-network-mobile-user-info {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .referrals-network-mobile-user-name {
+            font-weight: 700;
+            color: var(--text-primary);
+            font-size: 1rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .referrals-network-mobile-user-level {
+            font-size: 0.8125rem;
+            color: var(--text-secondary);
+        }
+
+        /* Mobile card layout - value on right */
+        .referrals-network-mobile-value {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            text-align: right;
+        }
+
+        .referrals-network-mobile-earning {
+            font-weight: 600;
+            color: #10B981;
+            font-size: 1rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .referrals-network-mobile-invested {
+            font-size: 0.8125rem;
+            color: var(--text-secondary);
+        }
+
+        .referrals-network-mobile-date {
+            font-size: 0.8125rem;
+            color: var(--text-secondary);
         }
 
         .referrals-rules-section-new {
@@ -2527,6 +2631,211 @@ ls-referrer-section-new {
             font-size: 1rem;
         }
     }
+
+    /* Referral Detail Modal Styles */
+    .referral-detail-modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 10000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 1rem;
+    }
+
+    .referral-detail-modal-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.6);
+        backdrop-filter: blur(2px);
+    }
+
+    .referral-detail-modal-content {
+        position: relative;
+        background: var(--card-bg);
+        border: 1px solid var(--card-border);
+        border-radius: 20px;
+        padding: 1.5rem;
+        width: 100%;
+        max-width: 450px;
+        max-height: 85vh;
+        overflow-y: auto;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        z-index: 10001;
+    }
+
+    .referral-detail-modal-title {
+        font-size: 1.125rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin: 0 0 1.5rem 0;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .referral-detail-modal-close {
+        width: 24px;
+        height: 24px;
+        border-radius: 0;
+        background: transparent;
+        border: none;
+        color: var(--text-primary);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s ease;
+        font-size: 1.125rem;
+        font-weight: 400;
+        padding: 0;
+        margin: 0;
+    }
+
+    .referral-detail-modal-close:hover {
+        background: transparent;
+        transform: none;
+        opacity: 0.7;
+    }
+
+    .referral-detail-header {
+        text-align: center;
+        margin-bottom: 1.5rem;
+        padding-bottom: 1.5rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .referral-detail-avatar {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, rgba(255, 178, 30, 0.2) 0%, rgba(255, 138, 29, 0.1) 100%);
+        border: 2px solid rgba(255, 178, 30, 0.4);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 1rem;
+        font-size: 2rem;
+        font-weight: 700;
+        color: var(--primary-color);
+    }
+
+    .referral-detail-name {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin: 0 0 0.375rem 0;
+    }
+
+    .referral-detail-date {
+        font-size: 0.875rem;
+        color: var(--text-secondary);
+        margin: 0;
+    }
+
+    .referral-detail-body {
+        display: flex;
+        flex-direction: column;
+        gap: 0.875rem;
+    }
+
+    .referral-detail-item {
+        display: flex;
+        flex-direction: column;
+        gap: 0.375rem;
+        padding: 0.75rem 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .referral-detail-item:last-child {
+        border-bottom: none;
+    }
+
+    .referral-detail-label {
+        font-size: 0.75rem;
+        color: var(--text-secondary);
+        font-weight: 500;
+    }
+
+    .referral-detail-value {
+        font-size: 0.9375rem;
+        font-weight: 600;
+        color: var(--text-primary);
+    }
+
+    .referral-row-clickable:hover {
+        background: rgba(255, 178, 30, 0.05) !important;
+    }
+
+    @media (max-width: 768px) {
+        .referral-detail-modal {
+            padding: 0.75rem;
+        }
+
+        .referral-detail-modal-content {
+            padding: 1.25rem;
+            border-radius: 16px;
+            max-height: 85vh;
+            max-width: 100%;
+            margin-bottom: 70px;
+        }
+
+        .referral-detail-modal-title {
+            font-size: 1rem;
+            margin-bottom: 1.25rem;
+            padding-bottom: 0.875rem;
+        }
+
+        .referral-detail-modal-close {
+            width: 24px;
+            height: 24px;
+            font-size: 1rem;
+        }
+
+        .referral-detail-header {
+            margin-bottom: 1.25rem;
+            padding-bottom: 1.25rem;
+        }
+
+        .referral-detail-avatar {
+            width: 70px;
+            height: 70px;
+            font-size: 1.75rem;
+            margin-bottom: 0.875rem;
+        }
+
+        .referral-detail-name {
+            font-size: 1.125rem;
+        }
+
+        .referral-detail-date {
+            font-size: 0.8125rem;
+        }
+
+        .referral-detail-body {
+            gap: 0.75rem;
+        }
+
+        .referral-detail-item {
+            padding: 0.625rem 0;
+        }
+
+        .referral-detail-label {
+            font-size: 0.6875rem;
+        }
+
+        .referral-detail-value {
+            font-size: 0.875rem;
+        }
+    }
 </style>
 @endpush
 
@@ -2548,7 +2857,7 @@ ls-referrer-section-new {
             </div>
             <div class="referrals-stat-content-new">
                 <div class="referrals-stat-label-new">Total Referral Earning</div>
-                <div class="referrals-stat-value-new">$0</div>
+                <div class="referrals-stat-value-new">${{ number_format($totalReferralEarnings, 2) }}</div>
             </div>
         </div>
 
@@ -2558,7 +2867,7 @@ ls-referrer-section-new {
             </div>
             <div class="referrals-stat-content-new">
                 <div class="referrals-stat-label-new">Total Referrals</div>
-                <div class="referrals-stat-value-new">0</div>
+                <div class="referrals-stat-value-new">{{ $totalReferrals }}</div>
             </div>
         </div>
     </div>
@@ -2604,7 +2913,7 @@ ls-referrer-section-new {
                 </div>
                 <div class="referrals-tool-body-new">
                     <div class="referrals-tool-input-wrapper-new">
-                        <input type="text" class="referrals-tool-input-new" id="referralLink" value="https://licrown.ai/auth/sign-up?ref=" readonly>
+                        <input type="text" class="referrals-tool-input-new" id="referralLink" value="{{ url('/register?ref=' . $user->refer_code) }}" readonly>
                         <button class="referrals-tool-copy-btn-new" data-copy="referralLink" title="Copy Link">
                             <i class="fas fa-copy"></i>
                         </button>
@@ -2623,7 +2932,7 @@ ls-referrer-section-new {
                 </div>
                 <div class="referrals-tool-body-new">
                     <div class="referrals-tool-input-wrapper-new">
-                        <input type="text" class="referrals-tool-input-new" id="referralCode" value="RAMEEZNAZAR2473" readonly>
+                        <input type="text" class="referrals-tool-input-new" id="referralCode" value="{{ $user->refer_code }}" readonly>
                         <button class="referrals-tool-copy-btn-new" data-copy="referralCode" title="Copy Code">
                             <i class="fas fa-copy"></i>
                         </button>
@@ -2644,27 +2953,37 @@ ls-referrer-section-new {
                 <h3 class="referrals-referrer-title-new">Referred By</h3>
             </div>
             <div class="referrals-referrer-info-grid-new">
+                @if($currentUserReferrer)
                 <div class="referrals-referrer-info-item-new">
                     <div class="referrals-referrer-info-label-new">
                         <i class="fas fa-user"></i>
                         <span>Name</span>
                     </div>
-                    <div class="referrals-referrer-info-value-new">Moneymaker</div>
+                    <div class="referrals-referrer-info-value-new">{{ $currentUserReferrer->name ?? 'N/A' }}</div>
                 </div>
                 <div class="referrals-referrer-info-item-new">
                     <div class="referrals-referrer-info-label-new">
                         <i class="fas fa-envelope"></i>
                         <span>Email</span>
                     </div>
-                    <div class="referrals-referrer-info-value-new">paksameer4@gmail.com</div>
+                    <div class="referrals-referrer-info-value-new">{{ $currentUserReferrer->email ?? 'N/A' }}</div>
                 </div>
                 <div class="referrals-referrer-info-item-new">
                     <div class="referrals-referrer-info-label-new">
                         <i class="fas fa-phone"></i>
                         <span>Phone</span>
                     </div>
-                    <div class="referrals-referrer-info-value-new">03375453962</div>
+                    <div class="referrals-referrer-info-value-new">{{ $currentUserReferrer->phone ?? 'N/A' }}</div>
                 </div>
+                @else
+                <div class="referrals-referrer-info-item-new" style="grid-column: 1 / -1;">
+                    <div class="referrals-referrer-info-label-new">
+                        <i class="fas fa-info-circle"></i>
+                        <span>Status</span>
+                    </div>
+                    <div class="referrals-referrer-info-value-new">Not referred by anyone</div>
+                </div>
+                @endif
             </div>
         </div>
     </div>
@@ -2679,60 +2998,17 @@ ls-referrer-section-new {
         <!-- Desktop Grid View (Same card design as mobile) -->
         <div class="referrals-investment-commission-desktop">
             <div class="referrals-investment-mobile-grid-new">
-                <!-- Level 1 -->
-                <div class="referrals-investment-mobile-card-new referrals-investment-level-1">
-                    <h3 class="referrals-investment-mobile-title-new">Direct Referral</h3>
+                @foreach($investmentCommissions as $commission)
+                <div class="referrals-investment-mobile-card-new referrals-investment-level-{{ $commission->level }}">
+                    <h3 class="referrals-investment-mobile-title-new">{{ $commission->level_name }}</h3>
                     <p class="referrals-investment-mobile-label-new">Commission Rate</p>
-                    <div class="referrals-investment-mobile-percentage-new">6%</div>
+                    <div class="referrals-investment-mobile-percentage-new">{{ number_format($commission->commission_rate, 0) }}%</div>
                     <div class="referrals-investment-mobile-footer-new">
                         <span>Earning</span>
-                        <span>Level 1</span>
+                        <span>Level {{ $commission->level }}</span>
                     </div>
                 </div>
-
-                <!-- Level 2 -->
-                <div class="referrals-investment-mobile-card-new referrals-investment-level-2">
-                    <h3 class="referrals-investment-mobile-title-new">Second Level</h3>
-                    <p class="referrals-investment-mobile-label-new">Commission Rate</p>
-                    <div class="referrals-investment-mobile-percentage-new">3%</div>
-                    <div class="referrals-investment-mobile-footer-new">
-                        <span>Earning</span>
-                        <span>Level 2</span>
-                    </div>
-                </div>
-
-                <!-- Level 3 -->
-                <div class="referrals-investment-mobile-card-new referrals-investment-level-3">
-                    <h3 class="referrals-investment-mobile-title-new">Third Level</h3>
-                    <p class="referrals-investment-mobile-label-new">Commission Rate</p>
-                    <div class="referrals-investment-mobile-percentage-new">3%</div>
-                    <div class="referrals-investment-mobile-footer-new">
-                        <span>Earning</span>
-                        <span>Level 3</span>
-                    </div>
-                </div>
-
-                <!-- Level 4 -->
-                <div class="referrals-investment-mobile-card-new referrals-investment-level-4">
-                    <h3 class="referrals-investment-mobile-title-new">Fourth Level</h3>
-                    <p class="referrals-investment-mobile-label-new">Commission Rate</p>
-                    <div class="referrals-investment-mobile-percentage-new">3%</div>
-                    <div class="referrals-investment-mobile-footer-new">
-                        <span>Earning</span>
-                        <span>Level 4</span>
-                    </div>
-                </div>
-
-                <!-- Level 5 -->
-                <div class="referrals-investment-mobile-card-new referrals-investment-level-5">
-                    <h3 class="referrals-investment-mobile-title-new">Fifth Level</h3>
-                    <p class="referrals-investment-mobile-label-new">Commission Rate</p>
-                    <div class="referrals-investment-mobile-percentage-new">3%</div>
-                    <div class="referrals-investment-mobile-footer-new">
-                        <span>Earning</span>
-                        <span>Level 5</span>
-                    </div>
-                </div>
+                @endforeach
             </div>
         </div>
 
@@ -2745,60 +3021,17 @@ ls-referrer-section-new {
                     <p class="referrals-investment-mobile-header-subtitle-new">Earn commissions on investments across 5 levels</p>
                 </div>
 
-                <!-- Level 1 -->
-                <div class="referrals-investment-mobile-card-new referrals-investment-level-1">
-                    <h3 class="referrals-investment-mobile-title-new">Direct Referral</h3>
+                @foreach($investmentCommissions as $commission)
+                <div class="referrals-investment-mobile-card-new referrals-investment-level-{{ $commission->level }}">
+                    <h3 class="referrals-investment-mobile-title-new">{{ $commission->level_name }}</h3>
                     <p class="referrals-investment-mobile-label-new">Commission Rate</p>
-                    <div class="referrals-investment-mobile-percentage-new">6%</div>
+                    <div class="referrals-investment-mobile-percentage-new">{{ number_format($commission->commission_rate, 0) }}%</div>
                     <div class="referrals-investment-mobile-footer-new">
                         <span>Earning</span>
-                        <span>Level 1</span>
+                        <span>Level {{ $commission->level }}</span>
                     </div>
                 </div>
-
-                <!-- Level 2 -->
-                <div class="referrals-investment-mobile-card-new referrals-investment-level-2">
-                    <h3 class="referrals-investment-mobile-title-new">Second Level</h3>
-                    <p class="referrals-investment-mobile-label-new">Commission Rate</p>
-                    <div class="referrals-investment-mobile-percentage-new">3%</div>
-                    <div class="referrals-investment-mobile-footer-new">
-                        <span>Earning</span>
-                        <span>Level 2</span>
-                    </div>
-                </div>
-
-                <!-- Level 3 -->
-                <div class="referrals-investment-mobile-card-new referrals-investment-level-3">
-                    <h3 class="referrals-investment-mobile-title-new">Third Level</h3>
-                    <p class="referrals-investment-mobile-label-new">Commission Rate</p>
-                    <div class="referrals-investment-mobile-percentage-new">3%</div>
-                    <div class="referrals-investment-mobile-footer-new">
-                        <span>Earning</span>
-                        <span>Level 3</span>
-                    </div>
-                </div>
-
-                <!-- Level 4 -->
-                <div class="referrals-investment-mobile-card-new referrals-investment-level-4">
-                    <h3 class="referrals-investment-mobile-title-new">Fourth Level</h3>
-                    <p class="referrals-investment-mobile-label-new">Commission Rate</p>
-                    <div class="referrals-investment-mobile-percentage-new">3%</div>
-                    <div class="referrals-investment-mobile-footer-new">
-                        <span>Earning</span>
-                        <span>Level 4</span>
-                    </div>
-                </div>
-
-                <!-- Level 5 -->
-                <div class="referrals-investment-mobile-card-new referrals-investment-level-5">
-                    <h3 class="referrals-investment-mobile-title-new">Fifth Level</h3>
-                    <p class="referrals-investment-mobile-label-new">Commission Rate</p>
-                    <div class="referrals-investment-mobile-percentage-new">3%</div>
-                    <div class="referrals-investment-mobile-footer-new">
-                        <span>Earning</span>
-                        <span>Level 5</span>
-                    </div>
-                </div>
+                @endforeach
             </div>
         </div>
     </div>
@@ -2812,75 +3045,20 @@ ls-referrer-section-new {
 
         <!-- Desktop Grid View -->
         <div class="referrals-commission-grid-new referrals-commission-desktop">
-            <!-- Level 1 -->
-            <div class="referrals-commission-card-new referrals-commission-level-1">
-                <div class="referrals-commission-level-badge-new">Level 1</div>
+            @foreach($earningCommissions as $commission)
+            <div class="referrals-commission-card-new referrals-commission-level-{{ $commission->level }}">
+                <div class="referrals-commission-level-badge-new">Level {{ $commission->level }}</div>
                 <div class="referrals-commission-level-icon-new">
                     <i class="fas fa-star"></i>
                 </div>
-                <div class="referrals-commission-level-name-new">Direct Referral</div>
+                <div class="referrals-commission-level-name-new">{{ $commission->level_name }}</div>
                 <div class="referrals-commission-rate-new">
-                    <span class="referrals-commission-rate-value-new">6%</span>
+                    <span class="referrals-commission-rate-value-new">{{ number_format($commission->commission_rate, 0) }}%</span>
                     <span class="referrals-commission-rate-label-new">Commission Rate</span>
                 </div>
                 <div class="referrals-commission-earning-label-new">Earning</div>
             </div>
-
-            <!-- Level 2 -->
-            <div class="referrals-commission-card-new referrals-commission-level-2">
-                <div class="referrals-commission-level-badge-new">Level 2</div>
-                <div class="referrals-commission-level-icon-new">
-                    <i class="fas fa-star"></i>
-                </div>
-                <div class="referrals-commission-level-name-new">Second Level</div>
-                <div class="referrals-commission-rate-new">
-                    <span class="referrals-commission-rate-value-new">3%</span>
-                    <span class="referrals-commission-rate-label-new">Commission Rate</span>
-                </div>
-                <div class="referrals-commission-earning-label-new">Earning</div>
-            </div>
-
-            <!-- Level 3 -->
-            <div class="referrals-commission-card-new referrals-commission-level-3">
-                <div class="referrals-commission-level-badge-new">Level 3</div>
-                <div class="referrals-commission-level-icon-new">
-                    <i class="fas fa-star"></i>
-                </div>
-                <div class="referrals-commission-level-name-new">Third Level</div>
-                <div class="referrals-commission-rate-new">
-                    <span class="referrals-commission-rate-value-new">3%</span>
-                    <span class="referrals-commission-rate-label-new">Commission Rate</span>
-                </div>
-                <div class="referrals-commission-earning-label-new">Earning</div>
-            </div>
-
-            <!-- Level 4 -->
-            <div class="referrals-commission-card-new referrals-commission-level-4">
-                <div class="referrals-commission-level-badge-new">Level 4</div>
-                <div class="referrals-commission-level-icon-new">
-                    <i class="fas fa-star"></i>
-                </div>
-                <div class="referrals-commission-level-name-new">Fourth Level</div>
-                <div class="referrals-commission-rate-new">
-                    <span class="referrals-commission-rate-value-new">3%</span>
-                    <span class="referrals-commission-rate-label-new">Commission Rate</span>
-                </div>
-                <div class="referrals-commission-earning-label-new">Earning</div>
-            </div>
-
-            <!-- Level 5 -->
-            <div class="referrals-commission-card-new referrals-commission-level-5">
-                <div class="referrals-commission-level-badge-new">Level 5</div>
-                <div class="referrals-commission-level-icon-new">
-                    <i class="fas fa-star"></i>
-                </div>
-                <div class="referrals-commission-level-name-new">Fifth Level</div>
-                <div class="referrals-commission-rate-new">
-                    <span class="referrals-commission-rate-value-new">3%</span>
-                    <span class="referrals-commission-rate-label-new">Commission Rate</span>
-                </div>
-                <div class="referrals-commission-earning-label-new">Earning</div>
-            </div>
+            @endforeach
         </div>
 
         <!-- Mobile Icon-Based View -->
@@ -2892,75 +3070,20 @@ ls-referrer-section-new {
                     <p class="referrals-commission-mobile-subtitle-new">Earn up to 18% commission across 5 levels</p>
                 </div>
 
-                <!-- Level 1 -->
-                <div class="referrals-commission-mobile-item-new referrals-commission-mobile-level-1">
+                @foreach($earningCommissions as $commission)
+                <div class="referrals-commission-mobile-item-new referrals-commission-mobile-level-{{ $commission->level }}">
                     <div class="referrals-commission-mobile-icon-wrapper-new">
                         <div class="referrals-commission-mobile-icon-new">
                             <i class="fas fa-star"></i>
                         </div>
-                        <div class="referrals-commission-mobile-badge-new">L1</div>
+                        <div class="referrals-commission-mobile-badge-new">L{{ $commission->level }}</div>
                     </div>
                     <div class="referrals-commission-mobile-content-new">
-                        <div class="referrals-commission-mobile-name-new">Direct Referral</div>
-                        <div class="referrals-commission-mobile-rate-new">6%</div>
+                        <div class="referrals-commission-mobile-name-new">{{ $commission->level_name }}</div>
+                        <div class="referrals-commission-mobile-rate-new">{{ number_format($commission->commission_rate, 0) }}%</div>
                     </div>
                 </div>
-
-                <!-- Level 2 -->
-                <div class="referrals-commission-mobile-item-new referrals-commission-mobile-level-2">
-                    <div class="referrals-commission-mobile-icon-wrapper-new">
-                        <div class="referrals-commission-mobile-icon-new">
-                            <i class="fas fa-star"></i>
-                        </div>
-                        <div class="referrals-commission-mobile-badge-new">L2</div>
-                    </div>
-                    <div class="referrals-commission-mobile-content-new">
-                        <div class="referrals-commission-mobile-name-new">Second Level</div>
-                        <div class="referrals-commission-mobile-rate-new">3%</div>
-                    </div>
-                </div>
-
-                <!-- Level 3 -->
-                <div class="referrals-commission-mobile-item-new referrals-commission-mobile-level-3">
-                    <div class="referrals-commission-mobile-icon-wrapper-new">
-                        <div class="referrals-commission-mobile-icon-new">
-                            <i class="fas fa-star"></i>
-                        </div>
-                        <div class="referrals-commission-mobile-badge-new">L3</div>
-                    </div>
-                    <div class="referrals-commission-mobile-content-new">
-                        <div class="referrals-commission-mobile-name-new">Third Level</div>
-                        <div class="referrals-commission-mobile-rate-new">3%</div>
-                    </div>
-                </div>
-
-                <!-- Level 4 -->
-                <div class="referrals-commission-mobile-item-new referrals-commission-mobile-level-4">
-                    <div class="referrals-commission-mobile-icon-wrapper-new">
-                        <div class="referrals-commission-mobile-icon-new">
-                            <i class="fas fa-star"></i>
-                        </div>
-                        <div class="referrals-commission-mobile-badge-new">L4</div>
-                    </div>
-                    <div class="referrals-commission-mobile-content-new">
-                        <div class="referrals-commission-mobile-name-new">Fourth Level</div>
-                        <div class="referrals-commission-mobile-rate-new">3%</div>
-                    </div>
-                </div>
-
-                <!-- Level 5 -->
-                <div class="referrals-commission-mobile-item-new referrals-commission-mobile-level-5">
-                    <div class="referrals-commission-mobile-icon-wrapper-new">
-                        <div class="referrals-commission-mobile-icon-new">
-                            <i class="fas fa-star"></i>
-                        </div>
-                        <div class="referrals-commission-mobile-badge-new">L5</div>
-                    </div>
-                    <div class="referrals-commission-mobile-content-new">
-                        <div class="referrals-commission-mobile-name-new">Fifth Level</div>
-                        <div class="referrals-commission-mobile-rate-new">3%</div>
-                    </div>
-                </div>
+                @endforeach
             </div>
         </div>
     </div>
@@ -2972,13 +3095,13 @@ ls-referrer-section-new {
                 <h2 class="referrals-network-title-new">Your Network</h2>
                 <p class="referrals-network-subtitle-new">View all your referrals and their investments</p>
             </div>
-            <select class="referrals-network-filter-new">
-                <option value="all">All Levels</option>
-                <option value="level1">Level 1</option>
-                <option value="level2">Level 2</option>
-                <option value="level3">Level 3</option>
-                <option value="level4">Level 4</option>
-                <option value="level5">Level 5</option>
+            <select class="referrals-network-filter-new" id="levelFilter" onchange="filterByLevel(this.value)">
+                <option value="all" {{ $currentLevel == 'all' ? 'selected' : '' }}>All Levels</option>
+                <option value="1" {{ $currentLevel == '1' ? 'selected' : '' }}>Level 1</option>
+                <option value="2" {{ $currentLevel == '2' ? 'selected' : '' }}>Level 2</option>
+                <option value="3" {{ $currentLevel == '3' ? 'selected' : '' }}>Level 3</option>
+                <option value="4" {{ $currentLevel == '4' ? 'selected' : '' }}>Level 4</option>
+                <option value="5" {{ $currentLevel == '5' ? 'selected' : '' }}>Level 5</option>
             </select>
         </div>
         <div class="referrals-network-card-new">
@@ -2992,26 +3115,130 @@ ls-referrer-section-new {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td colspan="3" class="referrals-network-empty-new">
-                                <div class="referrals-network-empty-content-new">
-                                    <div class="referrals-network-empty-icon-new referrals-network-empty-icon-desktop">
-                                        <i class="fas fa-inbox"></i>
+                        @if($referrals->count() > 0)
+                            @foreach($referrals as $referral)
+                            <tr class="referral-row-clickable" data-referral='@json($referral)' style="cursor: pointer;">
+                                <td>
+                                    <!-- Desktop: Full layout, Mobile: User info on left, Value on right -->
+                                    <div class="referrals-network-mobile-user-info" style="display: flex; align-items: center; gap: 1rem;">
+                                        <div style="width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, rgba(255, 178, 30, 0.2) 0%, rgba(255, 138, 29, 0.1) 100%); display: flex; align-items: center; justify-content: center; color: var(--primary-color); font-weight: 600; flex-shrink: 0;">
+                                            {{ strtoupper(substr($referral['name'], 0, 1)) }}
+                                        </div>
+                                        <div>
+                                            <div class="referrals-network-mobile-user-name" style="font-weight: 600; color: var(--text-primary); margin-bottom: 0.25rem;">{{ $referral['name'] }}</div>
+                                            <div class="referrals-network-mobile-user-level" style="font-size: 0.75rem; color: var(--text-secondary);">{{ $referral['level_name'] }}</div>
+                                        </div>
                                     </div>
-                                    <div class="referrals-network-empty-icon-new referrals-network-empty-icon-mobile">
-                                        <i class="fas fa-inbox"></i>
+                                    <!-- Mobile: Value on right -->
+                                    <div class="referrals-network-mobile-value">
+                                        <div class="referrals-network-mobile-earning">${{ number_format($referral['referral_earning'], 2) }}</div>
+                                        <div class="referrals-network-mobile-invested">Invested Amount: ${{ number_format($referral['invested_amount'], 2) }}</div>
                                     </div>
-                                    <p class="referrals-network-empty-message-new">No referrals yet</p>
-                                    <span class="referrals-network-empty-hint-new">Start sharing your referral link to build your network</span>
-                                    <button class="referrals-network-invite-btn-new">
-                                        <i class="fas fa-share-alt"></i>
-                                        <span>Invite Now</span>
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
+                                </td>
+                                <td>
+                                    <!-- Desktop: Invested Amount column -->
+                                    <div style="font-weight: 600; color: var(--text-primary);">${{ number_format($referral['invested_amount'], 2) }}</div>
+                                </td>
+                                <td>
+                                    <!-- Desktop: Referral Earning column -->
+                                    <div class="desktop-earning" style="font-weight: 600; color: #10B981;">${{ number_format($referral['referral_earning'], 2) }}</div>
+                                    <!-- Mobile: Date in bottom right (join date only) -->
+                                    <div class="referrals-network-mobile-date">{{ $referral['created_at']->format('M d, Y') }}</div>
+                                </td>
+                            </tr>
+                            @endforeach
+                        @else
+                            <tr>
+                                <td colspan="3" class="referrals-network-empty-new">
+                                    <div class="referrals-network-empty-content-new">
+                                        <div class="referrals-network-empty-icon-new referrals-network-empty-icon-desktop">
+                                            <i class="fas fa-inbox"></i>
+                                        </div>
+                                        <div class="referrals-network-empty-icon-new referrals-network-empty-icon-mobile">
+                                            <i class="fas fa-inbox"></i>
+                                        </div>
+                                        <p class="referrals-network-empty-message-new">No referrals yet</p>
+                                        <span class="referrals-network-empty-hint-new">Start sharing your referral link to build your network</span>
+                                        <button class="referrals-network-invite-btn-new">
+                                            <i class="fas fa-share-alt"></i>
+                                            <span>Invite Now</span>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        @endif
                     </tbody>
                 </table>
+                
+                @if($referrals->hasPages())
+                <div style="padding: 1.5rem; display: flex; justify-content: center; align-items: center; gap: 0.5rem; border-top: 1px solid rgba(255, 255, 255, 0.1);">
+                    @if($referrals->onFirstPage())
+                        <button disabled style="padding: 0.5rem 1rem; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; color: var(--text-secondary); cursor: not-allowed;">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                    @else
+                        <a href="{{ $referrals->previousPageUrl() }}" style="padding: 0.5rem 1rem; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; color: var(--text-primary); text-decoration: none;">
+                            <i class="fas fa-chevron-left"></i>
+                        </a>
+                    @endif
+                    
+                    @foreach($referrals->getUrlRange(1, $referrals->lastPage()) as $page => $url)
+                        @if($page == $referrals->currentPage())
+                            <span style="padding: 0.5rem 1rem; background: rgba(255, 178, 30, 0.2); border: 1px solid rgba(255, 178, 30, 0.4); border-radius: 8px; color: var(--primary-color); font-weight: 600;">{{ $page }}</span>
+                        @else
+                            <a href="{{ $url }}" style="padding: 0.5rem 1rem; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; color: var(--text-primary); text-decoration: none;">{{ $page }}</a>
+                        @endif
+                    @endforeach
+                    
+                    @if($referrals->hasMorePages())
+                        <a href="{{ $referrals->nextPageUrl() }}" style="padding: 0.5rem 1rem; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; color: var(--text-primary); text-decoration: none;">
+                            <i class="fas fa-chevron-right"></i>
+                        </a>
+                    @else
+                        <button disabled style="padding: 0.5rem 1rem; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; color: var(--text-secondary); cursor: not-allowed;">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    @endif
+                </div>
+                @endif
+            </div>
+        </div>
+    </div>
+
+    <!-- Referral User Detail Modal -->
+    <div id="referralDetailModal" class="referral-detail-modal" style="display: none;">
+        <div class="referral-detail-modal-overlay" onclick="closeReferralModal()"></div>
+        <div class="referral-detail-modal-content">
+            <div class="referral-detail-modal-title">
+                <span>Referral User Detail</span>
+                <button class="referral-detail-modal-close" onclick="closeReferralModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="referral-detail-header">
+                <div class="referral-detail-avatar">
+                    <span id="modalUserInitial">U</span>
+                </div>
+                <h3 class="referral-detail-name" id="modalUserName">User Name</h3>
+                <p class="referral-detail-date" id="modalUserDate">Jan 1, 2026</p>
+            </div>
+            <div class="referral-detail-body">
+                <div class="referral-detail-item">
+                    <span class="referral-detail-label">Phone Number:</span>
+                    <span class="referral-detail-value" id="modalUserPhone">N/A</span>
+                </div>
+                <div class="referral-detail-item">
+                    <span class="referral-detail-label">Level:</span>
+                    <span class="referral-detail-value" id="modalUserLevel">N/A</span>
+                </div>
+                <div class="referral-detail-item">
+                    <span class="referral-detail-label">Earning:</span>
+                    <span class="referral-detail-value" id="modalUserEarning">$0</span>
+                </div>
+                <div class="referral-detail-item">
+                    <span class="referral-detail-label">Invested Amount:</span>
+                    <span class="referral-detail-value" id="modalUserInvested">$0</span>
+                </div>
             </div>
         </div>
     </div>
@@ -3019,7 +3246,7 @@ ls-referrer-section-new {
 </div>
 
 @push('scripts')
-<script src="{{ asset('dashboard/js/referrals.js') }}"></script>
+<script src="{{ asset('assets/dashboard/js/referrals.js') }}"></script>
 <script>
     // Copy functionality
     document.querySelectorAll('[data-copy]').forEach(button => {
@@ -3041,6 +3268,85 @@ ls-referrer-section-new {
                 }, 2000);
             }
         });
+    });
+
+    // Level filter functionality
+    function filterByLevel(level) {
+        const url = new URL(window.location.href);
+        if (level === 'all') {
+            url.searchParams.delete('level');
+        } else {
+            url.searchParams.set('level', level);
+        }
+        url.searchParams.delete('page'); // Reset to first page when filtering
+        window.location.href = url.toString();
+    }
+
+    // Referral detail modal functionality
+    document.querySelectorAll('.referral-row-clickable').forEach(row => {
+        row.addEventListener('click', function(e) {
+            // Don't trigger if clicking on links or buttons
+            if (e.target.tagName === 'A' || e.target.tagName === 'BUTTON') {
+                return;
+            }
+            
+            const referralData = JSON.parse(this.getAttribute('data-referral'));
+            openReferralModal(referralData);
+        });
+    });
+
+    function openReferralModal(referral) {
+        // Set user initial
+        const initial = referral.name ? referral.name.charAt(0).toUpperCase() : 'U';
+        document.getElementById('modalUserInitial').textContent = initial;
+        
+        // Set user name
+        document.getElementById('modalUserName').textContent = referral.name || 'N/A';
+        
+        // Set date
+        let formattedDate = 'N/A';
+        if (referral.created_at) {
+            // Handle both string and object dates
+            const dateStr = typeof referral.created_at === 'string' ? referral.created_at : referral.created_at.date || referral.created_at;
+            const date = new Date(dateStr);
+            if (!isNaN(date.getTime())) {
+                formattedDate = date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+            }
+        }
+        document.getElementById('modalUserDate').textContent = formattedDate;
+        
+        // Set phone (format with + if not already present)
+        let phone = referral.phone || 'N/A';
+        if (phone !== 'N/A' && phone && !phone.startsWith('+')) {
+            // Add + if phone doesn't start with it (assuming it's an international number)
+            phone = '+' + phone;
+        }
+        document.getElementById('modalUserPhone').textContent = phone;
+        
+        // Set level
+        document.getElementById('modalUserLevel').textContent = referral.level_name || 'N/A';
+        
+        // Set earning
+        document.getElementById('modalUserEarning').textContent = '$' + parseFloat(referral.referral_earning || 0).toFixed(2);
+        
+        // Set invested amount
+        document.getElementById('modalUserInvested').textContent = '$' + parseFloat(referral.invested_amount || 0).toFixed(2);
+        
+        // Show modal
+        document.getElementById('referralDetailModal').style.display = 'flex';
+        document.body.style.overflow = 'hidden'; // Prevent background scrolling
+    }
+
+    function closeReferralModal() {
+        document.getElementById('referralDetailModal').style.display = 'none';
+        document.body.style.overflow = ''; // Restore scrolling
+    }
+
+    // Close modal on Escape key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            closeReferralModal();
+        }
     });
 </script>
 @endpush

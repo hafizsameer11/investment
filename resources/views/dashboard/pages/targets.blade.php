@@ -3,7 +3,7 @@
 @section('title', 'Core Mining - Targets')
 
 @push('styles')
-<link rel="stylesheet" href="{{ asset('dashboard/css/targets.css') }}">
+<link rel="stylesheet" href="{{ asset('assets/dashboard/css/targets.css') }}">
 @endpush
 
 @section('content')
@@ -47,7 +47,7 @@
 </div>
 
 @push('scripts')
-<script src="{{ asset('dashboard/js/targets.js') }}"></script>
+<script src="{{ asset('assets/dashboard/js/targets.js') }}"></script>
 @endpush
 @endsection
 

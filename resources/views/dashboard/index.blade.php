@@ -3,7 +3,7 @@
 @section('title', 'Core Mining - Dashboard')
 
 @push('styles')
-<link rel="stylesheet" href="{{ asset('dashboard/css/dashboard.css') }}">
+<link rel="stylesheet" href="{{ asset('assets/dashboard/css/dashboard.css') }}">
 <style>
     .mining-dashboard {
         padding: 2rem;
@@ -1851,7 +1851,7 @@
 @endsection
 
 @push('scripts')
-<script src="{{ asset('dashboard/js/dashboard.js') }}"></script>
+<script src="{{ asset('assets/dashboard/js/dashboard.js') }}"></script>
 <script>
     // Balance toggle functionality
     let balanceVisible = true;
