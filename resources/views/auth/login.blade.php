@@ -43,12 +43,16 @@
             </div>
         </div>
 
+        
         <!-- Login Form Card -->
         <div class="login-card">
             <div class="card-content">
-                <h1 class="welcome-title">Welcome Back</h1>
-                <p class="welcome-subtitle">Login to your account</p>
-
+                <!-- Page Header (Centered) -->
+                <div class="login-header" style="margin-bottom: 10px" >
+                    <h1 class="welcome-title">Welcome Back</h1>
+                    <p class="welcome-subtitle">Login to your account</p>
+                </div>
+                
                 <form id="loginForm" class="login-form" method="POST" action="{{ route('login.post') }}">
                     @csrf
                     <!-- Error Messages -->

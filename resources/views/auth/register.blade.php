@@ -42,11 +42,15 @@
             </div>
         </div>
 
+        
         <!-- Register Form Card -->
         <div class="register-card">
             <div class="card-content">
-                <h1 class="welcome-title">Create an Account</h1>
-                <p class="welcome-subtitle">Join the future of AI investing</p>
+                <!-- Page Header (Centered) -->
+                <div class="register-header" style="margin-bottom: 10px" >
+                    <h1 class="welcome-title">Create an Account</h1>
+                    <p class="welcome-subtitle">Join the future of AI investing</p>
+                </div>
 
                 <form id="registerForm" class="register-form" method="POST" action="{{ route('register') }}">
                     @csrf
