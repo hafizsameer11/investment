@@ -117,7 +117,7 @@
                         <li>
                             <a href="{{ route('admin.currency-conversion.index') }}" class="waves-effect">
                                 <i class="mdi mdi-currency-usd"></i>
-                                <span> USD to PKR Conversion </span>
+                                <span>Currency Conversion</span>
                             </a>
                         </li>
 
