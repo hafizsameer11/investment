@@ -274,21 +274,6 @@
                 </form>
             </div>
         </div>
-
-        <!-- Live Chat Widget -->
-        <div class="chat-widget">
-            <div class="chat-bubble">
-                <span class="chat-bubble-text">We are online!</span>
-            </div>
-            <div class="chat-icon-container">
-                <div class="chat-icon">
-                    <svg viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z"/>
-                    </svg>
-                </div>
-                <span class="chat-text">Live Tawk</span>
-            </div>
-        </div>
     </div>
 
     <script src="{{ asset('assets/dashboard/js/register.js') }}"></script>

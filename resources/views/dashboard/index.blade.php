@@ -1733,12 +1733,14 @@
                 </div>
             </div>
             <div class="balance-amount-display">
-                <span class="balance-amount-large" id="totalBalance">$0</span>
+                {{-- <span class="balance-amount-large" id="totalBalance">${{ number_format($user->net_balance ?? 0, 2) }}</span> --}}
+                <span class="balance-amount-large" id="totalBalance">${{ number_format($user->net_balance) }}</span>
             </div>
             <div class="wallet-info-row">
                 <div class="deposit-wallet-info">
                     <span class="deposit-wallet-label">Fund Wallet:</span>
-                    <span class="deposit-wallet-amount">$0</span>
+                    {{-- <span class="deposit-wallet-amount" id="fundWalletAmount">${{ number_format($user->fund_wallet ?? 0, 2) }}</span> --}}
+                    <span class="deposit-wallet-amount" id="fundWalletAmount">${{ number_format($user->fund_wallet ) }}</span>
                     <i class="fas fa-arrow-down deposit-trend-down"></i>
                 </div>
                 
@@ -1803,7 +1805,8 @@
                 <div class="stat-icon"><i class="fas fa-coins"></i></div>
                 <div class="stat-content">
                     <div class="stat-label">Total Invested</div>
-                    <div class="stat-value">$0</div>
+                    {{-- <div class="stat-value">${{ number_format($user->total_invested ?? 0, 2) }}</div> --}}
+                    <div class="stat-value">${{ number_format($user->total_invested ) }}</div>
                 </div>
             </div>
         </div>
@@ -1857,22 +1860,30 @@
     let balanceVisible = true;
     const balanceToggle = document.getElementById('balanceToggle');
     const totalBalanceEl = document.getElementById('totalBalance');
-    const depositWalletAmount = document.querySelector('.deposit-wallet-amount');
+    const depositWalletAmount = document.getElementById('fundWalletAmount');
+    
+    // Store original values
+    const originalNetBalance = totalBalanceEl ? totalBalanceEl.textContent : '$0.00';
+    const originalFundWallet = depositWalletAmount ? depositWalletAmount.textContent : '$0.00';
 
     if (balanceToggle) {
         balanceToggle.addEventListener('click', function() {
             balanceVisible = !balanceVisible;
             if (balanceVisible) {
                 // Show balance
-                totalBalanceEl.textContent = '$0';
+                if (totalBalanceEl) {
+                    totalBalanceEl.textContent = originalNetBalance;
+                }
                 if (depositWalletAmount) {
-                    depositWalletAmount.textContent = '$0';
+                    depositWalletAmount.textContent = originalFundWallet;
                 }
                 balanceToggle.classList.remove('fa-eye-slash');
                 balanceToggle.classList.add('fa-eye');
             } else {
                 // Hide balance
-                totalBalanceEl.textContent = '••••••';
+                if (totalBalanceEl) {
+                    totalBalanceEl.textContent = '••••••';
+                }
                 if (depositWalletAmount) {
                     depositWalletAmount.textContent = '••••';
                 }

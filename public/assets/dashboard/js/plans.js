@@ -11,6 +11,7 @@
         highlightActiveNavItem();
         initPlanButtons();
         initCalculator();
+        initCalculatorToggle();
     });
 
     /**
@@ -68,48 +69,252 @@
      * Initialize Investment Calculator
      */
     function initCalculator() {
-        const calculatorBtns = document.querySelectorAll('#openCalculatorBtn, .plan-action-secondary-new, .plan-calculator-toggle-new, #calculatorToggle');
-        const calculatorSection = document.getElementById('calculatorSection');
-        const calculatorContent = document.getElementById('calculatorContent');
+        const calculatorModalOverlay = document.getElementById('calculatorModalOverlay');
+        const calculatorBtns = document.querySelectorAll('.open-calculator-btn');
+        const closeModalBtns = document.querySelectorAll('#closeCalculatorModal, #closeCalculatorModalBtn');
+        const resetBtn = document.getElementById('resetCalculator');
+        const investmentInput = document.getElementById('investmentAmount');
         
+        // Store current plan data
+        let currentPlanData = null;
+        
+        // Open modal with plan data
         calculatorBtns.forEach(btn => {
             btn.addEventListener('click', function(e) {
                 e.preventDefault();
-                
-                if (calculatorSection) {
+                if (calculatorModalOverlay) {
+                    // Get plan data from button attributes
+                    currentPlanData = {
+                        id: btn.getAttribute('data-plan-id'),
+                        name: btn.getAttribute('data-plan-name'),
+                        subtitle: btn.getAttribute('data-plan-subtitle'),
+                        minInvestment: parseFloat(btn.getAttribute('data-min-investment')),
+                        maxInvestment: parseFloat(btn.getAttribute('data-max-investment')),
+                        dailyRoiMin: parseFloat(btn.getAttribute('data-daily-roi-min')),
+                        dailyRoiMax: parseFloat(btn.getAttribute('data-daily-roi-max')),
+                        hourlyRate: parseFloat(btn.getAttribute('data-hourly-rate')) || 0
+                    };
+                    
+                    // Populate modal with plan data
+                    populateCalculatorModal(currentPlanData);
+                    
+                    calculatorModalOverlay.classList.add('show');
+                    // Prevent body scroll when modal is open
+                    document.body.style.overflow = 'hidden';
+                }
+            });
+        });
+
+        // Close modal
+        function closeModal() {
+            if (calculatorModalOverlay) {
+                calculatorModalOverlay.classList.remove('show');
+                document.body.style.overflow = '';
+            }
+        }
+
+        closeModalBtns.forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                closeModal();
+            });
+        });
+
+        // Close modal when clicking overlay
+        if (calculatorModalOverlay) {
+            calculatorModalOverlay.addEventListener('click', function(e) {
+                if (e.target === calculatorModalOverlay) {
+                    closeModal();
+                }
+            });
+        }
+
+        // Close modal on Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && calculatorModalOverlay && calculatorModalOverlay.classList.contains('show')) {
+                closeModal();
+            }
+        });
+
+        // Reset calculator
+        if (resetBtn && investmentInput) {
+            resetBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                investmentInput.value = '';
+                calculateInvestment(investmentInput.value, currentPlanData);
+            });
+        }
+
+        // Calculate investment on input
+        if (investmentInput) {
+            investmentInput.addEventListener('input', function() {
+                calculateInvestment(this.value, currentPlanData);
+            });
+
+            investmentInput.addEventListener('change', function() {
+                calculateInvestment(this.value, currentPlanData);
+            });
+        }
+    }
+    
+    /**
+     * Populate Calculator Modal with Plan Data
+     */
+    function populateCalculatorModal(planData) {
+        if (!planData) return;
+        
+        // Update modal title
+        const modalTitle = document.getElementById('calculatorModalTitle');
+        if (modalTitle) {
+            modalTitle.textContent = `Investment Profit Calculator - ${planData.name}`;
+        }
+        
+        // Update plan name and description
+        const planName = document.getElementById('calculatorPlanName');
+        const planDescription = document.getElementById('calculatorPlanDescription');
+        if (planName) planName.textContent = planData.name;
+        if (planDescription) planDescription.textContent = planData.subtitle || 'Earn through mining';
+        
+        // Update investment range
+        const investmentRange = document.getElementById('calculatorInvestmentRange');
+        if (investmentRange) {
+            investmentRange.textContent = `$${planData.minInvestment.toFixed(2)} - $${planData.maxInvestment.toFixed(2)}`;
+        }
+        
+        // Update return rate (use hourly rate if available, otherwise calculate from daily)
+        const returnRateEl = document.getElementById('calculatorReturnRate');
+        const returnRateDetailEl = document.getElementById('calculatorReturnRateDetail');
+        const hourlyRate = planData.hourlyRate || (planData.dailyRoiMin / 24);
+        
+        if (returnRateEl) {
+            returnRateEl.textContent = `${hourlyRate.toFixed(3)}%`;
+        }
+        if (returnRateDetailEl) {
+            returnRateDetailEl.textContent = `${hourlyRate.toFixed(3)}% every hour`;
+        }
+        
+        // Update input placeholder and min/max
+        const investmentInput = document.getElementById('investmentAmount');
+        if (investmentInput) {
+            investmentInput.placeholder = `Enter amount between ${planData.minInvestment} - ${planData.maxInvestment}`;
+            investmentInput.min = planData.minInvestment;
+            investmentInput.max = planData.maxInvestment;
+            investmentInput.value = '';
+        }
+        
+        // Reset calculation cards
+        const investmentDetailsCard = document.getElementById('investmentDetailsCard');
+        const profitBreakdownCard = document.getElementById('profitBreakdownCard');
+        if (investmentDetailsCard) investmentDetailsCard.style.display = 'none';
+        if (profitBreakdownCard) profitBreakdownCard.style.display = 'none';
+    }
+
+    /**
+     * Calculate Investment Returns
+     */
+    function calculateInvestment(amount, planData) {
+        if (!planData) {
+            // Fallback to default values if no plan data
+            planData = {
+                minInvestment: 2,
+                maxInvestment: 100000,
+                hourlyRate: 0.145
+            };
+        }
+        
+        const returnRate = (planData.hourlyRate || 0) / 100; // Convert percentage to decimal
+        const investmentDetailsCard = document.getElementById('investmentDetailsCard');
+        const profitBreakdownCard = document.getElementById('profitBreakdownCard');
+        
+        // Parse amount
+        const investmentAmount = parseFloat(amount) || 0;
+        
+        // Validate amount
+        if (investmentAmount < planData.minInvestment || investmentAmount > planData.maxInvestment) {
+            if (investmentDetailsCard) investmentDetailsCard.style.display = 'none';
+            if (profitBreakdownCard) profitBreakdownCard.style.display = 'none';
+            return;
+        }
+        
+        // Show cards if amount is valid
+        if (investmentDetailsCard) investmentDetailsCard.style.display = 'block';
+        if (profitBreakdownCard) profitBreakdownCard.style.display = 'block';
+        
+        // Calculate profits
+        const profitPerCycle = investmentAmount * returnRate;
+        const profitHourly = profitPerCycle;
+        const profitDaily = profitHourly * 24;
+        const profitWeekly = profitDaily * 7;
+        const profitMonthly = profitDaily * 30;
+        
+        // Update Investment Details
+        const calculatedAmountEl = document.getElementById('calculatedAmount');
+        const profitPerCycleEl = document.getElementById('profitPerCycle');
+        
+        if (calculatedAmountEl) {
+            calculatedAmountEl.textContent = '$' + investmentAmount.toFixed(2);
+        }
+        if (profitPerCycleEl) {
+            profitPerCycleEl.textContent = '$' + profitPerCycle.toFixed(4);
+        }
+        
+        // Update Profit Breakdown
+        const profitHourlyEl = document.getElementById('profitHourly');
+        const profitDailyEl = document.getElementById('profitDaily');
+        const profitWeeklyEl = document.getElementById('profitWeekly');
+        const profitMonthlyEl = document.getElementById('profitMonthly');
+        
+        if (profitHourlyEl) {
+            profitHourlyEl.textContent = '$' + profitHourly.toFixed(4);
+        }
+        if (profitDailyEl) {
+            profitDailyEl.textContent = '$' + profitDaily.toFixed(2);
+        }
+        if (profitWeeklyEl) {
+            profitWeeklyEl.textContent = '$' + profitWeekly.toFixed(2);
+        }
+        if (profitMonthlyEl) {
+            profitMonthlyEl.textContent = '$' + profitMonthly.toFixed(2);
+        }
+    }
+
+    /**
+     * Handle calculator toggle for existing calculator section
+     */
+    function initCalculatorToggle() {
+        const calculatorToggles = document.querySelectorAll('.calculator-toggle');
+        
+        calculatorToggles.forEach(calculatorToggle => {
+            const planId = calculatorToggle.getAttribute('data-plan-id');
+            const calculatorSection = document.getElementById('calculatorSection' + planId);
+            const calculatorContent = document.getElementById('calculatorContent' + planId);
+            
+            if (calculatorToggle && calculatorSection) {
+                calculatorToggle.addEventListener('click', function(e) {
+                    e.preventDefault();
                     const isOpen = calculatorSection.classList.contains('show');
                     
                     if (isOpen) {
-                        // Close calculator
                         calculatorSection.classList.remove('show');
                         if (calculatorContent) {
                             calculatorContent.style.display = 'none';
                         }
-                        // Update toggle button text
-                        const toggleBtn = document.getElementById('calculatorToggle');
-                        if (toggleBtn) {
-                            const span = toggleBtn.querySelector('span');
-                            if (span) span.textContent = 'Open Calculator';
-                            const icon = toggleBtn.querySelector('i');
-                            if (icon) icon.className = 'fas fa-calculator';
-                        }
+                        const span = calculatorToggle.querySelector('span');
+                        if (span) span.textContent = 'Open Calculator';
+                        const icon = calculatorToggle.querySelector('i');
+                        if (icon) icon.className = 'fas fa-calculator';
                     } else {
-                        // Open calculator
                         calculatorSection.classList.add('show');
                         if (calculatorContent) {
                             calculatorContent.style.display = 'grid';
                         }
-                        // Update toggle button text
-                        const toggleBtn = document.getElementById('calculatorToggle');
-                        if (toggleBtn) {
-                            const span = toggleBtn.querySelector('span');
-                            if (span) span.textContent = 'Close Calculator';
-                            const icon = toggleBtn.querySelector('i');
-                            if (icon) icon.className = 'fas fa-times';
-                        }
+                        const span = calculatorToggle.querySelector('span');
+                        if (span) span.textContent = 'Close Calculator';
+                        const icon = calculatorToggle.querySelector('i');
+                        if (icon) icon.className = 'fas fa-times';
                     }
-                }
-            });
+                });
+            }
         });
     }
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
+use App\Models\MiningPlan;
 
 class PlansController extends Controller
 {
@@ -11,7 +12,12 @@ class PlansController extends Controller
      */
     public function index()
     {
-        return view('dashboard.pages.plans');
+        $plans = MiningPlan::where('is_active', true)
+            ->orderBy('sort_order')
+            ->orderBy('id')
+            ->get();
+        
+        return view('dashboard.pages.plans', compact('plans'));
     }
 }
 

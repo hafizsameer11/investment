@@ -1320,6 +1320,507 @@
             display: none;
         }
     }
+
+    /* Investment Calculator Modal Styles */
+    .calculator-modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.7);
+        z-index: 9999;
+        display: none;
+        align-items: flex-end;
+        justify-content: center;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .calculator-modal-overlay.show {
+        display: flex;
+        opacity: 1;
+    }
+
+    .calculator-modal {
+        background: #181b27;
+        border: 1px solid var(--card-border);
+        border-radius: 24px 24px 0 0;
+        width: 100%;
+        max-width: 100%;
+        height: 50vh;
+        
+        min-height: 50vh;
+        max-height: 50vh;
+        overflow: hidden;
+        box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.6);
+        position: relative;
+        transform: translateY(100%);
+        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        display: flex;
+        flex-direction: column;
+    }
+
+    .calculator-modal-overlay.show .calculator-modal {
+        transform: translateY(0);
+    }
+
+    .calculator-modal-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1rem 1.25rem;
+        border-bottom: 1px solid var(--card-border);
+        flex-shrink: 0;
+    }
+
+    .calculator-modal-title {
+        font-size: 1rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin: 0;
+    }
+
+    .calculator-modal-close {
+        background: transparent;
+        border: none;
+        color: var(--text-primary);
+        font-size: 1.1rem;
+        cursor: pointer;
+        padding: 0.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 8px;
+        transition: var(--transition);
+        width: 32px;
+        height: 32px;
+    }
+
+    .calculator-modal-close:hover {
+        background: rgba(255, 178, 30, 0.1);
+        color: var(--primary-color);
+    }
+
+    .calculator-modal-body {
+        padding: 1.25rem;
+        flex: 1;
+        overflow-y: auto;
+        min-height: 0;
+        overflow-x: hidden;
+    }
+
+    .calculator-plan-section {
+        margin-bottom: 1.5rem;
+    }
+
+    .calculator-plan-name {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin: 0 0 0.375rem 0;
+    }
+
+    .calculator-plan-description {
+        font-size: 0.875rem;
+        color: var(--text-secondary);
+        margin: 0;
+    }
+
+    .calculator-details-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+        width: 100%;
+    }
+
+    .calculator-detail-item {
+        display: flex;
+        flex-direction: column;
+        gap: 0.375rem;
+    }
+
+    .calculator-detail-label {
+        font-size: 0.75rem;
+        color: var(--text-secondary);
+        font-weight: 500;
+    }
+
+    .calculator-detail-value {
+        font-size: 0.875rem;
+        font-weight: 700;
+        color: var(--text-primary);
+    }
+
+    .calculator-input-section {
+        margin-bottom: 1rem;
+    }
+
+    .calculator-input-label {
+        display: block;
+        font-size: 0.75rem;
+        color: var(--text-secondary);
+        margin-bottom: 0.5rem;
+        font-weight: 500;
+    }
+
+    .calculator-input-wrapper {
+        position: relative;
+        display: flex;
+        align-items: center;
+        background: rgba(24, 27, 39, 0.8);
+        border: 1px solid var(--card-border);
+        border-radius: 12px;
+        padding: 0.75rem 1rem;
+        transition: var(--transition);
+    }
+
+    .calculator-input-wrapper:focus-within {
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 3px rgba(255, 178, 30, 0.1);
+    }
+
+    .calculator-input-prefix {
+        color: var(--text-primary);
+        font-weight: 600;
+        margin-right: 0.5rem;
+        font-size: 0.875rem;
+    }
+
+    .calculator-input {
+        flex: 1;
+        background: transparent;
+        border: none;
+        color: var(--text-primary);
+        font-size: 0.875rem;
+        outline: none;
+        padding: 0;
+    }
+
+    .calculator-input::placeholder {
+        color: var(--text-muted);
+    }
+
+    .calculator-input-action {
+        border: none;
+        cursor: default;
+        padding: 0.375rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 6px;
+        transition: var(--transition);
+        margin-left: 0.5rem;
+        width: 28px;
+        height: 28px;
+        pointer-events: none;
+    }
+
+    .calculator-input-action:first-of-type {
+        background: rgba(255, 193, 7, 0.2);
+        color: #FFC107;
+    }
+
+    .calculator-input-action:last-of-type {
+        background: rgba(68, 162, 210, 0.2);
+        color: #44a2d2;
+    }
+
+    /* Investment Details Card */
+    .calculator-details-card {
+        background: rgba(24, 27, 39, 0.6);
+        border: 1px solid var(--card-border);
+        border-radius: 12px;
+        padding: 1rem;
+        margin-bottom: 1rem;
+    }
+
+    .calculator-card-title {
+        font-size: 0.9375rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin: 0 0 1rem 0;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .calculator-trend-icon {
+        color: #10b981;
+        font-size: 0.875rem;
+    }
+
+    .calculator-details-list {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+
+    .calculator-detail-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .calculator-detail-row-label {
+        font-size: 0.8125rem;
+        color: var(--text-secondary);
+        font-weight: 500;
+    }
+
+    .calculator-detail-row-value {
+        font-size: 0.8125rem;
+        color: var(--text-primary);
+        font-weight: 600;
+    }
+
+    .calculator-profit-value {
+        color: #10b981 !important;
+        font-weight: 700;
+    }
+
+    /* Profit Breakdown Grid */
+    .calculator-profit-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.75rem;
+    }
+
+    .calculator-profit-item {
+        display: flex;
+        flex-direction: column;
+        gap: 0.375rem;
+    }
+
+    .calculator-profit-icon {
+        font-size: 0.75rem;
+        color: var(--text-secondary);
+        margin-bottom: 0.25rem;
+    }
+
+    .calculator-profit-label {
+        font-size: 0.75rem;
+        color: var(--text-secondary);
+        font-weight: 500;
+    }
+
+    .calculator-modal-footer {
+        display: flex;
+        gap: 0.75rem;
+        padding: 1rem 1.25rem;
+        border-top: 1px solid var(--card-border);
+        flex-shrink: 0;
+        background: #181b27;
+        position: relative;
+        z-index: 10;
+    }
+
+    .calculator-btn {
+        flex: 1;
+        padding: 0.75rem 1.25rem;
+        border: none;
+        border-radius: 12px;
+        font-weight: 600;
+        font-size: 0.875rem;
+        cursor: pointer;
+        transition: var(--transition);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 44px;
+    }
+
+    .calculator-btn-reset {
+        background: rgba(40, 40, 40, 0.8);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        color: #FFFFFF;
+    }
+
+    .calculator-btn-reset:hover {
+        background: rgba(50, 50, 50, 0.9);
+        border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .calculator-btn-close {
+        background: #FF69B4;
+        color: #FFFFFF;
+        box-shadow: 0 4px 16px rgba(255, 105, 180, 0.3);
+        border: none;
+    }
+
+    .calculator-btn-close:hover {
+        background: #FF1493;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(255, 105, 180, 0.4);
+    }
+
+
+    /* Mobile Responsive */
+    @media (max-width: 768px) {
+        .calculator-modal {
+            max-width: 100%;
+            border-radius: 20px 20px 0 0;
+            height: 50vh;
+            min-height: 50vh;
+            max-height: 50vh;
+        }
+
+        .calculator-modal-header {
+            padding: 1rem 1.25rem;
+        }
+
+        .calculator-modal-title {
+            font-size: 0.9375rem;
+        }
+
+        .calculator-modal-body {
+            padding: 1.25rem;
+        }
+
+        .calculator-plan-name {
+            font-size: 1.125rem;
+        }
+
+        .calculator-plan-description {
+            font-size: 0.8125rem;
+        }
+
+        .calculator-details-grid {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.875rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .calculator-detail-label {
+            font-size: 0.6875rem;
+        }
+
+        .calculator-detail-value {
+            font-size: 0.8125rem;
+        }
+
+        .calculator-input-label {
+            font-size: 0.6875rem;
+        }
+
+        .calculator-input {
+            font-size: 0.8125rem;
+        }
+
+        .calculator-details-card {
+            padding: 0.875rem;
+        }
+
+        .calculator-card-title {
+            font-size: 0.875rem;
+        }
+
+        .calculator-detail-row-label,
+        .calculator-detail-row-value {
+            font-size: 0.75rem;
+        }
+
+        .calculator-profit-grid {
+            gap: 0.625rem;
+        }
+
+        .calculator-profit-label,
+        .calculator-profit-value {
+            font-size: 0.6875rem;
+        }
+
+        .calculator-modal-footer {
+            padding: 1rem 1.25rem;
+            flex-direction: row;
+        }
+
+        .calculator-btn {
+            font-size: 0.8125rem;
+            padding: 0.6875rem 1rem;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .calculator-modal {
+            border-radius: 16px 16px 0 0;
+            height: 50vh;
+            min-height: 50vh;
+            max-height: 50vh;
+        }
+
+        .calculator-modal-header {
+            padding: 0.875rem 1rem;
+        }
+
+        .calculator-modal-title {
+            font-size: 0.875rem;
+        }
+
+        .calculator-modal-body {
+            padding: 1rem;
+        }
+
+        .calculator-plan-name {
+            font-size: 1rem;
+        }
+
+        .calculator-plan-description {
+            font-size: 0.75rem;
+        }
+
+        .calculator-details-grid {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.75rem;
+        }
+
+        .calculator-detail-label {
+            font-size: 0.625rem;
+        }
+
+        .calculator-detail-value {
+            font-size: 0.75rem;
+        }
+
+        .calculator-input-label {
+            font-size: 0.625rem;
+        }
+
+        .calculator-input {
+            font-size: 0.75rem;
+        }
+
+        .calculator-details-card {
+            padding: 0.75rem;
+        }
+
+        .calculator-card-title {
+            font-size: 0.8125rem;
+        }
+
+        .calculator-detail-row-label,
+        .calculator-detail-row-value {
+            font-size: 0.6875rem;
+        }
+
+        .calculator-profit-grid {
+            gap: 0.5rem;
+        }
+
+        .calculator-profit-label,
+        .calculator-profit-value {
+            font-size: 0.625rem;
+        }
+
+        .calculator-modal-footer {
+            padding: 0.875rem 1rem;
+        }
+
+        .calculator-btn {
+            font-size: 0.75rem;
+            padding: 0.625rem 0.875rem;
+        }
+    }
 </style>
 @endpush
 
@@ -1347,59 +1848,68 @@
         </div>
     </div>
 
-    <!-- Main Plan Card -->
-    <div class="plan-main-card-new">
+    <!-- Main Plan Cards -->
+    @forelse($plans as $plan)
+    <div class="plan-main-card-new" data-plan-id="{{ $plan->id }}">
         <div class="plan-card-content-new">
             <div class="plan-header-new">
                 <div class="plan-header-left-new">
                     <div class="plan-icon-large-new">
-                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M12 2L8 6L10 8L6 12L8 14L12 10L16 14L18 12L14 8L16 6L12 2Z" fill="url(#planGradient)" stroke="#FFB21E" stroke-width="1.5" stroke-linejoin="round"/>
-                            <rect x="4" y="16" width="4" height="4" rx="1" fill="#FFB21E" opacity="0.6"/>
-                            <rect x="10" y="18" width="4" height="4" rx="1" fill="#FF8A1D" opacity="0.6"/>
-                            <rect x="16" y="16" width="4" height="4" rx="1" fill="#FFB21E" opacity="0.6"/>
-                            <defs>
-                                <linearGradient id="planGradient" x1="12" y1="2" x2="12" y2="14" gradientUnits="userSpaceOnUse">
-                                    <stop offset="0%" stop-color="#FFB21E"/>
-                                    <stop offset="100%" stop-color="#FF8A1D"/>
-                                </linearGradient>
-                            </defs>
-                        </svg>
+                        @if($plan->icon_class)
+                            <i class="{{ $plan->icon_class }}"></i>
+                        @else
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 2L8 6L10 8L6 12L8 14L12 10L16 14L18 12L14 8L16 6L12 2Z" fill="url(#planGradient{{ $plan->id }})" stroke="#FFB21E" stroke-width="1.5" stroke-linejoin="round"/>
+                                <rect x="4" y="16" width="4" height="4" rx="1" fill="#FFB21E" opacity="0.6"/>
+                                <rect x="10" y="18" width="4" height="4" rx="1" fill="#FF8A1D" opacity="0.6"/>
+                                <rect x="16" y="16" width="4" height="4" rx="1" fill="#FFB21E" opacity="0.6"/>
+                                <defs>
+                                    <linearGradient id="planGradient{{ $plan->id }}" x1="12" y1="2" x2="12" y2="14" gradientUnits="userSpaceOnUse">
+                                        <stop offset="0%" stop-color="#FFB21E"/>
+                                        <stop offset="100%" stop-color="#FF8A1D"/>
+                                    </linearGradient>
+                                </defs>
+                            </svg>
+                        @endif
                     </div>
                     <div class="plan-title-section-new">
                         <div class="plan-badge-new">
                             <i class="fas fa-star"></i>
-                            <span>Featured Mining Plan</span>
+                            <span>Mining Plan</span>
                         </div>
-                        <h2 class="plan-name-new">Lithium</h2>
-                        <p class="plan-tagline-new">Advanced Mining Plan for Maximum Returns</p>
+                        <h2 class="plan-name-new">{{ $plan->name }}</h2>
+                        <p class="plan-tagline-new">{{ $plan->tagline ?? ($plan->subtitle ?? 'Advanced Mining Plan for Maximum Returns') }}</p>
                     </div>
             </div>
         </div>
 
-        <!-- Mobile Layout for Lithium Card -->
+        <!-- Mobile Layout -->
         <div class="plan-mobile-layout-new">
             <!-- Mobile Header: Icon + Title + Subtitle -->
             <div class="plan-mobile-header-new">
                 <div class="plan-mobile-icon-wrapper-new">
                     <div class="plan-icon-large-new">
-                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M12 2L8 6L10 8L6 12L8 14L12 10L16 14L18 12L14 8L16 6L12 2Z" fill="url(#planGradient)" stroke="#FFB21E" stroke-width="1.5" stroke-linejoin="round"/>
-                            <rect x="4" y="16" width="4" height="4" rx="1" fill="#FFB21E" opacity="0.6"/>
-                            <rect x="10" y="18" width="4" height="4" rx="1" fill="#FF8A1D" opacity="0.6"/>
-                            <rect x="16" y="16" width="4" height="4" rx="1" fill="#FFB21E" opacity="0.6"/>
-                            <defs>
-                                <linearGradient id="planGradient" x1="12" y1="2" x2="12" y2="14" gradientUnits="userSpaceOnUse">
-                                    <stop offset="0%" stop-color="#FFB21E"/>
-                                    <stop offset="100%" stop-color="#FF8A1D"/>
-                                </linearGradient>
-                            </defs>
-                        </svg>
+                        @if($plan->icon_class)
+                            <i class="{{ $plan->icon_class }}"></i>
+                        @else
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 2L8 6L10 8L6 12L8 14L12 10L16 14L18 12L14 8L16 6L12 2Z" fill="url(#planGradientMobile{{ $plan->id }})" stroke="#FFB21E" stroke-width="1.5" stroke-linejoin="round"/>
+                                <rect x="4" y="16" width="4" height="4" rx="1" fill="#FFB21E" opacity="0.6"/>
+                                <rect x="10" y="18" width="4" height="4" rx="1" fill="#FF8A1D" opacity="0.6"/>
+                                <rect x="16" y="16" width="4" height="4" rx="1" fill="#FFB21E" opacity="0.6"/>
+                                <defs>
+                                    <linearGradient id="planGradientMobile{{ $plan->id }}" x1="12" y1="2" x2="12" y2="14" gradientUnits="userSpaceOnUse">
+                                        <stop offset="0%" stop-color="#FFB21E"/>
+                                        <stop offset="100%" stop-color="#FF8A1D"/>
+                                    </linearGradient>
+                                </defs>
+                            </svg>
+                        @endif
                     </div>
                 </div>
                 <div class="plan-mobile-title-section-new">
-                    <h2 class="plan-mobile-name-new">Lithium</h2>
-                    <p class="plan-mobile-subtitle-new">Earn through lithium mining</p>
+                    <h2 class="plan-mobile-name-new">{{ $plan->name }}</h2>
+                    <p class="plan-mobile-subtitle-new">{{ $plan->subtitle ?? 'Earn through mining' }}</p>
                 </div>
             </div>
 
@@ -1412,11 +1922,11 @@
             <div class="plan-mobile-details-new">
                 <div class="plan-mobile-detail-col-new">
                     <div class="plan-mobile-detail-label-new">Range</div>
-                    <div class="plan-mobile-detail-value-new">$2 - $100000 Min</div>
+                    <div class="plan-mobile-detail-value-new">${{ number_format($plan->min_investment, 2) }} - ${{ number_format($plan->max_investment, 2) }}</div>
                 </div>
                 <div class="plan-mobile-detail-col-new">
-                    <div class="plan-mobile-detail-label-new">ROI 3/4% Daily</div>
-                    <div class="plan-mobile-detail-value-new">0% / Hourly</div>
+                    <div class="plan-mobile-detail-label-new">ROI {{ $plan->daily_roi_min }}% - {{ $plan->daily_roi_max }}% Daily</div>
+                    <div class="plan-mobile-detail-value-new">{{ $plan->hourly_rate ?? 0 }}% / Hourly</div>
                 </div>
             </div>
         </div>
@@ -1441,8 +1951,8 @@
                         <i class="fas fa-dollar-sign"></i>
                     </div>
                     <div class="plan-feature-label-new">Investment Range</div>
-                    <div class="plan-feature-value-new">$2 - $100,000</div>
-                    <div class="plan-feature-hint-new">Minimum investment: $2</div>
+                    <div class="plan-feature-value-new">${{ number_format($plan->min_investment, 2) }} - ${{ number_format($plan->max_investment, 2) }}</div>
+                    <div class="plan-feature-hint-new">Minimum investment: ${{ number_format($plan->min_investment, 2) }}</div>
                 </div>
 
                 <div class="plan-feature-card-new highlight">
@@ -1450,7 +1960,7 @@
                     <i class="fas fa-chart-line"></i>
                     </div>
                     <div class="plan-feature-label-new">Daily ROI</div>
-                    <div class="plan-feature-value-new">3% - 4%</div>
+                    <div class="plan-feature-value-new">{{ $plan->daily_roi_min }}% - {{ $plan->daily_roi_max }}%</div>
                     <div class="plan-feature-hint-new">Fixed daily returns guaranteed</div>
                 </div>
 
@@ -1459,22 +1969,22 @@
                         <i class="fas fa-clock"></i>
                     </div>
                     <div class="plan-feature-label-new">Hourly Rate</div>
-                    <div class="plan-feature-value-new">0%</div>
+                    <div class="plan-feature-value-new">{{ $plan->hourly_rate ?? 0 }}%</div>
                     <div class="plan-feature-hint-new">Per hour earnings</div>
                 </div>
             </div>
         </div>
 
             <!-- Calculator Section (Hidden by default on mobile, shown when button clicked) -->
-            <div class="plan-calculator-section-new" id="calculatorSection">
+            <div class="plan-calculator-section-new" id="calculatorSection{{ $plan->id }}">
                 <div class="plan-calculator-header-new">
                     <h3 class="plan-calculator-title-new">Estimated Returns</h3>
-                    <button class="plan-calculator-toggle-new" id="calculatorToggle">
+                    <button class="plan-calculator-toggle-new calculator-toggle" data-plan-id="{{ $plan->id }}">
                         <i class="fas fa-calculator"></i>
                         <span>Open Calculator</span>
                     </button>
                 </div>
-                <div class="plan-calculator-grid-new" id="calculatorContent">
+                <div class="plan-calculator-grid-new" id="calculatorContent{{ $plan->id }}">
                     <div class="plan-calculator-item-new">
                         <div class="plan-calculator-label-new">Daily Earnings</div>
                         <div class="plan-calculator-value-new">$0</div>
@@ -1494,7 +2004,7 @@
                     <i class="fas fa-rocket"></i>
                     <span>Start Investing</span>
                 </button>
-                <button class="plan-action-btn-new plan-action-secondary-new" id="openCalculatorBtn">
+                <button class="plan-action-btn-new plan-action-secondary-new open-calculator-btn" data-plan-id="{{ $plan->id }}" data-plan-name="{{ $plan->name }}" data-plan-subtitle="{{ $plan->subtitle ?? 'Earn through mining' }}" data-min-investment="{{ $plan->min_investment }}" data-max-investment="{{ $plan->max_investment }}" data-daily-roi-min="{{ $plan->daily_roi_min }}" data-daily-roi-max="{{ $plan->daily_roi_max }}" data-hourly-rate="{{ $plan->hourly_rate ?? 0 }}">
                     <i class="fas fa-calculator"></i>
                     <span>Investment Calculator</span>
                 </button>
@@ -1529,6 +2039,16 @@
             </div>
         </div>
     </div>
+    @empty
+    <div class="plan-main-card-new">
+        <div class="plan-card-content-new">
+            <div style="text-align: center; padding: 3rem;">
+                <h2 style="color: var(--text-primary); margin-bottom: 1rem;">No Mining Plans Available</h2>
+                <p style="color: var(--text-secondary);">Please check back later for available mining plans.</p>
+            </div>
+        </div>
+    </div>
+    @endforelse
 
     <!-- Coming Soon Section -->
     {{-- <div class="plans-coming-soon-new">
@@ -1555,6 +2075,124 @@
             </div>
         </div>
     </div> --}}
+
+    <!-- Investment Calculator Modal -->
+    <div class="calculator-modal-overlay" id="calculatorModalOverlay">
+        <div class="calculator-modal">
+            <div class="calculator-modal-header">
+                <h3 class="calculator-modal-title" id="calculatorModalTitle">Investment Profit Calculator</h3>
+                <button class="calculator-modal-close" id="closeCalculatorModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="calculator-modal-body">
+                <!-- Plan Section -->
+                <div class="calculator-plan-section">
+                    <h4 class="calculator-plan-name" id="calculatorPlanName">-</h4>
+                    <p class="calculator-plan-description" id="calculatorPlanDescription">-</p>
+                </div>
+
+                <!-- Investment Details Grid -->
+                <div class="calculator-details-grid">
+                    <div class="calculator-detail-item">
+                        <div class="calculator-detail-label">Return Rate:</div>
+                        <div class="calculator-detail-value" id="calculatorReturnRate">-</div>
+                    </div>
+                    <div class="calculator-detail-item">
+                        <div class="calculator-detail-label">Frequency:</div>
+                        <div class="calculator-detail-value" id="calculatorFrequency">Every hour</div>
+                    </div>
+                    <div class="calculator-detail-item">
+                        <div class="calculator-detail-label">Price Type:</div>
+                        <div class="calculator-detail-value">Range</div>
+                    </div>
+                    <div class="calculator-detail-item">
+                        <div class="calculator-detail-label">Investment Range:</div>
+                        <div class="calculator-detail-value" id="calculatorInvestmentRange">-</div>
+                    </div>
+                </div>
+
+                <!-- Investment Amount Input -->
+                <div class="calculator-input-section">
+                    <label class="calculator-input-label">Investment Amount</label>
+                    <div class="calculator-input-wrapper">
+                        <span class="calculator-input-prefix">$</span>
+                        <input type="number" 
+                               class="calculator-input" 
+                               id="investmentAmount"
+                               placeholder="Enter investment amount"
+                               step="0.01">
+                        <button class="calculator-input-action" type="button" title="More options" disabled>
+                            <i class="fas fa-ellipsis-h"></i>
+                        </button>
+                        <button class="calculator-input-action" type="button" title="Calculator" disabled>
+                            <i class="fas fa-ellipsis-v"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Investment Details Section -->
+                <div class="calculator-details-card" id="investmentDetailsCard" style="display: none;">
+                    <h4 class="calculator-card-title">Investment Details</h4>
+                    <div class="calculator-details-list">
+                        <div class="calculator-detail-row">
+                            <span class="calculator-detail-row-label">Investment Amount:</span>
+                            <span class="calculator-detail-row-value" id="calculatedAmount">$0.00</span>
+                        </div>
+                        <div class="calculator-detail-row">
+                            <span class="calculator-detail-row-label">Return Rate:</span>
+                            <span class="calculator-detail-row-value" id="calculatorReturnRateDetail">-</span>
+                        </div>
+                        <div class="calculator-detail-row">
+                            <span class="calculator-detail-row-label">Profit Per Cycle:</span>
+                            <span class="calculator-detail-row-value calculator-profit-value" id="profitPerCycle">$0.00</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Profit Breakdown Section -->
+                <div class="calculator-details-card" id="profitBreakdownCard" style="display: none;">
+                    <h4 class="calculator-card-title">
+                        <i class="fas fa-arrow-trend-up calculator-trend-icon"></i>
+                        Profit Breakdown by Time Period
+                    </h4>
+                    <div class="calculator-profit-grid">
+                        <div class="calculator-profit-item">
+                            <i class="fas fa-clock calculator-profit-icon"></i>
+                            <span class="calculator-profit-label">Hourly:</span>
+                            <span class="calculator-profit-value" id="profitHourly">$0.00</span>
+                        </div>
+                        <div class="calculator-profit-item">
+                            <i class="fas fa-clock calculator-profit-icon"></i>
+                            <span class="calculator-profit-label">Daily:</span>
+                            <span class="calculator-profit-value" id="profitDaily">$0.00</span>
+                        </div>
+                        <div class="calculator-profit-item">
+                            <i class="fas fa-clock calculator-profit-icon"></i>
+                            <span class="calculator-profit-label">Weekly:</span>
+                            <span class="calculator-profit-value" id="profitWeekly">$0.00</span>
+                        </div>
+                        <div class="calculator-profit-item">
+                            <i class="fas fa-clock calculator-profit-icon"></i>
+                            <span class="calculator-profit-label">Monthly:</span>
+                            <span class="calculator-profit-value" id="profitMonthly">$0.00</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal Footer Buttons -->
+            <div class="calculator-modal-footer">
+                <button class="calculator-btn calculator-btn-reset" id="resetCalculator">
+                    Reset
+                </button>
+                <button class="calculator-btn calculator-btn-close" id="closeCalculatorModalBtn">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
 </div>
 
 @push('scripts')

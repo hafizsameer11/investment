@@ -67,14 +67,14 @@
             </div>
             
             <!-- Mobile User Profile (shown only on mobile for home page) -->
-            @if($isHomePage)
+            @if($isHomePage && Auth::check())
             <div class="mobile-user-profile mobile-user-profile-visible">
                 <div class="mobile-user-avatar">
-                    <img src="https://ui-avatars.com/api/?name=Rameez+Nazar&background=00FF88&color=000&size=128" alt="User Avatar">
+                    <img src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->name ?? 'User') }}&background=00FF88&color=000&size=128" alt="User Avatar">
                 </div>
                 <div class="mobile-user-info">
-                    <div class="mobile-user-name">Rameez Nazar</div>
-                    <div class="mobile-user-email">ramiznazar600@gmail.com</div>
+                    <div class="mobile-user-name">{{ Auth::user()->name ?? 'User' }}</div>
+                    <div class="mobile-user-email">{{ Auth::user()->email ?? '' }}</div>
                 </div>
             </div>
             @endif
@@ -88,15 +88,17 @@
             </div>
 
             <!-- User Profile (shown on desktop) -->
+            @auth
             <div class="user-profile">
                 <div class="user-avatar">
-                    <img src="https://ui-avatars.com/api/?name=Rameez+Nazar&background=00FF88&color=000&size=128" alt="User Avatar">
+                    <img src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->name ?? 'User') }}&background=00FF88&color=000&size=128" alt="User Avatar">
                 </div>
                 <div class="user-info">
-                    <div class="user-name">Rameez Nazar</div>
-                    <div class="user-email">ramiznazar600@gmail.com</div>
+                    <div class="user-name">{{ Auth::user()->name ?? 'User' }}</div>
+                    <div class="user-email">{{ Auth::user()->email ?? '' }}</div>
                 </div>
             </div>
+            @endauth
         </div>
     </div>
 </div>

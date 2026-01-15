@@ -1271,16 +1271,6 @@
             </div>
         </div>
     </div>
-
-    <!-- Chat Widget -->
-    <div class="deposit-chat-widget">
-        <div class="deposit-chat-bubble">
-            We are online!
-        </div>
-        <div class="deposit-chat-icon">
-            <i class="fas fa-comments"></i>
-        </div>
-    </div>
 </div>
 
 <script>

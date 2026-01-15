@@ -30,6 +30,7 @@ class User extends Authenticatable
         'mining_earning',
         'referral_earning',
         'net_balance',
+        'total_invested',
     ];
 
     /**
@@ -54,6 +55,7 @@ class User extends Authenticatable
         'mining_earning' => 'decimal:2',
         'referral_earning' => 'decimal:2',
         'net_balance' => 'decimal:2',
+        'total_invested' => 'decimal:2',
     ];
 
     /**

@@ -159,6 +159,8 @@
         cursor: pointer;
         position: relative;
         min-height: 60px;
+        font-family: inherit;
+        font-size: inherit;
     }
 
     .settings-menu-item:last-child {
@@ -401,13 +403,16 @@
             <i class="fas fa-chevron-right settings-menu-arrow"></i>
         </a>
 
-        <a href="{{ route('login') }}" class="settings-menu-item">
-            <div class="settings-menu-icon">
-                <i class="fas fa-sign-out-alt"></i>
-            </div>
-            <span class="settings-menu-text">Quick Exit</span>
-            <i class="fas fa-chevron-right settings-menu-arrow"></i>
-        </a>
+        <form action="{{ route('logout') }}" method="POST" style="display: contents;">
+            @csrf
+            <button type="submit" class="settings-menu-item" style="width: 100%; border: none; background: none; text-align: left; cursor: pointer;">
+                <div class="settings-menu-icon">
+                    <i class="fas fa-sign-out-alt"></i>
+                </div>
+                <span class="settings-menu-text">Quick Exit</span>
+                <i class="fas fa-chevron-right settings-menu-arrow"></i>
+            </button>
+        </form>
     </div>
 </div>
 @endsection
