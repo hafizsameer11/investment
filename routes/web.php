@@ -75,41 +75,6 @@ Route::get('/', function () {
     return redirect()->route('login');
 });
 
-// Database Seeder Route (for production use)
-// Access: /run-seeders?token=YOUR_SECRET_TOKEN
-Route::get('/run-seeders', function () {
-    $token = request()->query('token');
-    $secretToken = env('SEEDER_SECRET_TOKEN', 'change-this-secret-token-in-production');
-    
-    // Check if token matches
-    if ($token !== $secretToken) {
-        return response()->json([
-            'error' => 'Unauthorized. Invalid token.',
-        ], 401);
-    }
-    
-    try {
-        // Run all seeders
-        \Illuminate\Support\Facades\Artisan::call('db:seed', [
-            '--class' => 'DatabaseSeeder',
-            '--force' => true,
-        ]);
-        
-        $output = \Illuminate\Support\Facades\Artisan::output();
-        
-        return response()->json([
-            'success' => true,
-            'message' => 'All seeders have been run successfully.',
-            'output' => $output,
-        ], 200);
-    } catch (\Exception $e) {
-        return response()->json([
-            'success' => false,
-            'error' => 'Failed to run seeders: ' . $e->getMessage(),
-        ], 500);
-    }
-})->name('run.seeders');
-
 // Admin Authentication Routes
 Route::middleware('guest')->group(function () {
     Route::get('/admin/login', [AdminAuthController::class, 'login'])->name('admin.login');
@@ -202,4 +167,61 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
         Route::post('/{id}/approve', [DepositController::class, 'approve'])->name('approve');
         Route::post('/{id}/reject', [DepositController::class, 'reject'])->name('reject');
     });
+});
+
+// Database Seeder Route (for production use)
+// Access: /run-seeders?token=YOUR_SECRET_TOKEN
+Route::get('/run-seeders', function () {
+    $token = request()->query('token');
+    $secretToken = env('SEEDER_SECRET_TOKEN', 'change-this-secret-token-in-production');
+    
+    // Check if token matches
+    if ($token !== $secretToken) {
+        return response()->json([
+            'error' => 'Unauthorized. Invalid token.',
+        ], 401);
+    }
+    
+    try {
+        // Run all seeders
+        \Illuminate\Support\Facades\Artisan::call('db:seed', [
+            '--class' => 'DatabaseSeeder',
+            '--force' => true,
+        ]);
+        
+        $output = \Illuminate\Support\Facades\Artisan::output();
+        
+        return response()->json([
+            'success' => true,
+            'message' => 'All seeders have been run successfully.',
+            'output' => $output,
+        ], 200);
+    } catch (\Exception $e) {
+        return response()->json([
+            'success' => false,
+            'error' => 'Failed to run seeders: ' . $e->getMessage(),
+        ], 500);
+    }
+})->name('run.seeders');
+
+Route::get('/optimize-app', function () {
+    Artisan::call('optimize:clear');
+    Artisan::call('cache:clear');
+    Artisan::call('config:clear');
+    Artisan::call('route:clear');
+    Artisan::call('view:clear');
+    Artisan::call('config:cache');
+    Artisan::call('route:cache');
+    Artisan::call('view:cache');
+    Artisan::call('optimize');
+
+    return "Application optimized and caches cleared successfully!";
+});
+Route::get('/migrate', function () {
+    Artisan::call('migrate');
+    return response()->json(['message' => 'Migration successful'], 200);
+});
+Route::get('/migrate/rollback', function () {
+    Artisan::call('migrate:rollback');
+    return response()->json(['message' => 'Migration rollback successfully'], 200);
 });
