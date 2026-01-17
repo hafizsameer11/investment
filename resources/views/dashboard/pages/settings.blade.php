@@ -126,6 +126,19 @@
         text-align: center;
     }
 
+    .settings-earnings-icon {
+        font-size: 2rem;
+        color: var(--primary-color);
+        margin-bottom: 0.75rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .settings-earnings-icon i {
+        filter: drop-shadow(0 0 8px rgba(255, 178, 30, 0.4));
+    }
+
     .settings-earnings-label {
         font-size: 0.75rem;
         color: var(--text-secondary);
@@ -269,6 +282,11 @@
             gap: 1rem;
         }
 
+        .settings-earnings-icon {
+            font-size: 1.75rem;
+            margin-bottom: 0.5rem;
+        }
+
         .settings-earnings-value {
             font-size: 1.25rem;
         }
@@ -316,13 +334,18 @@
 
     <!-- Total Earnings Section -->
     <div class="settings-earnings-card">
-        <h3 class="settings-earnings-title">Total Earnings</h3>
         <div class="settings-earnings-grid">
             <div class="settings-earnings-item">
+                <div class="settings-earnings-icon">
+                    <i class="fas fa-dollar-sign"></i>
+                </div>
                 <div class="settings-earnings-label">USD Earnings</div>
                 <div class="settings-earnings-value">$0</div>
             </div>
             <div class="settings-earnings-item">
+                <div class="settings-earnings-icon">
+                    <i class="fas fa-coins"></i>
+                </div>
                 <div class="settings-earnings-label">PKR Earnings</div>
                 <div class="settings-earnings-value">Rs0</div>
             </div>

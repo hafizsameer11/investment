@@ -18,13 +18,17 @@ class Investment extends Model
         'status',
         'last_profit_calculated_at',
         'total_profit_earned',
+        'unclaimed_profit',
+        'last_claimed_at',
     ];
 
     protected $casts = [
         'amount' => 'decimal:2',
         'hourly_rate' => 'decimal:2',
         'total_profit_earned' => 'decimal:2',
+        'unclaimed_profit' => 'decimal:2',
         'last_profit_calculated_at' => 'datetime',
+        'last_claimed_at' => 'datetime',
     ];
 
     /**

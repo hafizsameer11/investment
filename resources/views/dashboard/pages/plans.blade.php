@@ -2335,7 +2335,7 @@
         }
 
         .investment-balances-grid {
-            grid-template-columns: 1fr;
+            grid-template-columns: 1fr 1fr;
             gap: 0.75rem;
         }
 
@@ -2346,6 +2346,186 @@
         .investment-amount-input {
             font-size: 0.875rem;
         }
+    }
+
+    /* Active Badge */
+    .active-badge {
+        display: inline-flex;
+        align-items: center;
+        padding: 0.375rem 0.875rem;
+        background: #10b981;
+        border-radius: 9999px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        color: #ffffff;
+        white-space: nowrap;
+    }
+
+    /* Claim Earning Button */
+    .claim-earning-btn {
+        background: linear-gradient(135deg, #FFB21E 0%, #FF8A1D 100%);
+        color: #000;
+        box-shadow: 0 4px 20px rgba(255, 178, 30, 0.4);
+        white-space: nowrap;
+        min-width: fit-content;
+        width: auto;
+    }
+
+    .claim-earning-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 30px rgba(255, 178, 30, 0.6);
+    }
+
+    .claim-earning-btn:disabled {
+        opacity: 0.7;
+        cursor: not-allowed;
+    }
+
+    .claim-earning-btn span {
+        white-space: nowrap;
+        display: inline-block;
+    }
+
+    /* Manage Active Plan Button */
+    .manage-active-plan-btn {
+        background: linear-gradient(135deg, #9333ea 0%, #ec4899 100%);
+        color: #ffffff;
+        box-shadow: 0 4px 20px rgba(147, 51, 234, 0.4);
+        white-space: nowrap;
+    }
+
+    .manage-active-plan-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 30px rgba(147, 51, 234, 0.6);
+    }
+
+    /* Active Investment Amount */
+    .active-investment-amount {
+        font-size: 2rem;
+        font-weight: 700;
+        color: #10b981;
+        margin: 0.5rem 0;
+        line-height: 1.2;
+    }
+
+    /* Mobile Layout for Buttons */
+    @media (max-width: 768px) {
+        .plan-actions-new {
+            display: flex;
+            flex-direction: column;
+            gap: 0.875rem;
+        }
+
+        .claim-earning-btn {
+            order: 1;
+            font-size: 0.875rem;
+            padding: 0.875rem 1rem;
+        }
+
+        .manage-active-plan-btn {
+            order: 2;
+            font-size: 0.875rem;
+            padding: 0.875rem 1rem;
+        }
+
+        .open-calculator-btn {
+            order: 3;
+        }
+
+        .start-investing-btn {
+            order: 1;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .claim-earning-btn,
+        .manage-active-plan-btn,
+        .plan-action-btn-new {
+            font-size: 0.8125rem;
+            padding: 0.75rem 0.875rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .claim-earning-btn span,
+        .manage-active-plan-btn span {
+            white-space: nowrap;
+        }
+
+        .active-badge {
+            font-size: 0.6875rem;
+            padding: 0.25rem 0.625rem;
+        }
+
+        .active-investment-amount {
+            font-size: 1.5rem;
+        }
+    }
+
+    @media (max-width: 400px) {
+        .claim-earning-btn,
+        .manage-active-plan-btn {
+            font-size: 0.75rem;
+            padding: 0.6875rem 0.75rem;
+        }
+    }
+
+    /* Manage Plan Update Button */
+    .manage-plan-update-btn {
+        background: linear-gradient(135deg, #9333ea 0%, #ec4899 100%);
+        color: #ffffff;
+        box-shadow: 0 4px 16px rgba(147, 51, 234, 0.3);
+    }
+
+    .manage-plan-update-btn:hover {
+        background: linear-gradient(135deg, #7e22ce 0%, #db2777 100%);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(147, 51, 234, 0.4);
+    }
+
+    /* Claim Earnings Modal Styles */
+    #claimEarningsModalOverlay .calculator-modal {
+        max-width: 500px;
+        width: 100%;
+        height: auto;
+        max-height: 90vh;
+        border-radius: 24px;
+        margin: auto;
+    }
+
+    #claimEarningsAmount {
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin: 0.75rem 0;
+    }
+
+    #confirmClaimEarningsBtn {
+        background: linear-gradient(135deg, #FFB21E 0%, #FF8A1D 100%);
+        color: #000;
+        box-shadow: 0 4px 16px rgba(255, 178, 30, 0.3);
+    }
+
+    #confirmClaimEarningsBtn:hover:not(:disabled) {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(255, 178, 30, 0.4);
+    }
+
+    #confirmClaimEarningsBtn:disabled {
+        background: rgba(255, 178, 30, 0.3);
+        color: rgba(0, 0, 0, 0.5);
+        cursor: not-allowed;
+        opacity: 0.6;
+    }
+
+    /* Prevent button size change */
+    .claim-earning-btn {
+        transition: opacity 0.2s ease;
+    }
+
+    .claim-earning-btn span {
+        min-width: 100px;
+        text-align: center;
     }
 </style>
 @endpush
@@ -2399,9 +2579,16 @@
                         @endif
                     </div>
                     <div class="plan-title-section-new">
-                        <div class="plan-badge-new">
-                            <i class="fas fa-star"></i>
-                            <span>Mining Plan</span>
+                        <div style="display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 0.75rem;">
+                            <div class="plan-badge-new">
+                                <i class="fas fa-star"></i>
+                                <span>Mining Plan</span>
+                            </div>
+                            @if(isset($userInvestments[$plan->id]))
+                            <div class="active-badge">
+                                <span>Active</span>
+                            </div>
+                            @endif
                         </div>
                         <h2 class="plan-name-new">{{ $plan->name }}</h2>
                         <p class="plan-tagline-new">{{ $plan->tagline ?? ($plan->subtitle ?? 'Advanced Mining Plan for Maximum Returns') }}</p>
@@ -2526,10 +2713,29 @@
 
             <!-- Action Buttons -->
             <div class="plan-actions-new">
-                <button class="plan-action-btn-new plan-action-primary-new start-investing-btn" data-plan-id="{{ $plan->id }}">
-                    <i class="fas fa-rocket"></i>
-                    <span>Start Investing</span>
-                </button>
+                @if(isset($userInvestments[$plan->id]))
+                    @php
+                        $investment = $userInvestments[$plan->id];
+                        $unclaimedProfit = $investment['unclaimed_profit'] ?? 0;
+                    @endphp
+                    <!-- Claim Earning Button (shown when plan is purchased) -->
+                    <button class="plan-action-btn-new claim-earning-btn" data-investment-id="{{ $investment['id'] }}" data-plan-id="{{ $plan->id }}" style="white-space: nowrap;">
+                        <i class="fas fa-coins"></i>
+                        <span>Claim Earning</span>
+                    </button>
+                    <!-- Manage Active Plan Button -->
+                    <button class="plan-action-btn-new manage-active-plan-btn" data-plan-id="{{ $plan->id }}" data-investment-id="{{ $investment['id'] }}">
+                        <i class="fas fa-cog"></i>
+                        <span>Manage Active Plan</span>
+                    </button>
+                @else
+                    <!-- Start Investing Button (shown when plan is not purchased) -->
+                    <button class="plan-action-btn-new plan-action-primary-new start-investing-btn" data-plan-id="{{ $plan->id }}">
+                        <i class="fas fa-rocket"></i>
+                        <span>Start Investing</span>
+                    </button>
+                @endif
+                <!-- Investment Calculator Button (always shown) -->
                 <button class="plan-action-btn-new plan-action-secondary-new open-calculator-btn" data-plan-id="{{ $plan->id }}" data-plan-name="{{ $plan->name }}" data-plan-subtitle="{{ $plan->subtitle ?? 'Earn through mining' }}" data-min-investment="{{ $plan->min_investment }}" data-max-investment="{{ $plan->max_investment }}" data-daily-roi-min="{{ $plan->daily_roi_min }}" data-daily-roi-max="{{ $plan->daily_roi_max }}" data-hourly-rate="{{ $plan->hourly_rate ?? 0 }}">
                     <i class="fas fa-calculator"></i>
                     <span>Investment Calculator</span>
@@ -2810,6 +3016,177 @@
                     </button>
                     <button class="investment-btn investment-btn-confirm" id="confirmInvestmentBtn">
                         Confirm Investment
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Manage Active Plan Modal -->
+    <div class="calculator-modal-overlay" id="managePlanModalOverlay">
+        <div class="calculator-modal investment-modal">
+            <div class="calculator-modal-header">
+                <h3 class="calculator-modal-title">Manage Plan: <span class="investment-plan-name-highlight" id="managePlanName">-</span> <span class="active-badge" style="display: inline-flex; padding: 0.25rem 0.75rem; margin-left: 0.5rem;"><span>Active</span></span></h3>
+                <button class="calculator-modal-close" id="closeManagePlanModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="calculator-modal-body investment-modal-body">
+                <!-- Alert Message -->
+                <div id="managePlanAlert" class="investment-alert" style="display: none;">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <span id="managePlanAlertMessage"></span>
+                    <button id="managePlanDepositBtn" class="investment-deposit-btn" style="display: none;">Deposit Amount</button>
+                </div>
+
+                <!-- Active Investment Section -->
+                <div class="investment-plan-name-section">
+                    <div style="color: #10b981; font-size: 0.875rem; font-weight: 600; margin-bottom: 0.5rem;">Active Investment</div>
+                    <div class="active-investment-amount" id="activeInvestmentAmount">$0.00</div>
+                    <div style="color: #059669; font-size: 0.8125rem; margin-top: 0.25rem;">Currently invested in this plan</div>
+                </div>
+
+                <!-- Plan Name -->
+                <div class="investment-plan-name-section">
+                    <h2 class="investment-plan-name-text" id="managePlanNameText">-</h2>
+                </div>
+
+                <!-- Investment Range -->
+                <div class="investment-range-section">
+                    <div class="investment-range-amount">
+                        $<span id="managePlanMinAmount">0</span> - $<span id="managePlanMaxAmount">0</span>
+                    </div>
+                    <div class="investment-range-label">Minimum Investment</div>
+                </div>
+
+                <!-- Principal Return Policy -->
+                <div class="investment-principal-policy">
+                    Principal Return Policy Will Be Returned
+                </div>
+
+                <!-- Balances Section -->
+                <div class="investment-balances-section">
+                    <h4 class="investment-balances-title">Current amount in deposit and earning wallet</h4>
+                    <div class="investment-balances-grid">
+                        <div class="investment-balance-card investment-balance-fund">
+                            <i class="fas fa-wallet"></i>
+                            <div class="investment-balance-info">
+                                <div class="investment-balance-label">Deposit Balance</div>
+                                <div class="investment-balance-amount" id="managePlanFundBalance">$0.00</div>
+                            </div>
+                        </div>
+                        <div class="investment-balance-card investment-balance-earning">
+                            <i class="fas fa-wallet"></i>
+                            <div class="investment-balance-info">
+                                <div class="investment-balance-label">Earning Balance</div>
+                                <div class="investment-balance-amount" id="managePlanEarningBalance">$0.00</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pay From Selection -->
+                <div class="investment-pay-from-section">
+                    <label class="investment-pay-from-label">Pay from:</label>
+                    <div class="investment-select-wrapper">
+                        <select id="managePlanSourceBalanceSelect" class="investment-select">
+                            <option value="fund_wallet">Fund Balance</option>
+                            <option value="earning_balance">Earning Balance</option>
+                        </select>
+                        <i class="fas fa-chevron-down investment-select-arrow"></i>
+                    </div>
+                </div>
+
+                <!-- Additional Investment Amount Input -->
+                <div class="investment-amount-section">
+                    <label class="investment-amount-label" style="color: #ef4444;">Additional Investment Amount</label>
+                    <div class="investment-input-wrapper">
+                        <span class="investment-input-prefix">$</span>
+                        <input type="number" 
+                               id="managePlanAmountInput"
+                               class="investment-amount-input" 
+                               placeholder="Enter additional amount"
+                               step="0.01"
+                               min="0">
+                    </div>
+                    <div class="investment-amount-hint" id="managePlanAmountHint">Min: $0 - Max: $0</div>
+                    <div style="text-align: center; margin-top: 0.5rem; color: var(--text-secondary); font-size: 0.875rem;">
+                        Add more funds to your existing investment in this plan.
+                    </div>
+                </div>
+
+                <!-- Modal Footer Buttons -->
+                <div class="calculator-modal-footer investment-modal-footer">
+                    <button class="investment-btn investment-btn-cancel" id="cancelManagePlanBtn">
+                        Cancel
+                    </button>
+                    <button class="investment-btn investment-btn-confirm manage-plan-update-btn" id="updateManagePlanBtn">
+                        Update Settings
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Claim Earnings Modal -->
+    <div class="calculator-modal-overlay" id="claimEarningsModalOverlay">
+        <div class="calculator-modal investment-modal">
+            <div class="calculator-modal-header">
+                <h3 class="calculator-modal-title">Claim Earnings</h3>
+                <button class="calculator-modal-close" id="closeClaimEarningsModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="calculator-modal-body investment-modal-body">
+                <!-- Plan Name -->
+                <div class="investment-plan-name-section">
+                    <h2 class="investment-plan-name-text" id="claimEarningsPlanName">-</h2>
+                </div>
+
+                <!-- Earnings Amount Section -->
+                <div class="investment-range-section">
+                    <div style="color: var(--text-secondary); font-size: 0.875rem; font-weight: 600; margin-bottom: 0.5rem; text-align: center;">Available Earnings</div>
+                    <div class="active-investment-amount" id="claimEarningsAmount" style="text-align: center;">$0.00</div>
+                    <div style="color: var(--text-secondary); font-size: 0.8125rem; margin-top: 0.5rem; text-align: center;" id="claimEarningsStatus">No earnings available</div>
+                </div>
+
+                <!-- Current Mining Balance -->
+                <div class="investment-balances-section">
+                    <h4 class="investment-balances-title">Current Mining Balance</h4>
+                    <div class="investment-balances-grid">
+                        <div class="investment-balance-card investment-balance-earning" style="grid-column: 1 / -1;">
+                            <i class="fas fa-wallet"></i>
+                            <div class="investment-balance-info">
+                                <div class="investment-balance-label">Mining Earning Balance</div>
+                                <div class="investment-balance-amount" id="claimEarningsMiningBalance">$0.00</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Info Message -->
+                <div style="background: rgba(255, 178, 30, 0.1); border: 1px solid rgba(255, 178, 30, 0.3); border-radius: 12px; padding: 1rem; margin-bottom: 1.5rem;">
+                    <div style="display: flex; align-items: flex-start; gap: 0.75rem;">
+                        <i class="fas fa-info-circle" style="color: var(--primary-color); font-size: 1.125rem; margin-top: 0.125rem;"></i>
+                        <div style="flex: 1;">
+                            <div style="font-size: 0.875rem; color: var(--text-primary); font-weight: 600; margin-bottom: 0.25rem;">About Claiming Earnings</div>
+                            <div style="font-size: 0.8125rem; color: var(--text-secondary); line-height: 1.5;">
+                                When you claim your earnings, the unclaimed profit will be marked as claimed and will remain in your mining earning balance. New profits will continue to accumulate from this point.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modal Footer Buttons -->
+                <div class="calculator-modal-footer investment-modal-footer">
+                    <button class="investment-btn investment-btn-cancel" id="cancelClaimEarningsBtn">
+                        Cancel
+                    </button>
+                    <button class="investment-btn investment-btn-confirm" id="confirmClaimEarningsBtn" disabled>
+                        <i class="fas fa-coins"></i>
+                        Claim Earnings
                     </button>
                 </div>
             </div>

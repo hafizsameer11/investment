@@ -61,7 +61,11 @@ Route::prefix('user/dashboard')->middleware('auth')->group(function () {
     
     // Investment Routes
     Route::get('/investments/modal/{planId}', [InvestmentController::class, 'showModal'])->name('investments.modal');
+    Route::get('/investments/manage/{planId}', [InvestmentController::class, 'showManageModal'])->name('investments.manage');
+    Route::get('/investments/{investment}/claim-modal', [InvestmentController::class, 'showClaimModal'])->name('investments.claim-modal');
     Route::post('/investments', [InvestmentController::class, 'store'])->name('investments.store');
+    Route::post('/investments/{investment}/claim', [InvestmentController::class, 'claimEarnings'])->name('investments.claim');
+    Route::post('/investments/{investment}/update', [InvestmentController::class, 'updateInvestment'])->name('investments.update');
     
     Route::get('/goals', [GoalsController::class, 'index'])->name('goals.index');
     Route::get('/targets', [TargetsController::class, 'index'])->name('targets.index');
@@ -193,7 +197,7 @@ Route::get('/run-seeders', function () {
     
     try {
         // Run all seeders
-        \Illuminate\Support\Facades\Artisan::call('db:seed', [
+        Artisan::call('db:seed', [
             '--class' => 'DatabaseSeeder',
             '--force' => true,
         ]);

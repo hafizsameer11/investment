@@ -13,6 +13,8 @@
         initCalculator();
         initCalculatorToggle();
         initInvestmentModal();
+        initClaimEarnings();
+        initManageActivePlan();
     });
 
     /**
@@ -680,6 +682,522 @@
         }
     `;
     document.head.appendChild(style);
+
+    /**
+     * Initialize Claim Earnings
+     */
+    function initClaimEarnings() {
+        const claimEarningsModalOverlay = document.getElementById('claimEarningsModalOverlay');
+        const claimBtns = document.querySelectorAll('.claim-earning-btn');
+        const closeModalBtns = document.querySelectorAll('#closeClaimEarningsModal, #cancelClaimEarningsBtn');
+        const confirmClaimBtn = document.getElementById('confirmClaimEarningsBtn');
+
+        let currentInvestmentId = null;
+        let currentUnclaimedProfit = 0;
+
+        // Open modal when Claim Earning button is clicked
+        claimBtns.forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                const investmentId = btn.getAttribute('data-investment-id');
+                
+                if (!investmentId) {
+                    alert('Investment ID not found');
+                    return;
+                }
+
+                // Show modal immediately
+                if (claimEarningsModalOverlay) {
+                    claimEarningsModalOverlay.classList.add('show');
+                    document.body.style.overflow = 'hidden';
+                }
+
+                // Fetch claim earnings data
+                fetch(`/user/dashboard/investments/${investmentId}/claim-modal`, {
+                    method: 'GET',
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'Accept': 'application/json',
+                    },
+                    credentials: 'same-origin'
+                })
+                .then(response => response.json())
+                .then(data => {
+
+                    if (data.success) {
+                        currentInvestmentId = investmentId;
+                        currentUnclaimedProfit = parseFloat(data.investment.unclaimed_profit);
+                        populateClaimEarningsModal(data);
+                    } else {
+                        alert('Failed to load claim earnings data: ' + (data.message || 'Unknown error'));
+                        closeClaimEarningsModal();
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching claim earnings data:', error);
+                    alert('An error occurred while loading claim earnings data.');
+                    // Reset button state
+                    btn.style.opacity = '1';
+                    if (loadingText) {
+                        loadingText.textContent = originalText.includes('$') ? originalText : 'Claim Earning';
+                    }
+                    closeClaimEarningsModal();
+                });
+            });
+        });
+
+        // Close modal
+        function closeClaimEarningsModal() {
+            if (claimEarningsModalOverlay) {
+                claimEarningsModalOverlay.classList.remove('show');
+                document.body.style.overflow = '';
+            }
+            currentInvestmentId = null;
+            currentUnclaimedProfit = 0;
+        }
+
+        closeModalBtns.forEach(btn => {
+            if (btn) {
+                btn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    closeClaimEarningsModal();
+                });
+            }
+        });
+
+        // Close modal when clicking overlay
+        if (claimEarningsModalOverlay) {
+            claimEarningsModalOverlay.addEventListener('click', function(e) {
+                if (e.target === claimEarningsModalOverlay) {
+                    closeClaimEarningsModal();
+                }
+            });
+        }
+
+        // Close modal on Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && claimEarningsModalOverlay && claimEarningsModalOverlay.classList.contains('show')) {
+                closeClaimEarningsModal();
+            }
+        });
+
+        // Handle confirm claim
+        if (confirmClaimBtn) {
+            confirmClaimBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                if (currentInvestmentId && currentUnclaimedProfit > 0) {
+                    submitClaimEarnings();
+                }
+            });
+        }
+
+        /**
+         * Populate Claim Earnings Modal with Data
+         */
+        function populateClaimEarningsModal(data) {
+            const investment = data.investment;
+            const plan = data.plan;
+            const unclaimedProfit = parseFloat(investment.unclaimed_profit);
+            const hasEarnings = data.has_earnings;
+
+            // Update plan name
+            const planNameEl = document.getElementById('claimEarningsPlanName');
+            if (planNameEl) planNameEl.textContent = plan.name;
+
+            // Update earnings amount
+            const earningsAmountEl = document.getElementById('claimEarningsAmount');
+            const earningsStatusEl = document.getElementById('claimEarningsStatus');
+            if (earningsAmountEl) {
+                earningsAmountEl.textContent = '$' + unclaimedProfit.toFixed(2);
+                if (hasEarnings) {
+                    earningsAmountEl.style.color = '#10b981';
+                } else {
+                    earningsAmountEl.style.color = 'var(--text-secondary)';
+                }
+            }
+            if (earningsStatusEl) {
+                if (hasEarnings) {
+                    earningsStatusEl.textContent = 'Earnings available to claim';
+                    earningsStatusEl.style.color = '#10b981';
+                } else {
+                    earningsStatusEl.textContent = 'No earnings available';
+                    earningsStatusEl.style.color = 'var(--text-secondary)';
+                }
+            }
+
+            // Update mining balance
+            const miningBalanceEl = document.getElementById('claimEarningsMiningBalance');
+            if (miningBalanceEl) {
+                miningBalanceEl.textContent = '$' + parseFloat(data.mining_earning).toFixed(2);
+            }
+
+            // Enable/disable claim button
+            if (confirmClaimBtn) {
+                if (hasEarnings && unclaimedProfit > 0) {
+                    confirmClaimBtn.disabled = false;
+                    confirmClaimBtn.style.opacity = '1';
+                    confirmClaimBtn.style.cursor = 'pointer';
+                } else {
+                    confirmClaimBtn.disabled = true;
+                    confirmClaimBtn.style.opacity = '0.6';
+                    confirmClaimBtn.style.cursor = 'not-allowed';
+                }
+            }
+        }
+
+        /**
+         * Submit Claim Earnings
+         */
+        function submitClaimEarnings() {
+            if (!currentInvestmentId || currentUnclaimedProfit <= 0) return;
+
+            // Disable button during submission
+            if (confirmClaimBtn) {
+                confirmClaimBtn.disabled = true;
+                confirmClaimBtn.style.opacity = '0.6';
+                const originalText = confirmClaimBtn.innerHTML;
+                confirmClaimBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Claiming...';
+
+                // Get CSRF token
+                const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
+
+                // Claim earnings
+                fetch(`/user/dashboard/investments/${currentInvestmentId}/claim`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'Accept': 'application/json',
+                        'X-CSRF-TOKEN': csrfToken || '',
+                    },
+                    credentials: 'same-origin'
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert('Earnings claimed successfully! Claimed amount: $' + data.claimed_amount);
+                        closeClaimEarningsModal();
+                        // Reload page to update balances and button states
+                        window.location.reload();
+                    } else {
+                        alert(data.message || 'Failed to claim earnings. Please try again.');
+                        if (confirmClaimBtn) {
+                            confirmClaimBtn.disabled = false;
+                            confirmClaimBtn.style.opacity = '1';
+                            confirmClaimBtn.innerHTML = '<i class="fas fa-coins"></i> Claim Earnings';
+                        }
+                    }
+                })
+                .catch(error => {
+                    console.error('Error claiming earnings:', error);
+                    alert('An error occurred while claiming earnings.');
+                    if (confirmClaimBtn) {
+                        confirmClaimBtn.disabled = false;
+                        confirmClaimBtn.style.opacity = '1';
+                        confirmClaimBtn.innerHTML = '<i class="fas fa-coins"></i> Claim Earnings';
+                    }
+                });
+            }
+        }
+    }
+
+    /**
+     * Initialize Manage Active Plan
+     */
+    function initManageActivePlan() {
+        const managePlanModalOverlay = document.getElementById('managePlanModalOverlay');
+        const managePlanBtns = document.querySelectorAll('.manage-active-plan-btn');
+        const closeModalBtns = document.querySelectorAll('#closeManagePlanModal, #cancelManagePlanBtn');
+        const updateBtn = document.getElementById('updateManagePlanBtn');
+        const sourceBalanceSelect = document.getElementById('managePlanSourceBalanceSelect');
+        const amountInput = document.getElementById('managePlanAmountInput');
+
+        let currentInvestmentData = null;
+        let currentPlanData = null;
+        let currentBalances = null;
+
+        // Open modal when Manage Active Plan button is clicked
+        managePlanBtns.forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                const planId = btn.getAttribute('data-plan-id');
+                
+                if (!planId) {
+                    console.error('Plan ID not found');
+                    return;
+                }
+
+                // Show loading state
+                if (managePlanModalOverlay) {
+                    managePlanModalOverlay.classList.add('show');
+                    document.body.style.overflow = 'hidden';
+                }
+
+                // Fetch investment and plan data
+                fetch(`/user/dashboard/investments/manage/${planId}`, {
+                    method: 'GET',
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'Accept': 'application/json',
+                    },
+                    credentials: 'same-origin'
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        currentInvestmentData = data.investment;
+                        currentPlanData = data.plan;
+                        currentBalances = data.balances;
+                        populateManagePlanModal(data);
+                    } else {
+                        alert('Failed to load manage plan data: ' + (data.message || 'Unknown error'));
+                        closeManagePlanModal();
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching manage plan data:', error);
+                    alert('An error occurred while loading manage plan data.');
+                    closeManagePlanModal();
+                });
+            });
+        });
+
+        // Close modal
+        function closeManagePlanModal() {
+            if (managePlanModalOverlay) {
+                managePlanModalOverlay.classList.remove('show');
+                document.body.style.overflow = '';
+            }
+            // Reset form
+            if (amountInput) amountInput.value = '';
+            if (sourceBalanceSelect) sourceBalanceSelect.value = 'fund_wallet';
+            hideManagePlanAlert();
+        }
+
+        closeModalBtns.forEach(btn => {
+            if (btn) {
+                btn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    closeManagePlanModal();
+                });
+            }
+        });
+
+        // Close modal when clicking overlay
+        if (managePlanModalOverlay) {
+            managePlanModalOverlay.addEventListener('click', function(e) {
+                if (e.target === managePlanModalOverlay) {
+                    closeManagePlanModal();
+                }
+            });
+        }
+
+        // Close modal on Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && managePlanModalOverlay && managePlanModalOverlay.classList.contains('show')) {
+                closeManagePlanModal();
+            }
+        });
+
+        // Handle source balance change
+        if (sourceBalanceSelect) {
+            sourceBalanceSelect.addEventListener('change', function() {
+                validateManagePlanAmount();
+            });
+        }
+
+        // Handle amount input
+        if (amountInput) {
+            amountInput.addEventListener('input', function() {
+                validateManagePlanAmount();
+            });
+        }
+
+        // Handle update investment
+        if (updateBtn) {
+            updateBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                submitManagePlanUpdate();
+            });
+        }
+
+        /**
+         * Populate Manage Plan Modal with Data
+         */
+        function populateManagePlanModal(data) {
+            const investment = data.investment;
+            const plan = data.plan;
+            const balances = data.balances;
+
+            // Update plan name in header
+            const planNameEl = document.getElementById('managePlanName');
+            if (planNameEl) planNameEl.textContent = plan.name;
+
+            // Update plan name in body
+            const planNameTextEl = document.getElementById('managePlanNameText');
+            if (planNameTextEl) planNameTextEl.textContent = plan.name;
+
+            // Update active investment amount
+            const activeInvestmentEl = document.getElementById('activeInvestmentAmount');
+            if (activeInvestmentEl) activeInvestmentEl.textContent = '$' + parseFloat(investment.amount).toFixed(2);
+
+            // Update investment range
+            const minAmountEl = document.getElementById('managePlanMinAmount');
+            const maxAmountEl = document.getElementById('managePlanMaxAmount');
+            if (minAmountEl) minAmountEl.textContent = parseFloat(plan.min_investment).toFixed(2);
+            if (maxAmountEl) maxAmountEl.textContent = parseFloat(plan.max_investment).toFixed(2);
+
+            // Update balances
+            const fundBalanceEl = document.getElementById('managePlanFundBalance');
+            const earningBalanceEl = document.getElementById('managePlanEarningBalance');
+            if (fundBalanceEl) fundBalanceEl.textContent = '$' + parseFloat(balances.fund_balance).toFixed(2);
+            if (earningBalanceEl) earningBalanceEl.textContent = '$' + parseFloat(balances.earning_balance).toFixed(2);
+
+            // Update input hint with max additional
+            const amountHintEl = document.getElementById('managePlanAmountHint');
+            if (amountHintEl) {
+                const maxAdditional = parseFloat(data.max_additional);
+                amountHintEl.textContent = `Min: $0.01 - Max: $${maxAdditional.toFixed(2)}`;
+            }
+
+            // Validate and show/hide alert
+            validateManagePlanAmount();
+        }
+
+        /**
+         * Validate Manage Plan Amount
+         */
+        function validateManagePlanAmount() {
+            if (!currentPlanData || !currentBalances || !currentInvestmentData) return;
+
+            const selectedSource = sourceBalanceSelect ? sourceBalanceSelect.value : 'fund_wallet';
+            const amount = parseFloat(amountInput ? amountInput.value : 0);
+            const existingAmount = parseFloat(currentInvestmentData.amount);
+            const maxAdditional = parseFloat(currentPlanData.max_investment) - existingAmount;
+            
+            let selectedBalance = 0;
+            if (selectedSource === 'fund_wallet') {
+                selectedBalance = parseFloat(currentBalances.fund_balance);
+            } else {
+                selectedBalance = parseFloat(currentBalances.earning_balance);
+            }
+
+            const alertEl = document.getElementById('managePlanAlert');
+            const alertMessageEl = document.getElementById('managePlanAlertMessage');
+
+            // Validate amount if entered
+            if (amount > 0) {
+                if (amount > maxAdditional) {
+                    showManagePlanAlert(`Additional amount cannot exceed $${maxAdditional.toFixed(2)}. Maximum total investment is $${parseFloat(currentPlanData.max_investment).toFixed(2)}.`);
+                    if (updateBtn) updateBtn.disabled = true;
+                } else if (amount > selectedBalance) {
+                    showManagePlanAlert(`Insufficient balance. Available: $${selectedBalance.toFixed(2)}`);
+                    if (updateBtn) updateBtn.disabled = true;
+                } else {
+                    hideManagePlanAlert();
+                    if (updateBtn) updateBtn.disabled = false;
+                }
+            } else {
+                hideManagePlanAlert();
+                if (updateBtn) updateBtn.disabled = false;
+            }
+        }
+
+        /**
+         * Show Manage Plan Alert
+         */
+        function showManagePlanAlert(message) {
+            const alertEl = document.getElementById('managePlanAlert');
+            const alertMessageEl = document.getElementById('managePlanAlertMessage');
+            if (alertEl && alertMessageEl) {
+                alertMessageEl.textContent = message;
+                alertEl.style.display = 'flex';
+            }
+        }
+
+        /**
+         * Hide Manage Plan Alert
+         */
+        function hideManagePlanAlert() {
+            const alertEl = document.getElementById('managePlanAlert');
+            if (alertEl) {
+                alertEl.style.display = 'none';
+            }
+        }
+
+        /**
+         * Submit Manage Plan Update
+         */
+        function submitManagePlanUpdate() {
+            if (!currentInvestmentData || !currentPlanData) return;
+
+            const amount = parseFloat(amountInput ? amountInput.value : 0);
+            const sourceBalance = sourceBalanceSelect ? sourceBalanceSelect.value : 'fund_wallet';
+            const investmentId = currentInvestmentData.id;
+
+            // Validate amount
+            if (!amount || amount <= 0) {
+                showManagePlanAlert('Please enter a valid additional investment amount.');
+                return;
+            }
+
+            const existingAmount = parseFloat(currentInvestmentData.amount);
+            const maxAdditional = parseFloat(currentPlanData.max_investment) - existingAmount;
+
+            if (amount > maxAdditional) {
+                showManagePlanAlert(`Additional amount cannot exceed $${maxAdditional.toFixed(2)}.`);
+                return;
+            }
+
+            // Disable button during submission
+            if (updateBtn) {
+                updateBtn.disabled = true;
+                updateBtn.textContent = 'Processing...';
+            }
+
+            // Get CSRF token
+            const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
+
+            // Submit update
+            fetch(`/user/dashboard/investments/${investmentId}/update`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'Accept': 'application/json',
+                    'X-CSRF-TOKEN': csrfToken || '',
+                },
+                credentials: 'same-origin',
+                body: JSON.stringify({
+                    amount: amount,
+                    source_balance: sourceBalance
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Investment updated successfully!');
+                    closeManagePlanModal();
+                    // Reload page to update balances
+                    window.location.reload();
+                } else {
+                    showManagePlanAlert(data.message || 'Failed to update investment. Please try again.');
+                    if (updateBtn) {
+                        updateBtn.disabled = false;
+                        updateBtn.textContent = 'Update Settings';
+                    }
+                }
+            })
+            .catch(error => {
+                console.error('Error updating investment:', error);
+                showManagePlanAlert('An error occurred while updating the investment.');
+                if (updateBtn) {
+                    updateBtn.disabled = false;
+                    updateBtn.textContent = 'Update Settings';
+                }
+            });
+        }
+    }
 
 })();
 

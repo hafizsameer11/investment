@@ -53,9 +53,12 @@ class CalculateMiningProfits extends Command
                     $profit = $investment->amount * ($hourlyRate / 100);
 
                     if ($profit > 0) {
-                        // Add profit to user's mining_earning
+                        // Add profit to user's mining_earning (total)
                         $user = $investment->user;
                         $user->mining_earning = ($user->mining_earning ?? 0) + $profit;
+                        
+                        // Add profit to investment's unclaimed_profit (per investment)
+                        $investment->unclaimed_profit = ($investment->unclaimed_profit ?? 0) + $profit;
                         
                         // Update investment's total profit earned
                         $investment->total_profit_earned = ($investment->total_profit_earned ?? 0) + $profit;
