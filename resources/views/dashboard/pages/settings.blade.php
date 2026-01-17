@@ -386,7 +386,7 @@
             <i class="fas fa-chevron-right settings-menu-arrow"></i>
         </a>
 
-        <a href="{{ route('withdraw-security.index') }}" class="settings-menu-item">
+        <a href="{{ route('withdraw.index') }}" class="settings-menu-item">
             <div class="settings-menu-icon">
                 <i class="fas fa-hand-holding-usd"></i>
             </div>

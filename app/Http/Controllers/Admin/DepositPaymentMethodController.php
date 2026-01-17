@@ -39,6 +39,8 @@ class DepositPaymentMethodController extends Controller
             'account_number' => 'required|string|max:255',
             'minimum_deposit' => 'nullable|numeric|min:0',
             'maximum_deposit' => 'nullable|numeric|min:0',
+            'minimum_withdrawal_amount' => 'nullable|numeric|min:0',
+            'maximum_withdrawal_amount' => 'nullable|numeric|min:0',
         ]);
 
         // Additional validation: maximum should be greater than or equal to minimum
@@ -47,6 +49,15 @@ class DepositPaymentMethodController extends Controller
                 return redirect()->back()
                     ->withInput()
                     ->withErrors(['maximum_deposit' => 'Maximum deposit must be greater than or equal to minimum deposit.']);
+            }
+        }
+
+        // Additional validation: maximum withdrawal should be greater than or equal to minimum withdrawal
+        if ($request->filled('minimum_withdrawal_amount') && $request->filled('maximum_withdrawal_amount')) {
+            if ($request->maximum_withdrawal_amount < $request->minimum_withdrawal_amount) {
+                return redirect()->back()
+                    ->withInput()
+                    ->withErrors(['maximum_withdrawal_amount' => 'Maximum withdrawal must be greater than or equal to minimum withdrawal.']);
             }
         }
 
@@ -79,7 +90,11 @@ class DepositPaymentMethodController extends Controller
                 'account_number' => $request->account_number,
                 'minimum_deposit' => $request->minimum_deposit ?? null,
                 'maximum_deposit' => $request->maximum_deposit ?? null,
+                'minimum_withdrawal_amount' => $request->minimum_withdrawal_amount ?? null,
+                'maximum_withdrawal_amount' => $request->maximum_withdrawal_amount ?? null,
                 'is_active' => $request->has('is_active') ? true : false,
+                'allowed_for_deposit' => $request->has('allowed_for_deposit') ? true : false,
+                'allowed_for_withdrawal' => $request->has('allowed_for_withdrawal') ? true : false,
             ]);
 
             return redirect()->route('admin.deposit-payment-method.index')
@@ -123,6 +138,8 @@ class DepositPaymentMethodController extends Controller
             'account_number' => 'required|string|max:255',
             'minimum_deposit' => 'nullable|numeric|min:0',
             'maximum_deposit' => 'nullable|numeric|min:0',
+            'minimum_withdrawal_amount' => 'nullable|numeric|min:0',
+            'maximum_withdrawal_amount' => 'nullable|numeric|min:0',
         ]);
 
         // Additional validation: maximum should be greater than or equal to minimum
@@ -131,6 +148,15 @@ class DepositPaymentMethodController extends Controller
                 return redirect()->back()
                     ->withInput()
                     ->withErrors(['maximum_deposit' => 'Maximum deposit must be greater than or equal to minimum deposit.']);
+            }
+        }
+
+        // Additional validation: maximum withdrawal should be greater than or equal to minimum withdrawal
+        if ($request->filled('minimum_withdrawal_amount') && $request->filled('maximum_withdrawal_amount')) {
+            if ($request->maximum_withdrawal_amount < $request->minimum_withdrawal_amount) {
+                return redirect()->back()
+                    ->withInput()
+                    ->withErrors(['maximum_withdrawal_amount' => 'Maximum withdrawal must be greater than or equal to minimum withdrawal.']);
             }
         }
 
@@ -163,7 +189,11 @@ class DepositPaymentMethodController extends Controller
             'account_number' => $request->account_number,
             'minimum_deposit' => $request->minimum_deposit ?? null,
             'maximum_deposit' => $request->maximum_deposit ?? null,
+            'minimum_withdrawal_amount' => $request->minimum_withdrawal_amount ?? null,
+            'maximum_withdrawal_amount' => $request->maximum_withdrawal_amount ?? null,
             'is_active' => $request->has('is_active') ? true : false,
+            'allowed_for_deposit' => $request->has('allowed_for_deposit') ? true : false,
+            'allowed_for_withdrawal' => $request->has('allowed_for_withdrawal') ? true : false,
         ]);
 
         return redirect()->route('admin.deposit-payment-method.index')

@@ -115,6 +115,13 @@
                         </li>
 
                         <li>
+                            <a href="{{ route('admin.withdrawals.index') }}" class="waves-effect">
+                                <i class="mdi mdi-cash-refund"></i>
+                                <span> Withdrawals </span>
+                            </a>
+                        </li>
+
+                        <li>
                             <a href="{{ route('admin.currency-conversion.index') }}" class="waves-effect">
                                 <i class="mdi mdi-currency-usd"></i>
                                 <span>Currency Conversion</span>

@@ -98,11 +98,42 @@
                             </div>
 
                             <div class="form-group mb-0">
+                                <label class="my-2 py-1">Minimum Withdrawal</label>
+                                <input type="number" step="0.01" class="form-control" name="minimum_withdrawal_amount" value="{{ old('minimum_withdrawal_amount') }}"
+                                    placeholder="Enter minimum withdrawal amount (e.g., 10.00)" min="0" />
+                                <small class="form-text text-muted">The minimum withdrawal amount allowed for this payment method.</small>
+                            </div>
+
+                            <div class="form-group mb-0">
+                                <label class="my-2 py-1">Maximum Withdrawal</label>
+                                <input type="number" step="0.01" class="form-control" name="maximum_withdrawal_amount" value="{{ old('maximum_withdrawal_amount') }}"
+                                    placeholder="Enter maximum withdrawal amount (e.g., 10000.00)" min="0" />
+                                <small class="form-text text-muted">The maximum withdrawal amount allowed for this payment method.</small>
+                            </div>
+
+                            <div class="form-group mb-0">
                                 <div class="custom-control custom-checkbox">
                                     <input type="checkbox" class="custom-control-input" id="is_active" name="is_active" value="1" {{ old('is_active', true) ? 'checked' : '' }}>
                                     <label class="custom-control-label" for="is_active">Active</label>
                                 </div>
                                 <small class="form-text text-muted">Check to make this payment method active.</small>
+                            </div>
+
+                            <div class="form-group mb-0">
+                                <label class="my-2 py-1">Usage Settings</label>
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" id="allowed_for_deposit" name="allowed_for_deposit" value="1" {{ old('allowed_for_deposit', true) ? 'checked' : '' }}>
+                                    <label class="custom-control-label" for="allowed_for_deposit">Allow for Deposit</label>
+                                </div>
+                                <small class="form-text text-muted">Check to allow this payment method for deposits/recharges.</small>
+                            </div>
+
+                            <div class="form-group mb-0">
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" id="allowed_for_withdrawal" name="allowed_for_withdrawal" value="1" {{ old('allowed_for_withdrawal', false) ? 'checked' : '' }}>
+                                    <label class="custom-control-label" for="allowed_for_withdrawal">Allow for Withdrawal</label>
+                                </div>
+                                <small class="form-text text-muted">Check to allow this payment method for withdrawals.</small>
                             </div>
 
                             <div class="form-group mb-0">

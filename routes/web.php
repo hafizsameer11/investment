@@ -24,6 +24,7 @@ use App\Http\Controllers\Admin\EarningCommissionController;
 use App\Http\Controllers\Admin\CurrencyConversionController;
 use App\Http\Controllers\Admin\DepositPaymentMethodController;
 use App\Http\Controllers\Admin\InvestmentCommissionController;
+use App\Http\Controllers\Admin\WithdrawalController;
 use App\Http\Controllers\Dashboard\WithdrawSecurityController;
 use App\Http\Controllers\Admin\AuthController as AdminAuthController;
 
@@ -57,6 +58,8 @@ Route::prefix('user/dashboard')->middleware('auth')->group(function () {
     Route::get('/deposit/confirm', [WalletController::class, 'depositConfirm'])->name('deposit.confirm');
     Route::post('/deposit', [WalletController::class, 'storeDeposit'])->name('deposit.store');
     Route::get('/withdraw', [WalletController::class, 'withdraw'])->name('withdraw.index');
+    Route::get('/withdraw/confirm', [WalletController::class, 'withdrawConfirm'])->name('withdraw.confirm');
+    Route::post('/withdraw', [WalletController::class, 'storeWithdrawal'])->name('withdraw.store');
     Route::get('/plans', [PlansController::class, 'index'])->name('plans.index');
     
     // Investment Routes
@@ -179,6 +182,14 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
         Route::get('/{id}', [DepositController::class, 'show'])->name('show');
         Route::post('/{id}/approve', [DepositController::class, 'approve'])->name('approve');
         Route::post('/{id}/reject', [DepositController::class, 'reject'])->name('reject');
+    });
+
+    // Admin Withdrawal Management Routes
+    Route::prefix('withdrawals')->name('admin.withdrawals.')->group(function () {
+        Route::get('/', [WithdrawalController::class, 'index'])->name('index');
+        Route::get('/{id}', [WithdrawalController::class, 'show'])->name('show');
+        Route::post('/{id}/approve', [WithdrawalController::class, 'approve'])->name('approve');
+        Route::post('/{id}/reject', [WithdrawalController::class, 'reject'])->name('reject');
     });
 });
 

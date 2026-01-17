@@ -79,6 +79,7 @@
                                         <th data-priority="4">Min Deposit</th>
                                         <th data-priority="4">Max Deposit</th>
                                         <th data-priority="3">Status</th>
+                                        <th data-priority="2">Usage</th>
                                         <th data-priority="1">Actions</th>
                                     </tr>
                                     </thead>
@@ -118,6 +119,17 @@
                                             @endif
                                         </td>
                                         <td>
+                                            @if($paymentMethod->allowed_for_deposit ?? true)
+                                                <span class="badge badge-info">Deposit</span>
+                                            @endif
+                                            @if($paymentMethod->allowed_for_withdrawal ?? false)
+                                                <span class="badge badge-warning">Withdrawal</span>
+                                            @endif
+                                            @if(!($paymentMethod->allowed_for_deposit ?? true) && !($paymentMethod->allowed_for_withdrawal ?? false))
+                                                <span class="text-muted">-</span>
+                                            @endif
+                                        </td>
+                                        <td>
                                             <a href="{{ route('admin.deposit-payment-method.edit', $paymentMethod->id) }}" class="btn btn-sm btn-primary waves-effect waves-light" title="Edit">
                                                 <i class="mdi mdi-pencil"></i>
                                             </a>
@@ -132,7 +144,7 @@
                                     </tr>
                                     @empty
                                     <tr>
-                                        <td colspan="8" class="text-center">No payment methods found. <a href="{{ route('admin.deposit-payment-method.create') }}">Create one now</a>.</td>
+                                        <td colspan="9" class="text-center">No payment methods found. <a href="{{ route('admin.deposit-payment-method.create') }}">Create one now</a>.</td>
                                     </tr>
                                     @endforelse
                                     </tbody>

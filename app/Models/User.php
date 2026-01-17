@@ -218,6 +218,16 @@ class User extends Authenticatable
     }
 
     /**
+     * Get all withdrawals made by this user
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function withdrawals()
+    {
+        return $this->hasMany(Withdrawal::class);
+    }
+
+    /**
      * Recalculate and update the net balance
      * Net Balance = Fund Wallet + Mining Earning + Referral Earning
      *
