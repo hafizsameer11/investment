@@ -6,6 +6,7 @@
     $pageTitles = [
         'wallet.index' => 'Core Wallet',
         'deposit.index' => 'Add Money',
+        'deposit.confirm' => 'Add Money',
         'withdraw.index' => 'Withdraw Funds',
         'plans.index' => 'Mining Plans',
         'goals.index' => 'Victory Rewards',

@@ -17,7 +17,12 @@ class PlansController extends Controller
             ->orderBy('id')
             ->get();
         
-        return view('dashboard.pages.plans', compact('plans'));
+        $inactivePlans = MiningPlan::where('is_active', false)
+            ->orderBy('sort_order')
+            ->orderBy('id')
+            ->get();
+        
+        return view('dashboard.pages.plans', compact('plans', 'inactivePlans'));
     }
 }
 

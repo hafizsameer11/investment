@@ -408,13 +408,7 @@
         <!-- Amount -->
         <div class="deposit-info-row">
             <div class="deposit-info-label">Amount</div>
-            <div class="deposit-amount-display">Rs. {{ number_format($pkrAmount, 2) }}</div>
-        </div>
-
-        <!-- Currency -->
-        <div class="deposit-info-row">
-            <div class="deposit-info-label">Currency</div>
-            <div class="deposit-info-value">PKR</div>
+            <div class="deposit-amount-display">{{ number_format($pkrAmount, 0) }} PKR</div>
         </div>
 
         <!-- Transaction ID -->
@@ -489,7 +483,7 @@
                        class="deposit-transaction-input" 
                        id="verification-amount-input"
                        name="verification_amount"
-                       value="{{ number_format($pkrAmount, 2) }}" 
+                       value="{{ number_format($pkrAmount, 0) }}" 
                        readonly>
             </div>
 

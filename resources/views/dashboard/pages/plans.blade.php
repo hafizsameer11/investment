@@ -2577,30 +2577,29 @@
     @endforelse
 
     <!-- Coming Soon Section -->
-    {{-- <div class="plans-coming-soon-new">
+    @if(isset($inactivePlans) && $inactivePlans->count() > 0)
+    <div class="plans-coming-soon-new">
         <h3 class="coming-soon-title-new">More Plans Coming Soon</h3>
         <p class="coming-soon-subtitle-new">We're working on additional mining plan options for you</p>
         <div class="coming-soon-cards-new">
+            @foreach($inactivePlans as $inactivePlan)
             <div class="coming-soon-card-new">
                 <div class="coming-soon-icon-new">
-                    <i class="fas fa-gem"></i>
+                    @if($inactivePlan->icon_class)
+                        <i class="{{ $inactivePlan->icon_class }}"></i>
+                    @else
+                        <i class="fas fa-gem"></i>
+                    @endif
                 </div>
                 <div class="coming-soon-text-wrapper-new">
-                    <div class="coming-soon-name-new">Platinum</div>
+                    <div class="coming-soon-name-new">{{ $inactivePlan->name }}</div>
                     <div class="coming-soon-status-new">COMING SOON</div>
                 </div>
             </div>
-            <div class="coming-soon-card-new">
-                <div class="coming-soon-icon-new">
-                    <i class="fas fa-crown"></i>
-                </div>
-                <div class="coming-soon-text-wrapper-new">
-                    <div class="coming-soon-name-new">Diamond</div>
-                    <div class="coming-soon-status-new">COMING SOON</div>
-                </div>
-            </div>
+            @endforeach
         </div>
-    </div> --}}
+    </div>
+    @endif
 
     <!-- Investment Calculator Modal -->
     <div class="calculator-modal-overlay" id="calculatorModalOverlay">
