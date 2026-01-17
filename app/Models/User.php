@@ -228,6 +228,26 @@ class User extends Authenticatable
     }
 
     /**
+     * Get all notifications for this user
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function notifications()
+    {
+        return $this->hasMany(Notification::class);
+    }
+
+    /**
+     * Get all unread notifications for this user
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function unreadNotifications()
+    {
+        return $this->hasMany(Notification::class)->where('is_read', false);
+    }
+
+    /**
      * Recalculate and update the net balance
      * Net Balance = Fund Wallet + Mining Earning + Referral Earning
      *

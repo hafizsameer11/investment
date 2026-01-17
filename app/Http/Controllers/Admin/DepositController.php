@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Deposit;
+use App\Services\NotificationService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -74,6 +75,9 @@ class DepositController extends Controller
             $user->total_invested += $deposit->amount;
             $user->updateNetBalance(); // This will save the user
 
+            // Send notification to user
+            NotificationService::sendDepositApproved($deposit);
+
             DB::commit();
 
             return redirect()->route('admin.deposits.index')
@@ -115,6 +119,9 @@ class DepositController extends Controller
                 'approved_at' => now(),
                 'admin_notes' => $request->admin_notes,
             ]);
+
+            // Send notification to user
+            NotificationService::sendDepositRejected($deposit);
 
             return redirect()->route('admin.deposits.index')
                 ->with('warning', 'Deposit has been rejected.');

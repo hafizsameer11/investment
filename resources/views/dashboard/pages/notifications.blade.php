@@ -156,6 +156,12 @@
         gap: 1.25rem;
         transition: all 0.2s ease;
         cursor: pointer;
+        position: relative;
+    }
+
+    .notification-card.unread {
+        border-left: 4px solid #FFB21E;
+        background: rgba(255, 178, 30, 0.05);
     }
 
     .notification-card:hover {
@@ -163,6 +169,18 @@
         border-color: rgba(255, 178, 30, 0.3);
         transform: translateY(-2px);
         box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+    }
+
+    .notification-card.unread::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 8px;
+        height: 8px;
+        background: #FFB21E;
+        border-radius: 50%;
     }
 
     .notification-card-icon {
@@ -230,6 +248,43 @@
     .notifications-empty-text {
         font-size: 1.125rem;
         margin: 0;
+    }
+
+    .notifications-actions {
+        display: flex;
+        justify-content: flex-end;
+        margin-bottom: 1.5rem;
+    }
+
+    .notification-icon-type {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        background: rgba(255, 178, 30, 0.15);
+        border: 2px solid rgba(255, 178, 30, 0.3);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #FFB21E;
+        font-size: 1.25rem;
+    }
+
+    .notification-icon-type.deposit {
+        background: rgba(34, 197, 94, 0.15);
+        border-color: rgba(34, 197, 94, 0.3);
+        color: #22c55e;
+    }
+
+    .notification-icon-type.withdrawal {
+        background: rgba(59, 130, 246, 0.15);
+        border-color: rgba(59, 130, 246, 0.3);
+        color: #3b82f6;
+    }
+
+    .notification-icon-type.admin {
+        background: rgba(168, 85, 247, 0.15);
+        border-color: rgba(168, 85, 247, 0.3);
+        color: #a855f7;
     }
 
     /* Mobile Responsive */
@@ -338,47 +393,135 @@
         <div class="notifications-title-section">
             <h1 class="notifications-title">Notifications</h1>
         </div>
+        @if($notifications->count() > 0 && $notifications->where('is_read', false)->count() > 0)
+        <div class="notifications-actions">
+            <button type="button" class="notifications-unread-btn" id="markAllReadBtn">
+                Mark All as Read
+            </button>
+        </div>
+        @endif
     </div>
 
     <!-- Notifications List -->
     <div class="notifications-list">
-        <!-- Notification 1 -->
-        <div class="notification-card">
-            <div class="notification-card-icon">
-                <i class="fas fa-bell"></i>
+        @forelse($notifications as $notification)
+            @php
+                $iconClass = 'fas fa-bell';
+                $typeClass = '';
+                if (str_contains($notification->type, 'deposit')) {
+                    $iconClass = 'fas fa-arrow-down';
+                    $typeClass = 'deposit';
+                } elseif (str_contains($notification->type, 'withdrawal')) {
+                    $iconClass = 'fas fa-arrow-up';
+                    $typeClass = 'withdrawal';
+                } elseif (str_contains($notification->type, 'admin')) {
+                    $iconClass = 'fas fa-bullhorn';
+                    $typeClass = 'admin';
+                }
+            @endphp
+            <div class="notification-card {{ !$notification->is_read ? 'unread' : '' }}" 
+                 data-notification-id="{{ $notification->id }}"
+                 onclick="markAsRead({{ $notification->id }})">
+                <div class="notification-card-icon">
+                    <div class="notification-icon-type {{ $typeClass }}">
+                        <i class="{{ $iconClass }}"></i>
+                    </div>
+                </div>
+                <div class="notification-card-content">
+                    <div class="notification-card-greeting">{{ $notification->title }}</div>
+                    <div class="notification-card-message">{{ $notification->message }}</div>
+                    <div class="notification-card-time">{{ $notification->created_at->format('M d, Y h:i A') }}</div>
+                </div>
             </div>
-            <div class="notification-card-content">
-                <div class="notification-card-greeting">Hi, {{ Auth::user()->name ?? 'Moneymaker' }}</div>
-                <div class="notification-card-message">Your withdrawal request approved.</div>
-                <div class="notification-card-time">Jan 14, 2026 3:34 PM</div>
+        @empty
+            <div class="notifications-empty">
+                <div class="notifications-empty-icon">
+                    <i class="fas fa-bell-slash"></i>
+                </div>
+                <div class="notifications-empty-text">No notifications yet</div>
             </div>
-        </div>
-
-        <!-- Notification 2 -->
-        <div class="notification-card">
-            <div class="notification-card-icon">
-                <i class="fas fa-bell"></i>
-            </div>
-            <div class="notification-card-content">
-                <div class="notification-card-greeting">Hi, {{ Auth::user()->name ?? 'Moneymaker' }}</div>
-                <div class="notification-card-message">Your withdrawal request approved.</div>
-                <div class="notification-card-time">Jan 12, 2026 12:40 PM</div>
-            </div>
-        </div>
-
-        <!-- Notification 3 -->
-        <div class="notification-card">
-            <div class="notification-card-icon">
-                <i class="fas fa-bell"></i>
-            </div>
-            <div class="notification-card-content">
-                <div class="notification-card-greeting">Hi, {{ Auth::user()->name ?? 'Moneymaker' }}</div>
-                <div class="notification-card-message">Your rank level has been updated to Team leader, and you've earned a $5 reward.</div>
-                <div class="notification-card-time">Jan 12, 2026 2:13 AM</div>
-            </div>
-        </div>
-
+        @endforelse
     </div>
+
+    <!-- Pagination -->
+    @if($notifications->hasPages())
+    <div class="mt-4">
+        {{ $notifications->links() }}
+    </div>
+    @endif
 </div>
+
+@push('scripts')
+<script>
+    function markAsRead(notificationId) {
+        fetch(`{{ route('notifications.mark-read', '') }}/${notificationId}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                const card = document.querySelector(`[data-notification-id="${notificationId}"]`);
+                if (card) {
+                    card.classList.remove('unread');
+                    updateUnreadCount();
+                }
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    }
+
+    document.getElementById('markAllReadBtn')?.addEventListener('click', function() {
+        if (confirm('Mark all notifications as read?')) {
+            fetch('{{ route("notifications.mark-all-read") }}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    document.querySelectorAll('.notification-card').forEach(card => {
+                        card.classList.remove('unread');
+                    });
+                    document.getElementById('markAllReadBtn')?.remove();
+                    updateUnreadCount();
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+    });
+
+    function updateUnreadCount() {
+        fetch('{{ route("notifications.unread-count") }}')
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    const badge = document.querySelector('.notification-badge');
+                    if (badge) {
+                        if (data.count > 0) {
+                            badge.textContent = data.count;
+                            badge.style.display = 'flex';
+                        } else {
+                            badge.style.display = 'none';
+                        }
+                    }
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    }
+</script>
+@endpush
 @endsection
 

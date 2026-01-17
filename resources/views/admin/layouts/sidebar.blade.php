@@ -128,6 +128,13 @@
                             </a>
                         </li>
 
+                        <li>
+                            <a href="{{ route('admin.notifications.create') }}" class="waves-effect">
+                                <i class="mdi mdi-bell-outline"></i>
+                                <span>Send Notification</span>
+                            </a>
+                        </li>
+
                         {{-- <li>
                             <a href="calendar.html" class="waves-effect"><i class="mdi mdi-calendar-clock"></i><span>
                                     Calendar </span></a>

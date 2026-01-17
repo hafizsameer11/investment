@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Withdrawal;
+use App\Services\NotificationService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -95,6 +96,9 @@ class WithdrawalController extends Controller
                 'admin_proof_image' => $proofImagePath,
             ]);
 
+            // Send notification to user
+            NotificationService::sendWithdrawalApproved($withdrawal);
+
             DB::commit();
 
             return redirect()->route('admin.withdrawals.index')
@@ -149,6 +153,9 @@ class WithdrawalController extends Controller
                 'approved_at' => now(),
                 'admin_notes' => $request->admin_notes,
             ]);
+
+            // Send notification to user
+            NotificationService::sendWithdrawalRejected($withdrawal);
 
             DB::commit();
 

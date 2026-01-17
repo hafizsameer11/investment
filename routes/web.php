@@ -25,6 +25,7 @@ use App\Http\Controllers\Admin\CurrencyConversionController;
 use App\Http\Controllers\Admin\DepositPaymentMethodController;
 use App\Http\Controllers\Admin\InvestmentCommissionController;
 use App\Http\Controllers\Admin\WithdrawalController;
+use App\Http\Controllers\Admin\NotificationController;
 use App\Http\Controllers\Dashboard\WithdrawSecurityController;
 use App\Http\Controllers\Admin\AuthController as AdminAuthController;
 
@@ -75,6 +76,9 @@ Route::prefix('user/dashboard')->middleware('auth')->group(function () {
     Route::get('/referrals', [ReferralsController::class, 'index'])->name('referrals.index');
     Route::get('/transactions', [TransactionsController::class, 'index'])->name('transactions.index');
     Route::get('/notifications', [NotificationsController::class, 'index'])->name('notifications.index');
+    Route::post('/notifications/{id}/read', [NotificationsController::class, 'markAsRead'])->name('notifications.mark-read');
+    Route::post('/notifications/read-all', [NotificationsController::class, 'markAllAsRead'])->name('notifications.mark-all-read');
+    Route::get('/notifications/unread-count', [NotificationsController::class, 'getUnreadCount'])->name('notifications.unread-count');
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
     Route::get('/support', [SupportController::class, 'index'])->name('support.index');
     Route::get('/withdraw-security', [WithdrawSecurityController::class, 'index'])->name('withdraw-security.index');
@@ -190,6 +194,12 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
         Route::get('/{id}', [WithdrawalController::class, 'show'])->name('show');
         Route::post('/{id}/approve', [WithdrawalController::class, 'approve'])->name('approve');
         Route::post('/{id}/reject', [WithdrawalController::class, 'reject'])->name('reject');
+    });
+
+    // Admin Notification Routes
+    Route::prefix('notifications')->name('admin.notifications.')->group(function () {
+        Route::get('/create', [NotificationController::class, 'index'])->name('create');
+        Route::post('/', [NotificationController::class, 'store'])->name('store');
     });
 });
 

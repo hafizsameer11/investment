@@ -7,7 +7,7 @@
         'wallet.index' => 'Core Wallet',
         'deposit.index' => 'Add Money',
         'deposit.confirm' => 'Add Money',
-        'withdraw.index' => 'Withdraw Funds',
+        'withdraw.index' => 'Get Money',
         'plans.index' => 'Mining Plans',
         'goals.index' => 'Victory Rewards',
         'targets.index' => 'Targets',
@@ -87,7 +87,7 @@
             <div class="notification-wrapper">
                 <div class="notification-icon" id="notificationIcon">
                     <i class="fas fa-bell"></i>
-                    <span class="notification-badge">3</span>
+                    <span class="notification-badge" id="notificationBadge" style="display: none;">0</span>
                 </div>
                 
                 <!-- Notification Dropdown Panel -->
@@ -95,31 +95,9 @@
                     <div class="notification-panel-header">
                         <h3 class="notification-panel-title">Notifications</h3>
                     </div>
-                    <div class="notification-panel-body">
-                        <!-- Notification Item 1 -->
-                        <div class="notification-item">
-                            <div class="notification-icon-wrapper">
-                                <i class="fas fa-bell"></i>
-                                <span class="notification-dot"></span>
-                            </div>
-                            <div class="notification-content">
-                                <div class="notification-greeting">Hi, {{ Auth::user()->name ?? 'Moneymaker' }}</div>
-                                <div class="notification-message">Your withdrawal request approved.</div>
-                                <div class="notification-time">Jan 12, 2026 12:40 PM</div>
-                            </div>
-                        </div>
-                        
-                        <!-- Notification Item 2 -->
-                        <div class="notification-item">
-                            <div class="notification-icon-wrapper">
-                                <i class="fas fa-bell"></i>
-                                <span class="notification-dot"></span>
-                            </div>
-                            <div class="notification-content">
-                                <div class="notification-greeting">Hi, {{ Auth::user()->name ?? 'Moneymaker' }}</div>
-                                <div class="notification-message">Your rank level has been updated to Team lead...</div>
-                                <div class="notification-time">Jan 12, 2026 2:13 AM</div>
-                            </div>
+                    <div class="notification-panel-body" id="notificationPanelBody">
+                        <div class="notification-loading" style="text-align: center; padding: 1rem; color: var(--text-secondary);">
+                            <i class="fas fa-spinner fa-spin"></i> Loading...
                         </div>
                     </div>
                     <div class="notification-panel-footer">

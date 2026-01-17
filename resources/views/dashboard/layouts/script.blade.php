@@ -95,7 +95,13 @@
     document.addEventListener('DOMContentLoaded', function() {
         const notificationIcon = document.getElementById('notificationIcon');
         const notificationPanel = document.getElementById('notificationPanel');
+        const notificationPanelBody = document.getElementById('notificationPanelBody');
+        const notificationBadge = document.getElementById('notificationBadge');
         
+        // Load unread count on page load
+        loadUnreadCount();
+        
+        // Load notifications when panel is opened
         if (notificationIcon) {
             // Function to check if device is mobile
             function isMobile() {
@@ -114,7 +120,13 @@
                 
                 // On desktop, toggle dropdown panel
                 if (notificationPanel) {
+                    const isActive = notificationPanel.classList.contains('active');
                     notificationPanel.classList.toggle('active');
+                    
+                    // Load notifications when opening panel
+                    if (!isActive) {
+                        loadNotifications();
+                    }
                 }
             });
 
@@ -137,6 +149,101 @@
                 });
             }
         }
+
+        // Load notifications from API
+        function loadNotifications() {
+            if (!notificationPanelBody) return;
+            
+            notificationPanelBody.innerHTML = '<div class="notification-loading" style="text-align: center; padding: 1rem; color: var(--text-secondary);"><i class="fas fa-spinner fa-spin"></i> Loading...</div>';
+            
+            fetch('{{ route("notifications.index") }}?ajax=1', {
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'Accept': 'application/json'
+                }
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (!data.success || !data.notifications || data.notifications.length === 0) {
+                        notificationPanelBody.innerHTML = '<div style="text-align: center; padding: 2rem; color: var(--text-secondary);">No notifications</div>';
+                        return;
+                    }
+                    
+                    // Get first 5 notifications
+                    let htmlContent = '';
+                    data.notifications.slice(0, 5).forEach(notification => {
+                        const isUnread = !notification.is_read;
+                        
+                        htmlContent += `
+                            <div class="notification-item ${isUnread ? 'unread' : ''}" data-notification-id="${notification.id}" onclick="markNotificationAsRead(${notification.id})">
+                                <div class="notification-icon-wrapper">
+                                    <i class="fas fa-bell"></i>
+                                    ${isUnread ? '<span class="notification-dot"></span>' : ''}
+                                </div>
+                                <div class="notification-content">
+                                    <div class="notification-greeting">${notification.title}</div>
+                                    <div class="notification-message">${notification.message}</div>
+                                    <div class="notification-time">${notification.created_at}</div>
+                                </div>
+                            </div>
+                        `;
+                    });
+                    
+                    notificationPanelBody.innerHTML = htmlContent;
+                })
+                .catch(error => {
+                    console.error('Error loading notifications:', error);
+                    notificationPanelBody.innerHTML = '<div style="text-align: center; padding: 2rem; color: var(--text-secondary);">Error loading notifications</div>';
+                });
+        }
+
+        // Load unread count
+        function loadUnreadCount() {
+            fetch('{{ route("notifications.unread-count") }}')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success && notificationBadge) {
+                        if (data.count > 0) {
+                            notificationBadge.textContent = data.count > 99 ? '99+' : data.count;
+                            notificationBadge.style.display = 'flex';
+                        } else {
+                            notificationBadge.style.display = 'none';
+                        }
+                    }
+                })
+                .catch(error => {
+                    console.error('Error loading unread count:', error);
+                });
+        }
+
+        // Mark notification as read
+        window.markNotificationAsRead = function(notificationId) {
+            fetch(`{{ route("notifications.mark-read", "") }}/${notificationId}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    const item = document.querySelector(`[data-notification-id="${notificationId}"]`);
+                    if (item) {
+                        item.classList.remove('unread');
+                        const dot = item.querySelector('.notification-dot');
+                        if (dot) dot.remove();
+                    }
+                    loadUnreadCount();
+                }
+            })
+            .catch(error => {
+                console.error('Error marking notification as read:', error);
+            });
+        };
+
+        // Refresh unread count every 30 seconds
+        setInterval(loadUnreadCount, 30000);
     });
 </script>
 <script src="{{ asset('assets/dashboard/js/dashboard.js') }}"></script>
