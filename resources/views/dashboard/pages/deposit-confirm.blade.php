@@ -379,6 +379,14 @@
             <div class="deposit-info-value">{{ $paymentMethod->account_type }}</div>
         </div>
 
+        @if($paymentMethod->account_name)
+        <!-- Account Name -->
+        <div class="deposit-info-row">
+            <div class="deposit-info-label">Account Name</div>
+            <div class="deposit-info-value">{{ $paymentMethod->account_name }}</div>
+        </div>
+        @endif
+
         <!-- Phone Number -->
         <div class="deposit-info-row">
             <div class="deposit-info-label">Phone Number</div>

@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\DepositController;
 use App\Http\Controllers\Dashboard\AuthController;
 use App\Http\Controllers\Dashboard\GoalsController;
 use App\Http\Controllers\Dashboard\PlansController;
+use App\Http\Controllers\Dashboard\InvestmentController;
 use App\Http\Controllers\Admin\MiningPlanController;
 use App\Http\Controllers\Dashboard\WalletController;
 use App\Http\Controllers\Admin\RewardLevelController;
@@ -18,6 +19,7 @@ use App\Http\Controllers\Dashboard\SettingsController;
 use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\Dashboard\ReferralsController;
 use App\Http\Controllers\Dashboard\TransactionsController;
+use App\Http\Controllers\Dashboard\NotificationsController;
 use App\Http\Controllers\Admin\EarningCommissionController;
 use App\Http\Controllers\Admin\CurrencyConversionController;
 use App\Http\Controllers\Admin\DepositPaymentMethodController;
@@ -56,10 +58,16 @@ Route::prefix('user/dashboard')->middleware('auth')->group(function () {
     Route::post('/deposit', [WalletController::class, 'storeDeposit'])->name('deposit.store');
     Route::get('/withdraw', [WalletController::class, 'withdraw'])->name('withdraw.index');
     Route::get('/plans', [PlansController::class, 'index'])->name('plans.index');
+    
+    // Investment Routes
+    Route::get('/investments/modal/{planId}', [InvestmentController::class, 'showModal'])->name('investments.modal');
+    Route::post('/investments', [InvestmentController::class, 'store'])->name('investments.store');
+    
     Route::get('/goals', [GoalsController::class, 'index'])->name('goals.index');
     Route::get('/targets', [TargetsController::class, 'index'])->name('targets.index');
     Route::get('/referrals', [ReferralsController::class, 'index'])->name('referrals.index');
     Route::get('/transactions', [TransactionsController::class, 'index'])->name('transactions.index');
+    Route::get('/notifications', [NotificationsController::class, 'index'])->name('notifications.index');
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
     Route::get('/support', [SupportController::class, 'index'])->name('support.index');
     Route::get('/withdraw-security', [WithdrawSecurityController::class, 'index'])->name('withdraw-security.index');

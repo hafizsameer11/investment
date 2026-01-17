@@ -12,6 +12,7 @@ class DepositPaymentMethod extends Model
     protected $fillable = [
         'image',
         'account_type',
+        'account_name',
         'account_number',
         'minimum_deposit',
         'maximum_deposit',

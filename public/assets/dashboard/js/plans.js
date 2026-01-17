@@ -12,6 +12,7 @@
         initPlanButtons();
         initCalculator();
         initCalculatorToggle();
+        initInvestmentModal();
     });
 
     /**
@@ -63,6 +64,319 @@
                 // You can add modal or redirect logic here
             });
         });
+    }
+
+    /**
+     * Initialize Investment Modal
+     */
+    function initInvestmentModal() {
+        const investmentModalOverlay = document.getElementById('investmentModalOverlay');
+        const startInvestingBtns = document.querySelectorAll('.start-investing-btn');
+        const closeModalBtns = document.querySelectorAll('#closeInvestmentModal, #cancelInvestmentBtn');
+        const confirmBtn = document.getElementById('confirmInvestmentBtn');
+        const sourceBalanceSelect = document.getElementById('sourceBalanceSelect');
+        const investmentAmountInput = document.getElementById('investmentAmountInput');
+        const depositAmountBtn = document.getElementById('depositAmountBtn');
+
+        let currentPlanData = null;
+        let currentBalances = null;
+
+        // Open modal when Start Investing button is clicked
+        startInvestingBtns.forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                const planId = btn.getAttribute('data-plan-id');
+                
+                if (!planId) {
+                    console.error('Plan ID not found');
+                    return;
+                }
+
+                // Show loading state
+                if (investmentModalOverlay) {
+                    investmentModalOverlay.classList.add('show');
+                    document.body.style.overflow = 'hidden';
+                }
+
+                // Fetch plan and balance data
+                fetch(`/user/dashboard/investments/modal/${planId}`, {
+                    method: 'GET',
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'Accept': 'application/json',
+                    },
+                    credentials: 'same-origin'
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        currentPlanData = data.plan;
+                        currentBalances = data.balances;
+                        populateInvestmentModal(data);
+                    } else {
+                        alert('Failed to load investment data: ' + (data.message || 'Unknown error'));
+                        closeInvestmentModal();
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching investment data:', error);
+                    alert('An error occurred while loading investment data.');
+                    closeInvestmentModal();
+                });
+            });
+        });
+
+        // Close modal
+        function closeInvestmentModal() {
+            if (investmentModalOverlay) {
+                investmentModalOverlay.classList.remove('show');
+                document.body.style.overflow = '';
+            }
+            // Reset form
+            if (investmentAmountInput) investmentAmountInput.value = '';
+            if (sourceBalanceSelect) sourceBalanceSelect.value = 'fund_wallet';
+            hideAlert();
+        }
+
+        closeModalBtns.forEach(btn => {
+            if (btn) {
+                btn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    closeInvestmentModal();
+                });
+            }
+        });
+
+        // Close modal when clicking overlay
+        if (investmentModalOverlay) {
+            investmentModalOverlay.addEventListener('click', function(e) {
+                if (e.target === investmentModalOverlay) {
+                    closeInvestmentModal();
+                }
+            });
+        }
+
+        // Close modal on Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && investmentModalOverlay && investmentModalOverlay.classList.contains('show')) {
+                closeInvestmentModal();
+            }
+        });
+
+        // Handle source balance change
+        if (sourceBalanceSelect) {
+            sourceBalanceSelect.addEventListener('change', function() {
+                validateInvestmentAmount();
+            });
+        }
+
+        // Handle investment amount input
+        if (investmentAmountInput) {
+            investmentAmountInput.addEventListener('input', function() {
+                validateInvestmentAmount();
+            });
+        }
+
+        // Handle confirm investment
+        if (confirmBtn) {
+            confirmBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                submitInvestment();
+            });
+        }
+
+        // Handle deposit amount button
+        if (depositAmountBtn) {
+            depositAmountBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.location.href = '/user/dashboard/deposit';
+            });
+        }
+
+        /**
+         * Populate Investment Modal with Data
+         */
+        function populateInvestmentModal(data) {
+            const plan = data.plan;
+            const balances = data.balances;
+
+            // Update plan name in header
+            const planNameEl = document.getElementById('investmentPlanName');
+            if (planNameEl) planNameEl.textContent = plan.name;
+
+            // Update plan name in body section
+            const planNameTextEl = document.getElementById('investmentPlanNameText');
+            if (planNameTextEl) planNameTextEl.textContent = plan.name;
+
+            // Update investment range
+            const minAmountEl = document.getElementById('investmentMinAmount');
+            const maxAmountEl = document.getElementById('investmentMaxAmount');
+            if (minAmountEl) minAmountEl.textContent = parseFloat(plan.min_investment).toFixed(2);
+            if (maxAmountEl) maxAmountEl.textContent = parseFloat(plan.max_investment).toFixed(2);
+
+            // Update balances
+            const fundBalanceEl = document.getElementById('fundBalanceDisplay');
+            const earningBalanceEl = document.getElementById('earningBalanceDisplay');
+            if (fundBalanceEl) fundBalanceEl.textContent = '$' + parseFloat(balances.fund_balance).toFixed(2);
+            if (earningBalanceEl) earningBalanceEl.textContent = '$' + parseFloat(balances.earning_balance).toFixed(2);
+
+            // Update input placeholder and hint
+            if (investmentAmountInput) {
+                investmentAmountInput.placeholder = 'Enter amount';
+                investmentAmountInput.min = plan.min_investment;
+                investmentAmountInput.max = plan.max_investment;
+            }
+
+            // Update hint text
+            const amountHintEl = document.getElementById('investmentAmountHint');
+            if (amountHintEl) {
+                amountHintEl.textContent = `Min: $${parseFloat(plan.min_investment).toFixed(2)} - Max: $${parseFloat(plan.max_investment).toFixed(2)}`;
+            }
+
+            // Validate and show/hide alert
+            validateInvestmentAmount();
+        }
+
+        /**
+         * Validate Investment Amount
+         */
+        function validateInvestmentAmount() {
+            if (!currentPlanData || !currentBalances) return;
+
+            const selectedSource = sourceBalanceSelect ? sourceBalanceSelect.value : 'fund_wallet';
+            const amount = parseFloat(investmentAmountInput ? investmentAmountInput.value : 0);
+            const minInvestment = parseFloat(currentPlanData.min_investment);
+            
+            let selectedBalance = 0;
+            if (selectedSource === 'fund_wallet') {
+                selectedBalance = parseFloat(currentBalances.fund_balance);
+            } else {
+                selectedBalance = parseFloat(currentBalances.earning_balance);
+            }
+
+            const alertEl = document.getElementById('investmentAlert');
+            const alertMessageEl = document.getElementById('investmentAlertMessage');
+
+            // Check if balance is sufficient
+            if (selectedBalance < minInvestment) {
+                showAlert(`Please deposit at least $${minInvestment.toFixed(2)} to buy this plan.`);
+                if (depositAmountBtn) depositAmountBtn.style.display = 'block';
+                if (investmentAmountInput) investmentAmountInput.disabled = true;
+                if (confirmBtn) confirmBtn.disabled = true;
+            } else {
+                hideAlert();
+                if (depositAmountBtn) depositAmountBtn.style.display = 'none';
+                if (investmentAmountInput) investmentAmountInput.disabled = false;
+                
+                // Validate amount if entered
+                if (amount > 0) {
+                    if (amount < minInvestment || amount > parseFloat(currentPlanData.max_investment)) {
+                        showAlert(`Investment amount must be between $${minInvestment.toFixed(2)} and $${parseFloat(currentPlanData.max_investment).toFixed(2)}.`);
+                        if (confirmBtn) confirmBtn.disabled = true;
+                    } else if (amount > selectedBalance) {
+                        showAlert(`Insufficient balance. Available: $${selectedBalance.toFixed(2)}`);
+                        if (confirmBtn) confirmBtn.disabled = true;
+                    } else {
+                        hideAlert();
+                        if (confirmBtn) confirmBtn.disabled = false;
+                    }
+                } else {
+                    if (confirmBtn) confirmBtn.disabled = false;
+                }
+            }
+        }
+
+        /**
+         * Show Alert
+         */
+        function showAlert(message) {
+            const alertEl = document.getElementById('investmentAlert');
+            const alertMessageEl = document.getElementById('investmentAlertMessage');
+            if (alertEl && alertMessageEl) {
+                alertMessageEl.textContent = message;
+                alertEl.style.display = 'flex';
+            }
+        }
+
+        /**
+         * Hide Alert
+         */
+        function hideAlert() {
+            const alertEl = document.getElementById('investmentAlert');
+            if (alertEl) {
+                alertEl.style.display = 'none';
+            }
+        }
+
+        /**
+         * Submit Investment
+         */
+        function submitInvestment() {
+            if (!currentPlanData) return;
+
+            const amount = parseFloat(investmentAmountInput ? investmentAmountInput.value : 0);
+            const sourceBalance = sourceBalanceSelect ? sourceBalanceSelect.value : 'fund_wallet';
+
+            // Validate amount
+            if (!amount || amount <= 0) {
+                showAlert('Please enter a valid investment amount.');
+                return;
+            }
+
+            if (amount < parseFloat(currentPlanData.min_investment) || amount > parseFloat(currentPlanData.max_investment)) {
+                showAlert(`Investment amount must be between $${parseFloat(currentPlanData.min_investment).toFixed(2)} and $${parseFloat(currentPlanData.max_investment).toFixed(2)}.`);
+                return;
+            }
+
+            // Disable button during submission
+            if (confirmBtn) {
+                confirmBtn.disabled = true;
+                confirmBtn.textContent = 'Processing...';
+            }
+
+            // Get CSRF token
+            const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
+
+            // Submit investment
+            fetch('/user/dashboard/investments', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'Accept': 'application/json',
+                    'X-CSRF-TOKEN': csrfToken || '',
+                },
+                credentials: 'same-origin',
+                body: JSON.stringify({
+                    plan_id: currentPlanData.id,
+                    amount: amount,
+                    source_balance: sourceBalance
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Investment created successfully!');
+                    closeInvestmentModal();
+                    // Reload page to update balances
+                    window.location.reload();
+                } else {
+                    showAlert(data.message || 'Failed to create investment. Please try again.');
+                    if (confirmBtn) {
+                        confirmBtn.disabled = false;
+                        confirmBtn.textContent = 'Confirm Investment';
+                    }
+                }
+            })
+            .catch(error => {
+                console.error('Error creating investment:', error);
+                showAlert('An error occurred while creating the investment.');
+                if (confirmBtn) {
+                    confirmBtn.disabled = false;
+                    confirmBtn.textContent = 'Confirm Investment';
+                }
+            });
+        }
     }
 
     /**

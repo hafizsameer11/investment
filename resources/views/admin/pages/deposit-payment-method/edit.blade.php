@@ -66,6 +66,13 @@
                             </div>
 
                             <div class="form-group mb-0">
+                                <label class="my-2 py-1">Account Name</label>
+                                <input type="text" class="form-control" name="account_name" value="{{ old('account_name', $paymentMethod->account_name ?? '') }}"
+                                    placeholder="Enter account holder name" />
+                                <small class="form-text text-muted">The name of the account holder.</small>
+                            </div>
+
+                            <div class="form-group mb-0">
                                 <label class="my-2 py-1">Account Number <span class="text-danger">*</span></label>
                                 <input type="text" class="form-control" name="account_number" value="{{ old('account_number', $paymentMethod->account_number) }}" required
                                     placeholder="Enter account number" />

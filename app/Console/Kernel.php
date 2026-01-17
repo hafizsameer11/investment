@@ -12,7 +12,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
-        // $schedule->command('inspire')->hourly();
+        // Calculate mining profits every hour
+        $schedule->command('mining:calculate-profits')->hourly();
     }
 
     /**

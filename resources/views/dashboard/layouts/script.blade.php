@@ -90,5 +90,53 @@
             window.location.href = '{{ route("dashboard.index") }}';
         }
     }
+
+    // Notification Panel Toggle - Desktop Only, Mobile redirects to page
+    document.addEventListener('DOMContentLoaded', function() {
+        const notificationIcon = document.getElementById('notificationIcon');
+        const notificationPanel = document.getElementById('notificationPanel');
+        
+        if (notificationIcon) {
+            // Function to check if device is mobile
+            function isMobile() {
+                return window.innerWidth <= 768;
+            }
+
+            // Handle notification icon click
+            notificationIcon.addEventListener('click', function(e) {
+                e.stopPropagation();
+                
+                // On mobile, redirect to notifications page
+                if (isMobile()) {
+                    window.location.href = '{{ route("notifications.index") }}';
+                    return;
+                }
+                
+                // On desktop, toggle dropdown panel
+                if (notificationPanel) {
+                    notificationPanel.classList.toggle('active');
+                }
+            });
+
+            // Desktop-only: Close notification panel when clicking outside
+            if (notificationPanel) {
+                document.addEventListener('click', function(e) {
+                    if (!isMobile()) {
+                        const isClickInside = notificationPanel.contains(e.target) || notificationIcon.contains(e.target);
+                        if (!isClickInside && notificationPanel.classList.contains('active')) {
+                            notificationPanel.classList.remove('active');
+                        }
+                    }
+                });
+
+                // Desktop-only: Close notification panel on escape key
+                document.addEventListener('keydown', function(e) {
+                    if (!isMobile() && e.key === 'Escape' && notificationPanel.classList.contains('active')) {
+                        notificationPanel.classList.remove('active');
+                    }
+                });
+            }
+        }
+    });
 </script>
 <script src="{{ asset('assets/dashboard/js/dashboard.js') }}"></script>

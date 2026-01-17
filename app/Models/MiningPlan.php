@@ -32,6 +32,16 @@ class MiningPlan extends Model
         'sort_order' => 'integer',
         'is_active' => 'boolean',
     ];
+
+    /**
+     * Get all investments for this mining plan
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function investments()
+    {
+        return $this->hasMany(Investment::class);
+    }
 }
 
 

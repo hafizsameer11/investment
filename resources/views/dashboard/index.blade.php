@@ -228,6 +228,105 @@
         color: #128C7E;
     }
 
+    /* Telegram Group Box Styles */
+    .telegram-support-box {
+        flex-shrink: 0;
+    }
+
+    .telegram-link-box {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        background: linear-gradient(135deg, rgba(0, 136, 204, 0.15) 0%, rgba(0, 136, 204, 0.08) 100%);
+        border: 1.5px solid rgba(0, 136, 204, 0.3);
+        border-radius: 12px;
+        padding: 0.75rem 1rem;
+        text-decoration: none;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        overflow: hidden;
+        white-space: nowrap;
+    }
+
+    .telegram-link-box::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(0, 136, 204, 0.2), transparent);
+        transition: left 0.5s ease;
+    }
+
+    .telegram-link-box:hover::before {
+        left: 100%;
+    }
+
+    .telegram-link-box:hover {
+        background: linear-gradient(135deg, rgba(0, 136, 204, 0.25) 0%, rgba(0, 136, 204, 0.15) 100%);
+        border-color: rgba(0, 136, 204, 0.5);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 16px rgba(0, 136, 204, 0.3);
+    }
+
+    .telegram-icon-wrapper {
+        width: 40px;
+        height: 40px;
+        background: linear-gradient(135deg, #0088cc 0%, #006699 100%);
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        box-shadow: 0 4px 12px rgba(0, 136, 204, 0.4);
+        transition: all 0.3s ease;
+    }
+
+    .telegram-link-box:hover .telegram-icon-wrapper {
+        transform: scale(1.1) rotate(5deg);
+        box-shadow: 0 6px 20px rgba(0, 136, 204, 0.5);
+    }
+
+    .telegram-icon-wrapper i {
+        font-size: 1.25rem;
+        color: #FFFFFF;
+    }
+
+    .telegram-content {
+        display: flex;
+        flex-direction: column;
+        gap: 0.125rem;
+        min-width: 0;
+    }
+
+    .telegram-title {
+        font-size: 0.8125rem;
+        font-weight: 600;
+        color: var(--text-primary);
+        line-height: 1.2;
+        white-space: nowrap;
+    }
+
+    .telegram-subtitle {
+        font-size: 0.6875rem;
+        color: var(--text-secondary);
+        line-height: 1.3;
+        white-space: nowrap;
+    }
+
+    .telegram-arrow {
+        color: #0088cc;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        flex-shrink: 0;
+    }
+
+    .telegram-link-box:hover .telegram-arrow {
+        transform: translateX(4px);
+        color: #006699;
+    }
+
     /* Mobile Responsive for WhatsApp Box */
     @media (max-width: 768px) {
         .wallet-info-row {
@@ -266,6 +365,38 @@
         .whatsapp-arrow {
             font-size: 0.875rem;
         }
+
+        .telegram-link-box {
+            padding: 0.75rem 1rem;
+            gap: 0.75rem;
+        }
+
+        .telegram-icon-wrapper {
+            width: 40px;
+            height: 40px;
+        }
+
+        .telegram-icon-wrapper i {
+            font-size: 1.25rem;
+        }
+
+        .telegram-content {
+            min-width: 0;
+        }
+
+        .telegram-title {
+            font-size: 0.8125rem;
+            white-space: nowrap;
+        }
+
+        .telegram-subtitle {
+            font-size: 0.6875rem;
+            white-space: nowrap;
+        }
+
+        .telegram-arrow {
+            font-size: 0.875rem;
+        }
     }
 
     @media (max-width: 390px) {
@@ -296,6 +427,32 @@
         }
 
         .whatsapp-arrow {
+            display: none;
+        }
+
+        .telegram-link-box {
+            padding: 0.625rem 0.75rem;
+            gap: 0.625rem;
+        }
+
+        .telegram-icon-wrapper {
+            width: 36px;
+            height: 36px;
+        }
+
+        .telegram-icon-wrapper i {
+            font-size: 1.125rem;
+        }
+
+        .telegram-title {
+            font-size: 0.75rem;
+        }
+
+        .telegram-subtitle {
+            font-size: 0.625rem;
+        }
+
+        .telegram-arrow {
             display: none;
         }
     }
@@ -1732,9 +1889,24 @@
                     <i class="fas fa-eye-slash balance-toggle-icon" id="balanceToggle"></i>
                 </div>
             </div>
-            <div class="balance-amount-display">
+            <div class="balance-amount-display" style="display: flex; align-items: center; justify-content: space-between; gap: 15px; flex-wrap: wrap;">
                 {{-- <span class="balance-amount-large" id="totalBalance">${{ number_format($user->net_balance ?? 0, 2) }}</span> --}}
                 <span class="balance-amount-large" id="totalBalance">${{ number_format($user->net_balance) }}</span>
+                <!-- Telegram Group Box -->
+                <div class="telegram-support-box">
+                    <a href="https://t.me/YOUR_TELEGRAM_GROUP" target="_blank" rel="noopener noreferrer" class="telegram-link-box">
+                        <div class="telegram-icon-wrapper">
+                            <i class="fab fa-telegram"></i>
+                        </div>
+                        <div class="telegram-content">
+                            <div class="telegram-title">Join Our Group</div>
+                            <div class="telegram-subtitle">Join our Telegram group</div>
+                        </div>
+                        <div class="telegram-arrow">
+                            <i class="fas fa-arrow-right"></i>
+                        </div>
+                    </a>
+                </div>
             </div>
             <div class="wallet-info-row">
                 <div class="deposit-wallet-info">
@@ -1744,15 +1916,15 @@
                     <i class="fas fa-arrow-down deposit-trend-down"></i>
                 </div>
                 
-                <!-- WhatsApp Support Box -->
+                <!-- WhatsApp Group Box -->
                 <div class="whatsapp-support-box">
-                    <a href="https://wa.me/16474986701" target="_blank" rel="noopener noreferrer" class="whatsapp-link-box">
+                    <a href="https://chat.whatsapp.com/YOUR_GROUP_INVITE_CODE" target="_blank" rel="noopener noreferrer" class="whatsapp-link-box">
                         <div class="whatsapp-icon-wrapper">
                             <i class="fab fa-whatsapp"></i>
                         </div>
                         <div class="whatsapp-content">
-                            <div class="whatsapp-title">Need Help?</div>
-                            <div class="whatsapp-subtitle">Contact us on WhatsApp</div>
+                            <div class="whatsapp-title">Join Our Group</div>
+                            <div class="whatsapp-subtitle">Join our WhatsApp group</div>
                         </div>
                         <div class="whatsapp-arrow">
                             <i class="fas fa-arrow-right"></i>
@@ -1857,7 +2029,6 @@
 <script src="{{ asset('assets/dashboard/js/dashboard.js') }}"></script>
 <script>
     // Balance toggle functionality
-    let balanceVisible = true;
     const balanceToggle = document.getElementById('balanceToggle');
     const totalBalanceEl = document.getElementById('totalBalance');
     const depositWalletAmount = document.getElementById('fundWalletAmount');
@@ -1866,30 +2037,50 @@
     const originalNetBalance = totalBalanceEl ? totalBalanceEl.textContent : '$0.00';
     const originalFundWallet = depositWalletAmount ? depositWalletAmount.textContent : '$0.00';
 
-    if (balanceToggle) {
-        balanceToggle.addEventListener('click', function() {
-            balanceVisible = !balanceVisible;
-            if (balanceVisible) {
-                // Show balance
-                if (totalBalanceEl) {
-                    totalBalanceEl.textContent = originalNetBalance;
-                }
-                if (depositWalletAmount) {
-                    depositWalletAmount.textContent = originalFundWallet;
-                }
+    // Load balance visibility state from localStorage (default to true if not set)
+    // Use page-specific key for independent state management
+    let balanceVisible = localStorage.getItem('balanceVisibilityDashboard') !== 'false';
+
+    // Function to apply balance visibility state
+    function applyBalanceVisibility() {
+        if (balanceVisible) {
+            // Show balance
+            if (totalBalanceEl) {
+                totalBalanceEl.textContent = originalNetBalance;
+            }
+            if (depositWalletAmount) {
+                depositWalletAmount.textContent = originalFundWallet;
+            }
+            if (balanceToggle) {
                 balanceToggle.classList.remove('fa-eye-slash');
                 balanceToggle.classList.add('fa-eye');
-            } else {
-                // Hide balance
-                if (totalBalanceEl) {
-                    totalBalanceEl.textContent = '••••••';
-                }
-                if (depositWalletAmount) {
-                    depositWalletAmount.textContent = '••••';
-                }
+            }
+        } else {
+            // Hide balance
+            if (totalBalanceEl) {
+                totalBalanceEl.textContent = '••••••';
+            }
+            if (depositWalletAmount) {
+                depositWalletAmount.textContent = '••••';
+            }
+            if (balanceToggle) {
                 balanceToggle.classList.remove('fa-eye');
                 balanceToggle.classList.add('fa-eye-slash');
             }
+        }
+    }
+
+    // Apply initial state on page load
+    applyBalanceVisibility();
+
+    // Toggle balance visibility and save to localStorage
+    if (balanceToggle) {
+        balanceToggle.addEventListener('click', function() {
+            balanceVisible = !balanceVisible;
+            // Save state to localStorage with page-specific key
+            localStorage.setItem('balanceVisibilityDashboard', balanceVisible.toString());
+            // Apply the new state
+            applyBalanceVisibility();
         });
     }
 

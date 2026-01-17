@@ -35,6 +35,7 @@ class DepositPaymentMethodController extends Controller
         $request->validate([
             'image' => 'required|image',
             'account_type' => 'required|string|max:255',
+            'account_name' => 'nullable|string|max:255',
             'account_number' => 'required|string|max:255',
             'minimum_deposit' => 'nullable|numeric|min:0',
             'maximum_deposit' => 'nullable|numeric|min:0',
@@ -74,6 +75,7 @@ class DepositPaymentMethodController extends Controller
             $paymentMethod = DepositPaymentMethod::create([
                 'image' => $imagePath,
                 'account_type' => $request->account_type,
+                'account_name' => $request->account_name ?? null,
                 'account_number' => $request->account_number,
                 'minimum_deposit' => $request->minimum_deposit ?? null,
                 'maximum_deposit' => $request->maximum_deposit ?? null,
@@ -117,6 +119,7 @@ class DepositPaymentMethodController extends Controller
         $request->validate([
             'image' => 'nullable|image',
             'account_type' => 'required|string|max:255',
+            'account_name' => 'nullable|string|max:255',
             'account_number' => 'required|string|max:255',
             'minimum_deposit' => 'nullable|numeric|min:0',
             'maximum_deposit' => 'nullable|numeric|min:0',
@@ -156,6 +159,7 @@ class DepositPaymentMethodController extends Controller
         $paymentMethod->update([
             'image' => $imagePath,
             'account_type' => $request->account_type,
+            'account_name' => $request->account_name ?? null,
             'account_number' => $request->account_number,
             'minimum_deposit' => $request->minimum_deposit ?? null,
             'maximum_deposit' => $request->maximum_deposit ?? null,

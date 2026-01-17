@@ -2255,14 +2255,26 @@
     const eyeIconMobile = document.getElementById('eyeIconWalletMobile');
     const eyeSlashIconMobile = document.getElementById('eyeSlashIconWalletMobile');
     const balanceAmount = document.getElementById('balanceAmountWallet');
-    let balanceVisible = true;
+    const balanceLabelEye = document.getElementById('balanceLabelEye');
+    
+    // Load balance visibility state from localStorage (default to true if not set)
+    // Use page-specific key for independent state management
+    let balanceVisible = localStorage.getItem('balanceVisibilityWallet') !== 'false';
+
+    // Store original balance text value
+    const balanceAmountEl = balanceAmount;
+    const balanceText = balanceAmountEl ? balanceAmountEl.querySelector('.wallet-balance-amount') : null;
+    const originalBalanceText = balanceText ? balanceText.textContent : '0';
 
     function toggleBalanceVisibility() {
         balanceVisible = !balanceVisible;
-        const balanceAmountEl = balanceAmount;
-        const balanceText = balanceAmountEl ? balanceAmountEl.querySelector('.wallet-balance-amount') : null;
-        const balanceLabelEye = document.getElementById('balanceLabelEye');
+        // Save state to localStorage with page-specific key
+        localStorage.setItem('balanceVisibilityWallet', balanceVisible.toString());
+        // Apply the visibility state
+        applyBalanceVisibility();
+    }
 
+    function applyBalanceVisibility() {
         if (balanceVisible) {
             // Show balance - label eye icon always stays green (fa-eye)
             if (eyeIcon) eyeIcon.style.display = 'block';
@@ -2281,7 +2293,7 @@
                 balanceToggleMobileIcon.style.display = 'none';
             }
             if (balanceAmountEl) balanceAmountEl.style.opacity = '1';
-            if (balanceText) balanceText.textContent = '0';
+            if (balanceText) balanceText.textContent = originalBalanceText;
 
             // Show all detail values
             const detailValues = document.querySelectorAll('.wallet-detail-value');
@@ -2325,6 +2337,10 @@
         }
     }
 
+    // Apply initial state on page load
+    applyBalanceVisibility();
+
+    // Set up event listeners
     if (balanceToggle) {
         balanceToggle.addEventListener('click', toggleBalanceVisibility);
     }
@@ -2338,7 +2354,6 @@
     }
 
     // Make label eye icon clickable
-    const balanceLabelEye = document.getElementById('balanceLabelEye');
     if (balanceLabelEye) {
         balanceLabelEye.addEventListener('click', toggleBalanceVisibility);
     }

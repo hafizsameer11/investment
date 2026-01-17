@@ -6,7 +6,7 @@
 <link rel="stylesheet" href="{{ asset('assets/dashboard/css/plans.css') }}">
 <style>
     .plans-new-page {
-        padding: 2rem;
+        padding: 1.5rem;
         max-width: 1400px;
         margin: 0 auto;
         width: 100%;
@@ -17,14 +17,14 @@
     /* Hero Section */
     .plans-hero-new {
         text-align: center;
-        margin-bottom: 3rem;
-        padding: 3rem 2rem;
+        margin-bottom: 2rem;
+        padding: 2rem 1.5rem;
         background: var(--card-bg);
         border: 1px solid var(--card-border);
-        border-radius: 24px;
+        border-radius: 20px;
         position: relative;
         overflow: hidden;
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
         width: 100%;
         max-width: 100%;
         box-sizing: border-box;
@@ -64,23 +64,25 @@
     }
 
     .plans-hero-title-new {
-        font-size: 3rem;
+        font-size: 2.25rem;
         font-weight: 700;
         background: linear-gradient(135deg, #FFB21E 0%, #FF8A1D 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
-        margin: 0 0 1rem 0;
-        letter-spacing: -2px;
+        margin: 0 0 0.75rem 0;
+        letter-spacing: -1px;
+        line-height: 1.2;
     }
 
     .plans-hero-subtitle-new {
-        font-size: 1.125rem;
+        font-size: 1rem;
         color: var(--text-secondary);
-        margin: 0 0 2.5rem 0;
+        margin: 0 0 2rem 0;
         max-width: 700px;
         margin-left: auto;
         margin-right: auto;
+        line-height: 1.5;
     }
 
     .plans-hero-stats-new {
@@ -117,22 +119,23 @@
     }
 
     .plans-hero-stat-value-new {
-        font-size: 2.5rem;
+        font-size: 1.875rem;
         font-weight: 700;
         color: var(--primary-color);
         text-shadow: 0 0 20px rgba(255, 178, 30, 0.5);
+        line-height: 1.2;
     }
 
     /* Main Plan Card */
     .plan-main-card-new {
         background: var(--card-bg);
         border: 1px solid var(--card-border);
-        border-radius: 24px;
-        padding: 3rem;
-        margin-bottom: 3rem;
+        border-radius: 20px;
+        padding: 2rem;
+        margin-bottom: 2rem;
         position: relative;
         overflow: hidden;
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
         width: 100%;
         max-width: 100%;
         box-sizing: border-box;
@@ -168,28 +171,28 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        margin-bottom: 2.5rem;
+        margin-bottom: 1.5rem;
         flex-wrap: wrap;
-        gap: 1.5rem;
+        gap: 1.25rem;
     }
 
     .plan-header-left-new {
         display: flex;
         align-items: center;
-        gap: 2rem;
+        gap: 1.25rem;
         flex: 1;
     }
 
     .plan-icon-large-new {
-        width: 120px;
-        height: 120px;
-        border-radius: 24px;
+        width: 80px;
+        height: 80px;
+        border-radius: 16px;
         background: linear-gradient(135deg, rgba(255, 178, 30, 0.2) 0%, rgba(255, 138, 29, 0.1) 100%);
-        border: 3px solid rgba(255, 178, 30, 0.4);
+        border: 2px solid rgba(255, 178, 30, 0.4);
         display: flex;
         align-items: center;
         justify-content: center;
-        box-shadow: 0 8px 32px rgba(255, 178, 30, 0.3);
+        box-shadow: 0 4px 20px rgba(255, 178, 30, 0.25);
         position: relative;
         overflow: hidden;
     }
@@ -213,9 +216,9 @@
     .plan-icon-large-new svg {
         position: relative;
         z-index: 1;
-        width: 60px;
-        height: 60px;
-        filter: drop-shadow(0 0 10px rgba(255, 178, 30, 0.8));
+        width: 40px;
+        height: 40px;
+        filter: drop-shadow(0 0 8px rgba(255, 178, 30, 0.6));
     }
 
     .plan-title-section-new {
@@ -226,52 +229,55 @@
         display: inline-flex;
         align-items: center;
         gap: 0.5rem;
-        padding: 0.625rem 1.25rem;
+        padding: 0.5rem 1rem;
         background: linear-gradient(135deg, rgba(255, 178, 30, 0.2) 0%, rgba(255, 138, 29, 0.15) 100%);
         border: 1px solid rgba(255, 178, 30, 0.4);
-        border-radius: 20px;
-        font-size: 0.8125rem;
+        border-radius: 16px;
+        font-size: 0.75rem;
         font-weight: 600;
         color: var(--primary-color);
-        margin-bottom: 1rem;
-        box-shadow: 0 0 16px rgba(255, 178, 30, 0.3);
+        margin-bottom: 0.75rem;
+        box-shadow: 0 0 12px rgba(255, 178, 30, 0.25);
     }
 
     .plan-name-new {
-        font-size: 2.5rem;
+        font-size: 1.875rem;
         font-weight: 700;
         color: var(--text-primary);
         margin: 0 0 0.5rem 0;
-        letter-spacing: -1px;
+        letter-spacing: -0.5px;
+        line-height: 1.3;
     }
 
     .plan-tagline-new {
-        font-size: 1.125rem;
+        font-size: 1rem;
         color: var(--text-secondary);
         margin: 0;
+        line-height: 1.5;
     }
 
     .plan-security-badge-new {
         display: flex;
         align-items: center;
         gap: 1rem;
-        padding: 1.25rem 1.5rem;
+        padding: 1rem 1.25rem;
         background: rgba(255, 178, 30, 0.08);
         border: 1px solid rgba(255, 178, 30, 0.25);
         border-radius: 16px;
-        margin-bottom: 2.5rem;
+        margin-bottom: 1.5rem;
     }
 
     .plan-security-icon-new {
-        width: 48px;
-        height: 48px;
-        border-radius: 12px;
+        width: 40px;
+        height: 40px;
+        border-radius: 10px;
         background: linear-gradient(135deg, rgba(255, 178, 30, 0.2) 0%, rgba(255, 138, 29, 0.1) 100%);
         display: flex;
         align-items: center;
         justify-content: center;
         color: var(--primary-color);
-        font-size: 1.25rem;
+        font-size: 1rem;
+        flex-shrink: 0;
     }
 
     .plan-security-text-new {
@@ -279,15 +285,17 @@
     }
 
     .plan-security-title-new {
-        font-size: 1rem;
+        font-size: 0.9375rem;
         font-weight: 600;
         color: var(--text-primary);
         margin-bottom: 0.25rem;
+        line-height: 1.3;
     }
 
     .plan-security-desc-new {
-        font-size: 0.875rem;
+        font-size: 0.8125rem;
         color: var(--text-secondary);
+        line-height: 1.4;
     }
 
     /* Mobile Layout Styles */
@@ -302,16 +310,16 @@
     /* Features Grid */
     .plan-features-grid-new {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        gap: 1.5rem;
-        margin-bottom: 2.5rem;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1rem;
+        margin-bottom: 1.5rem;
     }
 
     .plan-feature-card-new {
         background: rgba(255, 178, 30, 0.05);
         border: 1px solid rgba(255, 178, 30, 0.2);
-        border-radius: 16px;
-        padding: 2rem;
+        border-radius: 12px;
+        padding: 1.5rem;
         transition: var(--transition);
         position: relative;
         overflow: hidden;
@@ -347,17 +355,17 @@
     }
 
     .plan-feature-icon-new {
-        width: 64px;
-        height: 64px;
-        border-radius: 16px;
+        width: 52px;
+        height: 52px;
+        border-radius: 12px;
         background: linear-gradient(135deg, rgba(255, 178, 30, 0.2) 0%, rgba(255, 138, 29, 0.1) 100%);
         border: 1px solid rgba(255, 178, 30, 0.3);
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 1.75rem;
+        font-size: 1.375rem;
         color: var(--primary-color);
-        margin-bottom: 1.25rem;
+        margin-bottom: 1rem;
         transition: var(--transition);
     }
 
@@ -373,20 +381,22 @@
     }
 
     .plan-feature-label-new {
-        font-size: 0.8125rem;
+        font-size: 0.75rem;
         color: var(--text-secondary);
         text-transform: uppercase;
         letter-spacing: 0.5px;
-        margin-bottom: 0.75rem;
+        margin-bottom: 0.625rem;
         font-weight: 600;
+        line-height: 1.3;
     }
 
     .plan-feature-value-new {
-        font-size: 2rem;
+        font-size: 1.5rem;
         font-weight: 700;
         color: var(--text-primary);
         margin-bottom: 0.5rem;
         font-variant-numeric: tabular-nums;
+        line-height: 1.2;
     }
 
     .plan-feature-card-new.highlight .plan-feature-value-new {
@@ -395,17 +405,18 @@
     }
 
     .plan-feature-hint-new {
-        font-size: 0.8125rem;
+        font-size: 0.75rem;
         color: var(--text-secondary);
+        line-height: 1.4;
     }
 
     /* Calculator Section */
     .plan-calculator-section-new {
         background: rgba(255, 178, 30, 0.05);
         border: 1px solid rgba(255, 178, 30, 0.2);
-        border-radius: 20px;
-        padding: 2.5rem;
-        margin-bottom: 2.5rem;
+        border-radius: 16px;
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
         display: block;
     }
 
@@ -417,31 +428,32 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        margin-bottom: 2rem;
+        margin-bottom: 1.5rem;
         flex-wrap: wrap;
-        gap: 1rem;
+        gap: 0.875rem;
     }
 
     .plan-calculator-title-new {
-        font-size: 1.5rem;
+        font-size: 1.25rem;
         font-weight: 700;
         color: var(--text-primary);
         margin: 0;
+        line-height: 1.3;
     }
 
     .plan-calculator-toggle-new {
-        padding: 0.875rem 1.5rem;
+        padding: 0.75rem 1.25rem;
         background: var(--card-bg);
         border: 1px solid var(--card-border);
-        border-radius: 12px;
+        border-radius: 10px;
         color: var(--text-primary);
         font-weight: 600;
-        font-size: 0.9375rem;
+        font-size: 0.875rem;
         cursor: pointer;
         transition: var(--transition);
         display: flex;
         align-items: center;
-        gap: 0.75rem;
+        gap: 0.625rem;
     }
 
     .plan-calculator-toggle-new:hover {
@@ -452,59 +464,62 @@
 
     .plan-calculator-grid-new {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 1.5rem;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 1rem;
     }
 
     .plan-calculator-item-new {
         background: var(--card-bg);
         border: 1px solid var(--card-border);
-        border-radius: 16px;
-        padding: 1.75rem;
+        border-radius: 12px;
+        padding: 1.25rem;
         text-align: center;
     }
 
     .plan-calculator-label-new {
-        font-size: 0.8125rem;
+        font-size: 0.75rem;
         color: var(--text-secondary);
-        margin-bottom: 0.75rem;
+        margin-bottom: 0.625rem;
         text-transform: uppercase;
         letter-spacing: 0.5px;
+        line-height: 1.3;
     }
 
     .plan-calculator-value-new {
-        font-size: 2rem;
+        font-size: 1.5rem;
         font-weight: 700;
         color: var(--primary-color);
         margin-bottom: 0.5rem;
         font-variant-numeric: tabular-nums;
+        line-height: 1.2;
     }
 
     .plan-calculator-note-new {
-        font-size: 0.8125rem;
+        font-size: 0.75rem;
         color: var(--text-secondary);
+        line-height: 1.4;
     }
 
     /* Action Buttons */
     .plan-actions-new {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 1.5rem;
-        margin-bottom: 2.5rem;
+        gap: 1rem;
+        margin-bottom: 1.5rem;
     }
 
     .plan-action-btn-new {
-        padding: 1.5rem 2rem;
+        padding: 1rem 1.5rem;
         border: none;
-        border-radius: 16px;
+        border-radius: 12px;
         font-weight: 600;
-        font-size: 1rem;
+        font-size: 0.9375rem;
         cursor: pointer;
         transition: var(--transition);
         display: flex;
         align-items: center;
         justify-content: center;
-        gap: 0.75rem;
+        gap: 0.625rem;
         position: relative;
         overflow: hidden;
     }
@@ -559,17 +574,17 @@
     /* Benefits Section */
     .plan-benefits-new {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 1rem;
-        padding-top: 2rem;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 0.875rem;
+        padding-top: 1.5rem;
         border-top: 1px solid var(--card-border);
     }
 
     .plan-benefit-item-new {
         display: flex;
         align-items: center;
-        gap: 1rem;
-        padding: 1rem;
+        gap: 0.875rem;
+        padding: 0.875rem;
         background: rgba(255, 178, 30, 0.05);
         border: 1px solid rgba(255, 178, 30, 0.15);
         border-radius: 12px;
@@ -583,22 +598,23 @@
     }
 
     .plan-benefit-icon-new {
-        width: 40px;
-        height: 40px;
-        border-radius: 10px;
+        width: 36px;
+        height: 36px;
+        border-radius: 8px;
         background: linear-gradient(135deg, rgba(255, 178, 30, 0.2) 0%, rgba(255, 138, 29, 0.1) 100%);
         display: flex;
         align-items: center;
         justify-content: center;
         color: var(--primary-color);
-        font-size: 1.125rem;
+        font-size: 1rem;
         flex-shrink: 0;
     }
 
     .plan-benefit-text-new {
-        font-size: 0.9375rem;
+        font-size: 0.875rem;
         color: var(--text-primary);
         font-weight: 500;
+        line-height: 1.4;
     }
 
     /* Coming Soon Section */
@@ -716,17 +732,19 @@
         }
 
         .plans-hero-new {
-            padding: 2rem 1.5rem;
-            margin-bottom: 2rem;
+            padding: 1.5rem 1rem;
+            margin-bottom: 1.5rem;
             border-radius: 16px;
         }
 
         .plans-hero-title-new {
-            font-size: 2rem;
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
         }
 
         .plans-hero-subtitle-new {
-            font-size: 1rem;
+            font-size: 0.875rem;
+            margin-bottom: 1.5rem;
         }
 
         /* Mobile: Single Card with Horizontal Layout */
@@ -782,7 +800,7 @@
         }
 
         .plans-hero-stat-value-new {
-            font-size: 1.5rem;
+            font-size: 1.25rem;
             font-weight: 700;
             color: var(--primary-color);
             text-shadow: 0 0 20px rgba(255, 178, 30, 0.5);
@@ -791,53 +809,95 @@
         }
 
         .plan-main-card-new {
-            padding: 2rem 1.5rem;
-            margin-bottom: 2rem;
+            padding: 1.5rem 1rem;
+            margin-bottom: 1.5rem;
             border-radius: 16px;
         }
 
         .plan-header-new {
             flex-direction: column;
             align-items: flex-start;
-            gap: 1.5rem;
+            gap: 1.25rem;
+            margin-bottom: 1.5rem;
         }
 
         .plan-header-left-new {
             flex-direction: column;
             align-items: center;
             text-align: center;
-            gap: 1.5rem;
+            gap: 1rem;
         }
 
         .plan-name-new {
-            font-size: 1.75rem;
+            font-size: 1.375rem;
+        }
+
+        .plan-tagline-new {
+            font-size: 0.875rem;
         }
 
         .plan-icon-large-new {
-            width: 80px;
-            height: 80px;
+            width: 64px;
+            height: 64px;
+        }
+
+        .plan-icon-large-new svg {
+            width: 32px;
+            height: 32px;
         }
 
         .plan-features-grid-new {
             grid-template-columns: 1fr;
-            gap: 1rem;
+            gap: 0.875rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .plan-feature-card-new {
+            padding: 1.25rem;
+        }
+
+        .plan-feature-value-new {
+            font-size: 1.25rem;
+        }
+
+        .plan-feature-icon-new {
+            width: 48px;
+            height: 48px;
+            font-size: 1.25rem;
         }
 
         .plan-calculator-section-new {
-            padding: 1.5rem;
+            padding: 1.25rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .plan-calculator-title-new {
+            font-size: 1.125rem;
         }
 
         .plan-calculator-grid-new {
             grid-template-columns: 1fr;
+            gap: 1rem;
+        }
+
+        .plan-calculator-value-new {
+            font-size: 1.25rem;
         }
 
         .plan-actions-new {
             grid-template-columns: 1fr;
-            gap: 1rem;
+            gap: 0.875rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .plan-action-btn-new {
+            padding: 1rem 1.5rem;
+            font-size: 0.9375rem;
         }
 
         .plan-benefits-new {
             grid-template-columns: 1fr;
+            gap: 0.75rem;
         }
 
         .plans-coming-soon-new {
@@ -853,7 +913,7 @@
 
     @media (max-width: 480px) {
         .plans-new-page {
-            padding: 0;
+            padding: 0.75rem;
             width: 100%;
             max-width: 100%;
             box-sizing: border-box;
@@ -861,17 +921,19 @@
         }
 
         .plans-hero-new {
-            padding: 1.5rem 1rem;
-            margin-bottom: 1.5rem;
-            border-radius: 12px;
+            padding: 1.25rem 0.875rem;
+            margin-bottom: 1.25rem;
+            border-radius: 16px;
         }
 
         .plans-hero-title-new {
-            font-size: 1.75rem;
+            font-size: 1.375rem;
+            margin-bottom: 0.5rem;
         }
 
         .plans-hero-subtitle-new {
-            font-size: 0.875rem;
+            font-size: 0.8125rem;
+            margin-bottom: 1.25rem;
         }
 
         .plans-hero-stats-new {
@@ -885,72 +947,117 @@
         }
 
         .plans-hero-stat-value-new {
-            font-size: 1.5rem;
+            font-size: 1.125rem;
+        }
+
+        .plans-hero-stat-label-new {
+            font-size: 0.6875rem;
         }
 
         .plan-main-card-new {
-            padding: 1.5rem 1rem;
-            margin-bottom: 1.5rem;
-            border-radius: 12px;
+            padding: 1.25rem 0.875rem;
+            margin-bottom: 1.25rem;
+            border-radius: 16px;
         }
 
         .plan-header-new {
-            margin-bottom: 1.5rem;
+            margin-bottom: 1.25rem;
         }
 
         .plan-header-left-new {
-            gap: 1rem;
-        }
-
-        .plan-name-new {
-            font-size: 1.5rem;
-        }
-
-        .plan-icon-large-new {
-            width: 70px;
-            height: 70px;
-        }
-
-        .plan-icon-large-new svg {
-            width: 40px;
-            height: 40px;
-        }
-
-        .plan-security-badge-new {
-            padding: 1rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .plan-features-grid-new {
             gap: 0.875rem;
         }
 
+        .plan-name-new {
+            font-size: 1.25rem;
+        }
+
+        .plan-tagline-new {
+            font-size: 0.8125rem;
+        }
+
+        .plan-icon-large-new {
+            width: 56px;
+            height: 56px;
+        }
+
+        .plan-icon-large-new svg {
+            width: 28px;
+            height: 28px;
+        }
+
+        .plan-security-badge-new {
+            padding: 0.875rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .plan-security-title-new {
+            font-size: 0.875rem;
+        }
+
+        .plan-security-desc-new {
+            font-size: 0.75rem;
+        }
+
+        .plan-features-grid-new {
+            gap: 0.75rem;
+            margin-bottom: 1.25rem;
+        }
+
         .plan-feature-card-new {
-            padding: 1.5rem;
+            padding: 1rem;
+        }
+
+        .plan-feature-icon-new {
+            width: 44px;
+            height: 44px;
+            font-size: 1.125rem;
+            margin-bottom: 0.875rem;
+        }
+
+        .plan-feature-label-new {
+            font-size: 0.75rem;
+            margin-bottom: 0.5rem;
         }
 
         .plan-feature-value-new {
-            font-size: 1.75rem;
+            font-size: 1.125rem;
+        }
+
+        .plan-feature-hint-new {
+            font-size: 0.75rem;
         }
 
         .plan-calculator-section-new {
-            padding: 1.25rem;
+            padding: 1rem;
+            margin-bottom: 1.25rem;
         }
 
         .plan-calculator-header-new {
             flex-direction: column;
             align-items: stretch;
-            gap: 1rem;
+            gap: 0.875rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .plan-calculator-title-new {
+            font-size: 1rem;
         }
 
         .plan-calculator-toggle-new {
             width: 100%;
             justify-content: center;
+            padding: 0.75rem 1.25rem;
+            font-size: 0.875rem;
+        }
+
+        .plan-calculator-value-new {
+            font-size: 1.125rem;
         }
 
         .plan-action-btn-new {
-            padding: 1.25rem 1.5rem;
-            font-size: 0.9375rem;
+            padding: 0.875rem 1.25rem;
+            font-size: 0.875rem;
         }
 
         .plans-coming-soon-new {
@@ -1206,8 +1313,8 @@
         .plan-mobile-header-new {
             display: flex;
             align-items: center;
-            gap: 1rem;
-            margin-bottom: 1rem;
+            gap: 0.875rem;
+            margin-bottom: 0.875rem;
         }
 
         .plan-mobile-icon-wrapper-new {
@@ -1215,14 +1322,14 @@
         }
 
         .plan-mobile-icon-wrapper-new .plan-icon-large-new {
-            width: 56px;
-            height: 56px;
-            border-radius: 16px;
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
         }
 
         .plan-mobile-icon-wrapper-new .plan-icon-large-new svg {
-            width: 32px;
-            height: 32px;
+            width: 24px;
+            height: 24px;
         }
 
         .plan-mobile-title-section-new {
@@ -1230,31 +1337,33 @@
         }
 
         .plan-mobile-name-new {
-            font-size: 1.25rem;
+            font-size: 1.125rem;
             font-weight: 700;
             color: var(--text-primary);
             margin: 0 0 0.25rem 0;
+            line-height: 1.3;
         }
 
         .plan-mobile-subtitle-new {
-            font-size: 0.875rem;
+            font-size: 0.8125rem;
             color: var(--text-secondary);
             margin: 0;
+            line-height: 1.4;
         }
 
         .plan-mobile-policy-new {
-            font-size: 0.875rem;
+            font-size: 0.8125rem;
             font-weight: 600;
             color: var(--success-color);
-            margin-bottom: 1.25rem;
-            padding: 0.75rem 0;
+            margin-bottom: 1rem;
+            padding: 0.625rem 0;
         }
 
         .plan-mobile-details-new {
             display: flex;
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-            padding-bottom: 1.25rem;
+            gap: 0.875rem;
+            margin-bottom: 1.25rem;
+            padding-bottom: 1rem;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
 
@@ -1263,15 +1372,17 @@
         }
 
         .plan-mobile-detail-label-new {
-            font-size: 0.75rem;
+            font-size: 0.6875rem;
             color: var(--text-secondary);
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.375rem;
+            line-height: 1.3;
         }
 
         .plan-mobile-detail-value-new {
-            font-size: 0.9375rem;
+            font-size: 0.875rem;
             font-weight: 600;
             color: var(--text-primary);
+            line-height: 1.3;
         }
 
         /* Mobile: Hide calculator section by default, show when toggled */
@@ -1408,6 +1519,14 @@
         overflow-y: auto;
         min-height: 0;
         overflow-x: hidden;
+    }
+
+    /* Investment modal body specific styles */
+    #investmentModalOverlay .calculator-modal-body {
+        padding: 1.25rem;
+        overflow-y: auto;
+        overflow-x: hidden;
+        -webkit-overflow-scrolling: touch;
     }
 
     .calculator-plan-section {
@@ -1821,6 +1940,413 @@
             padding: 0.625rem 0.875rem;
         }
     }
+
+    /* Investment Modal - Desktop Styles */
+    .investment-modal {
+        max-width: 500px;
+        width: 100%;
+        height: auto;
+        max-height: 90vh;
+        border-radius: 24px;
+        margin: auto;
+    }
+
+    .investment-modal-body {
+        padding: 2rem;
+    }
+
+    /* Alert Message */
+    .investment-alert {
+        background: var(--warning-color);
+        border: 1px solid var(--warning-color);
+        border-radius: 8px;
+        padding: 1rem;
+        margin-bottom: 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        color: var(--text-primary);
+    }
+
+    .investment-alert i {
+        font-size: 1.25rem;
+    }
+
+    .investment-alert span {
+        flex: 1;
+    }
+
+    .investment-deposit-btn {
+        background: var(--text-primary);
+        color: var(--warning-color);
+        border: none;
+        padding: 0.5rem 1rem;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: 600;
+        font-size: 0.875rem;
+        transition: var(--transition);
+    }
+
+    .investment-deposit-btn:hover {
+        opacity: 0.9;
+        transform: translateY(-1px);
+    }
+
+    /* Plan Name Section */
+    .investment-plan-name-section {
+        margin-bottom: 1.5rem;
+    }
+
+    .investment-plan-name-text {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin: 0;
+    }
+
+    .investment-plan-name-highlight {
+        color: var(--primary-color);
+    }
+
+    /* Investment Range Section */
+    .investment-range-section {
+        margin-bottom: 1.5rem;
+    }
+
+    .investment-range-amount {
+        font-size: 2rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin-bottom: 0.5rem;
+        line-height: 1.2;
+    }
+
+    .investment-range-label {
+        font-size: 0.875rem;
+        color: var(--text-secondary);
+    }
+
+    /* Principal Return Policy */
+    .investment-principal-policy {
+        color: var(--success-color);
+        margin-bottom: 1.5rem;
+        font-weight: 500;
+        font-size: 0.9375rem;
+    }
+
+    /* Balances Section */
+    .investment-balances-section {
+        margin-bottom: 1.5rem;
+    }
+
+    .investment-balances-title {
+        font-weight: 600;
+        font-size: 1rem;
+        color: var(--text-primary);
+        margin-bottom: 1rem;
+    }
+
+    .investment-balances-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+    }
+
+    .investment-balance-card {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 1rem;
+        border-radius: 12px;
+        border: 1px solid var(--card-border);
+        background: var(--card-bg);
+        transition: var(--transition);
+    }
+
+    .investment-balance-card:hover {
+        background: var(--card-bg-hover);
+        border-color: var(--card-border-hover);
+    }
+
+    .investment-balance-fund i {
+        font-size: 1.5rem;
+        color: var(--success-color);
+    }
+
+    .investment-balance-earning i {
+        font-size: 1.5rem;
+        color: var(--info-color);
+    }
+
+    .investment-balance-info {
+        flex: 1;
+    }
+
+    .investment-balance-label {
+        font-size: 0.75rem;
+        color: var(--text-secondary);
+        margin-bottom: 0.25rem;
+    }
+
+    .investment-balance-amount {
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: var(--text-primary);
+    }
+
+    /* Pay From Section */
+    .investment-pay-from-section {
+        margin-bottom: 1.5rem;
+        position: relative;
+        z-index: 1;
+    }
+
+    .investment-pay-from-label {
+        display: block;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+        color: var(--text-primary);
+        font-size: 0.9375rem;
+    }
+
+    .investment-select-wrapper {
+        position: relative;
+        width: 100%;
+    }
+
+    .investment-select {
+        width: 100%;
+        padding: 0.75rem 2.5rem 0.75rem 1rem;
+        border-radius: 8px;
+        border: 1px solid var(--card-border);
+        background: var(--card-bg);
+        color: var(--text-primary);
+        font-size: 1rem;
+        appearance: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        cursor: pointer;
+        transition: var(--transition);
+    }
+
+    .investment-select:hover {
+        border-color: var(--card-border-hover);
+    }
+
+    .investment-select:focus {
+        outline: none;
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 3px rgba(255, 178, 30, 0.1);
+    }
+
+    .investment-select-arrow {
+        position: absolute;
+        right: 1rem;
+        top: 50%;
+        transform: translateY(-50%);
+        pointer-events: none;
+        color: var(--text-secondary);
+        font-size: 0.875rem;
+    }
+
+    /* Investment Amount Section */
+    .investment-amount-section {
+        margin-bottom: 1.5rem;
+    }
+
+    .investment-amount-label {
+        display: block;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+        color: var(--text-primary);
+        font-size: 0.9375rem;
+    }
+
+    .investment-input-wrapper {
+        position: relative;
+        width: 100%;
+    }
+
+    .investment-input-prefix {
+        position: absolute;
+        left: 1rem;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--text-secondary);
+        font-size: 1rem;
+        z-index: 1;
+    }
+
+    .investment-amount-input {
+        width: 100%;
+        padding: 0.75rem 1rem 0.75rem 2.5rem;
+        border-radius: 8px;
+        border: 1px solid var(--card-border);
+        background: var(--card-bg);
+        color: var(--text-primary);
+        font-size: 1rem;
+        transition: var(--transition);
+    }
+
+    .investment-amount-input:focus {
+        outline: none;
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 3px rgba(255, 178, 30, 0.1);
+    }
+
+    .investment-amount-input::placeholder {
+        color: var(--text-muted);
+    }
+
+    .investment-amount-hint {
+        font-size: 0.75rem;
+        color: var(--text-secondary);
+        margin-top: 0.5rem;
+    }
+
+    /* Modal Footer Buttons */
+    .investment-modal-footer {
+        display: flex;
+        gap: 1rem;
+        padding: 1.5rem 2rem;
+    }
+
+    .investment-btn {
+        flex: 1;
+        padding: 0.875rem 1.5rem;
+        border-radius: 8px;
+        font-weight: 600;
+        font-size: 0.9375rem;
+        cursor: pointer;
+        transition: var(--transition);
+        border: none;
+    }
+
+    .investment-btn-cancel {
+        background: var(--card-bg);
+        color: var(--text-primary);
+        border: 1px solid var(--card-border);
+    }
+
+    .investment-btn-cancel:hover {
+        background: var(--card-bg-hover);
+        border-color: var(--card-border-hover);
+    }
+
+    .investment-btn-confirm {
+        background: linear-gradient(135deg, var(--primary-gradient-start) 0%, var(--primary-gradient-end) 100%);
+        color: var(--text-primary);
+    }
+
+    .investment-btn-confirm:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-lg), var(--glow-primary);
+    }
+
+    .investment-btn-confirm:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        transform: none;
+    }
+
+    /* Fix dropdown positioning on mobile */
+    #investmentModalOverlay .calculator-modal-body {
+        position: relative;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    /* Select dropdown container */
+    #sourceBalanceSelect {
+        position: relative;
+        z-index: 1;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    /* Mobile Responsive Styles */
+    @media (max-width: 768px) {
+        .investment-modal {
+            max-width: 100%;
+            height: 85vh;
+            min-height: 85vh;
+            max-height: 85vh;
+            border-radius: 24px 24px 0 0;
+        }
+
+        .investment-modal-body {
+            padding: 1.5rem;
+            padding-bottom: 2rem;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        .investment-range-amount {
+            font-size: 1.5rem;
+        }
+
+        .investment-balances-grid {
+            gap: 0.75rem;
+        }
+
+        .investment-balance-card {
+            padding: 0.875rem;
+        }
+
+        .investment-select {
+            font-size: 0.9375rem;
+            padding: 0.625rem 2rem 0.625rem 0.875rem;
+        }
+
+        .investment-amount-input {
+            font-size: 0.9375rem;
+            padding: 0.625rem 0.875rem 0.625rem 2.25rem;
+        }
+
+        .investment-modal-footer {
+            padding: 1rem 1.5rem;
+        }
+
+        .investment-btn {
+            font-size: 0.875rem;
+            padding: 0.75rem 1rem;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .investment-modal {
+            height: 90vh;
+            min-height: 90vh;
+            max-height: 90vh;
+        }
+
+        .investment-modal-body {
+            padding: 1.25rem;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .investment-plan-name-text {
+            font-size: 1.25rem;
+        }
+
+        .investment-range-amount {
+            font-size: 1.25rem;
+        }
+
+        .investment-balances-grid {
+            grid-template-columns: 1fr;
+            gap: 0.75rem;
+        }
+
+        .investment-select {
+            font-size: 0.875rem;
+        }
+
+        .investment-amount-input {
+            font-size: 0.875rem;
+        }
+    }
 </style>
 @endpush
 
@@ -2000,7 +2526,7 @@
 
             <!-- Action Buttons -->
             <div class="plan-actions-new">
-                <button class="plan-action-btn-new plan-action-primary-new">
+                <button class="plan-action-btn-new plan-action-primary-new start-investing-btn" data-plan-id="{{ $plan->id }}">
                     <i class="fas fa-rocket"></i>
                     <span>Start Investing</span>
                 </button>
@@ -2189,6 +2715,103 @@
                 </button>
                 <button class="calculator-btn calculator-btn-close" id="closeCalculatorModalBtn">
                     Close
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Investment Modal -->
+    <div class="calculator-modal-overlay" id="investmentModalOverlay">
+        <div class="calculator-modal investment-modal">
+            <div class="calculator-modal-header">
+                <h3 class="calculator-modal-title">Buy Investment Plan: <span class="investment-plan-name-highlight" id="investmentPlanName">-</span></h3>
+                <button class="calculator-modal-close" id="closeInvestmentModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="calculator-modal-body investment-modal-body">
+                <!-- Alert Message -->
+                <div id="investmentAlert" class="investment-alert" style="display: none;">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <span id="investmentAlertMessage"></span>
+                    <button id="depositAmountBtn" class="investment-deposit-btn" style="display: none;">Deposit Amount</button>
+                </div>
+
+                <!-- Plan Name -->
+                <div class="investment-plan-name-section">
+                    <h2 class="investment-plan-name-text" id="investmentPlanNameText">-</h2>
+                </div>
+
+                <!-- Investment Range -->
+                <div class="investment-range-section">
+                    <div class="investment-range-amount">
+                        $<span id="investmentMinAmount">0</span> - $<span id="investmentMaxAmount">0</span>
+                    </div>
+                    <div class="investment-range-label">Minimum Investment</div>
+                </div>
+
+                <!-- Principal Return Policy -->
+                <div class="investment-principal-policy">
+                    Principal Return Policy Will Be Returned
+                </div>
+
+                <!-- Balances Section -->
+                <div class="investment-balances-section">
+                    <h4 class="investment-balances-title">Current amount in deposit and earning wallet</h4>
+                    <div class="investment-balances-grid">
+                        <div class="investment-balance-card investment-balance-fund">
+                            <i class="fas fa-wallet"></i>
+                            <div class="investment-balance-info">
+                                <div class="investment-balance-label">Fund Balance</div>
+                                <div class="investment-balance-amount" id="fundBalanceDisplay">$0.00</div>
+                            </div>
+                        </div>
+                        <div class="investment-balance-card investment-balance-earning">
+                            <i class="fas fa-wallet"></i>
+                            <div class="investment-balance-info">
+                                <div class="investment-balance-label">Earning Balance</div>
+                                <div class="investment-balance-amount" id="earningBalanceDisplay">$0.00</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pay From Selection -->
+                <div class="investment-pay-from-section">
+                    <label class="investment-pay-from-label">Pay from:</label>
+                    <div class="investment-select-wrapper">
+                        <select id="sourceBalanceSelect" class="investment-select">
+                            <option value="fund_wallet">Fund Balance</option>
+                            <option value="earning_balance">Earning Balance</option>
+                        </select>
+                        <i class="fas fa-chevron-down investment-select-arrow"></i>
+                    </div>
+                </div>
+
+                <!-- Investment Amount Input -->
+                <div class="investment-amount-section">
+                    <label class="investment-amount-label">Investment Amount</label>
+                    <div class="investment-input-wrapper">
+                        <span class="investment-input-prefix">$</span>
+                        <input type="number" 
+                               id="investmentAmountInput"
+                               class="investment-amount-input" 
+                               placeholder="Enter amount"
+                               step="0.01"
+                               min="0">
+                    </div>
+                    <div class="investment-amount-hint" id="investmentAmountHint">Min: $0 - Max: $0</div>
+                </div>
+            </div>
+
+            <!-- Modal Footer Buttons -->
+            <div class="calculator-modal-footer investment-modal-footer">
+                <button class="investment-btn investment-btn-cancel" id="cancelInvestmentBtn">
+                    Cancel
+                </button>
+                <button class="investment-btn investment-btn-confirm" id="confirmInvestmentBtn">
+                    Confirm Investment
                 </button>
             </div>
         </div>

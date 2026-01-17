@@ -208,6 +208,16 @@ class User extends Authenticatable
     }
 
     /**
+     * Get all investments made by this user
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function investments()
+    {
+        return $this->hasMany(Investment::class);
+    }
+
+    /**
      * Recalculate and update the net balance
      * Net Balance = Fund Wallet + Mining Earning + Referral Earning
      *

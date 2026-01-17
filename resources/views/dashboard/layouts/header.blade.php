@@ -12,6 +12,7 @@
         'targets.index' => 'Targets',
         'referrals.index' => 'Invite System',
         'transactions.index' => 'Financial Records',
+        'notifications.index' => 'Notifications',
         'profile.index' => 'Profile',
         'support.index' => 'Technical Support',
         'withdraw-security.index' => 'Get Money',
@@ -82,9 +83,48 @@
 
         <div class="header-right">
             <!-- Notifications -->
-            <div class="notification-icon">
-                <i class="fas fa-bell"></i>
-                <span class="notification-badge">3</span>
+            <div class="notification-wrapper">
+                <div class="notification-icon" id="notificationIcon">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-badge">3</span>
+                </div>
+                
+                <!-- Notification Dropdown Panel -->
+                <div class="notification-panel" id="notificationPanel">
+                    <div class="notification-panel-header">
+                        <h3 class="notification-panel-title">Notifications</h3>
+                    </div>
+                    <div class="notification-panel-body">
+                        <!-- Notification Item 1 -->
+                        <div class="notification-item">
+                            <div class="notification-icon-wrapper">
+                                <i class="fas fa-bell"></i>
+                                <span class="notification-dot"></span>
+                            </div>
+                            <div class="notification-content">
+                                <div class="notification-greeting">Hi, {{ Auth::user()->name ?? 'Moneymaker' }}</div>
+                                <div class="notification-message">Your withdrawal request approved.</div>
+                                <div class="notification-time">Jan 12, 2026 12:40 PM</div>
+                            </div>
+                        </div>
+                        
+                        <!-- Notification Item 2 -->
+                        <div class="notification-item">
+                            <div class="notification-icon-wrapper">
+                                <i class="fas fa-bell"></i>
+                                <span class="notification-dot"></span>
+                            </div>
+                            <div class="notification-content">
+                                <div class="notification-greeting">Hi, {{ Auth::user()->name ?? 'Moneymaker' }}</div>
+                                <div class="notification-message">Your rank level has been updated to Team lead...</div>
+                                <div class="notification-time">Jan 12, 2026 2:13 AM</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="notification-panel-footer">
+                        <a href="{{ route('notifications.index') }}" class="notification-see-all">See all notification</a>
+                    </div>
+                </div>
             </div>
 
             <!-- User Profile (shown on desktop) -->
