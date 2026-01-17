@@ -2802,16 +2802,16 @@
                     </div>
                     <div class="investment-amount-hint" id="investmentAmountHint">Min: $0 - Max: $0</div>
                 </div>
-            </div>
 
-            <!-- Modal Footer Buttons -->
-            <div class="calculator-modal-footer investment-modal-footer">
-                <button class="investment-btn investment-btn-cancel" id="cancelInvestmentBtn">
-                    Cancel
-                </button>
-                <button class="investment-btn investment-btn-confirm" id="confirmInvestmentBtn">
-                    Confirm Investment
-                </button>
+                <!-- Modal Footer Buttons -->
+                <div class="calculator-modal-footer investment-modal-footer">
+                    <button class="investment-btn investment-btn-cancel" id="cancelInvestmentBtn">
+                        Cancel
+                    </button>
+                    <button class="investment-btn investment-btn-confirm" id="confirmInvestmentBtn">
+                        Confirm Investment
+                    </button>
+                </div>
             </div>
         </div>
     </div>
