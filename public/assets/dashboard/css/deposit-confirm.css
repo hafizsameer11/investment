@@ -1,0 +1,990 @@
+/* ============================================
+   Deposit Confirmation Page - Premium Design
+   ============================================ */
+
+/* Ensure content-area doesn't cause horizontal overflow */
+.content-area:has(.deposit-confirm-page) {
+    overflow-x: hidden;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+/* Fallback for browsers without :has() support */
+.content-area .deposit-confirm-page {
+    max-width: calc(100% - 4rem);
+}
+
+@media (max-width: 768px) {
+    .content-area .deposit-confirm-page {
+        max-width: 100%;
+    }
+}
+
+.deposit-confirm-page {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0;
+    width: 100%;
+    box-sizing: border-box;
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* ============================================
+   Header Section
+   ============================================ */
+
+.deposit-confirm-header {
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--card-border);
+}
+
+.deposit-confirm-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 0;
+    letter-spacing: -1px;
+    line-height: 1.2;
+    background: linear-gradient(135deg, var(--text-primary) 0%, var(--text-secondary) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* ============================================
+   Deposit Section
+   ============================================ */
+
+.deposit-confirm-section {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    box-sizing: border-box;
+    overflow-x: hidden;
+}
+
+.deposit-confirm-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 20px;
+    padding: 3rem;
+    box-shadow: var(--shadow-sm);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    max-width: 600px;
+    box-sizing: border-box;
+}
+
+.deposit-confirm-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary-gradient-start) 0%, var(--primary-gradient-end) 100%);
+    opacity: 1;
+    transition: var(--transition);
+}
+
+/* ============================================
+   Progress Steps
+   ============================================ */
+
+.deposit-progress-steps {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 3rem;
+    position: relative;
+    width: 100%;
+    box-sizing: border-box;
+    overflow-x: hidden;
+}
+
+.deposit-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    flex: 1;
+    position: relative;
+    z-index: 2;
+    min-width: 0;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+.deposit-step-number {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: var(--bg-darker);
+    border: 2px solid var(--card-border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-secondary);
+    transition: var(--transition);
+}
+
+.deposit-step.active .deposit-step-number {
+    background: transparent;
+    border: 2px solid var(--primary-gradient-start);
+    border-color: var(--primary-gradient-start);
+    color: white;
+    box-shadow: 0 0 0 4px rgba(255, 178, 30, 0.2);
+}
+
+@media (min-width: 769px) {
+    .deposit-step.active .deposit-step-number {
+        background: linear-gradient(135deg, var(--primary-gradient-start) 0%, var(--primary-gradient-end) 100%);
+        border-color: var(--primary-gradient-start);
+    }
+}
+
+.deposit-step.completed .deposit-step-number {
+    background: var(--success-color);
+    border-color: var(--success-color);
+    color: white;
+}
+
+.deposit-step.completed .deposit-step-number::after {
+    content: '✓';
+    font-size: 1.5rem;
+}
+
+.deposit-step-label {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    text-align: center;
+    transition: var(--transition);
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.deposit-step.active .deposit-step-label {
+    color: var(--primary-gradient-start);
+}
+
+.deposit-step.completed .deposit-step-label {
+    color: var(--success-color);
+}
+
+.deposit-step-line {
+    flex: 1;
+    height: 2px;
+    background: var(--card-border);
+    margin: 0 1rem;
+    position: relative;
+    top: -24px;
+    z-index: 1;
+    min-width: 0;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+.deposit-step-line.active {
+    background: linear-gradient(90deg, var(--primary-gradient-start) 0%, var(--primary-gradient-end) 100%);
+}
+
+/* ============================================
+   Step Content
+   ============================================ */
+
+.deposit-step-content {
+    display: none;
+    text-align: center;
+    width: 100%;
+    box-sizing: border-box;
+    overflow-x: hidden;
+}
+
+.deposit-step-content.active {
+    display: block;
+    animation: fadeIn 0.4s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.deposit-step-icon {
+    width: 120px;
+    height: 120px;
+    margin: 0 auto 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.08);
+    color: #FFFFFF;
+    font-size: 3.5rem;
+    transition: var(--transition);
+    border: none;
+}
+
+.deposit-step-icon i {
+    display: inline-block;
+    font-style: normal;
+    font-variant: normal;
+    text-rendering: auto;
+    line-height: 1;
+    font-family: "Font Awesome 6 Free";
+    font-weight: 400;
+}
+
+.deposit-step-icon i.fas,
+.deposit-step-icon i.far {
+    font-weight: 900;
+}
+
+@media (min-width: 769px) {
+    .deposit-step-icon {
+        background: rgba(255, 178, 30, 0.1);
+        color: var(--primary-gradient-start);
+    }
+}
+
+.deposit-step-icon.success {
+    background: rgba(255, 178, 30, 0.1);
+    color: var(--success-color);
+}
+
+.deposit-step-title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 0 0 0.75rem 0;
+    letter-spacing: -0.5px;
+    line-height: 1.2;
+}
+
+.deposit-step-subtitle {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    margin: 0 0 2.5rem 0;
+    line-height: 1.6;
+    font-weight: 400;
+}
+
+/* ============================================
+   Deposit Form
+   ============================================ */
+
+.deposit-form {
+    margin-bottom: 2rem;
+    text-align: left;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.deposit-form-label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 0.75rem;
+}
+
+.deposit-input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.deposit-input-icon {
+    position: absolute;
+    left: 1.25rem;
+    color: var(--text-secondary);
+    font-size: 1rem;
+    z-index: 1;
+    pointer-events: none;
+    display: inline-block;
+    font-style: normal;
+    font-variant: normal;
+    text-rendering: auto;
+    line-height: 1;
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+}
+
+.deposit-form-input {
+    width: 100%;
+    padding: 1rem 1.25rem 1rem 3.5rem;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    color: var(--text-primary);
+    font-size: 1rem;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    font-family: inherit;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    position: relative;
+    box-sizing: border-box;
+}
+
+.deposit-form-input::placeholder {
+    color: var(--text-muted);
+    opacity: 0.6;
+}
+
+.deposit-form-input:focus {
+    outline: none;
+    border-color: var(--primary-gradient-start);
+    box-shadow: 0 0 0 3px rgba(255, 178, 30, 0.15), 0 4px 12px rgba(255, 178, 30, 0.1);
+    background: rgba(255, 255, 255, 0.05);
+    transform: translateY(-1px);
+}
+
+.deposit-timer-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1rem;
+    gap: 0.5rem;
+}
+
+.deposit-timer {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    padding: 0.5rem 1rem;
+    background: rgba(255, 178, 30, 0.1);
+    border: 1px solid rgba(255, 178, 30, 0.2);
+    border-radius: 8px;
+}
+
+.deposit-timer.warning {
+    color: var(--danger-color);
+    background: rgba(255, 68, 68, 0.1);
+    border-color: rgba(255, 68, 68, 0.2);
+}
+
+/* ============================================
+   File Upload Area
+   ============================================ */
+
+.deposit-upload-area {
+    position: relative;
+    border: 2px dashed rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    padding: 2rem 1rem;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.03);
+    cursor: pointer;
+    transition: var(--transition);
+    margin-top: 0.5rem;
+    min-height: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.deposit-upload-area:hover {
+    border-color: var(--primary-gradient-start);
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.deposit-file-input {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    cursor: pointer;
+    z-index: 2;
+}
+
+.deposit-upload-content {
+    position: relative;
+    z-index: 1;
+}
+
+.deposit-upload-icon {
+    font-size: 2.5rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.5rem;
+    display: inline-block;
+    font-style: normal;
+    font-variant: normal;
+    text-rendering: auto;
+    line-height: 1;
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+}
+
+.deposit-upload-text {
+    color: var(--text-muted);
+    font-size: 0.875rem;
+    margin: 0;
+}
+
+.deposit-upload-preview {
+    position: relative;
+    width: 100%;
+    max-height: 200px;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.deposit-upload-preview img {
+    width: 100%;
+    height: auto;
+    max-height: 200px;
+    object-fit: contain;
+}
+
+.deposit-remove-file {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    background: rgba(0, 0, 0, 0.7);
+    border: none;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    color: var(--text-primary);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition);
+}
+
+.deposit-remove-file:hover {
+    background: rgba(255, 68, 68, 0.9);
+}
+
+/* ============================================
+   Success Message
+   ============================================ */
+
+.deposit-success-message {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    padding: 2rem;
+    background: rgba(255, 178, 30, 0.1);
+    border: 1px solid rgba(255, 178, 30, 0.2);
+    border-radius: 12px;
+    margin-bottom: 2rem;
+}
+
+.deposit-success-message i {
+    font-size: 3rem;
+    color: var(--success-color);
+}
+
+.deposit-success-message p {
+    font-size: 1rem;
+    color: var(--text-primary);
+    margin: 0;
+    text-align: center;
+    line-height: 1.6;
+}
+
+/* ============================================
+   Continue Button
+   ============================================ */
+
+.deposit-continue-btn {
+    width: 100%;
+    padding: 1.125rem 1.5rem;
+    background: linear-gradient(90deg, var(--primary-gradient-start) 0%, var(--primary-gradient-end) 100%);
+    border: none;
+    border-radius: 12px;
+    color: white;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    box-shadow: 0 4px 16px rgba(255, 178, 30, 0.3);
+    position: relative;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+@media (min-width: 769px) {
+    .deposit-continue-btn {
+        font-weight: 700;
+    }
+}
+
+.deposit-continue-btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.deposit-continue-btn:hover::before {
+    width: 300px;
+    height: 300px;
+}
+
+.deposit-continue-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 24px rgba(255, 178, 30, 0.4);
+}
+
+.deposit-continue-btn:active {
+    transform: translateY(0);
+}
+
+.deposit-continue-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* ============================================
+   Payment Details Display
+   ============================================ */
+
+.deposit-payment-details {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.deposit-detail-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.deposit-detail-row:last-child {
+    border-bottom: none;
+}
+
+.deposit-detail-label {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+.deposit-detail-value {
+    font-size: 1rem;
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+.deposit-copy-btn {
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: 0.5rem 1rem;
+    color: var(--primary-gradient-start);
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: var(--transition);
+    margin-left: 0.5rem;
+}
+
+.deposit-copy-btn:hover {
+    background: rgba(255, 178, 30, 0.1);
+    border-color: var(--primary-gradient-start);
+}
+
+/* ============================================
+   Responsive Design
+   ============================================ */
+
+@media (max-width: 1400px) {
+    .deposit-confirm-page {
+        max-width: 100%;
+        padding: 0 1rem;
+        width: 100%;
+        box-sizing: border-box;
+        overflow-x: hidden;
+    }
+}
+
+@media (max-width: 992px) {
+    .deposit-confirm-title {
+        font-size: 2.25rem;
+    }
+
+    .deposit-confirm-card {
+        padding: 2.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .deposit-confirm-page {
+        padding: 0;
+        max-width: 100%;
+        min-height: 100vh;
+        background: #181b27;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .deposit-confirm-header {
+        display: none;
+    }
+
+    .deposit-confirm-section {
+        flex: 1;
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
+        padding: 1.5rem 1.25rem;
+        min-height: calc(100vh - 0px);
+        width: 100%;
+        box-sizing: border-box;
+        overflow-x: hidden;
+    }
+
+    .deposit-confirm-card {
+        padding: 2rem 1.5rem;
+        margin: 0;
+        border-radius: 0;
+        border: none;
+        background: transparent;
+        box-shadow: none;
+        max-width: 100%;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        box-sizing: border-box;
+        overflow-x: hidden;
+    }
+
+    .deposit-confirm-card::before {
+        display: none;
+    }
+
+    /* Progress Steps - Mobile Optimized */
+    .deposit-progress-steps {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 3rem;
+        padding: 0 0.5rem;
+        position: relative;
+        width: 100%;
+        box-sizing: border-box;
+        overflow-x: hidden;
+    }
+
+    .deposit-step {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.5rem;
+        flex: 1;
+        position: relative;
+        z-index: 2;
+    }
+
+    .deposit-step-number {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.08);
+        border: 2px solid rgba(255, 255, 255, 0.15);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1rem;
+        font-weight: 700;
+        color: #B0B0B0;
+        transition: all 0.3s ease;
+    }
+
+    .deposit-step.active .deposit-step-number {
+        background: transparent;
+        border: 2px solid var(--primary-gradient-start);
+        border-color: var(--primary-gradient-start);
+        color: #FFFFFF;
+        box-shadow: 0 0 0 4px rgba(255, 178, 30, 0.2);
+    }
+
+    .deposit-step-label {
+        font-size: 0.75rem;
+        font-weight: 500;
+        color: #B0B0B0;
+        text-align: center;
+        transition: all 0.3s ease;
+        white-space: nowrap;
+    }
+
+    .deposit-step.active .deposit-step-label {
+        color: var(--primary-gradient-start);
+    }
+
+    .deposit-step-line {
+        flex: 1;
+        height: 2px;
+        background: rgba(255, 255, 255, 0.1);
+        margin: 0 0.5rem;
+        position: relative;
+        top: -20px;
+        z-index: 1;
+        max-width: 60px;
+    }
+
+    /* Step Content - Mobile Optimized */
+    .deposit-step-content {
+        display: none;
+        text-align: center;
+        flex: 1;
+        flex-direction: column;
+        justify-content: center;
+        padding: 0;
+    }
+
+    .deposit-step-content.active {
+        display: flex;
+        animation: fadeIn 0.4s ease-out;
+    }
+
+    .deposit-step-icon {
+        width: 100px;
+        height: 100px;
+        margin: 0 auto 2rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.08);
+        color: #FFFFFF;
+        font-size: 3rem;
+        transition: all 0.3s ease;
+        border: none;
+    }
+
+    .deposit-step-icon i {
+        display: inline-block;
+        font-style: normal;
+        font-variant: normal;
+        text-rendering: auto;
+        line-height: 1;
+        font-family: "Font Awesome 6 Free";
+        font-weight: 400;
+        -webkit-font-smoothing: antialiased;
+    }
+
+    .deposit-step-icon i.fas,
+    .deposit-step-icon i.far {
+        font-weight: 900;
+    }
+
+    .deposit-step-title {
+        font-size: 1.75rem;
+        font-weight: 700;
+        color: #FFFFFF;
+        margin: 0 0 0.75rem 0;
+        letter-spacing: -0.5px;
+        line-height: 1.2;
+    }
+
+    .deposit-step-subtitle {
+        font-size: 0.9375rem;
+        color: #B0B0B0;
+        margin: 0 0 2.5rem 0;
+        line-height: 1.5;
+        font-weight: 400;
+    }
+
+    /* Form - Mobile Optimized */
+    .deposit-form {
+        margin-bottom: 2rem;
+        text-align: left;
+        width: 100%;
+    }
+
+    .deposit-form-label {
+        display: block;
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: #FFFFFF;
+        margin-bottom: 0.75rem;
+    }
+
+    .deposit-input-wrapper {
+        position: relative;
+        display: flex;
+        align-items: center;
+    }
+
+    .deposit-input-icon {
+        position: absolute;
+        left: 1rem;
+        color: #B0B0B0;
+        font-size: 1rem;
+        z-index: 1;
+        pointer-events: none;
+        display: inline-block;
+        font-style: normal;
+        font-variant: normal;
+        text-rendering: auto;
+        line-height: 1;
+        font-family: "Font Awesome 6 Free";
+        font-weight: 900;
+    }
+
+    .deposit-form-input {
+        width: 100%;
+        padding: 1rem 1rem 1rem 3rem;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 12px;
+        color: #FFFFFF;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        font-family: inherit;
+        box-sizing: border-box;
+    }
+
+    .deposit-form-input::placeholder {
+        color: #808080;
+        opacity: 0.6;
+    }
+
+    .deposit-form-input:focus {
+        outline: none;
+        border-color: var(--primary-gradient-start);
+        box-shadow: 0 0 0 3px rgba(255, 178, 30, 0.15);
+        background: rgba(255, 255, 255, 0.08);
+    }
+
+    /* Continue Button - Orange Gradient */
+    .deposit-continue-btn {
+        width: 100%;
+        padding: 1rem 1.5rem;
+        background: linear-gradient(90deg, var(--primary-gradient-start) 0%, var(--primary-gradient-end) 100%);
+        border: none;
+        border-radius: 12px;
+        color: white;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 16px rgba(255, 178, 30, 0.3);
+        margin-top: auto;
+    }
+
+    .deposit-continue-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 24px rgba(255, 178, 30, 0.4);
+    }
+
+    .deposit-continue-btn:active {
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 480px) {
+    .deposit-confirm-section {
+        padding: 1rem 1rem;
+        width: 100%;
+        box-sizing: border-box;
+        overflow-x: hidden;
+    }
+
+    .deposit-confirm-card {
+        padding: 1.5rem 1rem;
+        width: 100%;
+        box-sizing: border-box;
+        overflow-x: hidden;
+    }
+
+    .deposit-progress-steps {
+        margin-bottom: 2.5rem;
+        padding: 0 0.25rem;
+    }
+
+    .deposit-step-number {
+        width: 36px;
+        height: 36px;
+        font-size: 0.875rem;
+    }
+
+    .deposit-step-label {
+        font-size: 0.6875rem;
+    }
+
+    .deposit-step-line {
+        margin: 0 0.25rem;
+        max-width: 40px;
+    }
+
+    .deposit-step-icon {
+        width: 90px;
+        height: 90px;
+        font-size: 2.75rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .deposit-step-icon i {
+        display: inline-block;
+        font-style: normal;
+        font-variant: normal;
+        text-rendering: auto;
+        line-height: 1;
+        font-family: "Font Awesome 6 Free";
+        font-weight: 400;
+    }
+
+    .deposit-step-icon i.fas,
+    .deposit-step-icon i.far {
+        font-weight: 900;
+    }
+
+    .deposit-step-title {
+        font-size: 1.5rem;
+    }
+
+    .deposit-step-subtitle {
+        font-size: 0.875rem;
+        margin-bottom: 2rem;
+    }
+
+    .deposit-form-input {
+        padding: 0.875rem 0.875rem 0.875rem 2.75rem;
+        font-size: 0.9375rem;
+    }
+
+    .deposit-continue-btn {
+        padding: 0.9375rem 1.5rem;
+        font-size: 0.9375rem;
+    }
+}
+

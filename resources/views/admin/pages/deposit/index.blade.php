@@ -105,7 +105,7 @@
                                         <td>${{ number_format($deposit->amount, 2) }}</td>
                                         <td>Rs. {{ number_format($deposit->pkr_amount, 2) }}</td>
                                         <td><code>{{ $deposit->transaction_id }}</code></td>
-                                        <td>{{ $deposit->phone }}</td>
+                                        <td>{{ $deposit->account_number }}</td>
                                         <td>
                                             @if($deposit->status === 'pending')
                                                 <span class="badge badge-warning">Pending</span>

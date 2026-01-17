@@ -78,12 +78,14 @@ class WalletController extends Controller
             'amount' => 'required|numeric|min:0.01',
             'pkr_amount' => 'required|numeric|min:0.01',
             'transaction_id' => 'required|string|max:255',
-            'phone' => 'required|string|regex:/^\d{10}$/',
+            'account_number' => 'required|string|max:255',
+            'account_holder_name' => 'required|string|max:255',
             'payment_proof' => 'required|image|mimes:jpeg,png,jpg,gif|max:5120', // 5MB max
         ], [
-            'phone.regex' => 'Phone number must be exactly 10 digits.',
             'payment_proof.image' => 'Payment proof must be an image file.',
             'payment_proof.max' => 'Payment proof image must not exceed 5MB.',
+            'account_number.required' => 'Account number is required.',
+            'account_holder_name.required' => 'Account holder name is required.',
         ]);
 
         try {
@@ -129,7 +131,8 @@ class WalletController extends Controller
                 'amount' => $request->amount,
                 'pkr_amount' => $request->pkr_amount,
                 'transaction_id' => $request->transaction_id,
-                'phone' => $request->phone,
+                'account_number' => $request->account_number,
+                'account_holder_name' => $request->account_holder_name,
                 'payment_proof' => $paymentProofPath,
                 'status' => 'pending',
             ]);
