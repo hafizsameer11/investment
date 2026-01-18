@@ -27,5 +27,15 @@ class RewardLevel extends Model
         'is_premium' => 'boolean',
         'is_active' => 'boolean',
     ];
+
+    /**
+     * Get all users who have achieved this reward level
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function userRewardLevels()
+    {
+        return $this->hasMany(UserRewardLevel::class);
+    }
 }
 

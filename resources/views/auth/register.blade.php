@@ -165,7 +165,7 @@
                     </div>
 
                     <!-- Phone Field -->
-                    <div class="form-group">
+                    {{-- <div class="form-group">
                         <label for="phone" class="form-label">Phone <span class="text-muted">(Optional)</span></label>
                         <div class="input-wrapper">
                             <svg class="input-icon" viewBox="0 0 20 20" fill="currentColor">
@@ -184,7 +184,7 @@
                         @error('phone')
                             <div class="text-danger mt-1" style="font-size: 0.75rem; color: #ef4444 !important;">{{ $message }}</div>
                         @enderror
-                    </div>
+                    </div> --}}
 
                     <!-- Password Field -->
                     <div class="form-group">

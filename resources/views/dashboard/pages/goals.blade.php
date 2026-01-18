@@ -462,8 +462,8 @@
     .goals-reward-badge-new {
         display: none;
         position: absolute;
-        top: 1.5rem;
-        right: 1.5rem;
+        top: 1rem;
+        right: 0.6rem;
         padding: 0.5rem 1rem;
         background: linear-gradient(135deg, #FFB21E 0%, #FF8A1D 100%);
         color: #000;
@@ -668,6 +668,27 @@
     .goals-level-card-new.premium {
         background: linear-gradient(135deg, rgba(255, 178, 30, 0.1) 0%, rgba(255, 138, 29, 0.05) 100%);
         border: 2px solid rgba(255, 178, 30, 0.4);
+    }
+
+    .goals-level-card-new.current {
+        background: linear-gradient(135deg, rgba(0, 170, 255, 0.1) 0%, rgba(0, 136, 204, 0.05) 100%);
+        border: 2px solid rgba(0, 170, 255, 0.5);
+        box-shadow: 0 0 40px rgba(0, 170, 255, 0.3);
+    }
+
+    .goals-level-card-new.current::before {
+        transform: scaleX(1);
+        background: linear-gradient(90deg, #00AAFF 0%, #0088CC 100%);
+    }
+
+    .goals-level-card-new.achieved {
+        background: linear-gradient(135deg, rgba(34, 197, 94, 0.1) 0%, rgba(22, 163, 74, 0.05) 100%);
+        border: 2px solid rgba(34, 197, 94, 0.5);
+    }
+
+    .goals-level-card-new.achieved::before {
+        transform: scaleX(1);
+        background: linear-gradient(90deg, #22C55E 0%, #16A34A 100%);
     }
 
     .goals-level-badge-premium-new {
@@ -1159,28 +1180,63 @@
                 <div class="goals-rank-icon-wrapper-new">
                     <i class="fas fa-trophy goals-rank-icon-new"></i>
                 </div>
-                <div class="goals-rank-badge-new">No Rank</div>
+                <div class="goals-rank-badge-new">
+                    @if($currentRewardLevel)
+                        Level {{ $currentRewardLevel->level }}
+                    @elseif($currentWorkingLevel)
+                        Level {{ $currentWorkingLevel->level }}
+                    @else
+                        Level 0
+                    @endif
+                </div>
                 <div class="goals-rank-label-new">Current Rank</div>
-                <div class="goals-rank-hint-new">Complete goals to advance</div>
+                <div class="goals-rank-hint-new">
+                    @if($currentRewardLevel)
+                        {{ $currentRewardLevel->level_name }} Achieved
+                    @elseif($currentWorkingLevel)
+                        Working on {{ $currentWorkingLevel->level_name }}
+                    @else
+                        Complete goals to advance
+                    @endif
+                </div>
             </div>
 
             <!-- Progress Card -->
             <div class="goals-status-card-new goals-progress-card-new goals-desktop-card-new">
                 <div class="goals-progress-header-new">
                     <h3 class="goals-progress-title-new">Progress to Next Goal</h3>
-                    <div class="goals-progress-goal-name-new">Team Builder</div>
+                    <div class="goals-progress-goal-name-new">{{ $nextLevel ? $nextLevel->level_name : 'All Goals Completed!' }}</div>
                 </div>
                 <div class="goals-progress-display-new">
-                    <div class="goals-progress-bar-wrapper-new">
-                        <div class="goals-progress-fill-new" style="width: 0%"></div>
-                        <div class="goals-progress-percentage-new">0%</div>
-                    </div>
-                    <div class="goals-progress-info-new">
-                        <span class="goals-progress-current-new">$0</span>
-                        <span class="goals-progress-separator-new">/</span>
-                        <span class="goals-progress-target-new">$10</span>
-                    </div>
-                    <div class="goals-progress-message-new">Almost there! Keep going!</div>
+                    @if($nextLevel && $nextLevelProgress)
+                        <div class="goals-progress-bar-wrapper-new">
+                            <div class="goals-progress-fill-new" style="width: {{ $nextLevelProgress['progress_percentage'] }}%"></div>
+                            <div class="goals-progress-percentage-new">{{ number_format($nextLevelProgress['progress_percentage'], 1) }}%</div>
+                        </div>
+                        <div class="goals-progress-info-new">
+                            <span class="goals-progress-current-new">${{ number_format($nextLevelProgress['current_progress'], 2) }}</span>
+                            <span class="goals-progress-separator-new">/</span>
+                            <span class="goals-progress-target-new">${{ number_format($nextLevel->investment_required, 2) }}</span>
+                        </div>
+                        <div class="goals-progress-message-new">
+                            @if($nextLevelProgress['progress_percentage'] >= 100)
+                                Level Complete!
+                            @elseif($nextLevelProgress['progress_percentage'] >= 75)
+                                Almost there! Keep going!
+                            @else
+                                Keep building your team!
+                            @endif
+                        </div>
+                    @else
+                        <div class="goals-progress-bar-wrapper-new">
+                            <div class="goals-progress-fill-new" style="width: 100%"></div>
+                            <div class="goals-progress-percentage-new">100%</div>
+                        </div>
+                        <div class="goals-progress-info-new">
+                            <span class="goals-progress-current-new">All Levels Complete!</span>
+                        </div>
+                        <div class="goals-progress-message-new">Congratulations! You've achieved all reward levels!</div>
+                    @endif
                 </div>
             </div>
 
@@ -1189,17 +1245,33 @@
                 <div class="goals-next-goal-header-new">
                     <h3 class="goals-next-goal-title-new">Next Goal</h3>
                 </div>
-                <div class="goals-next-goal-name-new">Team Builder</div>
-                <div class="goals-next-goal-requirements-new">
-                    <div class="goals-requirement-item-new">
-                        <i class="fas fa-users-cog"></i>
-                        <span>Team Progress: <strong>$0</strong></span>
+                @if($nextLevel && $nextLevelProgress)
+                    <div class="goals-next-goal-name-new">{{ $nextLevel->level_name }}</div>
+                    <div class="goals-next-goal-requirements-new">
+                        <div class="goals-requirement-item-new">
+                            <i class="fas fa-users-cog"></i>
+                            <span>Team Progress: <strong>${{ number_format($nextLevelProgress['current_progress'], 2) }}</strong></span>
+                        </div>
                     </div>
-                </div>
-                <div class="goals-next-progress-bar-wrapper-new">
-                    <div class="goals-next-progress-fill-new" style="width: 0%"></div>
-                </div>
-                <div class="goals-next-goal-needed-new">$10 more needed</div>
+                    <div class="goals-next-progress-bar-wrapper-new">
+                        <div class="goals-next-progress-fill-new" style="width: {{ $nextLevelProgress['progress_percentage'] }}%"></div>
+                    </div>
+                    <div class="goals-next-goal-needed-new">
+                        @if($nextLevelProgress['remaining_needed'] > 0)
+                            ${{ number_format($nextLevelProgress['remaining_needed'], 2) }} more needed
+                        @else
+                            Level Complete!
+                        @endif
+                    </div>
+                @else
+                    <div class="goals-next-goal-name-new">All Goals Completed!</div>
+                    <div class="goals-next-goal-requirements-new">
+                        <div class="goals-requirement-item-new">
+                            <i class="fas fa-trophy"></i>
+                            <span>Congratulations! You've achieved all reward levels!</span>
+                        </div>
+                    </div>
+                @endif
             </div>
 
             <!-- Mobile: Combined Single Card -->
@@ -1209,42 +1281,77 @@
                     <div class="goals-rank-icon-wrapper-new">
                         <i class="fas fa-trophy goals-rank-icon-new"></i>
                     </div>
-                    <div class="goals-rank-text-new">No Rank</div>
+                    <div class="goals-rank-text-new">
+                        @if($currentRewardLevel)
+                            Level {{ $currentRewardLevel->level }}
+                        @elseif($currentWorkingLevel)
+                            Level {{ $currentWorkingLevel->level }}
+                        @else
+                            Level 0
+                        @endif
+                    </div>
                 </div>
 
                 <!-- Progress Section -->
                 <div class="goals-progress-section-mobile-new">
                     <div class="goals-progress-title-row-new">
                         <span class="goals-progress-title-new">Progress to next goal</span>
-                        <span class="goals-progress-percent-new">0%</span>
+                        <span class="goals-progress-percent-new">{{ $nextLevel && $nextLevelProgress ? number_format($nextLevelProgress['progress_percentage'], 1) . '%' : '100%' }}</span>
                     </div>
                     <div class="goals-progress-goal-row-new">
-                        <span class="goals-progress-goal-name-new">Team Builder</span>
-                        <span class="goals-progress-status-new">Almost there!</span>
+                        <span class="goals-progress-goal-name-new">{{ $nextLevel ? $nextLevel->level_name : 'All Goals Completed!' }}</span>
+                        <span class="goals-progress-status-new">
+                            @if($nextLevel && $nextLevelProgress)
+                                @if($nextLevelProgress['progress_percentage'] >= 100)
+                                    Complete!
+                                @elseif($nextLevelProgress['progress_percentage'] >= 75)
+                                    Almost there!
+                                @else
+                                    In Progress
+                                @endif
+                            @else
+                                Complete!
+                            @endif
+                        </span>
                     </div>
                     <div class="goals-progress-bar-mobile-new">
-                        <div class="goals-progress-fill-mobile-new" style="width: 0%"></div>
+                        <div class="goals-progress-fill-mobile-new" style="width: {{ $nextLevel && $nextLevelProgress ? $nextLevelProgress['progress_percentage'] : 100 }}%"></div>
                     </div>
                 </div>
 
                 <!-- Next Goal Section -->
                 <div class="goals-next-goal-section-mobile-new">
                     <div class="goals-next-goal-card-inner-new">
-                        <div class="goals-next-goal-title-mobile-new">Next Goal Team Builder</div>
-                        <div class="goals-next-goal-progress-row-new">
-                            <div class="goals-next-goal-progress-label-new">
-                                <i class="fas fa-chart-line"></i>
-                                <span>Team Progress</span>
+                        <div class="goals-next-goal-title-mobile-new">Next Goal {{ $nextLevel ? $nextLevel->level_name : 'All Complete!' }}</div>
+                        @if($nextLevel && $nextLevelProgress)
+                            <div class="goals-next-goal-progress-row-new">
+                                <div class="goals-next-goal-progress-label-new">
+                                    <i class="fas fa-chart-line"></i>
+                                    <span>Team Progress</span>
+                                </div>
+                                <span class="goals-next-goal-current-new">${{ number_format($nextLevelProgress['current_progress'], 2) }}</span>
                             </div>
-                            <span class="goals-next-goal-current-new">$0</span>
-                        </div>
-                        <div class="goals-next-progress-bar-mobile-new">
-                            <div class="goals-next-progress-fill-mobile-new" style="width: 0%"></div>
-                        </div>
-                        <div class="goals-next-goal-target-row-new">
-                            <span class="goals-next-goal-needed-mobile-new">$10 more needed</span>
-                            <span class="goals-next-goal-target-new">$10</span>
-                        </div>
+                            <div class="goals-next-progress-bar-mobile-new">
+                                <div class="goals-next-progress-fill-mobile-new" style="width: {{ $nextLevelProgress['progress_percentage'] }}%"></div>
+                            </div>
+                            <div class="goals-next-goal-target-row-new">
+                                <span class="goals-next-goal-needed-mobile-new">
+                                    @if($nextLevelProgress['remaining_needed'] > 0)
+                                        ${{ number_format($nextLevelProgress['remaining_needed'], 2) }} more needed
+                                    @else
+                                        Level Complete!
+                                    @endif
+                                </span>
+                                <span class="goals-next-goal-target-new">${{ number_format($nextLevel->investment_required, 2) }}</span>
+                            </div>
+                        @else
+                            <div class="goals-next-goal-progress-row-new">
+                                <div class="goals-next-goal-progress-label-new">
+                                    <i class="fas fa-trophy"></i>
+                                    <span>All Levels Achieved!</span>
+                                </div>
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -1259,275 +1366,67 @@
         </div>
 
         <div class="goals-all-levels-grid-new">
-            <!-- Level 1: Team Builder -->
-            <div class="goals-level-card-new">
-                <div class="goals-level-icon-new goals-level-icon-gold-new">
-                    <i class="fas fa-user-tie"></i>
-                </div>
-                <div class="goals-level-content-new">
-                    <h3 class="goals-level-name-new">Team Builder</h3>
-                    <div class="goals-level-number-new">Level 1</div>
-                    <div class="goals-level-details-new">
-                        <div class="goals-level-detail-item-new">
-                            <span class="goals-level-detail-label-new">Total Referral Investment</span>
-                            <span class="goals-level-detail-value-new">$10</span>
+            @foreach($rewardLevels as $levelData)
+                @php
+                    $level = $levelData['level'];
+                    $isAchieved = $levelData['is_achieved'];
+                    $progressPercentage = $levelData['progress_percentage'];
+                    $currentProgress = $levelData['current_progress'];
+                    $remainingNeeded = $levelData['remaining_needed'];
+                    
+                    // Determine icon color class
+                    $iconColorClass = 'goals-level-icon-gold-new';
+                    if ($level->icon_color === 'silver') {
+                        $iconColorClass = 'goals-level-icon-silver-new';
+                    } elseif ($level->icon_color === 'purple') {
+                        $iconColorClass = 'goals-level-icon-purple-new';
+                    } elseif ($level->icon_color === 'red') {
+                        $iconColorClass = 'goals-level-icon-red-new';
+                    }
+                @endphp
+                @php
+                    $isCurrent = isset($levelData['is_current']) && $levelData['is_current'];
+                @endphp
+                <div class="goals-level-card-new {{ $isAchieved ? 'achieved' : '' }} {{ $isCurrent ? 'current' : '' }} {{ $level->is_premium ? 'premium' : '' }}">
+                    @if($isAchieved)
+                        <div class="goals-reward-badge-new" style="display: block;">Achieved</div>
+                    @elseif($isCurrent)
+                        <div class="goals-reward-badge-new" style="display: block; background: linear-gradient(135deg, #00AAFF 0%, #0088CC 100%);">Current</div>
+                    @endif
+                    @if($level->is_premium)
+                        <div class="goals-level-badge-premium-new">Premium</div>
+                    @endif
+                    <div class="goals-level-icon-new {{ $iconColorClass }}">
+                        <i class="{{ $level->icon_class ?? 'fas fa-trophy' }}"></i>
+                    </div>
+                    <div class="goals-level-content-new">
+                        <h3 class="goals-level-name-new">{{ $level->level_name }}</h3>
+                        <div class="goals-level-number-new">Level {{ $level->level }}</div>
+                        <div class="goals-level-details-new">
+                            <div class="goals-level-detail-item-new">
+                                <span class="goals-level-detail-label-new">Total Referral Investment</span>
+                                <span class="goals-level-detail-value-new">${{ number_format($level->investment_required, 2) }}</span>
+                            </div>
+                            <div class="goals-level-detail-item-new">
+                                <span class="goals-level-detail-label-new">Reward</span>
+                                <span class="goals-level-detail-value-new goals-level-reward-new">${{ number_format($level->reward_amount, 2) }}</span>
+                            </div>
                         </div>
-                        <div class="goals-level-detail-item-new">
-                            <span class="goals-level-detail-label-new">Reward</span>
-                            <span class="goals-level-detail-value-new goals-level-reward-new">$2</span>
+                        <div class="goals-level-progress-new">
+                            <div class="goals-level-progress-bar-wrapper-new">
+                                <div class="goals-level-progress-fill-new" style="width: {{ $progressPercentage }}%"></div>
+                            </div>
+                            <div class="goals-level-progress-text-new">
+                                @if($isAchieved)
+                                    Achieved
+                                @else
+                                    {{ number_format($progressPercentage, 1) }}%
+                                @endif
+                            </div>
                         </div>
                     </div>
-                    <div class="goals-level-progress-new">
-                        <div class="goals-level-progress-bar-wrapper-new">
-                            <div class="goals-level-progress-fill-new" style="width: 0%"></div>
-                        </div>
-                        <div class="goals-level-progress-text-new">0%</div>
-                    </div>
                 </div>
-            </div>
-
-            <!-- Level 2: Team Leader -->
-            <div class="goals-level-card-new">
-                <div class="goals-level-icon-new goals-level-icon-gold-new">
-                    <i class="fas fa-user-graduate"></i>
-                </div>
-                <div class="goals-level-content-new">
-                    <h3 class="goals-level-name-new">Team Leader</h3>
-                    <div class="goals-level-number-new">Level 2</div>
-                    <div class="goals-level-details-new">
-                        <div class="goals-level-detail-item-new">
-                            <span class="goals-level-detail-label-new">Total Referral Investment</span>
-                            <span class="goals-level-detail-value-new">$40</span>
-                        </div>
-                        <div class="goals-level-detail-item-new">
-                            <span class="goals-level-detail-label-new">Reward</span>
-                            <span class="goals-level-detail-value-new goals-level-reward-new">$5</span>
-                        </div>
-                    </div>
-                    <div class="goals-level-progress-new">
-                        <div class="goals-level-progress-bar-wrapper-new">
-                            <div class="goals-level-progress-fill-new" style="width: 0%"></div>
-                        </div>
-                        <div class="goals-level-progress-text-new">0%</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Level 3: Team Director -->
-            <div class="goals-level-card-new">
-                <div class="goals-level-icon-new goals-level-icon-gold-new">
-                    <i class="fas fa-briefcase"></i>
-                </div>
-                <div class="goals-level-content-new">
-                    <h3 class="goals-level-name-new">Team Director</h3>
-                    <div class="goals-level-number-new">Level 3</div>
-                    <div class="goals-level-details-new">
-                        <div class="goals-level-detail-item-new">
-                            <span class="goals-level-detail-label-new">Total Referral Investment</span>
-                            <span class="goals-level-detail-value-new">$120</span>
-                        </div>
-                        <div class="goals-level-detail-item-new">
-                            <span class="goals-level-detail-label-new">Reward</span>
-                            <span class="goals-level-detail-value-new goals-level-reward-new">$8</span>
-                        </div>
-                    </div>
-                    <div class="goals-level-progress-new">
-                        <div class="goals-level-progress-bar-wrapper-new">
-                            <div class="goals-level-progress-fill-new" style="width: 0%"></div>
-                        </div>
-                        <div class="goals-level-progress-text-new">0%</div>
-                    </div>
-                </div>
-            </div>
-            <!-- Level 4: Team Master -->
-            <div class="goals-level-card-new">
-                <div class="goals-level-icon-new goals-level-icon-gold-new">
-                    <i class="fas fa-medal"></i>
-                </div>
-                <div class="goals-level-content-new">
-                    <h3 class="goals-level-name-new">Team Master</h3>
-                    <div class="goals-level-number-new">Level 4</div>
-                    <div class="goals-level-details-new">
-                        <div class="goals-level-detail-item-new">
-                            <span class="goals-level-detail-label-new">Total Referral Investment</span>
-                            <span class="goals-level-detail-value-new">$200</span>
-                        </div>
-                        <div class="goals-level-detail-item-new">
-                            <span class="goals-level-detail-label-new">Reward</span>
-                            <span class="goals-level-detail-value-new goals-level-reward-new">$16</span>
-                        </div>
-                    </div>
-                    <div class="goals-level-progress-new">
-                        <div class="goals-level-progress-bar-wrapper-new">
-                            <div class="goals-level-progress-fill-new" style="width: 0%"></div>
-                        </div>
-                        <div class="goals-level-progress-text-new">0%</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Level 5: Team Chief -->
-            <div class="goals-level-card-new">
-                <div class="goals-level-icon-new goals-level-icon-silver-new">
-                    <i class="fas fa-award"></i>
-                </div>
-                <div class="goals-level-content-new">
-                    <h3 class="goals-level-name-new">Team Chief</h3>
-                    <div class="goals-level-number-new">Level 5</div>
-                    <div class="goals-level-details-new">
-                        <div class="goals-level-detail-item-new">
-                            <span class="goals-level-detail-label-new">Total Referral Investment</span>
-                            <span class="goals-level-detail-value-new">$600</span>
-                        </div>
-                        <div class="goals-level-detail-item-new">
-                            <span class="goals-level-detail-label-new">Reward</span>
-                            <span class="goals-level-detail-value-new goals-level-reward-new">$50</span>
-                        </div>
-                    </div>
-                    <div class="goals-level-progress-new">
-                        <div class="goals-level-progress-bar-wrapper-new">
-                            <div class="goals-level-progress-fill-new" style="width: 0%"></div>
-                        </div>
-                        <div class="goals-level-progress-text-new">0%</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Level 6: Team Executive -->
-            <div class="goals-level-card-new">
-                <div class="goals-level-icon-new goals-level-icon-purple-new">
-                    <i class="fas fa-gem"></i>
-                </div>
-                <div class="goals-level-content-new">
-                    <h3 class="goals-level-name-new">Team Executive</h3>
-                    <div class="goals-level-number-new">Level 6</div>
-                    <div class="goals-level-details-new">
-                        <div class="goals-level-detail-item-new">
-                            <span class="goals-level-detail-label-new">Total Referral Investment</span>
-                            <span class="goals-level-detail-value-new">$1,000</span>
-                        </div>
-                        <div class="goals-level-detail-item-new">
-                            <span class="goals-level-detail-label-new">Reward</span>
-                            <span class="goals-level-detail-value-new goals-level-reward-new">$170</span>
-                        </div>
-                    </div>
-                    <div class="goals-level-progress-new">
-                        <div class="goals-level-progress-bar-wrapper-new">
-                            <div class="goals-level-progress-fill-new" style="width: 0%"></div>
-                        </div>
-                        <div class="goals-level-progress-text-new">0%</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Level 7: Team Captain -->
-            <div class="goals-level-card-new">
-                <div class="goals-level-icon-new goals-level-icon-red-new">
-                    <i class="fas fa-star"></i>
-                </div>
-                <div class="goals-level-content-new">
-                    <h3 class="goals-level-name-new">Team Captain</h3>
-                    <div class="goals-level-number-new">Level 7</div>
-                    <div class="goals-level-details-new">
-                        <div class="goals-level-detail-item-new">
-                            <span class="goals-level-detail-label-new">Total Referral Investment</span>
-                            <span class="goals-level-detail-value-new">$2,500</span>
-                        </div>
-                        <div class="goals-level-detail-item-new">
-                            <span class="goals-level-detail-label-new">Reward</span>
-                            <span class="goals-level-detail-value-new goals-level-reward-new">$500</span>
-                        </div>
-                    </div>
-                    <div class="goals-level-progress-new">
-                        <div class="goals-level-progress-bar-wrapper-new">
-                            <div class="goals-level-progress-fill-new" style="width: 0%"></div>
-                        </div>
-                        <div class="goals-level-progress-text-new">0%</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Level 8: Team Commander -->
-            <div class="goals-level-card-new">
-                <div class="goals-level-icon-new goals-level-icon-red-new">
-                    <i class="fas fa-chess-king"></i>
-                </div>
-                <div class="goals-level-content-new">
-                    <h3 class="goals-level-name-new">Team Commander</h3>
-                    <div class="goals-level-number-new">Level 8</div>
-                    <div class="goals-level-details-new">
-                        <div class="goals-level-detail-item-new">
-                            <span class="goals-level-detail-label-new">Total Referral Investment</span>
-                            <span class="goals-level-detail-value-new">$8,000</span>
-                        </div>
-                        <div class="goals-level-detail-item-new">
-                            <span class="goals-level-detail-label-new">Reward</span>
-                            <span class="goals-level-detail-value-new goals-level-reward-new">$2,000</span>
-                        </div>
-                    </div>
-                    <div class="goals-level-progress-new">
-                        <div class="goals-level-progress-bar-wrapper-new">
-                            <div class="goals-level-progress-fill-new" style="width: 0%"></div>
-                        </div>
-                        <div class="goals-level-progress-text-new">0%</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Level 9: Team Head -->
-            <div class="goals-level-card-new">
-                <div class="goals-level-icon-new goals-level-icon-red-new">
-                    <i class="fas fa-chess-queen"></i>
-                </div>
-                <div class="goals-level-content-new">
-                    <h3 class="goals-level-name-new">Team Head</h3>
-                    <div class="goals-level-number-new">Level 9</div>
-                    <div class="goals-level-details-new">
-                        <div class="goals-level-detail-item-new">
-                            <span class="goals-level-detail-label-new">Total Referral Investment</span>
-                            <span class="goals-level-detail-value-new">$15,000</span>
-                        </div>
-                        <div class="goals-level-detail-item-new">
-                            <span class="goals-level-detail-label-new">Reward</span>
-                            <span class="goals-level-detail-value-new goals-level-reward-new">$4,500</span>
-                        </div>
-                    </div>
-                    <div class="goals-level-progress-new">
-                        <div class="goals-level-progress-bar-wrapper-new">
-                            <div class="goals-level-progress-fill-new" style="width: 0%"></div>
-                        </div>
-                        <div class="goals-level-progress-text-new">0%</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Level 10: Team President -->
-            <div class="goals-level-card-new premium">
-                <div class="goals-level-badge-premium-new">Premium</div>
-                <div class="goals-level-icon-new goals-level-icon-red-new">
-                    <i class="fas fa-crown"></i>
-                </div>
-                <div class="goals-level-content-new">
-                    <h3 class="goals-level-name-new">Team President</h3>
-                    <div class="goals-level-number-new">Level 10</div>
-                    <div class="goals-level-details-new">
-                        <div class="goals-level-detail-item-new">
-                            <span class="goals-level-detail-label-new">Total Referral Investment</span>
-                            <span class="goals-level-detail-value-new">$25,000</span>
-                        </div>
-                        <div class="goals-level-detail-item-new">
-                            <span class="goals-level-detail-label-new">Reward</span>
-                            <span class="goals-level-detail-value-new goals-level-reward-new">$8,000</span>
-                        </div>
-                    </div>
-                    <div class="goals-level-progress-new">
-                        <div class="goals-level-progress-bar-wrapper-new">
-                            <div class="goals-level-progress-fill-new" style="width: 0%"></div>
-                        </div>
-                        <div class="goals-level-progress-text-new">0%</div>
-                    </div>
-                </div>
-            </div>
+            @endforeach
         </div>
     </div>
 </div>

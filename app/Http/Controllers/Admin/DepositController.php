@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Deposit;
+use App\Models\Transaction;
 use App\Services\NotificationService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -52,7 +53,7 @@ class DepositController extends Controller
         try {
             DB::beginTransaction();
 
-            $deposit = Deposit::with('user')->findOrFail($id);
+            $deposit = Deposit::with(['user', 'paymentMethod'])->findOrFail($id);
 
             // Check if deposit is already processed
             if ($deposit->status !== 'pending') {
@@ -74,6 +75,18 @@ class DepositController extends Controller
             // Increment total invested (this should only increase, never decrease)
             $user->total_invested += $deposit->amount;
             $user->updateNetBalance(); // This will save the user
+
+            // Create transaction record
+            $paymentMethodName = $deposit->paymentMethod ? $deposit->paymentMethod->name : 'Payment Method';
+            Transaction::create([
+                'user_id' => $user->id,
+                'type' => 'deposit',
+                'amount' => $deposit->amount,
+                'description' => 'Deposit via ' . $paymentMethodName,
+                'reference_id' => $deposit->id,
+                'reference_type' => Deposit::class,
+                'status' => 'completed',
+            ]);
 
             // Send notification to user
             NotificationService::sendDepositApproved($deposit);

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Withdrawal;
+use App\Models\Transaction;
 use App\Services\NotificationService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -94,6 +95,18 @@ class WithdrawalController extends Controller
                 'approved_at' => now(),
                 'admin_notes' => $request->admin_notes,
                 'admin_proof_image' => $proofImagePath,
+            ]);
+
+            // Create transaction record
+            $paymentMethodName = $withdrawal->paymentMethod ? $withdrawal->paymentMethod->name : 'Payment Method';
+            Transaction::create([
+                'user_id' => $withdrawal->user_id,
+                'type' => 'withdrawal',
+                'amount' => $withdrawal->amount,
+                'description' => 'Withdrawal via ' . $paymentMethodName,
+                'reference_id' => $withdrawal->id,
+                'reference_type' => Withdrawal::class,
+                'status' => 'completed',
             ]);
 
             // Send notification to user

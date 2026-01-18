@@ -248,6 +248,68 @@ class User extends Authenticatable
     }
 
     /**
+     * Get all reward levels achieved by this user
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function rewardLevels()
+    {
+        return $this->hasMany(UserRewardLevel::class);
+    }
+
+    /**
+     * Get all transactions for this user
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function transactions()
+    {
+        return $this->hasMany(Transaction::class);
+    }
+
+    /**
+     * Calculate total referral investment (sum of investments from direct referrals)
+     *
+     * @return float
+     */
+    public function getTotalReferralInvestment(): float
+    {
+        return \App\Services\RewardLevelService::calculateTotalReferralInvestment($this);
+    }
+
+    /**
+     * Get all reward levels achieved by this user
+     *
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function getAchievedRewardLevels()
+    {
+        return $this->rewardLevels()
+            ->with('rewardLevel')
+            ->get()
+            ->map(function ($userRewardLevel) {
+                return $userRewardLevel->rewardLevel;
+            });
+    }
+
+    /**
+     * Get the current (highest) reward level achieved by this user
+     *
+     * @return RewardLevel|null
+     */
+    public function getCurrentRewardLevel(): ?RewardLevel
+    {
+        $achievedLevel = $this->rewardLevels()
+            ->with('rewardLevel')
+            ->join('reward_levels', 'user_reward_levels.reward_level_id', '=', 'reward_levels.id')
+            ->orderBy('reward_levels.sort_order', 'desc')
+            ->orderBy('reward_levels.level', 'desc')
+            ->first();
+
+        return $achievedLevel ? $achievedLevel->rewardLevel : null;
+    }
+
+    /**
      * Recalculate and update the net balance
      * Net Balance = Fund Wallet + Mining Earning + Referral Earning
      *

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Dashboard;
 use App\Http\Controllers\Controller;
 use App\Models\Investment;
 use App\Models\MiningPlan;
+use App\Services\RewardLevelService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -178,6 +179,24 @@ class InvestmentController extends Controller
                 ]);
 
                 DB::commit();
+
+                // Process reward levels for referrer if user has a referrer
+                if ($user->referred_by) {
+                    $referrer = \App\Models\User::where('refer_code', $user->referred_by)->first();
+                    if ($referrer) {
+                        // Process reward levels asynchronously to avoid blocking the response
+                        // Using dispatch after response or queue if available
+                        try {
+                            RewardLevelService::processRewardLevels($referrer, $amount);
+                        } catch (\Exception $e) {
+                            // Log error but don't fail the investment creation
+                            Log::error('Error processing reward levels for referrer: ' . $e->getMessage(), [
+                                'referrer_id' => $referrer->id,
+                                'investment_amount' => $amount,
+                            ]);
+                        }
+                    }
+                }
 
                 return response()->json([
                     'success' => true,
@@ -492,6 +511,23 @@ class InvestmentController extends Controller
                 $investment->save();
 
                 DB::commit();
+
+                // Process reward levels for referrer if user has a referrer
+                if ($user->referred_by) {
+                    $referrer = \App\Models\User::where('refer_code', $user->referred_by)->first();
+                    if ($referrer) {
+                        // Process reward levels asynchronously to avoid blocking the response
+                        try {
+                            RewardLevelService::processRewardLevels($referrer, $additionalAmount);
+                        } catch (\Exception $e) {
+                            // Log error but don't fail the investment update
+                            Log::error('Error processing reward levels for referrer: ' . $e->getMessage(), [
+                                'referrer_id' => $referrer->id,
+                                'investment_amount' => $additionalAmount,
+                            ]);
+                        }
+                    }
+                }
 
                 return response()->json([
                     'success' => true,

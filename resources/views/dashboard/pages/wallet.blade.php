@@ -490,6 +490,45 @@
         color: var(--primary-color);
     }
 
+    .wallet-filter-dropdown {
+        position: absolute;
+        top: 100%;
+        right: 0;
+        margin-top: 0.5rem;
+        background: rgba(20, 20, 25, 0.98);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 12px;
+        padding: 0.75rem;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+        z-index: 1000;
+        min-width: 200px;
+        backdrop-filter: blur(10px);
+        display: none;
+    }
+
+    .wallet-filter-dropdown label {
+        display: flex;
+        align-items: center;
+        padding: 0.75rem;
+        cursor: pointer;
+        border-radius: 8px;
+        transition: var(--transition);
+        color: var(--text-primary);
+    }
+
+    .wallet-filter-dropdown label:hover {
+        background: rgba(255, 178, 30, 0.1);
+    }
+
+    .wallet-filter-dropdown label input[type="radio"] {
+        margin-right: 0.75rem;
+        cursor: pointer;
+    }
+
+    .wallet-filter-dropdown label span {
+        font-size: 0.9375rem;
+    }
+
     .wallet-date-select {
         padding: 0.875rem 1.25rem;
         background: rgba(255, 255, 255, 0.03);
@@ -499,12 +538,26 @@
         font-size: 0.9375rem;
         cursor: pointer;
         transition: var(--transition);
+        appearance: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23ffffff' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 1rem center;
+        padding-right: 2.75rem;
     }
 
     .wallet-date-select:focus {
         outline: none;
         border-color: var(--primary-color);
         box-shadow: 0 0 0 3px rgba(255, 178, 30, 0.1);
+        background-color: rgba(255, 255, 255, 0.05);
+    }
+
+    .wallet-date-select option {
+        background: rgba(20, 20, 25, 0.98);
+        color: var(--text-primary);
+        padding: 0.75rem;
     }
 
     .wallet-table-container {
@@ -846,10 +899,17 @@
             max-width: 100%;
         }
 
-        .wallet-filter-button,
+        .wallet-filter-button {
+            width: 100%;
+            justify-content: center;
+        }
+
         .wallet-date-select {
             width: 100%;
             justify-content: center;
+            font-size: 0.875rem;
+            padding: 0.875rem 1rem;
+            padding-right: 2.75rem;
         }
 
         .wallet-table-container {
@@ -1535,10 +1595,116 @@
             color: var(--text-primary);
             cursor: pointer;
             appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
             background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23ffffff' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
             background-repeat: no-repeat;
             background-position: right 0.75rem center;
             padding-right: 2.5rem;
+            width: 100%;
+            box-sizing: border-box;
+            transition: all 0.3s ease;
+        }
+
+        .wallet-date-select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(255, 178, 30, 0.15);
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+
+        .wallet-date-select:active {
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+
+        /* Style select options for mobile */
+        .wallet-date-select option {
+            background: rgba(20, 20, 25, 0.98);
+            color: var(--text-primary);
+            padding: 0.75rem;
+            border: none;
+        }
+
+        /* Custom dropdown styling for better mobile experience */
+        .wallet-date-select-wrapper {
+            position: relative;
+            width: 100%;
+        }
+
+        /* Mobile filter dropdown backdrop overlay */
+        .wallet-filter-dropdown-backdrop {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 9999;
+            backdrop-filter: blur(2px);
+            animation: fadeIn 0.3s ease-out;
+            display: none;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Mobile filter dropdown styling */
+        .wallet-filter-dropdown {
+            position: fixed;
+            top: auto;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            margin-top: 0;
+            margin-bottom: 0;
+            background: rgba(20, 20, 25, 0.98);
+            border: none;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px 20px 0 0;
+            padding: 1.5rem 1rem;
+            padding-bottom: calc(1.5rem + env(safe-area-inset-bottom, 0px));
+            box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.5);
+            z-index: 10000;
+            min-width: auto;
+            max-width: 100%;
+            width: 100%;
+            backdrop-filter: blur(20px);
+            animation: slideUp 0.3s ease-out;
+            max-height: 80vh;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+            display: none;
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .wallet-filter-dropdown label {
+            padding: 1rem;
+            font-size: 1rem;
+            border-radius: 12px;
+            margin-bottom: 0.5rem;
+            min-height: 48px;
+            display: flex;
+            align-items: center;
+        }
+
+        .wallet-filter-dropdown label:active {
+            background: rgba(255, 178, 30, 0.15);
         }
 
         .wallet-table-container {
@@ -1938,7 +2104,7 @@
             </div>
             <div class="wallet-balance-amount-wrapper" id="balanceAmountWallet">
                 <span class="wallet-balance-currency">$</span>
-                <span class="wallet-balance-amount">0</span>
+                <span class="wallet-balance-amount">{{ number_format($balances['net_balance'], 2) }}</span>
             </div>
 
             <div class="wallet-balance-details">
@@ -1949,7 +2115,7 @@
                     <div class="wallet-detail-content">
                         <div class="wallet-detail-label">Fund Wallet:</div>
                         <div class="wallet-detail-value">
-                            $0
+                            ${{ number_format($balances['fund_wallet'], 2) }}
                             <i class="fas fa-arrow-down wallet-detail-trend down"></i>
                         </div>
                     </div>
@@ -1961,7 +2127,7 @@
                     <div class="wallet-detail-content">
                         <div class="wallet-detail-label">Mining Earning:</div>
                         <div class="wallet-detail-value">
-                            $0
+                            ${{ number_format($balances['mining_earning'], 2) }}
                             <i class="fas fa-arrow-down wallet-detail-trend down"></i>
                         </div>
                     </div>
@@ -1975,7 +2141,7 @@
                             Referral Earning:
                         </div>
                         <div class="wallet-detail-value">
-                            $0
+                            ${{ number_format($balances['referral_earning'], 2) }}
                             <i class="fas fa-arrow-down wallet-detail-trend down"></i>
                         </div>
                     </div>
@@ -2001,7 +2167,7 @@
 
     <!-- Wallet Cards Grid -->
     <div class="wallet-cards-grid">
-        <div class="wallet-card">
+        {{-- <div class="wallet-card">
             <div class="wallet-card-header">
                 <div class="wallet-card-icon-wrapper">
                     <i class="fas fa-users wallet-card-icon"></i>
@@ -2031,7 +2197,7 @@
                 <div class="wallet-card-value">$0</div>
                 <div class="wallet-card-description">Active mining returns and profits</div>
             </div>
-        </div>
+        </div> --}}
 
         <div class="wallet-card">
             <div class="wallet-card-header">
@@ -2044,7 +2210,7 @@
             </div>
             <div class="wallet-card-body">
                 <div class="wallet-card-label">Total Deposits</div>
-                <div class="wallet-card-value">$0</div>
+                <div class="wallet-card-value">${{ number_format($totalDeposits, 2) }}</div>
                 <div class="wallet-card-description">All-time deposit amount</div>
             </div>
         </div>
@@ -2060,7 +2226,7 @@
             </div>
             <div class="wallet-card-body">
                 <div class="wallet-card-label">Total Withdrawals</div>
-                <div class="wallet-card-value">$0</div>
+                <div class="wallet-card-value">${{ number_format($totalWithdrawals, 2) }}</div>
                 <div class="wallet-card-description">All-time withdrawal amount</div>
             </div>
         </div>
@@ -2084,7 +2250,9 @@
                     </button>
                 <select class="wallet-date-select" id="walletDateFilter">
                         <option value="all">All Time</option>
-                        <option value="7" selected>1 Week</option>
+                        <option value="this_week" selected>This Week</option>
+                        <option value="last_week">Last Week</option>
+                        <option value="7">Last 7 Days</option>
                         <option value="30">Last 30 Days</option>
                         <option value="90">Last 90 Days</option>
                     </select>
@@ -2103,123 +2271,109 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>
-                            <div class="wallet-transaction-cell">
-                                <div class="wallet-transaction-icon success">
-                                    <i class="fas fa-arrow-down"></i>
-                                </div>
-                                <div class="wallet-transaction-info">
-                                    <div class="wallet-transaction-name">Bonus</div>
-                                    <div class="wallet-transaction-meta">
-                                        <div class="wallet-transaction-date-time">Dec 28, 2025, 11:11 PM</div>
+                    @forelse($transactions as $transaction)
+                        @php
+                            $type = $transaction['type'];
+                            $amount = $transaction['amount'];
+                            $description = $transaction['description'] ?? '';
+                            $status = $transaction['status'] ?? 'completed';
+                            $createdAt = $transaction['created_at'];
+                            
+                            // Determine icon and styling based on transaction type
+                            $isCredit = in_array($type, ['deposit', 'referral_earning', 'mining_earning']);
+                            $iconClass = 'success';
+                            $icon = 'fa-arrow-down';
+                            $typeBadgeClass = 'wallet-type-credit';
+                            $typeIcon = 'fa-arrow-up';
+                            $typeLabel = 'Credit';
+                            $amountClass = 'wallet-amount-positive';
+                            $amountPrefix = '+';
+                            
+                            if ($type === 'withdrawal') {
+                                $iconClass = 'danger';
+                                $icon = 'fa-arrow-up';
+                                $typeBadgeClass = 'wallet-type-debit';
+                                $typeIcon = 'fa-arrow-down';
+                                $typeLabel = 'Debit';
+                                $amountClass = 'wallet-amount-negative';
+                                $amountPrefix = '-';
+                            } elseif ($type === 'referral_earning') {
+                                $icon = 'fa-trophy';
+                            } elseif ($type === 'mining_earning') {
+                                $icon = 'fa-coins';
+                            } elseif ($type === 'deposit') {
+                                $icon = 'fa-plus-circle';
+                            }
+                            
+                            // Format date
+                            $date = $createdAt instanceof \Carbon\Carbon ? $createdAt : \Carbon\Carbon::parse($createdAt);
+                            $dateFormatted = $date->format('M d, Y');
+                            $timeFormatted = $date->format('h:i A');
+                            
+                            // Status badge class
+                            $statusBadgeClass = 'wallet-status-' . $status;
+                        @endphp
+                        <tr data-transaction-type="{{ $type }}" data-transaction-date="{{ $date->format('Y-m-d') }}" data-transaction-timestamp="{{ $date->timestamp }}">
+                            <td>
+                                <div class="wallet-transaction-cell">
+                                    <div class="wallet-transaction-icon {{ $iconClass }}">
+                                        <i class="fas {{ $icon }}"></i>
+                                    </div>
+                                    <div class="wallet-transaction-info">
+                                        <div class="wallet-transaction-name">{{ $description ?: ucfirst(str_replace('_', ' ', $type)) }}</div>
+                                        <div class="wallet-transaction-meta">
+                                            <div class="wallet-transaction-date-time">{{ $dateFormatted }}, {{ $timeFormatted }}</div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </td>
-                        <td>
-                            <span class="wallet-type-badge wallet-type-credit">
-                                <i class="fas fa-arrow-up"></i>
-                                <span>Credit</span>
-                            </span>
-                        </td>
-                        <td>
-                            <div class="wallet-amount-cell">
-                                <div class="wallet-amount-value wallet-amount-positive">+$0</div>
-                                <div class="wallet-amount-wallet">Earning Wallet: $0</div>
-                                <div class="wallet-status-mobile wallet-status-completed">Completed</div>
-                            </div>
-                        </td>
-                        <td>
-                            <span class="wallet-status-badge wallet-status-completed">
-                                <span>Completed</span>
-                            </span>
-                        </td>
-                        <td>
-                            <div class="wallet-date-cell">
-                                <div class="wallet-date-main">Dec 28, 2025</div>
-                                <div class="wallet-date-time">11:11 PM</div>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="wallet-transaction-cell">
-                                <div class="wallet-transaction-icon danger">
-                                    <i class="fas fa-arrow-down"></i>
-                                </div>
-                                <div class="wallet-transaction-info">
-                                    <div class="wallet-transaction-name">Withdrawal</div>
-                                    <div class="wallet-transaction-meta">
-                                        <div class="wallet-transaction-date-time">Dec 27, 2025, 03:45 PM</div>
+                            </td>
+                            <td>
+                                <span class="wallet-type-badge {{ $typeBadgeClass }}">
+                                    <i class="fas {{ $typeIcon }}"></i>
+                                    <span>{{ $typeLabel }}</span>
+                                </span>
+                            </td>
+                            <td>
+                                <div class="wallet-amount-cell">
+                                    <div class="wallet-amount-value {{ $amountClass }}">{{ $amountPrefix }}${{ number_format($amount, 2) }}</div>
+                                    <div class="wallet-amount-wallet">
+                                        @if($type === 'deposit')
+                                            Fund Wallet: ${{ number_format($balances['fund_wallet'], 2) }}
+                                        @elseif($type === 'withdrawal')
+                                            Net Balance: ${{ number_format($balances['net_balance'], 2) }}
+                                        @elseif($type === 'referral_earning')
+                                            Referral Earning: ${{ number_format($balances['referral_earning'], 2) }}
+                                        @elseif($type === 'mining_earning')
+                                            Mining Earning: ${{ number_format($balances['mining_earning'], 2) }}
+                                        @else
+                                            Net Balance: ${{ number_format($balances['net_balance'], 2) }}
+                                        @endif
                                     </div>
+                                    <div class="wallet-status-mobile {{ $statusBadgeClass }}">{{ ucfirst($status) }}</div>
                                 </div>
-                            </div>
-                        </td>
-                        <td>
-                            <span class="wallet-type-badge wallet-type-debit">
-                                <i class="fas fa-arrow-down"></i>
-                                <span>Debit</span>
-                            </span>
-                        </td>
-                        <td>
-                            <div class="wallet-amount-cell">
-                                <div class="wallet-amount-value wallet-amount-negative">-$50</div>
-                                <div class="wallet-amount-wallet">Main Wallet: $0</div>
-                                <div class="wallet-status-mobile wallet-status-pending">Pending</div>
-                            </div>
-                        </td>
-                        <td>
-                            <span class="wallet-status-badge wallet-status-pending">
-                                <span>Pending</span>
-                            </span>
-                        </td>
-                        <td>
-                            <div class="wallet-date-cell">
-                                <div class="wallet-date-main">Dec 27, 2025</div>
-                                <div class="wallet-date-time">03:45 PM</div>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="wallet-transaction-cell">
-                                <div class="wallet-transaction-icon success">
-                                    <i class="fas fa-arrow-down"></i>
+                            </td>
+                            <td>
+                                <span class="wallet-status-badge {{ $statusBadgeClass }}">
+                                    <span>{{ ucfirst($status) }}</span>
+                                </span>
+                            </td>
+                            <td>
+                                <div class="wallet-date-cell">
+                                    <div class="wallet-date-main">{{ $dateFormatted }}</div>
+                                    <div class="wallet-date-time">{{ $timeFormatted }}</div>
                                 </div>
-                                <div class="wallet-transaction-info">
-                                    <div class="wallet-transaction-name">Deposit</div>
-                                    <div class="wallet-transaction-meta">
-                                        <div class="wallet-transaction-date-time">Dec 26, 2025, 09:20 AM</div>
-                                    </div>
+                            </td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="5" style="text-align: center; padding: 2rem;">
+                                <div style="color: var(--text-secondary);">
+                                    <i class="fas fa-inbox" style="font-size: 2rem; margin-bottom: 1rem; opacity: 0.5;"></i>
+                                    <p>No transactions found</p>
                                 </div>
-                            </div>
-                        </td>
-                        <td>
-                            <span class="wallet-type-badge wallet-type-credit">
-                                <i class="fas fa-arrow-up"></i>
-                                <span>Credit</span>
-                            </span>
-                        </td>
-                        <td>
-                            <div class="wallet-amount-cell">
-                                <div class="wallet-amount-value wallet-amount-positive">+$100</div>
-                                <div class="wallet-amount-wallet">Main Wallet: $0</div>
-                                <div class="wallet-status-mobile wallet-status-completed">Completed</div>
-                            </div>
-                        </td>
-                        <td>
-                            <span class="wallet-status-badge wallet-status-completed">
-                                <span>Completed</span>
-                            </span>
-                        </td>
-                        <td>
-                            <div class="wallet-date-cell">
-                                <div class="wallet-date-main">Dec 26, 2025</div>
-                                <div class="wallet-date-time">09:20 AM</div>
-                            </div>
-                        </td>
-                    </tr>
+                            </td>
+                        </tr>
+                    @endforelse
                 </tbody>
             </table>
         </div>
