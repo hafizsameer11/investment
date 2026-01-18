@@ -109,6 +109,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::get('/', [HomeController::class, 'index'])->name('admin.index');
     Route::get('/form', [HomeController::class, 'form'])->name('admin.form');
     Route::get('/table', [HomeController::class, 'table'])->name('admin.table');
+    Route::get('/financial-data', [HomeController::class, 'getFinancialData'])->name('admin.financial-data');
 
     // Admin Investment Commission Routes
     Route::prefix('investment-commission')->name('admin.investment-commission.')->group(function () {
