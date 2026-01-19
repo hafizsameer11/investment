@@ -1636,6 +1636,27 @@
         flex: 1;
     }
 
+    /* Level name colors matching commission structure */
+    .referrals-network-level-1 {
+        color: #F59E0B !important;
+    }
+
+    .referrals-network-level-2 {
+        color: #3B82F6 !important;
+    }
+
+    .referrals-network-level-3 {
+        color: #10B981 !important;
+    }
+
+    .referrals-network-level-4 {
+        color: #8B5CF6 !important;
+    }
+
+    .referrals-network-level-5 {
+        color: #EC4899 !important;
+    }
+
     .referrals-network-card-new {
         background: var(--card-bg);
         border: 1px solid var(--card-border);
