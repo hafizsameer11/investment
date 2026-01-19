@@ -327,11 +327,8 @@
 
         // Reset Password Form
         if (resetPasswordForm && resetPasswordButton) {
-            const passwordConfirmationInput = document.getElementById('password_confirmation');
-            
             resetPasswordForm.addEventListener('submit', function(e) {
                 const password = passwordInput && passwordInput.value;
-                const passwordConfirmation = passwordConfirmationInput && passwordConfirmationInput.value;
 
                 if (!password || password.length < 8) {
                     e.preventDefault();
@@ -341,29 +338,8 @@
                     return false;
                 }
 
-                if (password !== passwordConfirmation) {
-                    e.preventDefault();
-                    if (passwordConfirmationInput) {
-                        showFieldError(passwordConfirmationInput, 'Passwords do not match');
-                    }
-                    return false;
-                }
-
                 setLoadingStateForButton(resetPasswordButton, true);
             });
-
-            // Real-time password confirmation validation
-            if (passwordConfirmationInput && passwordInput) {
-                passwordConfirmationInput.addEventListener('input', function() {
-                    if (this.value && passwordInput.value && this.value !== passwordInput.value) {
-                        this.classList.add('input-error');
-                        showFieldError(this, 'Passwords do not match');
-                    } else {
-                        this.classList.remove('input-error');
-                        hideFieldError(this);
-                    }
-                });
-            }
         }
     }
 
