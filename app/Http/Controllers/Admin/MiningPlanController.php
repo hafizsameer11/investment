@@ -145,3 +145,4 @@ class MiningPlanController extends Controller
 
 
 
+

@@ -344,10 +344,8 @@ class WalletController extends Controller
             'transaction_id' => 'required|string|max:255',
             'account_number' => 'required|string|max:255',
             'account_holder_name' => 'required|string|max:255',
-            'payment_proof' => 'required|image|mimes:jpeg,png,jpg,gif|max:5120', // 5MB max
-        ], [
-            'payment_proof.image' => 'Payment proof must be an image file.',
-            'payment_proof.max' => 'Payment proof image must not exceed 5MB.',
+            'payment_proof' => 'required|image', // 5MB max
+        ], [  
             'account_number.required' => 'Account number is required.',
             'account_holder_name.required' => 'Account holder name is required.',
         ]);
@@ -377,12 +375,17 @@ class WalletController extends Controller
                     
                     // Create directory if it doesn't exist
                     $directory = public_path('assets/deposits/payment-proofs');
+                    
+                    // Try to create directory with proper permissions
                     if (!file_exists($directory)) {
-                        if (!mkdir($directory, 0755, true)) {
+                        // Try to create the directory
+                        $created = @mkdir($directory, 0755, true);
+                        if (!$created) {
                             DB::rollBack();
                             Log::error('Failed to create deposit payment proofs directory', [
                                 'directory' => $directory,
                                 'user_id' => auth()->id(),
+                                'permissions' => substr(sprintf('%o', fileperms(dirname($directory))), -4),
                             ]);
                             return response()->json([
                                 'success' => false,
@@ -391,12 +394,23 @@ class WalletController extends Controller
                         }
                     }
                     
-                    // Check if directory is writable
+                    // Ensure directory permissions are correct
+                    if (file_exists($directory)) {
+                        // Try to make it writable if it's not
+                        if (!is_writable($directory)) {
+                            @chmod($directory, 0755);
+                        }
+                    }
+                    
+                    // Check if directory is writable after attempting to fix permissions
                     if (!is_writable($directory)) {
                         DB::rollBack();
                         Log::error('Deposit payment proofs directory is not writable', [
                             'directory' => $directory,
                             'user_id' => auth()->id(),
+                            'exists' => file_exists($directory),
+                            'is_dir' => is_dir($directory),
+                            'permissions' => file_exists($directory) ? substr(sprintf('%o', fileperms($directory)), -4) : 'N/A',
                         ]);
                         return response()->json([
                             'success' => false,
