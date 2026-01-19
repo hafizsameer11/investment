@@ -1088,30 +1088,55 @@
         border-top: 1px solid rgba(255, 255, 255, 0.1);
     }
 
-    .referrals-investment-mobile-footer-new span:last-child {
-        color: #EF4444;
+    /* Investment Commission Level Colors */
+    .referrals-investment-level-1 .referrals-investment-mobile-percentage-new {
+        color: #F59E0B;
+        text-shadow: 0 0 15px rgba(245, 158, 11, 0.5);
+    }
+
+    .referrals-investment-level-1 .referrals-investment-mobile-footer-new span:last-child {
+        color: #F59E0B;
         font-weight: 600;
     }
 
-    /* Investment Commission Level Colors */
-    .referrals-investment-level-1 .referrals-investment-mobile-percentage-new {
-        color: #EF4444;
+    .referrals-investment-level-2 .referrals-investment-mobile-percentage-new {
+        color: #3B82F6;
+        text-shadow: 0 0 15px rgba(59, 130, 246, 0.5);
     }
 
-    .referrals-investment-level-2 .referrals-investment-mobile-percentage-new {
-        color: #EF4444;
+    .referrals-investment-level-2 .referrals-investment-mobile-footer-new span:last-child {
+        color: #3B82F6;
+        font-weight: 600;
     }
 
     .referrals-investment-level-3 .referrals-investment-mobile-percentage-new {
-        color: #EF4444;
+        color: #10B981;
+        text-shadow: 0 0 15px rgba(16, 185, 129, 0.5);
+    }
+
+    .referrals-investment-level-3 .referrals-investment-mobile-footer-new span:last-child {
+        color: #10B981;
+        font-weight: 600;
     }
 
     .referrals-investment-level-4 .referrals-investment-mobile-percentage-new {
-        color: #EF4444;
+        color: #8B5CF6;
+        text-shadow: 0 0 15px rgba(139, 92, 246, 0.5);
+    }
+
+    .referrals-investment-level-4 .referrals-investment-mobile-footer-new span:last-child {
+        color: #8B5CF6;
+        font-weight: 600;
     }
 
     .referrals-investment-level-5 .referrals-investment-mobile-percentage-new {
-        color: #EF4444;
+        color: #EC4899;
+        text-shadow: 0 0 15px rgba(236, 72, 153, 0.5);
+    }
+
+    .referrals-investment-level-5 .referrals-investment-mobile-footer-new span:last-child {
+        color: #EC4899;
+        font-weight: 600;
     }
 
     /* Commission Structure Section */
@@ -1270,63 +1295,63 @@
 
     /* Level-specific colors */
     .referrals-commission-level-1 .referrals-commission-level-icon-new {
-        background: linear-gradient(135deg, #EF4444 0%, #DC2626 100%);
-        border-color: rgba(239, 68, 68, 0.5);
+        background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+        border-color: rgba(245, 158, 11, 0.5);
         color: #000;
-        box-shadow: 0 0 30px rgba(239, 68, 68, 0.4);
+        box-shadow: 0 0 30px rgba(245, 158, 11, 0.4);
     }
 
     .referrals-commission-level-1 .referrals-commission-rate-value-new {
-        color: #EF4444;
-        text-shadow: 0 0 20px rgba(239, 68, 68, 0.5);
+        color: #F59E0B;
+        text-shadow: 0 0 20px rgba(245, 158, 11, 0.5);
     }
 
     .referrals-commission-level-2 .referrals-commission-level-icon-new {
-        background: linear-gradient(135deg, #EF4444 0%, #DC2626 100%);
-        border-color: rgba(239, 68, 68, 0.5);
-        color: #000;
-        box-shadow: 0 0 30px rgba(239, 68, 68, 0.4);
+        background: linear-gradient(135deg, #3B82F6 0%, #2563EB 100%);
+        border-color: rgba(59, 130, 246, 0.5);
+        color: #fff;
+        box-shadow: 0 0 30px rgba(59, 130, 246, 0.4);
     }
 
     .referrals-commission-level-2 .referrals-commission-rate-value-new {
-        color: #EF4444;
-        text-shadow: 0 0 20px rgba(239, 68, 68, 0.5);
+        color: #3B82F6;
+        text-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
     }
 
     .referrals-commission-level-3 .referrals-commission-level-icon-new {
-        background: linear-gradient(135deg, #EF4444 0%, #DC2626 100%);
-        border-color: rgba(239, 68, 68, 0.5);
-        color: #000;
-        box-shadow: 0 0 30px rgba(239, 68, 68, 0.4);
+        background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+        border-color: rgba(16, 185, 129, 0.5);
+        color: #fff;
+        box-shadow: 0 0 30px rgba(16, 185, 129, 0.4);
     }
 
     .referrals-commission-level-3 .referrals-commission-rate-value-new {
-        color: #EF4444;
-        text-shadow: 0 0 20px rgba(239, 68, 68, 0.5);
+        color: #10B981;
+        text-shadow: 0 0 20px rgba(16, 185, 129, 0.5);
     }
 
     .referrals-commission-level-4 .referrals-commission-level-icon-new {
-        background: linear-gradient(135deg, #EF4444 0%, #DC2626 100%);
-        border-color: rgba(239, 68, 68, 0.5);
-        color: #000;
-        box-shadow: 0 0 30px rgba(239, 68, 68, 0.4);
+        background: linear-gradient(135deg, #8B5CF6 0%, #7C3AED 100%);
+        border-color: rgba(139, 92, 246, 0.5);
+        color: #fff;
+        box-shadow: 0 0 30px rgba(139, 92, 246, 0.4);
     }
 
     .referrals-commission-level-4 .referrals-commission-rate-value-new {
-        color: #EF4444;
-        text-shadow: 0 0 20px rgba(239, 68, 68, 0.5);
+        color: #8B5CF6;
+        text-shadow: 0 0 20px rgba(139, 92, 246, 0.5);
     }
 
     .referrals-commission-level-5 .referrals-commission-level-icon-new {
-        background: linear-gradient(135deg, #EF4444 0%, #DC2626 100%);
-        border-color: rgba(239, 68, 68, 0.5);
-        color: #000;
-        box-shadow: 0 0 30px rgba(239, 68, 68, 0.4);
+        background: linear-gradient(135deg, #EC4899 0%, #DB2777 100%);
+        border-color: rgba(236, 72, 153, 0.5);
+        color: #fff;
+        box-shadow: 0 0 30px rgba(236, 72, 153, 0.4);
     }
 
     .referrals-commission-level-5 .referrals-commission-rate-value-new {
-        color: #EF4444;
-        text-shadow: 0 0 20px rgba(239, 68, 68, 0.5);
+        color: #EC4899;
+        text-shadow: 0 0 20px rgba(236, 72, 153, 0.5);
     }
 
     /* Mobile Icon-Based Commission Structure */
@@ -1410,7 +1435,7 @@
         justify-content: center;
         font-size: 0.625rem;
         font-weight: 700;
-        color: #EF4444;
+        color: var(--text-primary);
         text-transform: uppercase;
         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
     }
@@ -1440,53 +1465,53 @@
 
     /* Mobile Level Colors */
     .referrals-commission-mobile-level-1 .referrals-commission-mobile-icon-new {
-        background: linear-gradient(135deg, #EF4444 0%, #DC2626 100%);
-        box-shadow: 0 4px 16px rgba(239, 68, 68, 0.4);
+        background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+        box-shadow: 0 4px 16px rgba(245, 158, 11, 0.4);
     }
 
     .referrals-commission-mobile-level-1 .referrals-commission-mobile-rate-new {
-        color: #EF4444;
-        text-shadow: 0 0 15px rgba(239, 68, 68, 0.5);
+        color: #F59E0B;
+        text-shadow: 0 0 15px rgba(245, 158, 11, 0.5);
     }
 
     .referrals-commission-mobile-level-2 .referrals-commission-mobile-icon-new {
-        background: linear-gradient(135deg, #EF4444 0%, #DC2626 100%);
-        box-shadow: 0 4px 16px rgba(239, 68, 68, 0.4);
+        background: linear-gradient(135deg, #3B82F6 0%, #2563EB 100%);
+        box-shadow: 0 4px 16px rgba(59, 130, 246, 0.4);
     }
 
     .referrals-commission-mobile-level-2 .referrals-commission-mobile-rate-new {
-        color: #EF4444;
-        text-shadow: 0 0 15px rgba(239, 68, 68, 0.5);
+        color: #3B82F6;
+        text-shadow: 0 0 15px rgba(59, 130, 246, 0.5);
     }
 
     .referrals-commission-mobile-level-3 .referrals-commission-mobile-icon-new {
-        background: linear-gradient(135deg, #EF4444 0%, #DC2626 100%);
-        box-shadow: 0 4px 16px rgba(239, 68, 68, 0.4);
+        background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+        box-shadow: 0 4px 16px rgba(16, 185, 129, 0.4);
     }
 
     .referrals-commission-mobile-level-3 .referrals-commission-mobile-rate-new {
-        color: #EF4444;
-        text-shadow: 0 0 15px rgba(239, 68, 68, 0.5);
+        color: #10B981;
+        text-shadow: 0 0 15px rgba(16, 185, 129, 0.5);
     }
 
     .referrals-commission-mobile-level-4 .referrals-commission-mobile-icon-new {
-        background: linear-gradient(135deg, #EF4444 0%, #DC2626 100%);
-        box-shadow: 0 4px 16px rgba(239, 68, 68, 0.4);
+        background: linear-gradient(135deg, #8B5CF6 0%, #7C3AED 100%);
+        box-shadow: 0 4px 16px rgba(139, 92, 246, 0.4);
     }
 
     .referrals-commission-mobile-level-4 .referrals-commission-mobile-rate-new {
-        color: #EF4444;
-        text-shadow: 0 0 15px rgba(239, 68, 68, 0.5);
+        color: #8B5CF6;
+        text-shadow: 0 0 15px rgba(139, 92, 246, 0.5);
     }
 
     .referrals-commission-mobile-level-5 .referrals-commission-mobile-icon-new {
-        background: linear-gradient(135deg, #EF4444 0%, #DC2626 100%);
-        box-shadow: 0 4px 16px rgba(239, 68, 68, 0.4);
+        background: linear-gradient(135deg, #EC4899 0%, #DB2777 100%);
+        box-shadow: 0 4px 16px rgba(236, 72, 153, 0.4);
     }
 
     .referrals-commission-mobile-level-5 .referrals-commission-mobile-rate-new {
-        color: #EF4444;
-        text-shadow: 0 0 15px rgba(239, 68, 68, 0.5);
+        color: #EC4899;
+        text-shadow: 0 0 15px rgba(236, 72, 153, 0.5);
     }
 
     /* Network Section */
@@ -1499,6 +1524,7 @@
         justify-content: space-between;
         align-items: flex-start;
         margin-bottom: 2rem;
+        margin-top: 1.5rem;
         flex-wrap: wrap;
         gap: 1.5rem;
     }
@@ -1516,21 +1542,98 @@
         margin: 0;
     }
 
-    .referrals-network-filter-new {
-        padding: 0.875rem 1.25rem;
-        background: rgba(255, 255, 255, 0.03);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 12px;
-        color: var(--text-primary);
-        font-size: 0.9375rem;
-        cursor: pointer;
-        transition: var(--transition);
+    /* Custom Dropdown */
+    .referrals-network-dropdown-new {
+        position: relative;
+        display: inline-block;
+        margin-top: 0.5rem;
+        margin-left: auto;
     }
 
-    .referrals-network-filter-new:focus {
-        outline: none;
-        border-color: var(--primary-color);
-        box-shadow: 0 0 0 3px rgba(255, 178, 30, 0.1);
+    .referrals-network-dropdown-btn-new {
+        padding: 0.875rem 1.25rem;
+        background: #fff;
+        border: 1px solid rgba(255, 178, 30, 0.6);
+        border-radius: 12px;
+        color: #000;
+        font-size: 0.9375rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: var(--transition);
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        min-width: 120px;
+        justify-content: space-between;
+    }
+
+    .referrals-network-dropdown-btn-new:hover {
+        border-color: rgba(255, 178, 30, 0.8);
+    }
+
+    .referrals-network-dropdown-btn-new i {
+        font-size: 0.75rem;
+        color: #000;
+        transition: transform 0.2s ease;
+    }
+
+    .referrals-network-dropdown-new.active .referrals-network-dropdown-btn-new i {
+        transform: rotate(180deg);
+    }
+
+    .referrals-network-dropdown-menu-new {
+        position: absolute;
+        top: calc(100% + 0.5rem);
+        right: 0;
+        background: rgba(40, 40, 40, 0.98);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 12px;
+        min-width: 160px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-10px);
+        transition: all 0.2s ease;
+        z-index: 1000;
+        padding: 0.5rem;
+        margin-top: 0.25rem;
+        backdrop-filter: blur(10px);
+    }
+
+    .referrals-network-dropdown-new.active .referrals-network-dropdown-menu-new {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+    }
+
+    .referrals-network-dropdown-item-new {
+        padding: 0.2rem 1rem;
+        color: #fff;
+        font-size: 0.9375rem;
+        cursor: pointer;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.75rem;
+        transition: background 0.2s ease;
+    }
+
+    .referrals-network-dropdown-item-new:hover {
+        background: rgba(255, 255, 255, 0.1);
+    }
+
+    .referrals-network-dropdown-item-new.active {
+        background: rgba(255, 255, 255, 0.2);
+    }
+
+    .referrals-network-dropdown-item-new i {
+        font-size: 0.875rem;
+        color: #fff;
+    }
+
+    .referrals-network-dropdown-item-new span {
+        flex: 1;
     }
 
     .referrals-network-card-new {
@@ -1559,6 +1662,26 @@
         border-bottom: 2px solid rgba(255, 178, 30, 0.2);
     }
 
+    /* Hide table header when empty state is shown */
+    .referrals-network-table-new tbody:has(.referrals-network-empty-new) ~ thead,
+    .referrals-network-table-new:has(.referrals-network-empty-new) thead {
+        display: none;
+    }
+
+    /* Fallback for browsers without :has() support */
+    .referrals-network-empty-new {
+        position: relative;
+    }
+
+    .referrals-network-empty-new::before {
+        content: '';
+        position: absolute;
+        top: -100px;
+        left: 0;
+        right: 0;
+        height: 1px;
+    }
+
     .referrals-network-table-new th {
         padding: 1.25rem 1.5rem;
         text-align: left;
@@ -1585,13 +1708,17 @@
     .referrals-network-empty-new {
         text-align: center;
         padding: 4rem 2rem;
+        border: none !important;
     }
 
     .referrals-network-empty-content-new {
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 1rem;
+        justify-content: center;
+        gap: 1.5rem;
+        width: 100%;
+        max-width: 100%;
     }
 
     .referrals-network-empty-icon-mobile {
@@ -1603,28 +1730,29 @@
         align-items: center;
         justify-content: center;
         margin: 0 auto;
+        width: 120px;
+        height: 120px;
     }
 
     .referrals-network-empty-icon-desktop i {
         font-size: 4rem;
-        color: var(--text-secondary);
-        opacity: 0.3;
+        color: rgba(255, 255, 255, 0.5);
+        opacity: 1;
     }
 
     .referrals-network-empty-content-new > i {
         display: none;
     }
 
-    .referrals-network-empty-content-new p {
+    .referrals-network-empty-message-new {
         font-size: 1.125rem;
         font-weight: 600;
         color: var(--text-primary);
         margin: 0;
     }
 
-    .referrals-network-empty-content-new span {
-        font-size: 0.9375rem;
-        color: var(--text-secondary);
+    .referrals-network-empty-hint-new {
+        display: none;
     }
 
     .referrals-network-invite-btn-new {
@@ -1919,12 +2047,17 @@ ls-referrer-section-new {
             justify-content: space-between;
             align-items: center;
             margin-bottom: 1.5rem;
+            margin-top: 1rem;
             padding-top: 0.5rem;
             gap: 1rem;
         }
 
-        .referrals-network-header-new > div {
+        .referrals-network-header-new > div:first-child {
             flex: 1;
+        }
+
+        .referrals-network-header-new > div:last-child {
+            flex: 0 0 auto;
         }
 
         .referrals-network-subtitle-new {
@@ -1936,19 +2069,20 @@ ls-referrer-section-new {
             margin: 0;
         }
 
-        .referrals-network-filter-new {
+        .referrals-network-dropdown-new {
+            margin-top: 0.5rem;
+            margin-left: auto;
+        }
+
+        .referrals-network-dropdown-btn-new {
             padding: 0.625rem 1rem;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            color: var(--text-primary);
             font-size: 0.875rem;
-            min-width: 80px;
-            appearance: none;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23fff' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: right 0.75rem center;
-            padding-right: 2.5rem;
+            min-width: 100px;
+        }
+
+        .referrals-network-dropdown-menu-new {
+            min-width: 140px;
+            right: 0;
         }
 
         .referrals-network-card-new {
@@ -1958,6 +2092,10 @@ ls-referrer-section-new {
             border-radius: 16px;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
             position: relative;
+        }
+
+        .referrals-network-card-new:has(.referrals-network-empty-new) {
+            padding: 1.5rem;
         }
 
         /* Move header inside card on mobile using CSS */
@@ -1979,38 +2117,92 @@ ls-referrer-section-new {
             padding-top: 4.5rem;
         }
 
-        .referrals-network-empty-icon-desktop {
-            display: none !important;
+        /* Remove top padding when empty state is shown */
+        .referrals-network-table-wrapper-new:has(.referrals-network-empty-new),
+        .referrals-network-card-new:has(.referrals-network-empty-new) .referrals-network-table-wrapper-new {
+            padding-top: 0 !important;
         }
 
         .referrals-network-empty-new {
-            padding: 3rem 1.5rem;
+            padding: 0 !important;
+            border: none !important;
+            display: block !important;
+            width: 100% !important;
+            background: transparent !important;
+            position: relative !important;
+        }
+
+        /* Empty state row styling - card appearance */
+        .referrals-network-table-new tbody tr:has(.referrals-network-empty-new) {
+            display: block !important;
+            width: 100% !important;
+            margin: 0 !important;
+            margin-bottom: 0 !important;
+            background: rgba(255, 255, 255, 0.03) !important;
+            border: 1px solid rgba(255, 255, 255, 0.1) !important;
+            border-radius: 16px !important;
+            padding: 0 !important;
+            min-height: auto !important;
+            box-sizing: border-box !important;
+        }
+
+        .referrals-network-table-new tbody:has(.referrals-network-empty-new) {
+            display: block !important;
+            width: 100% !important;
+            margin: 0 !important;
+        }
+
+        /* Empty state td styling */
+        .referrals-network-table-new tbody tr:has(.referrals-network-empty-new) td,
+        .referrals-network-table-new td.referrals-network-empty-new {
+            display: block !important;
+            width: 100% !important;
+            padding: 1.5rem 1rem !important;
+            border: none !important;
+            background: transparent !important;
+            box-sizing: border-box !important;
+            text-align: center !important;
         }
 
         .referrals-network-empty-content-new {
-            gap: 1.5rem;
+            gap: 1.25rem;
+            width: 100%;
+            max-width: 100%;
+            display: flex !important;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            text-align: center;
+            padding-top: 40px;
         }
 
         .referrals-network-empty-icon-desktop {
             display: none !important;
+        }
+
+        .referrals-network-empty-icon-new {
+            margin-top: 0 !important;
         }
 
         .referrals-network-empty-icon-mobile {
             display: flex !important;
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            width: 64px;
+            height: 64px;
+            border-radius: 16px;
+            background: linear-gradient(135deg, #9333EA 0%, #EC4899 100%);
             align-items: center;
             justify-content: center;
-            margin: 0 auto;
+            margin: 0 auto !important;
+            margin-top: 1rem !important;
             flex-shrink: 0;
+            box-shadow: 0 4px 16px rgba(147, 51, 234, 0.4);
+            position: relative;
+            z-index: 10;
         }
 
         .referrals-network-empty-icon-mobile i {
-            font-size: 3.5rem;
-            color: rgba(255, 255, 255, 0.7);
+            font-size: 1.75rem;
+            color: #fff;
             opacity: 1;
             display: block !important;
             visibility: visible !important;
@@ -2021,10 +2213,12 @@ ls-referrer-section-new {
         }
 
         .referrals-network-empty-message-new {
-            font-size: 1rem;
+            font-size: 0.875rem;
             font-weight: 600;
             color: var(--text-primary);
             margin: 0;
+            text-align: center;
+            width: 100%;
         }
 
         .referrals-network-empty-hint-new {
@@ -2046,7 +2240,8 @@ ls-referrer-section-new {
             justify-content: center;
             gap: 0.5rem;
             box-shadow: 0 4px 16px rgba(147, 51, 234, 0.3);
-            margin-top: 0.5rem;
+            margin-top: 0;
+            width: auto;
         }
 
         .referrals-network-invite-btn-new:hover {
@@ -2110,11 +2305,20 @@ ls-referrer-section-new {
             box-sizing: border-box;
         }
 
+        .referrals-network-table-new td.referrals-network-empty-new {
+            padding: 1.5rem 1rem !important;
+            display: block !important;
+        }
+
         .referrals-network-table-new td:first-child {
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
             margin-bottom: 0;
+        }
+
+        .referrals-network-table-new td:first-child.referrals-network-empty-new {
+            display: block !important;
         }
 
         .referrals-network-table-new td:first-child .referrals-network-mobile-value {
@@ -3066,7 +3270,19 @@ ls-referrer-section-new {
             <div class="referrals-commission-card-new referrals-commission-level-{{ $commission->level }}">
                 <div class="referrals-commission-level-badge-new">Level {{ $commission->level }}</div>
                 <div class="referrals-commission-level-icon-new">
-                    <i class="fas fa-star"></i>
+                    @if($commission->level == 1)
+                        <i class="fas fa-trophy"></i>
+                    @elseif($commission->level == 2)
+                        <i class="fas fa-medal"></i>
+                    @elseif($commission->level == 3)
+                        <i class="fas fa-award"></i>
+                    @elseif($commission->level == 4)
+                        <i class="fas fa-gem"></i>
+                    @elseif($commission->level == 5)
+                        <i class="fas fa-crown"></i>
+                    @else
+                        <i class="fas fa-star"></i>
+                    @endif
                 </div>
                 <div class="referrals-commission-level-name-new">{{ $commission->level_name }}</div>
                 <div class="referrals-commission-rate-new">
@@ -3091,7 +3307,19 @@ ls-referrer-section-new {
                 <div class="referrals-commission-mobile-item-new referrals-commission-mobile-level-{{ $commission->level }}">
                     <div class="referrals-commission-mobile-icon-wrapper-new">
                         <div class="referrals-commission-mobile-icon-new">
-                            <i class="fas fa-star"></i>
+                            @if($commission->level == 1)
+                                <i class="fas fa-trophy"></i>
+                            @elseif($commission->level == 2)
+                                <i class="fas fa-medal"></i>
+                            @elseif($commission->level == 3)
+                                <i class="fas fa-award"></i>
+                            @elseif($commission->level == 4)
+                                <i class="fas fa-gem"></i>
+                            @elseif($commission->level == 5)
+                                <i class="fas fa-crown"></i>
+                            @else
+                                <i class="fas fa-star"></i>
+                            @endif
                         </div>
                         <div class="referrals-commission-mobile-badge-new">L{{ $commission->level }}</div>
                     </div>
@@ -3112,18 +3340,55 @@ ls-referrer-section-new {
                 <h2 class="referrals-network-title-new">Your Network</h2>
                 <p class="referrals-network-subtitle-new">View all your referrals and their investments</p>
             </div>
-            <select class="referrals-network-filter-new" id="levelFilter" onchange="filterByLevel(this.value)">
-                <option value="all" {{ $currentLevel == 'all' ? 'selected' : '' }}>All Levels</option>
-                <option value="1" {{ $currentLevel == '1' ? 'selected' : '' }}>Level 1</option>
-                <option value="2" {{ $currentLevel == '2' ? 'selected' : '' }}>Level 2</option>
-                <option value="3" {{ $currentLevel == '3' ? 'selected' : '' }}>Level 3</option>
-                <option value="4" {{ $currentLevel == '4' ? 'selected' : '' }}>Level 4</option>
-                <option value="5" {{ $currentLevel == '5' ? 'selected' : '' }}>Level 5</option>
-            </select>
+            <div class="referrals-network-dropdown-new">
+                <button class="referrals-network-dropdown-btn-new" id="levelFilterBtn" onclick="toggleLevelDropdown()">
+                    <span id="levelFilterText">{{ $currentLevel == 'all' ? 'All' : 'Level ' . $currentLevel }}</span>
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="referrals-network-dropdown-menu-new" id="levelFilterMenu">
+                    <div class="referrals-network-dropdown-item-new {{ $currentLevel == 'all' ? 'active' : '' }}" onclick="selectLevel('all')">
+                        <span>All</span>
+                        @if($currentLevel == 'all')
+                        <i class="fas fa-check"></i>
+                        @endif
+                    </div>
+                    <div class="referrals-network-dropdown-item-new {{ $currentLevel == '1' ? 'active' : '' }}" onclick="selectLevel('1')">
+                        <span>Level 1</span>
+                        @if($currentLevel == '1')
+                        <i class="fas fa-check"></i>
+                        @endif
+                    </div>
+                    <div class="referrals-network-dropdown-item-new {{ $currentLevel == '2' ? 'active' : '' }}" onclick="selectLevel('2')">
+                        <span>Level 2</span>
+                        @if($currentLevel == '2')
+                        <i class="fas fa-check"></i>
+                        @endif
+                    </div>
+                    <div class="referrals-network-dropdown-item-new {{ $currentLevel == '3' ? 'active' : '' }}" onclick="selectLevel('3')">
+                        <span>Level 3</span>
+                        @if($currentLevel == '3')
+                        <i class="fas fa-check"></i>
+                        @endif
+                    </div>
+                    <div class="referrals-network-dropdown-item-new {{ $currentLevel == '4' ? 'active' : '' }}" onclick="selectLevel('4')">
+                        <span>Level 4</span>
+                        @if($currentLevel == '4')
+                        <i class="fas fa-check"></i>
+                        @endif
+                    </div>
+                    <div class="referrals-network-dropdown-item-new {{ $currentLevel == '5' ? 'active' : '' }}" onclick="selectLevel('5')">
+                        <span>Level 5</span>
+                        @if($currentLevel == '5')
+                        <i class="fas fa-check"></i>
+                        @endif
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="referrals-network-card-new">
             <div class="referrals-network-table-wrapper-new">
                 <table class="referrals-network-table-new">
+                    @if($referrals->count() > 0)
                     <thead>
                         <tr>
                             <th>User Info</th>
@@ -3131,6 +3396,7 @@ ls-referrer-section-new {
                             <th>Referral Earning</th>
                         </tr>
                     </thead>
+                    @endif
                     <tbody>
                         @if($referrals->count() > 0)
                             @foreach($referrals as $referral)
@@ -3169,14 +3435,13 @@ ls-referrer-section-new {
                                 <td colspan="3" class="referrals-network-empty-new">
                                     <div class="referrals-network-empty-content-new">
                                         <div class="referrals-network-empty-icon-new referrals-network-empty-icon-desktop">
-                                            <i class="fas fa-inbox"></i>
+                                            <i class="fas fa-users"></i>
                                         </div>
                                         <div class="referrals-network-empty-icon-new referrals-network-empty-icon-mobile">
-                                            <i class="fas fa-inbox"></i>
+                                            <i class="fas fa-users"></i>
                                         </div>
-                                        <p class="referrals-network-empty-message-new">No referrals yet</p>
-                                        <span class="referrals-network-empty-hint-new">Start sharing your referral link to build your network</span>
-                                        <button class="referrals-network-invite-btn-new">
+                                        <p class="referrals-network-empty-message-new">You don't have any referrals yet</p>
+                                        <button class="referrals-network-invite-btn-new" onclick="copyReferralLink()">
                                             <i class="fas fa-share-alt"></i>
                                             <span>Invite Now</span>
                                         </button>
@@ -3186,7 +3451,7 @@ ls-referrer-section-new {
                         @endif
                     </tbody>
                 </table>
-                
+
                 @if($referrals->hasPages())
                 <div style="padding: 1.5rem; display: flex; justify-content: center; align-items: center; gap: 0.5rem; border-top: 1px solid rgba(255, 255, 255, 0.1);">
                     @if($referrals->onFirstPage())
@@ -3198,7 +3463,7 @@ ls-referrer-section-new {
                             <i class="fas fa-chevron-left"></i>
                         </a>
                     @endif
-                    
+
                     @foreach($referrals->getUrlRange(1, $referrals->lastPage()) as $page => $url)
                         @if($page == $referrals->currentPage())
                             <span style="padding: 0.5rem 1rem; background: rgba(255, 178, 30, 0.2); border: 1px solid rgba(255, 178, 30, 0.4); border-radius: 8px; color: var(--primary-color); font-weight: 600;">{{ $page }}</span>
@@ -3206,7 +3471,7 @@ ls-referrer-section-new {
                             <a href="{{ $url }}" style="padding: 0.5rem 1rem; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; color: var(--text-primary); text-decoration: none;">{{ $page }}</a>
                         @endif
                     @endforeach
-                    
+
                     @if($referrals->hasMorePages())
                         <a href="{{ $referrals->nextPageUrl() }}" style="padding: 0.5rem 1rem; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; color: var(--text-primary); text-decoration: none;">
                             <i class="fas fa-chevron-right"></i>
@@ -3287,8 +3552,13 @@ ls-referrer-section-new {
         });
     });
 
-    // Level filter functionality
-    function filterByLevel(level) {
+    // Custom dropdown functionality
+    function toggleLevelDropdown() {
+        const dropdown = document.querySelector('.referrals-network-dropdown-new');
+        dropdown.classList.toggle('active');
+    }
+
+    function selectLevel(level) {
         const url = new URL(window.location.href);
         if (level === 'all') {
             url.searchParams.delete('level');
@@ -3299,6 +3569,19 @@ ls-referrer-section-new {
         window.location.href = url.toString();
     }
 
+    // Close dropdown when clicking outside
+    document.addEventListener('click', function(event) {
+        const dropdown = document.querySelector('.referrals-network-dropdown-new');
+        if (dropdown && !dropdown.contains(event.target)) {
+            dropdown.classList.remove('active');
+        }
+    });
+
+    // Level filter functionality (legacy support)
+    function filterByLevel(level) {
+        selectLevel(level);
+    }
+
     // Referral detail modal functionality
     document.querySelectorAll('.referral-row-clickable').forEach(row => {
         row.addEventListener('click', function(e) {
@@ -3306,7 +3589,7 @@ ls-referrer-section-new {
             if (e.target.tagName === 'A' || e.target.tagName === 'BUTTON') {
                 return;
             }
-            
+
             const referralData = JSON.parse(this.getAttribute('data-referral'));
             openReferralModal(referralData);
         });
@@ -3316,10 +3599,10 @@ ls-referrer-section-new {
         // Set user initial
         const initial = referral.name ? referral.name.charAt(0).toUpperCase() : 'U';
         document.getElementById('modalUserInitial').textContent = initial;
-        
+
         // Set user name
         document.getElementById('modalUserName').textContent = referral.name || 'N/A';
-        
+
         // Set date
         let formattedDate = 'N/A';
         if (referral.created_at) {
@@ -3331,7 +3614,7 @@ ls-referrer-section-new {
             }
         }
         document.getElementById('modalUserDate').textContent = formattedDate;
-        
+
         // Set phone (format with + if not already present)
         let phone = referral.phone || 'N/A';
         if (phone !== 'N/A' && phone && !phone.startsWith('+')) {
@@ -3339,16 +3622,16 @@ ls-referrer-section-new {
             phone = '+' + phone;
         }
         document.getElementById('modalUserPhone').textContent = phone;
-        
+
         // Set level
         document.getElementById('modalUserLevel').textContent = referral.level_name || 'N/A';
-        
+
         // Set earning
         document.getElementById('modalUserEarning').textContent = '$' + parseFloat(referral.referral_earning || 0).toFixed(2);
-        
+
         // Set invested amount
         document.getElementById('modalUserInvested').textContent = '$' + parseFloat(referral.invested_amount || 0).toFixed(2);
-        
+
         // Show modal
         document.getElementById('referralDetailModal').style.display = 'flex';
         document.body.style.overflow = 'hidden'; // Prevent background scrolling
@@ -3394,13 +3677,13 @@ ls-referrer-section-new {
                     if (data.success) {
                         // Show success message
                         alert('Success! ' + data.message + ' Amount claimed: $' + data.claimed_amount);
-                        
+
                         // Reload page to update balances
                         window.location.reload();
                     } else {
                         // Show error message
                         alert('Error: ' + (data.message || 'Failed to claim earnings. Please try again.'));
-                        
+
                         // Re-enable button
                         this.disabled = false;
                         this.innerHTML = originalHTML;
@@ -3409,7 +3692,7 @@ ls-referrer-section-new {
                 .catch(error => {
                     console.error('Error:', error);
                     alert('An error occurred. Please try again.');
-                    
+
                     // Re-enable button
                     this.disabled = false;
                     this.innerHTML = originalHTML;

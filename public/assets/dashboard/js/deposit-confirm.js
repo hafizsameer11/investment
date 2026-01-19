@@ -36,7 +36,7 @@
     const uploadContent = document.getElementById('depositUploadContent');
     const previewImage = document.getElementById('depositPreviewImage');
     const removeFileBtn = document.getElementById('depositRemoveFile');
-    
+
     // Timer elements for each step
     let timerElement = null;
 
@@ -164,20 +164,20 @@
      */
     function validateStep1() {
         if (!transactionIdInput) return false;
-        
+
         const transactionId = transactionIdInput.value.trim();
-        
+
         if (!transactionId) {
             if (continueStep2Btn) {
                 continueStep2Btn.disabled = true;
             }
             return false;
         }
-        
+
         if (continueStep2Btn) {
             continueStep2Btn.disabled = false;
         }
-        
+
         return true;
     }
 
@@ -191,11 +191,11 @@
             }
             return false;
         }
-        
+
         if (continueStep3Btn) {
             continueStep3Btn.disabled = false;
         }
-        
+
         return true;
     }
 
@@ -204,21 +204,21 @@
      */
     function validateStep3() {
         if (!accountNumberInput || !accountHolderNameInput) return false;
-        
+
         const accountNumber = accountNumberInput.value.trim();
         const accountHolderName = accountHolderNameInput.value.trim();
-        
+
         if (!accountNumber || !accountHolderName) {
             if (continueStep4Btn) {
                 continueStep4Btn.disabled = true;
             }
             return false;
         }
-        
+
         if (continueStep4Btn) {
             continueStep4Btn.disabled = false;
         }
-        
+
         return true;
     }
 
@@ -227,12 +227,12 @@
      */
     function goToStep(step) {
         if (step < 1 || step > 4) return;
-        
+
         // Stop current timer
         stopStepTimer();
-        
+
         currentStep = step;
-        
+
         // Update step indicators
         steps.forEach((stepEl, index) => {
             const stepNum = index + 1;
@@ -246,7 +246,7 @@
                 stepEl.classList.remove('active', 'completed');
             }
         });
-        
+
         // Update step lines
         stepLines.forEach((line, index) => {
             if (index + 1 < currentStep) {
@@ -255,7 +255,7 @@
                 line.classList.remove('active');
             }
         });
-        
+
         // Show/hide step contents
         stepContents.forEach((content, index) => {
             if (index + 1 === currentStep) {
@@ -264,12 +264,12 @@
                 content.classList.remove('active');
             }
         });
-        
+
         // Start timer for steps 1, 2, and 3
         if (currentStep >= 1 && currentStep <= 3) {
             startStepTimer();
         }
-        
+
         // Focus on input
         if (currentStep === 1 && transactionIdInput) {
             setTimeout(() => transactionIdInput.focus(), 300);
@@ -284,27 +284,27 @@
     function startStepTimer() {
         // Clear any existing timer
         stopStepTimer();
-        
+
         // Get the timer element for current step
         timerElement = document.getElementById(`depositTimerStep${currentStep}`);
-        
+
         if (!timerElement) {
             console.warn(`Timer element not found for step ${currentStep}`);
             return;
         }
-        
+
         stepTimerSeconds = TIMER_DURATION;
         updateTimerDisplay();
-        
+
         // Show timer element
         if (timerElement) {
             timerElement.style.display = 'inline-block';
         }
-        
+
         stepTimer = setInterval(() => {
             stepTimerSeconds--;
             updateTimerDisplay();
-            
+
             if (stepTimerSeconds <= 0) {
                 stopStepTimer();
                 handleTimerExpired();
@@ -327,11 +327,11 @@
      */
     function updateTimerDisplay() {
         if (!timerElement) return;
-        
+
         const minutes = Math.floor(stepTimerSeconds / 60);
         const seconds = stepTimerSeconds % 60;
         timerElement.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
-        
+
         // Add warning class when time is running out
         if (stepTimerSeconds <= 10) {
             timerElement.classList.add('warning');
@@ -345,10 +345,10 @@
      */
     function handleTimerExpired() {
         stopStepTimer();
-        
+
         // Show alert
         alert('Time expired! Your deposit request has been cancelled. Please start the process again.');
-        
+
         // Redirect to deposit selection page
         const depositIndexUrl = document.getElementById('depositIndexUrl')?.value || '/user/dashboard/deposit';
         window.location.href = depositIndexUrl;
@@ -360,20 +360,20 @@
     function submitDeposit() {
         // Stop timer
         stopStepTimer();
-        
+
         // Final validation
         if (!formData.transactionId) {
             showNotification('Please enter transaction ID', 'error');
             goToStep(1);
             return;
         }
-        
+
         if (!formData.paymentProof) {
             showNotification('Please upload payment proof', 'error');
             goToStep(2);
             return;
         }
-        
+
         if (!formData.accountNumber || !formData.accountHolderName) {
             showNotification('Please enter account details', 'error');
             goToStep(3);
@@ -407,7 +407,7 @@
         submitFormData.append('account_number', currentAccountNumber);
         submitFormData.append('account_holder_name', currentAccountHolderName);
         submitFormData.append('payment_proof', currentPaymentProof);
-        
+
         // Get CSRF token from meta tag
         const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content || '';
         submitFormData.append('_token', csrfToken);
@@ -417,7 +417,7 @@
             submitDepositBtn.disabled = true;
             const originalText = submitDepositBtn.innerHTML;
             submitDepositBtn.innerHTML = '<span>Submitting...</span>';
-            
+
             // Submit form via AJAX
             fetch(document.getElementById('depositStoreUrl')?.value || '/user/dashboard/deposit', {
                 method: 'POST',
@@ -431,7 +431,7 @@
             .then(data => {
                 if (data.success) {
                     showNotification(data.message || 'Deposit request submitted successfully!', 'success');
-                    
+
                     // Redirect after 2 seconds
                     setTimeout(() => {
                         window.location.href = data.redirect || '/user/dashboard/deposit';
@@ -460,12 +460,12 @@
         if (existing) {
             existing.remove();
         }
-        
+
         // Create notification element
         const notification = document.createElement('div');
         notification.className = `deposit-notification deposit-notification-${type}`;
         notification.textContent = message;
-        
+
         // Add styles
         notification.style.cssText = `
             position: fixed;
@@ -481,9 +481,9 @@
             font-weight: 500;
             font-size: 0.875rem;
         `;
-        
+
         document.body.appendChild(notification);
-        
+
         // Remove after 3 seconds
         setTimeout(() => {
             notification.style.animation = 'slideOutRight 0.3s ease-out';
