@@ -11,6 +11,7 @@ use App\Models\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
 class WalletController extends Controller
@@ -352,12 +353,15 @@ class WalletController extends Controller
         ]);
 
         try {
+            DB::beginTransaction();
+
             // Check for duplicate transaction ID for this user
             $existingDeposit = Deposit::where('user_id', auth()->id())
                 ->where('transaction_id', $request->transaction_id)
                 ->first();
 
             if ($existingDeposit) {
+                DB::rollBack();
                 return response()->json([
                     'success' => false,
                     'message' => 'A deposit with this transaction ID already exists.',
@@ -367,24 +371,66 @@ class WalletController extends Controller
             // Handle file upload
             $paymentProofPath = null;
             if ($request->hasFile('payment_proof')) {
-                $file = $request->file('payment_proof');
-                $fileName = Str::random(40) . '.' . $file->getClientOriginalExtension();
-                
-                // Create directory if it doesn't exist
-                $directory = public_path('assets/deposits/payment-proofs');
-                if (!file_exists($directory)) {
-                    mkdir($directory, 0755, true);
-                }
-                
-                // Move the file
-                if (!$file->move($directory, $fileName)) {
+                try {
+                    $file = $request->file('payment_proof');
+                    $fileName = Str::random(40) . '.' . $file->getClientOriginalExtension();
+                    
+                    // Create directory if it doesn't exist
+                    $directory = public_path('assets/deposits/payment-proofs');
+                    if (!file_exists($directory)) {
+                        if (!mkdir($directory, 0755, true)) {
+                            DB::rollBack();
+                            Log::error('Failed to create deposit payment proofs directory', [
+                                'directory' => $directory,
+                                'user_id' => auth()->id(),
+                            ]);
+                            return response()->json([
+                                'success' => false,
+                                'message' => 'Failed to create upload directory. Please contact support.',
+                            ], 500);
+                        }
+                    }
+                    
+                    // Check if directory is writable
+                    if (!is_writable($directory)) {
+                        DB::rollBack();
+                        Log::error('Deposit payment proofs directory is not writable', [
+                            'directory' => $directory,
+                            'user_id' => auth()->id(),
+                        ]);
+                        return response()->json([
+                            'success' => false,
+                            'message' => 'Upload directory is not writable. Please contact support.',
+                        ], 500);
+                    }
+                    
+                    // Move the file
+                    if (!$file->move($directory, $fileName)) {
+                        DB::rollBack();
+                        Log::error('Failed to move uploaded payment proof file', [
+                            'directory' => $directory,
+                            'fileName' => $fileName,
+                            'user_id' => auth()->id(),
+                        ]);
+                        return response()->json([
+                            'success' => false,
+                            'message' => 'Failed to upload payment proof. Please try again.',
+                        ], 500);
+                    }
+                    
+                    $paymentProofPath = 'assets/deposits/payment-proofs/' . $fileName;
+                } catch (\Exception $uploadException) {
+                    DB::rollBack();
+                    Log::error('Exception during payment proof upload', [
+                        'error' => $uploadException->getMessage(),
+                        'trace' => $uploadException->getTraceAsString(),
+                        'user_id' => auth()->id(),
+                    ]);
                     return response()->json([
                         'success' => false,
-                        'message' => 'Failed to upload payment proof. Please try again.',
+                        'message' => 'Failed to upload payment proof: ' . $uploadException->getMessage(),
                     ], 500);
                 }
-                
-                $paymentProofPath = 'assets/deposits/payment-proofs/' . $fileName;
             }
 
             // Create deposit record
@@ -400,21 +446,45 @@ class WalletController extends Controller
                 'status' => 'pending',
             ]);
 
+            DB::commit();
+
             return response()->json([
                 'success' => true,
                 'message' => 'Your deposit request has been submitted for manual review. You will be notified once it is processed.',
                 'redirect' => route('deposit.index'),
             ], 200);
 
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            DB::rollBack();
+            
+            // Delete uploaded file if validation failed
+            if (isset($paymentProofPath) && file_exists(public_path($paymentProofPath))) {
+                @unlink(public_path($paymentProofPath));
+            }
+            
+            // Re-throw validation exceptions to return proper validation errors
+            throw $e;
         } catch (\Exception $e) {
+            DB::rollBack();
+            
+            // Log the actual error for debugging
+            Log::error('Error storing deposit', [
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
+                'file' => $e->getFile(),
+                'line' => $e->getLine(),
+                'user_id' => auth()->id(),
+                'request_data' => $request->except(['payment_proof']), // Don't log file data
+            ]);
+
             // Delete uploaded file if deposit creation failed
             if (isset($paymentProofPath) && file_exists(public_path($paymentProofPath))) {
-                unlink(public_path($paymentProofPath));
+                @unlink(public_path($paymentProofPath));
             }
 
             return response()->json([
                 'success' => false,
-                'message' => 'An error occurred while submitting your deposit. Please try again.',
+                'message' => 'An error occurred while submitting your deposit. Please try again. If the problem persists, contact support.',
             ], 500);
         }
     }
