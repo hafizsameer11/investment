@@ -68,9 +68,16 @@ RUN mkdir -p /var/lib/nginx/tmp && \
 COPY docker/entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
-# Permissions
-RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
-RUN chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
+# Create upload directories structure (permissions set at runtime in entrypoint)
+RUN mkdir -p /var/www/html/public/assets/deposits/payment-proofs && \
+    mkdir -p /var/www/html/public/assets/withdrawals && \
+    mkdir -p /var/www/html/public/assets
+
+# Permissions - Set ownership and permissions for storage and upload directories
+RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache && \
+    chown -R www-data:www-data /var/www/html/public/assets && \
+    chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache && \
+    chmod -R 775 /var/www/html/public/assets
 
 EXPOSE 80
 
