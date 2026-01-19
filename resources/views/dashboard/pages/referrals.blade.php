@@ -2856,8 +2856,8 @@ ls-referrer-section-new {
                 <i class="fas fa-dollar-sign"></i>
             </div>
             <div class="referrals-stat-content-new">
-                <div class="referrals-stat-label-new">Total Referral Earning</div>
-                <div class="referrals-stat-value-new">${{ number_format($totalReferralEarnings, 2) }}</div>
+                <div class="referrals-stat-label-new">Pending Referral Earnings</div>
+                <div class="referrals-stat-value-new">${{ number_format($pendingReferralEarnings ?? 0, 2) }}</div>
             </div>
         </div>
 
@@ -2876,20 +2876,37 @@ ls-referrer-section-new {
     <div class="referrals-wallet-section-new">
         <div class="referrals-wallet-header-new">
             <div class="referrals-wallet-title-section-new">
-                <h3 class="referrals-wallet-title-new">Referral Earning Wallet</h3>
-                <p class="referrals-wallet-subtitle-new">Your current available balance</p>
+                <h3 class="referrals-wallet-title-new">Referral Earnings Wallet</h3>
+                <p class="referrals-wallet-subtitle-new">Your pending earnings ready to claim</p>
             </div>
         </div>
         <div class="referrals-wallet-body-new">
             <div class="referrals-balance-display-new">
                 <div class="referrals-balance-amount-wrapper-new">
-                    <span class="referrals-balance-value-new">$0</span>
+                    <span class="referrals-balance-value-new" id="pendingEarningsAmount">${{ number_format($pendingReferralEarnings ?? 0, 2) }}</span>
                     <div class="referrals-minimum-badge-new">Minimum $1</div>
                 </div>
-                <div class="referrals-minimum-needed-new">$1 more needed to claim</div>
+                @if(($pendingReferralEarnings ?? 0) < 1)
+                <div class="referrals-minimum-needed-new">${{ number_format(1 - ($pendingReferralEarnings ?? 0), 2) }} more needed to claim</div>
+                @else
+                <div class="referrals-minimum-needed-new" style="color: #10B981;">Ready to claim!</div>
+                @endif
             </div>
+            @if(isset($pendingCommissionsByLevel) && count($pendingCommissionsByLevel) > 0)
+            <div class="referrals-commission-breakdown-new" style="margin: 1.5rem 0; padding: 1rem; background: rgba(255, 255, 255, 0.02); border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.05);">
+                <p style="margin: 0 0 0.75rem 0; font-size: 0.875rem; color: var(--text-secondary);">Breakdown by Level:</p>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 0.75rem;">
+                    @for($i = 1; $i <= 5; $i++)
+                    <div style="text-align: center;">
+                        <div style="font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 0.25rem;">Level {{ $i }}</div>
+                        <div style="font-weight: 600; color: #FFB21E;">${{ number_format($pendingCommissionsByLevel[$i] ?? 0, 2) }}</div>
+                    </div>
+                    @endfor
+                </div>
+            </div>
+            @endif
             <p class="referrals-claim-note-new">You can claim referral earnings when balance reaches $1 or more</p>
-            <button class="referrals-claim-btn-new" disabled>
+            <button class="referrals-claim-btn-new" id="claimEarningsBtn" {{ ($pendingReferralEarnings ?? 0) < 1 ? 'disabled' : '' }}>
                 <i class="fas fa-gift"></i>
                 <span>Claim Earnings</span>
             </button>
@@ -3346,6 +3363,58 @@ ls-referrer-section-new {
     document.addEventListener('keydown', function(e) {
         if (e.key === 'Escape') {
             closeReferralModal();
+        }
+    });
+
+    // Claim Earnings functionality
+    document.addEventListener('DOMContentLoaded', function() {
+        const claimBtn = document.getElementById('claimEarningsBtn');
+        if (claimBtn) {
+            claimBtn.addEventListener('click', function() {
+                if (this.disabled) {
+                    return;
+                }
+
+                // Disable button and show loading state
+                this.disabled = true;
+                const originalHTML = this.innerHTML;
+                this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> <span>Claiming...</span>';
+
+                // Make AJAX request
+                fetch('{{ route("referrals.claim") }}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                        'Accept': 'application/json'
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Show success message
+                        alert('Success! ' + data.message + ' Amount claimed: $' + data.claimed_amount);
+                        
+                        // Reload page to update balances
+                        window.location.reload();
+                    } else {
+                        // Show error message
+                        alert('Error: ' + (data.message || 'Failed to claim earnings. Please try again.'));
+                        
+                        // Re-enable button
+                        this.disabled = false;
+                        this.innerHTML = originalHTML;
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('An error occurred. Please try again.');
+                    
+                    // Re-enable button
+                    this.disabled = false;
+                    this.innerHTML = originalHTML;
+                });
+            });
         }
     });
 </script>

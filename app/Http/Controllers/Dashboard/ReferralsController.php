@@ -6,8 +6,12 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\InvestmentCommissionStructure;
 use App\Models\EarningCommissionStructure;
+use App\Models\PendingReferralCommission;
+use App\Models\Investment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class ReferralsController extends Controller
 {
@@ -36,14 +40,20 @@ class ReferralsController extends Controller
             // Get referrer details
             $referrer = $referral->referrer;
             
-            // Calculate invested amount (placeholder - to be implemented when investment system is ready)
-            $investedAmount = 0; // TODO: Calculate from investments table
+            // Calculate invested amount from investments table
+            $investedAmount = Investment::where('user_id', $referral->id)
+                ->where('status', 'active')
+                ->sum('amount');
             
-            // Calculate referral earning (placeholder - to be implemented when earnings system is ready)
-            $referralEarning = 0; // TODO: Calculate from earnings/commissions table
+            // Calculate referral earning from pending commissions for this specific referral
+            $level = $referral->referral_level ?? 0;
+            $referralEarning = PendingReferralCommission::where('referrer_id', $user->id)
+                ->where('investor_id', $referral->id)
+                ->where('level', $level)
+                ->where('is_claimed', false)
+                ->sum('commission_amount');
             
             // Get level name from commission structure
-            $level = $referral->referral_level ?? 0;
             $levelName = 'level' . $level;
             
             return [
@@ -102,8 +112,24 @@ class ReferralsController extends Controller
         // Calculate total referrals count
         $totalReferrals = $allReferrals->count();
         
-        // Calculate total referral earnings (placeholder)
-        $totalReferralEarnings = 0; // TODO: Calculate from earnings/commissions table
+        // Calculate pending referral earnings (unclaimed)
+        $pendingReferralEarnings = PendingReferralCommission::where('referrer_id', $user->id)
+            ->where('is_claimed', false)
+            ->sum('commission_amount');
+        
+        // Calculate total claimed referral earnings
+        $claimedReferralEarnings = PendingReferralCommission::where('referrer_id', $user->id)
+            ->where('is_claimed', true)
+            ->sum('commission_amount');
+        
+        // Get pending commissions breakdown by level
+        $pendingCommissionsByLevel = PendingReferralCommission::where('referrer_id', $user->id)
+            ->where('is_claimed', false)
+            ->select('level', DB::raw('SUM(commission_amount) as total'))
+            ->groupBy('level')
+            ->orderBy('level')
+            ->pluck('total', 'level')
+            ->toArray();
         
         return view('dashboard.pages.referrals', [
             'referrals' => $paginator,
@@ -111,10 +137,78 @@ class ReferralsController extends Controller
             'earningCommissions' => $earningCommissions,
             'currentUserReferrer' => $currentUserReferrer,
             'totalReferrals' => $totalReferrals,
-            'totalReferralEarnings' => $totalReferralEarnings,
+            'pendingReferralEarnings' => $pendingReferralEarnings,
+            'claimedReferralEarnings' => $claimedReferralEarnings,
+            'pendingCommissionsByLevel' => $pendingCommissionsByLevel,
             'currentLevel' => $filterLevel,
             'user' => $user,
         ]);
+    }
+
+    /**
+     * Claim all pending referral earnings
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function claimEarnings(Request $request)
+    {
+        try {
+            $user = Auth::user();
+            
+            // Get all pending commissions for this user
+            $pendingCommissions = PendingReferralCommission::where('referrer_id', $user->id)
+                ->where('is_claimed', false)
+                ->get();
+            
+            if ($pendingCommissions->isEmpty()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'No pending earnings to claim.',
+                ], 422);
+            }
+            
+            // Calculate total amount to claim
+            $totalAmount = $pendingCommissions->sum('commission_amount');
+            
+            DB::beginTransaction();
+            
+            try {
+                // Transfer to user's referral_earning field
+                $user->referral_earning = ($user->referral_earning ?? 0) + $totalAmount;
+                $user->updateNetBalance();
+                $user->save();
+                
+                // Mark all pending commissions as claimed
+                $now = now();
+                PendingReferralCommission::where('referrer_id', $user->id)
+                    ->where('is_claimed', false)
+                    ->update([
+                        'is_claimed' => true,
+                        'claimed_at' => $now,
+                    ]);
+                
+                DB::commit();
+                
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Earnings claimed successfully.',
+                    'claimed_amount' => number_format($totalAmount, 2, '.', ''),
+                ]);
+            } catch (\Exception $e) {
+                DB::rollBack();
+                Log::error('Error claiming referral earnings: ' . $e->getMessage(), [
+                    'user_id' => $user->id,
+                ]);
+                throw $e;
+            }
+        } catch (\Exception $e) {
+            Log::error('Error in claimEarnings: ' . $e->getMessage());
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to claim earnings. Please try again.',
+            ], 500);
+        }
     }
 }
 

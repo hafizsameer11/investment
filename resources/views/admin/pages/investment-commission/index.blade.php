@@ -74,6 +74,7 @@
                                         <th>#</th>
                                         <th data-priority="1">Level</th>
                                         <th data-priority="2">Level Name</th>
+                                        <th data-priority="2">Plan</th>
                                         <th data-priority="1">Commission Rate (%)</th>
                                         <th data-priority="3">Status</th>
                                         <th data-priority="1">Actions</th>
@@ -85,6 +86,13 @@
                                         <th scope="row">{{ $loop->iteration }}</th>
                                         <td>{{ $commission->level }}</td>
                                         <td>{{ $commission->level_name }}</td>
+                                        <td>
+                                            @if($commission->miningPlan)
+                                                <span class="badge badge-info">{{ $commission->miningPlan->name }}</span>
+                                            @else
+                                                <span class="badge badge-secondary">Global</span>
+                                            @endif
+                                        </td>
                                         <td>{{ number_format($commission->commission_rate, 2) }}%</td>
                                         <td>
                                             @if($commission->is_active)
@@ -108,7 +116,7 @@
                                     </tr>
                                     @empty
                                     <tr>
-                                        <td colspan="6" class="text-center">No commission structures found. <a href="{{ route('admin.investment-commission.create') }}">Create one now</a>.</td>
+                                        <td colspan="7" class="text-center">No commission structures found. <a href="{{ route('admin.investment-commission.create') }}">Create one now</a>.</td>
                                     </tr>
                                     @endforelse
                                     </tbody>

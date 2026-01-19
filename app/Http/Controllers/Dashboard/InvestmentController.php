@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Investment;
 use App\Models\MiningPlan;
 use App\Services\RewardLevelService;
+use App\Services\ReferralCommissionService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -179,6 +180,17 @@ class InvestmentController extends Controller
                 ]);
 
                 DB::commit();
+
+                // Calculate and distribute referral commissions
+                try {
+                    ReferralCommissionService::calculateAndDistributeCommissions($user, $investment);
+                } catch (\Exception $e) {
+                    // Log error but don't fail the investment creation
+                    Log::error('Error calculating referral commissions: ' . $e->getMessage(), [
+                        'user_id' => $user->id,
+                        'investment_id' => $investment->id,
+                    ]);
+                }
 
                 // Process reward levels for referrer if user has a referrer
                 if ($user->referred_by) {
@@ -511,6 +523,18 @@ class InvestmentController extends Controller
                 $investment->save();
 
                 DB::commit();
+
+                // Calculate and distribute referral commissions for additional amount
+                try {
+                    ReferralCommissionService::calculateAndDistributeCommissions($user, $investment, $additionalAmount);
+                } catch (\Exception $e) {
+                    // Log error but don't fail the investment update
+                    Log::error('Error calculating referral commissions for additional investment: ' . $e->getMessage(), [
+                        'user_id' => $user->id,
+                        'investment_id' => $investment->id,
+                        'additional_amount' => $additionalAmount,
+                    ]);
+                }
 
                 // Process reward levels for referrer if user has a referrer
                 if ($user->referred_by) {
