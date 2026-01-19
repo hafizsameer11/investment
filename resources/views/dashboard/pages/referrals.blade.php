@@ -2111,6 +2111,7 @@ ls-referrer-section-new {
             z-index: 10;
             margin: 0;
             padding: 0;
+            margin: 0px 12px;
         }
 
         .referrals-network-table-wrapper-new {
