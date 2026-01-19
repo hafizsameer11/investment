@@ -2291,6 +2291,7 @@ ls-referrer-section-new {
             box-sizing: border-box;
             position: relative;
             min-height: 100px;
+            margin-top: 20px
         }
 
         .referrals-network-table-new tbody tr:last-child {
