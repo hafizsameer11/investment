@@ -3,6 +3,9 @@ set -e
 
 echo "Running Laravel setup..."
 
+# Create storage link
+php artisan storage:link || true
+
 # Clear and cache config
 php artisan config:clear || true
 php artisan cache:clear || true
