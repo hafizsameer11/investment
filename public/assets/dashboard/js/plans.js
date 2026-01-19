@@ -213,8 +213,14 @@
             // Update investment range
             const minAmountEl = document.getElementById('investmentMinAmount');
             const maxAmountEl = document.getElementById('investmentMaxAmount');
-            if (minAmountEl) minAmountEl.textContent = parseFloat(plan.min_investment).toFixed(2);
-            if (maxAmountEl) maxAmountEl.textContent = parseFloat(plan.max_investment).toFixed(2);
+            if (minAmountEl) {
+                const minValue = parseFloat(plan.min_investment).toFixed(2).replace(/\.?0+$/, '');
+                minAmountEl.textContent = minValue;
+            }
+            if (maxAmountEl) {
+                const maxValue = parseFloat(plan.max_investment).toFixed(2).replace(/\.?0+$/, '');
+                maxAmountEl.textContent = maxValue;
+            }
 
             // Update balances
             const fundBalanceEl = document.getElementById('fundBalanceDisplay');
@@ -232,7 +238,9 @@
             // Update hint text
             const amountHintEl = document.getElementById('investmentAmountHint');
             if (amountHintEl) {
-                amountHintEl.textContent = `Min: $${parseFloat(plan.min_investment).toFixed(2)} - Max: $${parseFloat(plan.max_investment).toFixed(2)}`;
+                const minValue = parseFloat(plan.min_investment).toFixed(2).replace(/\.?0+$/, '');
+                const maxValue = parseFloat(plan.max_investment).toFixed(2).replace(/\.?0+$/, '');
+                amountHintEl.textContent = `Min: $${minValue} - Max: $${maxValue}`;
             }
 
             // Validate and show/hide alert
@@ -494,7 +502,9 @@
         // Update investment range
         const investmentRange = document.getElementById('calculatorInvestmentRange');
         if (investmentRange) {
-            investmentRange.textContent = `$${planData.minInvestment.toFixed(2)} - $${planData.maxInvestment.toFixed(2)}`;
+            const minValue = planData.minInvestment.toFixed(2).replace(/\.?0+$/, '');
+            const maxValue = planData.maxInvestment.toFixed(2).replace(/\.?0+$/, '');
+            investmentRange.textContent = `$${minValue} - $${maxValue}`;
         }
         
         // Update return rate (use hourly rate if available, otherwise calculate from daily)

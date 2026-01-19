@@ -1460,7 +1460,7 @@
         width: 100%;
         max-width: 100%;
         height: 50vh;
-        
+
         min-height: 50vh;
         max-height: 50vh;
         overflow: hidden;
@@ -2544,7 +2544,7 @@
                 </div>
                 <div class="plans-hero-stat-new">
                     <div class="plans-hero-stat-label-new">Minimum Investment</div>
-                    <div class="plans-hero-stat-value-new">$2</div>
+                    <div class="plans-hero-stat-value-new">$1</div>
                 </div>
                 <div class="plans-hero-stat-new">
                     <div class="plans-hero-stat-label-new">Active Mining</div>
@@ -2635,7 +2635,7 @@
             <div class="plan-mobile-details-new">
                 <div class="plan-mobile-detail-col-new">
                     <div class="plan-mobile-detail-label-new">Range</div>
-                    <div class="plan-mobile-detail-value-new">${{ number_format($plan->min_investment, 2) }} - ${{ number_format($plan->max_investment, 2) }}</div>
+                    <div class="plan-mobile-detail-value-new">${{ rtrim(rtrim(number_format($plan->min_investment, 2), '0'), '.') }} - ${{ rtrim(rtrim(number_format($plan->max_investment, 2), '0'), '.') }}</div>
                 </div>
                 <div class="plan-mobile-detail-col-new">
                     <div class="plan-mobile-detail-label-new">ROI {{ $plan->daily_roi_min }}% - {{ $plan->daily_roi_max }}% Daily</div>
@@ -2664,8 +2664,8 @@
                         <i class="fas fa-dollar-sign"></i>
                     </div>
                     <div class="plan-feature-label-new">Investment Range</div>
-                    <div class="plan-feature-value-new">${{ number_format($plan->min_investment, 2) }} - ${{ number_format($plan->max_investment, 2) }}</div>
-                    <div class="plan-feature-hint-new">Minimum investment: ${{ number_format($plan->min_investment, 2) }}</div>
+                    <div class="plan-feature-value-new">${{ rtrim(rtrim(number_format($plan->min_investment, 2), '0'), '.') }} - ${{ rtrim(rtrim(number_format($plan->max_investment, 2), '0'), '.') }}</div>
+                    <div class="plan-feature-hint-new">Minimum investment: ${{ rtrim(rtrim(number_format($plan->min_investment, 2), '0'), '.') }}</div>
                 </div>
 
                 <div class="plan-feature-card-new highlight">
@@ -2816,7 +2816,7 @@
                     <i class="fas fa-times"></i>
                 </button>
             </div>
-            
+
             <div class="calculator-modal-body">
                 <!-- Plan Section -->
                 <div class="calculator-plan-section">
@@ -2849,8 +2849,8 @@
                     <label class="calculator-input-label">Investment Amount</label>
                     <div class="calculator-input-wrapper">
                         <span class="calculator-input-prefix">$</span>
-                        <input type="number" 
-                               class="calculator-input" 
+                        <input type="number"
+                               class="calculator-input"
                                id="investmentAmount"
                                placeholder="Enter investment amount"
                                step="0.01">
@@ -2934,7 +2934,7 @@
                     <i class="fas fa-times"></i>
                 </button>
             </div>
-            
+
             <div class="calculator-modal-body investment-modal-body">
                 <!-- Alert Message -->
                 <div id="investmentAlert" class="investment-alert" style="display: none;">
@@ -2999,9 +2999,9 @@
                     <label class="investment-amount-label">Investment Amount</label>
                     <div class="investment-input-wrapper">
                         <span class="investment-input-prefix">$</span>
-                        <input type="number" 
+                        <input type="number"
                                id="investmentAmountInput"
-                               class="investment-amount-input" 
+                               class="investment-amount-input"
                                placeholder="Enter amount"
                                step="0.01"
                                min="0">
@@ -3031,7 +3031,7 @@
                     <i class="fas fa-times"></i>
                 </button>
             </div>
-            
+
             <div class="calculator-modal-body investment-modal-body">
                 <!-- Alert Message -->
                 <div id="managePlanAlert" class="investment-alert" style="display: none;">
@@ -3103,9 +3103,9 @@
                     <label class="investment-amount-label" style="color: #ef4444;">Additional Investment Amount</label>
                     <div class="investment-input-wrapper">
                         <span class="investment-input-prefix">$</span>
-                        <input type="number" 
+                        <input type="number"
                                id="managePlanAmountInput"
-                               class="investment-amount-input" 
+                               class="investment-amount-input"
                                placeholder="Enter additional amount"
                                step="0.01"
                                min="0">
@@ -3138,7 +3138,7 @@
                     <i class="fas fa-times"></i>
                 </button>
             </div>
-            
+
             <div class="calculator-modal-body investment-modal-body">
                 <!-- Plan Name -->
                 <div class="investment-plan-name-section">
