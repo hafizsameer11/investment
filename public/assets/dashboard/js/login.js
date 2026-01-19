@@ -8,9 +8,13 @@
 
     // DOM Elements
     const loginForm = document.getElementById('loginForm');
+    const forgotPasswordForm = document.getElementById('forgotPasswordForm');
+    const resetPasswordForm = document.getElementById('resetPasswordForm');
     const passwordInput = document.getElementById('password');
     const passwordToggle = document.getElementById('passwordToggle');
     const loginButton = document.getElementById('loginButton');
+    const forgotPasswordButton = document.getElementById('forgotPasswordButton');
+    const resetPasswordButton = document.getElementById('resetPasswordButton');
     const emailInput = document.getElementById('email');
     const rememberCheckbox = document.getElementById('remember');
 
@@ -20,6 +24,7 @@
         initFormValidation();
         initFormSubmission();
         initInputAnimations();
+        initPasswordResetForms();
         restoreFormData();
     });
 
@@ -299,6 +304,82 @@
             console.log('Chat widget clicked');
             // You can integrate with Tawk.to or other chat services here
         });
+    }
+
+    /**
+     * Initialize Password Reset Forms
+     */
+    function initPasswordResetForms() {
+        // Forgot Password Form
+        if (forgotPasswordForm && forgotPasswordButton) {
+            forgotPasswordForm.addEventListener('submit', function(e) {
+                const email = emailInput && emailInput.value.trim();
+                if (!email) {
+                    e.preventDefault();
+                    if (emailInput) {
+                        showFieldError(emailInput, 'Please enter your email address');
+                    }
+                    return false;
+                }
+                setLoadingStateForButton(forgotPasswordButton, true);
+            });
+        }
+
+        // Reset Password Form
+        if (resetPasswordForm && resetPasswordButton) {
+            const passwordConfirmationInput = document.getElementById('password_confirmation');
+            
+            resetPasswordForm.addEventListener('submit', function(e) {
+                const password = passwordInput && passwordInput.value;
+                const passwordConfirmation = passwordConfirmationInput && passwordConfirmationInput.value;
+
+                if (!password || password.length < 8) {
+                    e.preventDefault();
+                    if (passwordInput) {
+                        showFieldError(passwordInput, 'Password must be at least 8 characters');
+                    }
+                    return false;
+                }
+
+                if (password !== passwordConfirmation) {
+                    e.preventDefault();
+                    if (passwordConfirmationInput) {
+                        showFieldError(passwordConfirmationInput, 'Passwords do not match');
+                    }
+                    return false;
+                }
+
+                setLoadingStateForButton(resetPasswordButton, true);
+            });
+
+            // Real-time password confirmation validation
+            if (passwordConfirmationInput && passwordInput) {
+                passwordConfirmationInput.addEventListener('input', function() {
+                    if (this.value && passwordInput.value && this.value !== passwordInput.value) {
+                        this.classList.add('input-error');
+                        showFieldError(this, 'Passwords do not match');
+                    } else {
+                        this.classList.remove('input-error');
+                        hideFieldError(this);
+                    }
+                });
+            }
+        }
+    }
+
+    /**
+     * Set Loading State for Any Button
+     */
+    function setLoadingStateForButton(button, loading) {
+        if (!button) return;
+
+        if (loading) {
+            button.classList.add('loading');
+            button.disabled = true;
+        } else {
+            button.classList.remove('loading');
+            button.disabled = false;
+        }
     }
 
     /**

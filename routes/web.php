@@ -62,7 +62,7 @@ Route::prefix('user/dashboard')->middleware('auth')->group(function () {
     Route::get('/withdraw/confirm', [WalletController::class, 'withdrawConfirm'])->name('withdraw.confirm');
     Route::post('/withdraw', [WalletController::class, 'storeWithdrawal'])->name('withdraw.store');
     Route::get('/plans', [PlansController::class, 'index'])->name('plans.index');
-    
+
     // Investment Routes
     Route::get('/investments/modal/{planId}', [InvestmentController::class, 'showModal'])->name('investments.modal');
     Route::get('/investments/manage/{planId}', [InvestmentController::class, 'showManageModal'])->name('investments.manage');
@@ -70,7 +70,7 @@ Route::prefix('user/dashboard')->middleware('auth')->group(function () {
     Route::post('/investments', [InvestmentController::class, 'store'])->name('investments.store');
     Route::post('/investments/{investment}/claim', [InvestmentController::class, 'claimEarnings'])->name('investments.claim');
     Route::post('/investments/{investment}/update', [InvestmentController::class, 'updateInvestment'])->name('investments.update');
-    
+
     Route::get('/goals', [GoalsController::class, 'index'])->name('goals.index');
     Route::get('/targets', [TargetsController::class, 'index'])->name('targets.index');
     Route::get('/referrals', [ReferralsController::class, 'index'])->name('referrals.index');
@@ -86,10 +86,13 @@ Route::prefix('user/dashboard')->middleware('auth')->group(function () {
     Route::get('/settings', [SettingsController::class, 'index'])->name('settings.index');
 });
 
-// Placeholder routes (to be implemented later)
-Route::get('/password/reset', function () {
-    return redirect()->route('login')->with('info', 'Password reset will be available soon.');
-})->name('password.request');
+// Password Reset Routes
+Route::middleware('guest')->group(function () {
+    Route::get('/password/reset', [AuthController::class, 'showForgotPasswordForm'])->name('password.request');
+    Route::post('/password/email', [AuthController::class, 'sendPasswordResetLink'])->name('password.email');
+    Route::get('/password/reset/{token}', [AuthController::class, 'showResetPasswordForm'])->name('password.reset');
+    Route::post('/password/reset', [AuthController::class, 'resetPassword'])->name('password.update');
+});
 
 // Home route - redirect to login
 Route::get('/', function () {
@@ -210,23 +213,23 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
 Route::get('/run-seeders', function () {
     $token = request()->query('token');
     $secretToken = env('SEEDER_SECRET_TOKEN', 'change-this-secret-token-in-production');
-    
+
     // Check if token matches
     if ($token !== $secretToken) {
         return response()->json([
             'error' => 'Unauthorized. Invalid token.',
         ], 401);
     }
-    
+
     try {
         // Run all seeders
         Artisan::call('db:seed', [
             '--class' => 'DatabaseSeeder',
             '--force' => true,
         ]);
-        
+
         $output = \Illuminate\Support\Facades\Artisan::output();
-        
+
         return response()->json([
             'success' => true,
             'message' => 'All seeders have been run successfully.',

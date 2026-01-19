@@ -42,7 +42,7 @@
             </div>
         </div>
 
-        
+
         <!-- Register Form Card -->
         <div class="register-card">
             <div class="card-content">
@@ -215,7 +215,7 @@
                     </div>
 
                     <!-- Confirm Password Field -->
-                    <div class="form-group">
+                    {{-- <div class="form-group">
                         <label for="password_confirmation" class="form-label">Confirm Password</label>
                         <div class="input-wrapper">
                             <svg class="input-icon" viewBox="0 0 20 20" fill="currentColor">
@@ -240,7 +240,7 @@
                         @error('password')
                             <div class="text-danger mt-1" style="font-size: 0.75rem; color: #ef4444 !important;">{{ $message }}</div>
                         @enderror
-                    </div>
+                    </div> --}}
 
                     <!-- Terms and Conditions Checkbox -->
                     <div class="form-group">
