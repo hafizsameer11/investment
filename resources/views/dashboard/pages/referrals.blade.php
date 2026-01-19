@@ -2405,6 +2405,27 @@ ls-referrer-section-new {
             color: var(--text-secondary);
         }
 
+        /* Level name colors matching commission structure */
+        .referrals-network-level-1 {
+            color: #F59E0B !important;
+        }
+
+        .referrals-network-level-2 {
+            color: #3B82F6 !important;
+        }
+
+        .referrals-network-level-3 {
+            color: #10B981 !important;
+        }
+
+        .referrals-network-level-4 {
+            color: #8B5CF6 !important;
+        }
+
+        .referrals-network-level-5 {
+            color: #EC4899 !important;
+        }
+
         /* Mobile card layout - value on right */
         .referrals-network-mobile-value {
             display: flex;
@@ -3411,7 +3432,7 @@ ls-referrer-section-new {
                                         </div>
                                         <div>
                                             <div class="referrals-network-mobile-user-name" style="font-weight: 600; color: var(--text-primary); margin-bottom: 0.25rem;">{{ $referral['name'] }}</div>
-                                            <div class="referrals-network-mobile-user-level" style="font-size: 0.75rem; color: var(--text-secondary);">{{ $referral['level_name'] }}</div>
+                                            <div class="referrals-network-mobile-user-level referrals-network-level-{{ $referral['level'] }}" style="font-size: 0.75rem;">{{ $referral['level_name'] }}</div>
                                         </div>
                                     </div>
                                     <!-- Mobile: Value on right -->
