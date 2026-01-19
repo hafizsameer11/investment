@@ -407,7 +407,10 @@
         submitFormData.append('account_number', currentAccountNumber);
         submitFormData.append('account_holder_name', currentAccountHolderName);
         submitFormData.append('payment_proof', currentPaymentProof);
-        submitFormData.append('_token', document.querySelector('meta[name="csrf-token"]')?.content || '');
+        
+        // Get CSRF token from meta tag
+        const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content || '';
+        submitFormData.append('_token', csrfToken);
 
         // Disable button during submission
         if (submitDepositBtn) {
@@ -421,6 +424,7 @@
                 body: submitFormData,
                 headers: {
                     'X-Requested-With': 'XMLHttpRequest',
+                    'X-CSRF-TOKEN': csrfToken,
                 }
             })
             .then(response => response.json())
