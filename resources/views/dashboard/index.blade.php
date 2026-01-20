@@ -2101,6 +2101,7 @@
     @media (max-width: 768px) {
         .live-earning-container {
             padding: 1.25rem;
+            overflow: visible;
         }
 
         .live-earning-animated-box {
@@ -2111,7 +2112,7 @@
         }
 
         .live-earning-content {
-            padding-right: 90px;
+            padding-right: 0;
         }
 
         .animated-box-icon {
@@ -2134,13 +2135,17 @@
 
         .live-earning-actions {
             flex-direction: column;
-            align-items: center;
+            align-items: stretch;
             justify-content: center;
+            width: 100%;
+            margin-left: -1.25rem;
+            margin-right: -1.25rem;
+            padding-left: 1.25rem;
+            padding-right: 1.25rem;
         }
 
         .live-earning-actions .live-earning-btn {
             width: 100%;
-            max-width: 280px;
         }
     }
 
@@ -2163,7 +2168,7 @@
         }
 
         .live-earning-content {
-            padding-right: 80px;
+            padding-right: 0;
         }
 
         .animated-box-icon {
@@ -2197,13 +2202,17 @@
 
         .live-earning-actions {
             flex-direction: column;
-            align-items: center;
+            align-items: stretch;
             justify-content: center;
+            width: 100%;
+            margin-left: -1rem;
+            margin-right: -1rem;
+            padding-left: 1rem;
+            padding-right: 1rem;
         }
 
         .live-earning-actions .live-earning-btn {
             width: 100%;
-            max-width: 260px;
         }
     }
 </style>

@@ -47,56 +47,68 @@ class CalculateMiningProfits extends Command
 
             foreach ($investments as $investment) {
                 try {
-                    DB::beginTransaction();
-
                     // Determine the starting point for profit calculation
                     // If last_profit_calculated_at is null, use the investment's created_at
                     $lastCalculatedAt = $investment->last_profit_calculated_at ?? $investment->created_at;
                     
-                    // Calculate hours elapsed since last calculation
-                    $hoursElapsed = $now->diffInHours($lastCalculatedAt);
+                    // Calculate hours elapsed since last calculation (using seconds for accuracy)
+                    $secondsElapsed = $now->diffInSeconds($lastCalculatedAt);
+                    $hoursElapsed = $secondsElapsed / 3600;
                     
-                    // Only calculate if at least 1 hour has passed
+                    // Only calculate if at least 1 hour has passed (for scheduled command)
                     if ($hoursElapsed < 1) {
-                        DB::commit();
                         continue;
                     }
 
                     // Calculate hourly profit: amount * (hourly_rate / 100)
                     $hourlyRate = $investment->hourly_rate ?? 0;
+                    
+                    // Skip if hourly rate is not set or zero
+                    if ($hourlyRate <= 0) {
+                        $this->warn("Investment ID {$investment->id} has no hourly rate set. Skipping.");
+                        continue;
+                    }
+
                     $hourlyProfit = $investment->amount * ($hourlyRate / 100);
                     
                     // Calculate total profit for all hours elapsed
                     $totalProfitForPeriod = $hourlyProfit * $hoursElapsed;
 
                     if ($totalProfitForPeriod > 0) {
-                        // Add profit to user's mining_earning (total)
-                        $user = $investment->user;
-                        $user->mining_earning = ($user->mining_earning ?? 0) + $totalProfitForPeriod;
+                        DB::beginTransaction();
                         
-                        // Add profit to investment's unclaimed_profit (per investment)
-                        $investment->unclaimed_profit = ($investment->unclaimed_profit ?? 0) + $totalProfitForPeriod;
-                        
-                        // Update investment's total profit earned
-                        $investment->total_profit_earned = ($investment->total_profit_earned ?? 0) + $totalProfitForPeriod;
-                        $investment->last_profit_calculated_at = $now;
-                        
-                        // Update user's net balance
-                        $user->updateNetBalance();
-                        
-                        // Save changes
-                        $user->save();
-                        $investment->save();
+                        try {
+                            // Add profit to user's mining_earning (total)
+                            $user = $investment->user;
+                            $user->mining_earning = ($user->mining_earning ?? 0) + $totalProfitForPeriod;
+                            
+                            // Add profit to investment's unclaimed_profit (per investment)
+                            $investment->unclaimed_profit = ($investment->unclaimed_profit ?? 0) + $totalProfitForPeriod;
+                            
+                            // Update investment's total profit earned
+                            $investment->total_profit_earned = ($investment->total_profit_earned ?? 0) + $totalProfitForPeriod;
+                            $investment->last_profit_calculated_at = $now;
+                            
+                            // Update user's net balance
+                            $user->updateNetBalance();
+                            
+                            // Save changes
+                            $user->save();
+                            $investment->save();
 
-                        $totalProfit += $totalProfitForPeriod;
-                        $processedCount++;
-                        
-                        $this->info("Investment ID {$investment->id}: Calculated ${totalProfitForPeriod} for {$hoursElapsed} hours");
+                            $totalProfit += $totalProfitForPeriod;
+                            $processedCount++;
+                            
+                            $this->info("Investment ID {$investment->id}: Calculated $" . number_format($totalProfitForPeriod, 2) . " for " . number_format($hoursElapsed, 2) . " hours");
+                            
+                            DB::commit();
+                        } catch (\Exception $e) {
+                            DB::rollBack();
+                            Log::error("Error saving profit for investment ID {$investment->id}: " . $e->getMessage());
+                            $this->warn("Failed to save profit for investment ID {$investment->id}: " . $e->getMessage());
+                        }
                     }
-
-                    DB::commit();
                 } catch (\Exception $e) {
-                    DB::rollBack();
                     Log::error("Error calculating profit for investment ID {$investment->id}: " . $e->getMessage());
                     $this->warn("Failed to process investment ID {$investment->id}: " . $e->getMessage());
                 }
