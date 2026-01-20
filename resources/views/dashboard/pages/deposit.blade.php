@@ -299,7 +299,7 @@
     /* PKR Amount Display */
     .deposit-pkr-amount {
         margin-top: 0.75rem;
-        padding: 0.875rem 1.25rem;
+        padding: 0.2rem 1.25rem;
         background: rgba(24, 27, 39, 0.6);
         border-radius: 10px;
         text-align: center;
@@ -309,7 +309,7 @@
     .deposit-pkr-amount #pkr-amount-text {
         color: var(--text-primary);
         font-size: 1.125rem;
-        font-weight: 600;
+        font-weight: 500;
         letter-spacing: 0.2px;
     }
 
@@ -480,7 +480,7 @@
         background: rgba(255, 178, 30, 0.1);
         border: 1px solid rgba(255, 178, 30, 0.3);
         border-radius: 8px;
-        color: var(--text-primary);
+        color: #000000;
         font-size: 0.875rem;
         cursor: pointer;
         transition: var(--transition);
@@ -489,6 +489,11 @@
     .deposit-filter-dropdown:hover {
         background: rgba(255, 178, 30, 0.2);
         border-color: var(--primary-color);
+    }
+
+    .deposit-filter-dropdown option {
+        color: #000000;
+        background: white;
     }
 
     .deposit-history-empty {
@@ -733,6 +738,204 @@
         font-size: 1rem;
     }
 
+    /* Advanced Search Modal */
+    .deposit-advance-search-modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.7);
+        z-index: 1000;
+        align-items: center;
+        justify-content: center;
+        padding: 1rem;
+        backdrop-filter: blur(5px);
+    }
+
+    .deposit-advance-search-modal.show {
+        display: flex;
+    }
+
+    .deposit-advance-search-content {
+        background: var(--card-bg);
+        border-radius: 20px;
+        padding: 2rem;
+        width: 100%;
+        max-width: 500px;
+        position: relative;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        border: 1px solid var(--card-border);
+    }
+
+    .deposit-advance-search-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 2rem;
+    }
+
+    .deposit-advance-search-title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin: 0;
+    }
+
+    .deposit-advance-search-close {
+        width: 36px;
+        height: 36px;
+        border-radius: 8px;
+        background: rgba(255, 178, 30, 0.1);
+        border: 1px solid rgba(255, 178, 30, 0.3);
+        color: var(--text-primary);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: var(--transition);
+    }
+
+    .deposit-advance-search-close:hover {
+        background: rgba(255, 178, 30, 0.2);
+        border-color: var(--primary-color);
+    }
+
+    .deposit-advance-search-form {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+
+    .deposit-advance-search-field {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+
+    .deposit-advance-search-label {
+        font-size: 0.9375rem;
+        font-weight: 600;
+        color: var(--text-primary);
+    }
+
+    .deposit-advance-search-date-wrapper {
+        position: relative;
+    }
+
+    .deposit-advance-search-date-input {
+        width: 100%;
+        padding: 0.875rem 1rem 0.875rem 3rem;
+        background: rgba(24, 27, 39, 0.9);
+        border: 1px solid rgba(255, 178, 30, 0.2);
+        border-radius: 10px;
+        color: var(--text-primary);
+        font-size: 0.9375rem;
+        transition: var(--transition);
+    }
+
+    .deposit-advance-search-date-input:focus {
+        outline: none;
+        border-color: var(--primary-color);
+        box-shadow: 0 0 15px rgba(255, 178, 30, 0.2);
+    }
+
+    .deposit-advance-search-date-icon {
+        position: absolute;
+        left: 1rem;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--text-secondary);
+        font-size: 1rem;
+    }
+
+    .deposit-advance-search-sort-wrapper {
+        position: relative;
+    }
+
+    .deposit-advance-search-sort {
+        width: 100%;
+        padding: 0.875rem 1rem;
+        background: rgba(24, 27, 39, 0.9);
+        border: 1px solid rgba(255, 178, 30, 0.2);
+        border-radius: 10px;
+        color: #000000;
+        font-size: 0.9375rem;
+        cursor: pointer;
+        transition: var(--transition);
+        appearance: none;
+        padding-right: 3rem;
+    }
+
+    .deposit-advance-search-sort:focus {
+        outline: none;
+        border-color: var(--primary-color);
+        box-shadow: 0 0 15px rgba(255, 178, 30, 0.2);
+    }
+
+    .deposit-advance-search-sort option {
+        color: #000000;
+        background: white;
+    }
+
+    .deposit-advance-search-buttons {
+        display: flex;
+        gap: 1rem;
+        margin-top: 0.5rem;
+    }
+
+    .deposit-advance-search-apply {
+        flex: 1;
+        padding: 1rem 1.5rem;
+        background: linear-gradient(135deg, #FF00FF 0%, #FF1493 100%);
+        border: none;
+        border-radius: 12px;
+        color: white;
+        font-size: 1rem;
+        font-weight: 700;
+        cursor: pointer;
+        transition: var(--transition);
+    }
+
+    .deposit-advance-search-apply:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(255, 0, 255, 0.4);
+    }
+
+    .deposit-advance-search-clear {
+        flex: 1;
+        padding: 1rem 1.5rem;
+        background: rgba(24, 27, 39, 0.9);
+        border: 1px solid rgba(255, 178, 30, 0.2);
+        border-radius: 12px;
+        color: var(--text-primary);
+        font-size: 1rem;
+        font-weight: 700;
+        cursor: pointer;
+        transition: var(--transition);
+    }
+
+    .deposit-advance-search-clear:hover {
+        background: rgba(255, 178, 30, 0.1);
+        border-color: var(--primary-color);
+    }
+
+    @media (max-width: 768px) {
+        .deposit-advance-search-content {
+            padding: 1.5rem;
+            border-radius: 16px;
+        }
+
+        .deposit-advance-search-title {
+            font-size: 1.25rem;
+        }
+
+        .deposit-advance-search-buttons {
+            flex-direction: column;
+        }
+    }
+
     /* Chat Widget */
     .deposit-chat-widget {
         position: fixed;
@@ -883,13 +1086,13 @@
             background: rgba(24, 27, 39, 0.8);
             border: 1px solid rgba(255, 178, 30, 0.2);
             border-radius: 10px;
-            color: var(--text-primary);
+            color: #000000;
             font-size: 0.9375rem;
             font-weight: 600;
             cursor: pointer;
             transition: var(--transition);
             appearance: none;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23B0B0B0' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23000000' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
             background-repeat: no-repeat;
             background-position: right 1rem center;
             padding-right: 3rem;
@@ -904,6 +1107,11 @@
             outline: none;
             border-color: var(--primary-color);
             box-shadow: 0 0 15px rgba(255, 178, 30, 0.2);
+        }
+
+        .deposit-filter-dropdown option {
+            color: #000000;
+            background: white;
         }
 
         .deposit-history-empty {
@@ -1218,7 +1426,7 @@
                     </li>
                     <li class="deposit-instruction-item">
                         <span class="deposit-instruction-bullet"></span>
-                        <span>Minimum deposit is $2</span>
+                        <span>Minimum deposit is $1</span>
                     </li>
                 </ul>
             </div>
@@ -1305,6 +1513,56 @@
                 <div class="deposit-history-empty" id="deposit-history-empty" style="{{ $deposits->count() > 0 ? 'display: none;' : '' }}">
                     No transaction history found!
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Advance Search Modal -->
+<div class="deposit-advance-search-modal" id="deposit-advance-search-modal">
+    <div class="deposit-advance-search-content">
+        <div class="deposit-advance-search-header">
+            <h3 class="deposit-advance-search-title">Advance Search</h3>
+            <button class="deposit-advance-search-close" id="deposit-advance-search-close">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="deposit-advance-search-form">
+            <div class="deposit-advance-search-field">
+                <label class="deposit-advance-search-label">Select start & end date:</label>
+                <div class="deposit-advance-search-date-wrapper">
+                    <i class="fas fa-calendar deposit-advance-search-date-icon"></i>
+                    <input type="text"
+                           class="deposit-advance-search-date-input"
+                           id="deposit-date-range-input"
+                           placeholder="dd/mm/yyyy - dd/mm/yyyy"
+                           readonly>
+                    <input type="date"
+                           id="deposit-start-date"
+                           style="position: absolute; opacity: 0; width: 1px; height: 1px; pointer-events: none;">
+                    <input type="date"
+                           id="deposit-end-date"
+                           style="position: absolute; opacity: 0; width: 1px; height: 1px; pointer-events: none;">
+                </div>
+            </div>
+            <div class="deposit-advance-search-field">
+                <label class="deposit-advance-search-label">Sort:</label>
+                <div class="deposit-advance-search-sort-wrapper">
+                    <select class="deposit-advance-search-sort" id="deposit-advance-sort">
+                        <option value="newest">Newest</option>
+                        <option value="oldest">Oldest</option>
+                        <option value="amount-high">Amount: High to Low</option>
+                        <option value="amount-low">Amount: Low to High</option>
+                    </select>
+                </div>
+            </div>
+            <div class="deposit-advance-search-buttons">
+                <button type="button" class="deposit-advance-search-apply" id="deposit-advance-apply">
+                    Apply Filters
+                </button>
+                <button type="button" class="deposit-advance-search-clear" id="deposit-advance-clear">
+                    Clear Filter
+                </button>
             </div>
         </div>
     </div>
@@ -1484,10 +1742,88 @@
     const depositTransactionsList = document.getElementById('deposit-transactions-list');
     const depositHistoryEmpty = document.getElementById('deposit-history-empty');
 
+    // Advance Search Modal Elements
+    const advanceSearchModal = document.getElementById('deposit-advance-search-modal');
+    const advanceSearchClose = document.getElementById('deposit-advance-search-close');
+    const advanceSearchApply = document.getElementById('deposit-advance-apply');
+    const advanceSearchClear = document.getElementById('deposit-advance-clear');
+    const dateRangeInput = document.getElementById('deposit-date-range-input');
+    const advanceSortSelect = document.getElementById('deposit-advance-sort');
+
+    // Filter state
+    let dateRangeFilter = null;
+    let sortOrder = 'newest';
+
+    // Date range picker
+    let startDate = null;
+    let endDate = null;
+    const startDateInput = document.getElementById('deposit-start-date');
+    const endDateInput = document.getElementById('deposit-end-date');
+
+    function updateDateRangeDisplay() {
+        if (startDate && endDate) {
+            const formatDate = (date) => {
+                const day = String(date.getDate()).padStart(2, '0');
+                const month = String(date.getMonth() + 1).padStart(2, '0');
+                const year = date.getFullYear();
+                return `${day}/${month}/${year}`;
+            };
+            dateRangeInput.value = `${formatDate(startDate)} - ${formatDate(endDate)}`;
+            dateRangeFilter = {
+                start: Math.floor(startDate.getTime() / 1000),
+                end: Math.floor(endDate.getTime() / 1000) + 86400 // Add one day to include the end date
+            };
+        } else {
+            dateRangeInput.value = '';
+            dateRangeFilter = null;
+        }
+    }
+
+    if (dateRangeInput) {
+        dateRangeInput.addEventListener('click', function() {
+            if (startDateInput && typeof startDateInput.showPicker === 'function') {
+                startDateInput.showPicker();
+            } else {
+                startDateInput.click();
+            }
+        });
+    }
+
+    if (startDateInput) {
+        startDateInput.addEventListener('change', function() {
+            startDate = new Date(this.value);
+            if (endDateInput) {
+                endDateInput.min = this.value;
+                if (endDate && endDate < startDate) {
+                    endDate = null;
+                    endDateInput.value = '';
+                }
+                updateDateRangeDisplay();
+                // Automatically open end date picker
+                setTimeout(() => {
+                    if (typeof endDateInput.showPicker === 'function') {
+                        endDateInput.showPicker();
+                    } else {
+                        endDateInput.click();
+                    }
+                }, 100);
+            } else {
+                updateDateRangeDisplay();
+            }
+        });
+    }
+
+    if (endDateInput) {
+        endDateInput.addEventListener('change', function() {
+            endDate = new Date(this.value);
+            updateDateRangeDisplay();
+        });
+    }
+
     function filterDeposits() {
         const searchTerm = depositSearchInput ? depositSearchInput.value.toLowerCase().trim() : '';
         const dateFilter = depositDateFilter ? depositDateFilter.value : 'all';
-        const transactionCards = depositTransactionsList ? depositTransactionsList.querySelectorAll('.deposit-transaction-card') : [];
+        const transactionCards = depositTransactionsList ? Array.from(depositTransactionsList.querySelectorAll('.deposit-transaction-card')) : [];
 
         let visibleCount = 0;
         const now = Math.floor(Date.now() / 1000);
@@ -1497,19 +1833,25 @@
             '30': 30 * 24 * 60 * 60
         };
 
-        transactionCards.forEach(card => {
+        // Filter cards
+        const filteredCards = transactionCards.filter(card => {
             const transactionDate = parseInt(card.dataset.date);
             const transactionStatus = card.dataset.status.toLowerCase();
-            const transactionAmount = card.dataset.amount;
+            const transactionAmount = parseFloat(card.dataset.amount);
             const transactionId = (card.dataset.transactionId || '').toLowerCase();
             const cardText = card.textContent.toLowerCase();
 
-            // Date filter
+            // Date filter (from dropdown)
             let dateMatch = true;
-            if (dateFilter !== 'all') {
+            if (dateFilter !== 'all' && !dateRangeFilter) {
                 const daysAgo = daysInSeconds[dateFilter];
                 const cutoffDate = now - daysAgo;
                 dateMatch = transactionDate >= cutoffDate;
+            }
+
+            // Date range filter (from advance search)
+            if (dateRangeFilter) {
+                dateMatch = transactionDate >= dateRangeFilter.start && transactionDate <= dateRangeFilter.end;
             }
 
             // Search filter
@@ -1517,16 +1859,46 @@
             if (searchTerm) {
                 searchMatch = cardText.includes(searchTerm) ||
                              transactionId.includes(searchTerm) ||
-                             transactionAmount.includes(searchTerm);
+                             transactionAmount.toString().includes(searchTerm);
             }
 
-            // Show/hide card
-            if (dateMatch && searchMatch) {
+            return dateMatch && searchMatch;
+        });
+
+        // Sort filtered cards
+        filteredCards.sort((a, b) => {
+            const dateA = parseInt(a.dataset.date);
+            const dateB = parseInt(b.dataset.date);
+            const amountA = parseFloat(a.dataset.amount);
+            const amountB = parseFloat(b.dataset.amount);
+
+            switch(sortOrder) {
+                case 'newest':
+                    return dateB - dateA;
+                case 'oldest':
+                    return dateA - dateB;
+                case 'amount-high':
+                    return amountB - amountA;
+                case 'amount-low':
+                    return amountA - amountB;
+                default:
+                    return dateB - dateA;
+            }
+        });
+
+        // Show/hide cards
+        transactionCards.forEach(card => {
+            if (filteredCards.includes(card)) {
                 card.style.display = 'flex';
                 visibleCount++;
             } else {
                 card.style.display = 'none';
             }
+        });
+
+        // Reorder visible cards
+        filteredCards.forEach(card => {
+            depositTransactionsList.appendChild(card);
         });
 
         // Show/hide empty state
@@ -1539,6 +1911,68 @@
         }
     }
 
+    // Open advance search modal
+    function openAdvanceSearchModal() {
+        if (advanceSearchModal) {
+            advanceSearchModal.classList.add('show');
+            document.body.style.overflow = 'hidden';
+        }
+    }
+
+    // Close advance search modal
+    function closeAdvanceSearchModal() {
+        if (advanceSearchModal) {
+            advanceSearchModal.classList.remove('show');
+            document.body.style.overflow = '';
+        }
+    }
+
+    // Apply filters from advance search
+    if (advanceSearchApply) {
+        advanceSearchApply.addEventListener('click', function() {
+            sortOrder = advanceSortSelect ? advanceSortSelect.value : 'newest';
+            filterDeposits();
+            closeAdvanceSearchModal();
+        });
+    }
+
+    // Clear filters
+    if (advanceSearchClear) {
+        advanceSearchClear.addEventListener('click', function() {
+            startDate = null;
+            endDate = null;
+            dateRangeFilter = null;
+            if (dateRangeInput) {
+                dateRangeInput.value = '';
+            }
+            if (advanceSortSelect) {
+                advanceSortSelect.value = 'newest';
+            }
+            sortOrder = 'newest';
+            filterDeposits();
+            closeAdvanceSearchModal();
+        });
+    }
+
+    // Close modal handlers
+    if (advanceSearchClose) {
+        advanceSearchClose.addEventListener('click', closeAdvanceSearchModal);
+    }
+
+    if (advanceSearchModal) {
+        advanceSearchModal.addEventListener('click', function(e) {
+            if (e.target === advanceSearchModal) {
+                closeAdvanceSearchModal();
+            }
+        });
+    }
+
+    // Open modal from filter icons
+    const filterIcons = document.querySelectorAll('.deposit-filter-icon, .deposit-search-filter-btn');
+    filterIcons.forEach(icon => {
+        icon.addEventListener('click', openAdvanceSearchModal);
+    });
+
     // Add event listeners
     if (depositSearchInput) {
         depositSearchInput.addEventListener('input', filterDeposits);
@@ -1547,6 +1981,9 @@
     if (depositDateFilter) {
         depositDateFilter.addEventListener('change', filterDeposits);
     }
+
+    // Initial filter
+    filterDeposits();
 </script>
 @endsection
 

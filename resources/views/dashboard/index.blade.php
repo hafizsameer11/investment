@@ -1915,7 +1915,7 @@
                     <span class="deposit-wallet-amount" id="fundWalletAmount">${{ number_format($user->fund_wallet ) }}</span>
                     <i class="fas fa-arrow-down deposit-trend-down"></i>
                 </div>
-                
+
                 <!-- WhatsApp Group Box -->
                 <div class="whatsapp-support-box">
                     <a href="https://chat.whatsapp.com/YOUR_GROUP_INVITE_CODE" target="_blank" rel="noopener noreferrer" class="whatsapp-link-box">
@@ -2032,7 +2032,7 @@
     const balanceToggle = document.getElementById('balanceToggle');
     const totalBalanceEl = document.getElementById('totalBalance');
     const depositWalletAmount = document.getElementById('fundWalletAmount');
-    
+
     // Store original values
     const originalNetBalance = totalBalanceEl ? totalBalanceEl.textContent : '$0.00';
     const originalFundWallet = depositWalletAmount ? depositWalletAmount.textContent : '$0.00';
@@ -2099,14 +2099,122 @@
             if (action === 'deposit') {
                 window.location.href = '{{ route("deposit.index") }}';
             } else if (action === 'withdraw') {
-                window.location.href = '{{ route("withdraw-security.index") }}';
+                window.location.href = '{{ route("withdraw.index") }}';
             } else if (action === 'wallet') {
                 window.location.href = '{{ route("wallet.index") }}';
             } else if (action === 'refer') {
-                window.location.href = '{{ route("referrals.index") }}';
+                // Copy referral link to clipboard
+                const referralLink = '{{ url("/register?ref=" . auth()->user()->refer_code) }}';
+
+                // Use modern Clipboard API
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    navigator.clipboard.writeText(referralLink).then(function() {
+                        // Show success notification
+                        showNotification('Referral link copied to clipboard!', 'success');
+                    }).catch(function(err) {
+                        // Fallback for older browsers
+                        fallbackCopyToClipboard(referralLink);
+                    });
+                } else {
+                    // Fallback for older browsers
+                    fallbackCopyToClipboard(referralLink);
+                }
             }
         });
     });
+
+    // Fallback copy to clipboard function for older browsers
+    function fallbackCopyToClipboard(text) {
+        const textArea = document.createElement('textarea');
+        textArea.value = text;
+        textArea.style.position = 'fixed';
+        textArea.style.left = '-999999px';
+        textArea.style.top = '-999999px';
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+
+        try {
+            const successful = document.execCommand('copy');
+            if (successful) {
+                showNotification('Referral link copied to clipboard!', 'success');
+            } else {
+                showNotification('Failed to copy. Please copy manually: ' + text, 'error');
+            }
+        } catch (err) {
+            showNotification('Failed to copy. Please copy manually: ' + text, 'error');
+        }
+
+        document.body.removeChild(textArea);
+    }
+
+    // Show notification function
+    function showNotification(message, type = 'success') {
+        // Remove existing notification if any
+        const existingNotification = document.querySelector('.wallet-notification');
+        if (existingNotification) {
+            existingNotification.remove();
+        }
+
+        // Create notification element
+        const notification = document.createElement('div');
+        notification.className = 'wallet-notification';
+        notification.style.cssText = `
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: ${type === 'success' ? 'linear-gradient(135deg, #4CAF50 0%, #45a049 100%)' : 'linear-gradient(135deg, #FF4444 0%, #cc0000 100%)'};
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            z-index: 10000;
+            font-weight: 600;
+            font-size: 0.9375rem;
+            animation: slideInRight 0.3s ease-out;
+            max-width: 300px;
+        `;
+        notification.textContent = message;
+
+        // Add animation keyframes if not already added
+        if (!document.getElementById('notification-styles')) {
+            const style = document.createElement('style');
+            style.id = 'notification-styles';
+            style.textContent = `
+                @keyframes slideInRight {
+                    from {
+                        transform: translateX(100%);
+                        opacity: 0;
+                    }
+                    to {
+                        transform: translateX(0);
+                        opacity: 1;
+                    }
+                }
+                @keyframes slideOutRight {
+                    from {
+                        transform: translateX(0);
+                        opacity: 1;
+                    }
+                    to {
+                        transform: translateX(100%);
+                        opacity: 0;
+                    }
+                }
+            `;
+            document.head.appendChild(style);
+        }
+
+        document.body.appendChild(notification);
+
+        // Remove notification after 3 seconds
+        setTimeout(() => {
+            notification.style.animation = 'slideOutRight 0.3s ease-out';
+            setTimeout(() => {
+                notification.remove();
+            }, 300);
+        }, 3000);
+    }
 
     // Smooth scroll behavior
     document.documentElement.style.scrollBehavior = 'smooth';
