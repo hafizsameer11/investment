@@ -3344,7 +3344,7 @@ ls-referrer-section-new {
                 <!-- Mobile Header Inside Card -->
                 <div class="referrals-commission-mobile-header-new">
                     <h2 class="referrals-commission-mobile-title-new">Earning Commission Structure</h2>
-                    <p class="referrals-commission-mobile-subtitle-new">Earn up to 18% commission across 5 levels</p>
+                    <p class="referrals-commission-mobile-subtitle-new">Earn commissions on earning across 5 levels</p>
                 </div>
 
                 @foreach($earningCommissions as $commission)
