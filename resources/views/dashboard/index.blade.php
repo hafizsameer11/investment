@@ -1870,6 +1870,342 @@
         }
 
     }
+
+    /* Live Earning Section Styles */
+    .live-earning-section {
+        margin-bottom: 1.5rem;
+        animation: fadeInUp 0.6s ease-out 0.3s forwards;
+    }
+
+    .live-earning-container {
+        background: var(--card-bg);
+        border: 1px solid var(--card-border);
+        border-radius: 16px;
+        padding: 1.5rem;
+        position: relative;
+        overflow: visible;
+    }
+
+    /* Animated Box - Right Top */
+    .live-earning-animated-box {
+        position: absolute;
+        top: -20px;
+        right: 20px;
+        width: 100px;
+        height: 100px;
+        background: linear-gradient(135deg, rgba(255, 178, 30, 0.2) 0%, rgba(255, 138, 29, 0.15) 100%);
+        border: 2px solid rgba(255, 178, 30, 0.4);
+        border-radius: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 10;
+        animation: pulseGlow 2s ease-in-out infinite;
+        box-shadow: 0 4px 20px rgba(255, 178, 30, 0.3);
+    }
+
+    @keyframes pulseGlow {
+        0%, 100% {
+            box-shadow: 0 0 20px rgba(255, 178, 30, 0.3),
+                        0 0 40px rgba(255, 178, 30, 0.2),
+                        inset 0 0 20px rgba(255, 178, 30, 0.1);
+            border-color: rgba(255, 178, 30, 0.3);
+        }
+        50% {
+            box-shadow: 0 0 30px rgba(255, 178, 30, 0.5),
+                        0 0 60px rgba(255, 178, 30, 0.4),
+                        inset 0 0 30px rgba(255, 178, 30, 0.2);
+            border-color: rgba(255, 178, 30, 0.5);
+        }
+    }
+
+    .animated-box-content {
+        text-align: center;
+        z-index: 1;
+    }
+
+    .animated-box-icon {
+        font-size: 2.5rem;
+        color: var(--primary-color);
+        margin-bottom: 0.5rem;
+        filter: drop-shadow(0 0 10px rgba(255, 178, 30, 0.6));
+    }
+
+    .animated-box-text {
+        font-size: 0.875rem;
+        font-weight: 600;
+        color: var(--text-primary);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    /* Content */
+    .live-earning-content {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        position: relative;
+        z-index: 1;
+        padding-right: 120px;
+    }
+
+    .live-earning-header {
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+        position: relative;
+    }
+
+    .live-earning-title {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 1rem;
+        font-weight: 600;
+        color: #4CAF50;
+    }
+
+    .live-earning-title i {
+        font-size: 0.875rem;
+    }
+
+    .live-earning-subtitle {
+        font-size: 0.75rem;
+        color: #4CAF50;
+        opacity: 0.8;
+    }
+
+    .live-earning-amount {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        font-variant-numeric: tabular-nums;
+        line-height: 1.2;
+    }
+
+    .live-earning-timer {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 1rem;
+        color: var(--text-secondary);
+    }
+
+    .live-earning-timer i {
+        color: var(--primary-color);
+    }
+
+    .live-earning-timer span {
+        font-weight: 600;
+        color: var(--text-primary);
+        font-variant-numeric: tabular-nums;
+    }
+
+    .live-earning-actions {
+        margin-top: 0.5rem;
+    }
+
+    .live-earning-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.875rem 1.5rem;
+        border: none;
+        border-radius: 12px;
+        font-size: 0.9375rem;
+        font-weight: 600;
+        color: white;
+        cursor: pointer;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .live-earning-btn::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+        transition: left 0.5s ease;
+    }
+
+    .live-earning-btn:hover::before {
+        left: 100%;
+    }
+
+    .activate-now-btn {
+        background: linear-gradient(135deg, #FF8A1D 0%, #FFB21E 100%);
+        box-shadow: 0 4px 15px rgba(255, 138, 29, 0.4);
+    }
+
+    .activate-now-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(255, 138, 29, 0.6);
+    }
+
+    .activate-now-btn:active {
+        transform: translateY(0);
+    }
+
+    .add-funds-btn {
+        background: linear-gradient(135deg, #00897B 0%, #00ACC1 100%);
+        box-shadow: 0 4px 15px rgba(0, 137, 123, 0.4);
+    }
+
+    .add-funds-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(0, 137, 123, 0.6);
+    }
+
+    .add-funds-btn:active {
+        transform: translateY(0);
+    }
+
+    .claim-earnings-btn {
+        background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+        box-shadow: 0 4px 15px rgba(76, 175, 80, 0.4);
+    }
+
+    .claim-earnings-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(76, 175, 80, 0.6);
+    }
+
+    .claim-earnings-btn:active {
+        transform: translateY(0);
+    }
+
+    .claim-earnings-btn:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+        transform: none;
+        background: linear-gradient(135deg, rgba(76, 175, 80, 0.5) 0%, rgba(69, 160, 73, 0.5) 100%);
+        box-shadow: none;
+    }
+
+    .claim-earnings-btn:disabled:hover {
+        transform: none;
+        box-shadow: none;
+    }
+
+    .live-earning-actions {
+        display: flex;
+        gap: 0.75rem;
+        flex-wrap: wrap;
+    }
+
+    /* Mobile Responsive */
+    @media (max-width: 768px) {
+        .live-earning-container {
+            padding: 1.25rem;
+        }
+
+        .live-earning-animated-box {
+            width: 80px;
+            height: 80px;
+            top: -15px;
+            right: 15px;
+        }
+
+        .live-earning-content {
+            padding-right: 90px;
+        }
+
+        .animated-box-icon {
+            font-size: 1.75rem;
+        }
+
+        .animated-box-text {
+            font-size: 0.75rem;
+        }
+
+        .live-earning-amount {
+            font-size: 2rem;
+        }
+
+        .live-earning-btn {
+            flex: 1;
+            min-width: 0;
+            justify-content: center;
+        }
+
+        .live-earning-actions {
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .live-earning-actions .live-earning-btn {
+            width: 100%;
+            max-width: 280px;
+        }
+    }
+
+    @media (max-width: 390px) {
+        .live-earning-section {
+            margin-bottom: 1rem;
+        }
+
+        .live-earning-container {
+            padding: 1rem;
+            border-radius: 12px;
+            margin-top: 20px;
+        }
+
+        .live-earning-animated-box {
+            width: 70px;
+            height: 70px;
+            margin-top: 30px;
+            right: 32px;
+        }
+
+        .live-earning-content {
+            padding-right: 80px;
+        }
+
+        .animated-box-icon {
+            font-size: 1.25rem;
+        }
+
+        .animated-box-text {
+            font-size: 0.6875rem;
+        }
+
+        .live-earning-title {
+            font-size: 0.875rem;
+        }
+
+        .live-earning-subtitle {
+            font-size: 0.6875rem;
+        }
+
+        .live-earning-amount {
+            font-size: 1.75rem;
+        }
+
+        .live-earning-timer {
+            font-size: 0.875rem;
+        }
+
+        .live-earning-btn {
+            padding: 0.75rem 1.25rem;
+            font-size: 0.875rem;
+        }
+
+        .live-earning-actions {
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .live-earning-actions .live-earning-btn {
+            width: 100%;
+            max-width: 260px;
+        }
+    }
 </style>
 @endpush
 
@@ -1959,6 +2295,68 @@
                     <i class="fas fa-user-plus"></i>
                 </div>
                 <span class="wallet-action-label">Invite</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Live Earning Section -->
+    <div class="live-earning-section">
+        <div class="live-earning-container">
+            <!-- Right Top - Animated Box -->
+            <div class="live-earning-animated-box">
+                <div class="animated-box-content">
+                    @if($hasActivePlan)
+                        <div class="animated-box-icon">
+                            <i class="fas fa-bolt"></i>
+                        </div>
+                        <div class="animated-box-text">Active</div>
+                    @else
+                        <div class="animated-box-icon">
+                            <i class="fas fa-rocket"></i>
+                        </div>
+                        <div class="animated-box-text">Start</div>
+                    @endif
+                </div>
+            </div>
+
+            <!-- Content -->
+            <div class="live-earning-content">
+                <div class="live-earning-header">
+                    <div class="live-earning-title">
+                        <i class="fas fa-chart-line"></i>
+                        <span>Live Earning</span>
+                    </div>
+                    <div class="live-earning-subtitle">Real time updates</div>
+                </div>
+
+                <div class="live-earning-amount" id="liveEarningAmount">
+                    ${{ number_format($totalUnclaimedProfit ?? 0, 6, '.', '') }}
+                </div>
+
+                @if($hasActivePlan)
+                    <div class="live-earning-timer">
+                        <i class="fas fa-clock"></i>
+                        <span id="hourlyTimer">{{ $initialCountdown }}</span>
+                    </div>
+                @endif
+
+                <div class="live-earning-actions">
+                    @if($hasActivePlan)
+                        <button class="live-earning-btn claim-earnings-btn" id="claimAllEarningsBtn" {{ $totalUnclaimedProfit <= 0 ? 'disabled' : '' }}>
+                            <i class="fas fa-coins"></i>
+                            <span>Claim Mining Earning</span>
+                        </button>
+                        <button class="live-earning-btn add-funds-btn" onclick="window.location.href='{{ route('deposit.index') }}'">
+                            <i class="fas fa-arrow-up"></i>
+                            <span>Add Funds</span>
+                        </button>
+                    @else
+                        <button class="live-earning-btn activate-now-btn" onclick="window.location.href='{{ route('plans.index') }}'">
+                            <i class="fas fa-play"></i>
+                            <span>Activate Now</span>
+                        </button>
+                    @endif
+                </div>
             </div>
         </div>
     </div>
@@ -2485,6 +2883,105 @@
                 console.log('Chart initialized on retry');
             }
         }, 1000);
+    });
+
+    // Live Earning Timer Countdown
+    document.addEventListener('DOMContentLoaded', function() {
+        const timerElement = document.getElementById('hourlyTimer');
+
+        if (timerElement) {
+            // Get initial countdown from server (seconds until next hour)
+            let secondsRemaining = {{ isset($secondsUntilNextHour) ? $secondsUntilNextHour : 3600 }};
+
+            function updateTimer() {
+                if (secondsRemaining <= 0) {
+                    // Reset to 1 hour (3600 seconds) when timer reaches 0
+                    secondsRemaining = 3600;
+                }
+
+                const hours = Math.floor(secondsRemaining / 3600);
+                const minutes = Math.floor((secondsRemaining % 3600) / 60);
+                const seconds = secondsRemaining % 60;
+
+                const formattedTime = String(hours).padStart(2, '0') + ':' +
+                                    String(minutes).padStart(2, '0') + ':' +
+                                    String(seconds).padStart(2, '0');
+
+                timerElement.textContent = formattedTime;
+                secondsRemaining--;
+            }
+
+            // Update timer immediately
+            updateTimer();
+
+            // Update timer every second
+            setInterval(updateTimer, 1000);
+        }
+
+        // Claim All Earnings Button Handler
+        const claimBtn = document.getElementById('claimAllEarningsBtn');
+        if (claimBtn) {
+            claimBtn.addEventListener('click', function() {
+                const btn = this;
+
+                // Don't proceed if button is disabled
+                if (btn.disabled) {
+                    return;
+                }
+
+                const originalText = btn.innerHTML;
+
+                // Disable button and show loading state
+                btn.disabled = true;
+                btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> <span>Claiming...</span>';
+
+                // Make API call to claim all earnings
+                fetch('{{ route("dashboard.claim-all-earnings") }}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    body: JSON.stringify({})
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Show success notification
+                        showNotification(data.message || 'Earnings claimed successfully!', 'success');
+
+                        // Update the earning amount display
+                        const earningAmountEl = document.getElementById('liveEarningAmount');
+                        if (earningAmountEl) {
+                            earningAmountEl.textContent = '$0.000000';
+                        }
+
+                        // Disable the claim button since there's no more to claim
+                        btn.disabled = true;
+
+                        // Reload page after a short delay to update all balances
+                        setTimeout(() => {
+                            window.location.reload();
+                        }, 1500);
+                    } else {
+                        // Show error notification
+                        showNotification(data.message || 'Failed to claim earnings.', 'error');
+
+                        // Re-enable button
+                        btn.disabled = false;
+                        btn.innerHTML = originalText;
+                    }
+                })
+                .catch(error => {
+                    console.error('Error claiming earnings:', error);
+                    showNotification('An error occurred. Please try again.', 'error');
+
+                    // Re-enable button
+                    btn.disabled = false;
+                    btn.innerHTML = originalText;
+                });
+            });
+        }
     });
 </script>
 @endpush

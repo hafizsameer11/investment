@@ -55,6 +55,7 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middl
 // Dashboard Routes - Protected with auth middleware
 Route::prefix('user/dashboard')->middleware('auth')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard.index');
+    Route::post('/claim-all-earnings', [DashboardController::class, 'claimAllEarnings'])->name('dashboard.claim-all-earnings');
     Route::get('/wallet', [WalletController::class, 'index'])->name('wallet.index');
     Route::get('/deposit', [WalletController::class, 'deposit'])->name('deposit.index');
     Route::get('/deposit/confirm', [WalletController::class, 'depositConfirm'])->name('deposit.confirm');
