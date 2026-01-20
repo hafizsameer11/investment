@@ -33,6 +33,14 @@ class AuthController extends Controller
     }
 
     /**
+     * Show the terms and conditions page.
+     */
+    public function showTerms()
+    {
+        return view('auth.terms');
+    }
+
+    /**
      * Handle user registration.
      */
     public function register(Request $request)

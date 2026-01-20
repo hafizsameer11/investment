@@ -46,6 +46,7 @@ Route::middleware('guest')->group(function () {
     Route::post('/login', [AuthController::class, 'login'])->name('login.post');
     Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register');
     Route::post('/register', [AuthController::class, 'register'])->name('register.post');
+    Route::get('/terms', [AuthController::class, 'showTerms'])->name('terms');
 });
 
 // Logout Route

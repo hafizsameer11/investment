@@ -145,7 +145,14 @@ class WalletController extends Controller
             ->orderBy('created_at', 'desc')
             ->get();
         
-        return view('dashboard.pages.deposit', compact('paymentMethods', 'deposits'));
+        // Get active currency conversion rate (fallback to any rate if no active one)
+        $currencyConversion = CurrencyConversion::where('is_active', true)->first();
+        if (!$currencyConversion) {
+            $currencyConversion = CurrencyConversion::first();
+        }
+        $conversionRate = $currencyConversion ? (float) $currencyConversion->rate : 0;
+        
+        return view('dashboard.pages.deposit', compact('paymentMethods', 'deposits', 'conversionRate'));
     }
 
     /**

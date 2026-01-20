@@ -253,7 +253,7 @@
                                 required
                             >
                             <span class="checkbox-custom"></span>
-                            <span class="checkbox-label">I accept the <a href="#" class="terms-link">terms and conditions</a></span>
+                            <span class="checkbox-label">I accept the <a href="{{ route('terms') }}" class="terms-link">terms and conditions</a></span>
                         </label>
                     </div>
 

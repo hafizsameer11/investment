@@ -43,26 +43,43 @@ class CalculateMiningProfits extends Command
 
             $processedCount = 0;
             $totalProfit = 0;
+            $now = now();
 
             foreach ($investments as $investment) {
                 try {
                     DB::beginTransaction();
 
-                    // Calculate profit: amount * (hourly_rate / 100)
-                    $hourlyRate = $investment->hourly_rate ?? 0;
-                    $profit = $investment->amount * ($hourlyRate / 100);
+                    // Determine the starting point for profit calculation
+                    // If last_profit_calculated_at is null, use the investment's created_at
+                    $lastCalculatedAt = $investment->last_profit_calculated_at ?? $investment->created_at;
+                    
+                    // Calculate hours elapsed since last calculation
+                    $hoursElapsed = $now->diffInHours($lastCalculatedAt);
+                    
+                    // Only calculate if at least 1 hour has passed
+                    if ($hoursElapsed < 1) {
+                        DB::commit();
+                        continue;
+                    }
 
-                    if ($profit > 0) {
+                    // Calculate hourly profit: amount * (hourly_rate / 100)
+                    $hourlyRate = $investment->hourly_rate ?? 0;
+                    $hourlyProfit = $investment->amount * ($hourlyRate / 100);
+                    
+                    // Calculate total profit for all hours elapsed
+                    $totalProfitForPeriod = $hourlyProfit * $hoursElapsed;
+
+                    if ($totalProfitForPeriod > 0) {
                         // Add profit to user's mining_earning (total)
                         $user = $investment->user;
-                        $user->mining_earning = ($user->mining_earning ?? 0) + $profit;
+                        $user->mining_earning = ($user->mining_earning ?? 0) + $totalProfitForPeriod;
                         
                         // Add profit to investment's unclaimed_profit (per investment)
-                        $investment->unclaimed_profit = ($investment->unclaimed_profit ?? 0) + $profit;
+                        $investment->unclaimed_profit = ($investment->unclaimed_profit ?? 0) + $totalProfitForPeriod;
                         
                         // Update investment's total profit earned
-                        $investment->total_profit_earned = ($investment->total_profit_earned ?? 0) + $profit;
-                        $investment->last_profit_calculated_at = now();
+                        $investment->total_profit_earned = ($investment->total_profit_earned ?? 0) + $totalProfitForPeriod;
+                        $investment->last_profit_calculated_at = $now;
                         
                         // Update user's net balance
                         $user->updateNetBalance();
@@ -71,8 +88,10 @@ class CalculateMiningProfits extends Command
                         $user->save();
                         $investment->save();
 
-                        $totalProfit += $profit;
+                        $totalProfit += $totalProfitForPeriod;
                         $processedCount++;
+                        
+                        $this->info("Investment ID {$investment->id}: Calculated ${totalProfitForPeriod} for {$hoursElapsed} hours");
                     }
 
                     DB::commit();

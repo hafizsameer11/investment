@@ -296,6 +296,34 @@
         z-index: 1;
     }
 
+    /* PKR Amount Display */
+    .deposit-pkr-amount {
+        margin-top: 0.75rem;
+        padding: 0.875rem 1.25rem;
+        background: rgba(24, 27, 39, 0.6);
+        border-radius: 10px;
+        text-align: center;
+        animation: fadeIn 0.3s ease-in-out;
+    }
+
+    .deposit-pkr-amount #pkr-amount-text {
+        color: var(--text-primary);
+        font-size: 1.125rem;
+        font-weight: 600;
+        letter-spacing: 0.2px;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(-5px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
     .deposit-continue-btn {
         width: 100%;
         padding: 1.375rem 1.5rem;
@@ -1109,7 +1137,7 @@
                 <h2 class="deposit-section-title">Selected Payment Method</h2>
                 <div class="deposit-payment-methods">
                     @forelse($paymentMethods as $paymentMethod)
-                        <div class="deposit-payment-method" 
+                        <div class="deposit-payment-method"
                              data-method-id="{{ $paymentMethod->id }}"
                              data-method-name="{{ $paymentMethod->account_type }}"
                              data-min-deposit="{{ $paymentMethod->minimum_deposit ?? 0 }}"
@@ -1134,7 +1162,7 @@
             <!-- Deposit Amount -->
             <div class="deposit-section-card deposit-amount-section">
                 <h2 class="deposit-section-title">Deposit Amount</h2>
-                
+
                 <!-- Preset Amount Buttons -->
                 <div class="deposit-preset-amounts">
                     <button type="button" class="deposit-preset-btn" data-amount="5">$5</button>
@@ -1144,17 +1172,26 @@
                     <button type="button" class="deposit-preset-btn" data-amount="500">$500</button>
                     <button type="button" class="deposit-preset-btn" data-amount="1000">$1K</button>
                 </div>
-                
+
                 <!-- Custom Amount Input -->
                 <div class="deposit-amount-wrapper">
                     <span class="deposit-amount-symbol">$</span>
-                    <input type="number" 
-                           class="deposit-amount-input" 
+                    <input type="number"
+                           class="deposit-amount-input"
                            id="deposit-amount-input"
-                           placeholder="Enter custom amount" 
-                           min="2" 
-                           step="0.01">
+                           placeholder="Enter custom amount"
+                           min="2"
+                           >
                 </div>
+                <!-- PKR Amount Display -->
+                <div class="deposit-pkr-amount" id="deposit-pkr-amount" style="display: none;">
+                    <span id="pkr-amount-text"></span>
+                </div>
+                @if(!$conversionRate || $conversionRate == 0)
+                <div style="color: #ff6b6b; font-size: 0.875rem; margin-top: 0.5rem; text-align: center;">
+                    Note: Currency conversion rate is not set. Please contact admin.
+                </div>
+                @endif
                 <button class="deposit-continue-btn" id="deposit-continue-btn">
                     Continue Deposit
                 </button>
@@ -1216,7 +1253,7 @@
                 <div class="deposit-transactions-list" id="deposit-transactions-list">
                     @forelse($deposits as $deposit)
                         <div class="deposit-transaction-card" data-date="{{ $deposit->created_at->timestamp }}" data-status="{{ $deposit->status }}" data-amount="{{ $deposit->amount }}" data-transaction-id="{{ $deposit->transaction_id }}">
-                            <div class="deposit-transaction-icon-wrapper 
+                            <div class="deposit-transaction-icon-wrapper
                                 @if($deposit->status === 'approved') icon-approved
                                 @elseif($deposit->status === 'rejected') icon-rejected
                                 @else icon-pending
@@ -1236,7 +1273,7 @@
                                 <p class="deposit-transaction-date">{{ $deposit->created_at->format('M d, Y, h:i A') }}</p>
                             </div>
                             <div class="deposit-transaction-right">
-                                <div class="deposit-transaction-amount 
+                                <div class="deposit-transaction-amount
                                     @if($deposit->status === 'approved') amount-success
                                     @elseif($deposit->status === 'rejected') amount-danger
                                     @else amount-warning
@@ -1246,7 +1283,7 @@
                                 @else
                                     <p class="deposit-transaction-wallet">Fund Wallet: -</p>
                                 @endif
-                                <span class="deposit-transaction-status 
+                                <span class="deposit-transaction-status
                                     @if($deposit->status === 'approved') status-success
                                     @elseif($deposit->status === 'rejected') status-danger
                                     @else status-warning
@@ -1275,16 +1312,50 @@
 
 <script>
     let selectedPaymentMethod = null;
+    const conversionRate = parseFloat({{ $conversionRate ?? 0 }}) || 0;
+
+    // Function to update PKR amount display
+    function updatePKRAmount() {
+        const amountInput = document.getElementById('deposit-amount-input');
+        const pkrAmountDisplay = document.getElementById('deposit-pkr-amount');
+        const pkrAmountText = document.getElementById('pkr-amount-text');
+
+        if (!amountInput || !pkrAmountDisplay || !pkrAmountText) {
+            return;
+        }
+
+        const amount = parseFloat(amountInput.value) || 0;
+        const rate = conversionRate;
+
+        // Show PKR amount only if payment method is selected, amount is valid, and conversion rate exists
+        if (selectedPaymentMethod && amount > 0 && rate > 0) {
+            const pkrAmount = amount * rate;
+            // Format dollar amount, remove trailing zeros
+            const formattedUSD = amount.toLocaleString('en-US', {
+                maximumFractionDigits: 2,
+                minimumFractionDigits: 0
+            });
+            // Format PKR amount with commas, remove trailing zeros
+            const formattedPKR = pkrAmount.toLocaleString('en-US', {
+                maximumFractionDigits: 2,
+                minimumFractionDigits: 0
+            });
+            pkrAmountText.textContent = `$${formattedUSD} = Rs ${formattedPKR}`;
+            pkrAmountDisplay.style.display = 'block';
+        } else {
+            pkrAmountDisplay.style.display = 'none';
+        }
+    }
 
     // Payment method selection
     document.querySelectorAll('.deposit-payment-method').forEach(method => {
         method.addEventListener('click', function() {
             // Remove active class from all methods
             document.querySelectorAll('.deposit-payment-method').forEach(m => m.classList.remove('active'));
-            
+
             // Add active class to clicked method
             this.classList.add('active');
-            
+
             // Store selected payment method data
             selectedPaymentMethod = {
                 id: this.dataset.methodId,
@@ -1292,19 +1363,19 @@
                 minDeposit: parseFloat(this.dataset.minDeposit) || 2,
                 maxDeposit: parseFloat(this.dataset.maxDeposit) || null
             };
-            
+
             // Show deposit amount section with animation
             const depositAmountSection = document.querySelector('.deposit-amount-section');
             if (depositAmountSection) {
                 depositAmountSection.classList.add('show');
             }
-            
+
             // Update continue button text
             const continueBtn = document.getElementById('deposit-continue-btn');
             if (continueBtn && selectedPaymentMethod) {
                 continueBtn.textContent = `Continue Deposit with ${selectedPaymentMethod.name}`;
             }
-            
+
             // Update input min/max attributes
             const amountInput = document.getElementById('deposit-amount-input');
             if (amountInput) {
@@ -1320,6 +1391,8 @@
                     btn.classList.remove('active');
                 });
             }
+            // Update PKR amount display (will hide if amount is cleared)
+            updatePKRAmount();
         });
     });
 
@@ -1328,16 +1401,18 @@
         btn.addEventListener('click', function() {
             // Remove active class from all preset buttons
             document.querySelectorAll('.deposit-preset-btn').forEach(b => b.classList.remove('active'));
-            
+
             // Add active class to clicked button
             this.classList.add('active');
-            
+
             // Set the amount in the input field
             const amount = this.dataset.amount;
             const amountInput = document.getElementById('deposit-amount-input');
             if (amountInput) {
                 amountInput.value = amount;
-                // Trigger input event to validate
+                // Update PKR amount display immediately
+                updatePKRAmount();
+                // Also trigger input event for other validations
                 amountInput.dispatchEvent(new Event('input'));
             }
         });
@@ -1351,7 +1426,7 @@
             const value = parseFloat(this.value);
             const presetButtons = document.querySelectorAll('.deposit-preset-btn');
             let matchesPreset = false;
-            
+
             presetButtons.forEach(btn => {
                 const presetAmount = parseFloat(btn.dataset.amount);
                 if (value === presetAmount) {
@@ -1361,11 +1436,14 @@
                     btn.classList.remove('active');
                 }
             });
-            
+
             // If doesn't match any preset, clear all active states
             if (!matchesPreset && this.value !== '') {
                 presetButtons.forEach(btn => btn.classList.remove('active'));
             }
+
+            // Update PKR amount display
+            updatePKRAmount();
         });
     }
 
@@ -1392,10 +1470,10 @@
             }
 
             // Redirect to deposit confirmation page
-            const confirmUrl = '{{ route("deposit.confirm") }}' + 
-                '?method_id=' + encodeURIComponent(selectedPaymentMethod.id) + 
+            const confirmUrl = '{{ route("deposit.confirm") }}' +
+                '?method_id=' + encodeURIComponent(selectedPaymentMethod.id) +
                 '&amount=' + encodeURIComponent(amount);
-            
+
             window.location.href = confirmUrl;
         });
     }
@@ -1410,7 +1488,7 @@
         const searchTerm = depositSearchInput ? depositSearchInput.value.toLowerCase().trim() : '';
         const dateFilter = depositDateFilter ? depositDateFilter.value : 'all';
         const transactionCards = depositTransactionsList ? depositTransactionsList.querySelectorAll('.deposit-transaction-card') : [];
-        
+
         let visibleCount = 0;
         const now = Math.floor(Date.now() / 1000);
         const daysInSeconds = {
@@ -1437,7 +1515,7 @@
             // Search filter
             let searchMatch = true;
             if (searchTerm) {
-                searchMatch = cardText.includes(searchTerm) || 
+                searchMatch = cardText.includes(searchTerm) ||
                              transactionId.includes(searchTerm) ||
                              transactionAmount.includes(searchTerm);
             }
