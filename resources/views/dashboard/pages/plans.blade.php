@@ -2084,7 +2084,7 @@
     }
 
     .investment-balance-label {
-        font-size: 0.75rem;
+        font-size: 0.7rem;
         color: var(--text-secondary);
         margin-bottom: 0.25rem;
     }
@@ -2638,8 +2638,8 @@
                     <div class="plan-mobile-detail-value-new">${{ rtrim(rtrim(number_format($plan->min_investment, 2), '0'), '.') }} - ${{ rtrim(rtrim(number_format($plan->max_investment, 2), '0'), '.') }}</div>
                 </div>
                 <div class="plan-mobile-detail-col-new">
-                    <div class="plan-mobile-detail-label-new">ROI {{ $plan->daily_roi_min }}% - {{ $plan->daily_roi_max }}% Daily</div>
-                    <div class="plan-mobile-detail-value-new">{{ $plan->hourly_rate ?? 0 }}% / Hourly</div>
+                    <div class="plan-mobile-detail-label-new">ROI {{ rtrim(rtrim(number_format($plan->daily_roi_min, 2), '0'), '.') }}% - {{ rtrim(rtrim(number_format($plan->daily_roi_max, 2), '0'), '.') }}% Daily</div>
+                    <div class="plan-mobile-detail-value-new">{{ rtrim(rtrim(number_format($plan->hourly_rate ?? 0, 2), '0'), '.') }}% / Hourly</div>
                 </div>
             </div>
         </div>
@@ -2673,7 +2673,7 @@
                     <i class="fas fa-chart-line"></i>
                     </div>
                     <div class="plan-feature-label-new">Daily ROI</div>
-                    <div class="plan-feature-value-new">{{ $plan->daily_roi_min }}% - {{ $plan->daily_roi_max }}%</div>
+                    <div class="plan-feature-value-new">{{ rtrim(rtrim(number_format($plan->daily_roi_min, 2), '0'), '.') }}% - {{ rtrim(rtrim(number_format($plan->daily_roi_max, 2), '0'), '.') }}%</div>
                     <div class="plan-feature-hint-new">Fixed daily returns guaranteed</div>
                 </div>
 
@@ -2682,7 +2682,7 @@
                         <i class="fas fa-clock"></i>
                     </div>
                     <div class="plan-feature-label-new">Hourly Rate</div>
-                    <div class="plan-feature-value-new">{{ $plan->hourly_rate ?? 0 }}%</div>
+                    <div class="plan-feature-value-new">{{ rtrim(rtrim(number_format($plan->hourly_rate ?? 0, 2), '0'), '.') }}%</div>
                     <div class="plan-feature-hint-new">Per hour earnings</div>
                 </div>
             </div>
@@ -2854,12 +2854,6 @@
                                id="investmentAmount"
                                placeholder="Enter investment amount"
                                step="0.01">
-                        <button class="calculator-input-action" type="button" title="More options" disabled>
-                            <i class="fas fa-ellipsis-h"></i>
-                        </button>
-                        <button class="calculator-input-action" type="button" title="Calculator" disabled>
-                            <i class="fas fa-ellipsis-v"></i>
-                        </button>
                     </div>
                 </div>
 

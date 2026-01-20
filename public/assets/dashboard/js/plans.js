@@ -225,8 +225,12 @@
             // Update balances
             const fundBalanceEl = document.getElementById('fundBalanceDisplay');
             const earningBalanceEl = document.getElementById('earningBalanceDisplay');
-            if (fundBalanceEl) fundBalanceEl.textContent = '$' + parseFloat(balances.fund_balance).toFixed(2);
-            if (earningBalanceEl) earningBalanceEl.textContent = '$' + parseFloat(balances.earning_balance).toFixed(2);
+            // Helper function to format number without trailing zeros
+            const formatBalance = (num) => {
+                return parseFloat(num).toFixed(2).replace(/\.?0+$/, '');
+            };
+            if (fundBalanceEl) fundBalanceEl.textContent = '$' + formatBalance(balances.fund_balance);
+            if (earningBalanceEl) earningBalanceEl.textContent = '$' + formatBalance(balances.earning_balance);
 
             // Update input placeholder and hint
             if (investmentAmountInput) {
@@ -267,9 +271,14 @@
             const alertEl = document.getElementById('investmentAlert');
             const alertMessageEl = document.getElementById('investmentAlertMessage');
 
+            // Helper function to format number without trailing zeros
+            const formatAmount = (num) => {
+                return parseFloat(num).toFixed(2).replace(/\.?0+$/, '');
+            };
+            
             // Check if balance is sufficient
             if (selectedBalance < minInvestment) {
-                showAlert(`Please deposit at least $${minInvestment.toFixed(2)} to buy this plan.`);
+                showAlert(`Please deposit at least $${formatAmount(minInvestment)} to buy this plan.`);
                 if (depositAmountBtn) depositAmountBtn.style.display = 'block';
                 if (investmentAmountInput) investmentAmountInput.disabled = true;
                 if (confirmBtn) confirmBtn.disabled = true;
@@ -281,10 +290,10 @@
                 // Validate amount if entered
                 if (amount > 0) {
                     if (amount < minInvestment || amount > parseFloat(currentPlanData.max_investment)) {
-                        showAlert(`Investment amount must be between $${minInvestment.toFixed(2)} and $${parseFloat(currentPlanData.max_investment).toFixed(2)}.`);
+                        showAlert(`Investment amount must be between $${formatAmount(minInvestment)} and $${formatAmount(currentPlanData.max_investment)}.`);
                         if (confirmBtn) confirmBtn.disabled = true;
                     } else if (amount > selectedBalance) {
-                        showAlert(`Insufficient balance. Available: $${selectedBalance.toFixed(2)}`);
+                        showAlert(`Insufficient balance. Available: $${formatAmount(selectedBalance)}`);
                         if (confirmBtn) confirmBtn.disabled = true;
                     } else {
                         hideAlert();
@@ -333,8 +342,13 @@
                 return;
             }
 
+            // Helper function to format number without trailing zeros
+            const formatAmount = (num) => {
+                return parseFloat(num).toFixed(2).replace(/\.?0+$/, '');
+            };
+            
             if (amount < parseFloat(currentPlanData.min_investment) || amount > parseFloat(currentPlanData.max_investment)) {
-                showAlert(`Investment amount must be between $${parseFloat(currentPlanData.min_investment).toFixed(2)} and $${parseFloat(currentPlanData.max_investment).toFixed(2)}.`);
+                showAlert(`Investment amount must be between $${formatAmount(currentPlanData.min_investment)} and $${formatAmount(currentPlanData.max_investment)}.`);
                 return;
             }
 
@@ -512,11 +526,16 @@
         const returnRateDetailEl = document.getElementById('calculatorReturnRateDetail');
         const hourlyRate = planData.hourlyRate || (planData.dailyRoiMin / 24);
         
+        // Helper function to format number without trailing zeros
+        const formatNumber = (num) => {
+            return parseFloat(num.toFixed(3)).toString();
+        };
+        
         if (returnRateEl) {
-            returnRateEl.textContent = `${hourlyRate.toFixed(3)}%`;
+            returnRateEl.textContent = `${formatNumber(hourlyRate)}%`;
         }
         if (returnRateDetailEl) {
-            returnRateDetailEl.textContent = `${hourlyRate.toFixed(3)}% every hour`;
+            returnRateDetailEl.textContent = `${formatNumber(hourlyRate)}% every hour`;
         }
         
         // Update input placeholder and min/max
@@ -817,8 +836,12 @@
             // Update earnings amount
             const earningsAmountEl = document.getElementById('claimEarningsAmount');
             const earningsStatusEl = document.getElementById('claimEarningsStatus');
+            // Helper function to format number without trailing zeros
+            const formatBalance = (num) => {
+                return parseFloat(num).toFixed(2).replace(/\.?0+$/, '');
+            };
             if (earningsAmountEl) {
-                earningsAmountEl.textContent = '$' + unclaimedProfit.toFixed(2);
+                earningsAmountEl.textContent = '$' + formatBalance(unclaimedProfit);
                 if (hasEarnings) {
                     earningsAmountEl.style.color = '#10b981';
                 } else {
@@ -838,7 +861,7 @@
             // Update mining balance
             const miningBalanceEl = document.getElementById('claimEarningsMiningBalance');
             if (miningBalanceEl) {
-                miningBalanceEl.textContent = '$' + parseFloat(data.mining_earning).toFixed(2);
+                miningBalanceEl.textContent = '$' + formatBalance(data.mining_earning);
             }
 
             // Enable/disable claim button
@@ -1049,25 +1072,33 @@
 
             // Update active investment amount
             const activeInvestmentEl = document.getElementById('activeInvestmentAmount');
-            if (activeInvestmentEl) activeInvestmentEl.textContent = '$' + parseFloat(investment.amount).toFixed(2);
+            // Helper function to format number without trailing zeros
+            const formatBalance = (num) => {
+                return parseFloat(num).toFixed(2).replace(/\.?0+$/, '');
+            };
+            if (activeInvestmentEl) activeInvestmentEl.textContent = '$' + formatBalance(investment.amount);
 
             // Update investment range
             const minAmountEl = document.getElementById('managePlanMinAmount');
             const maxAmountEl = document.getElementById('managePlanMaxAmount');
-            if (minAmountEl) minAmountEl.textContent = parseFloat(plan.min_investment).toFixed(2);
-            if (maxAmountEl) maxAmountEl.textContent = parseFloat(plan.max_investment).toFixed(2);
+            if (minAmountEl) minAmountEl.textContent = formatBalance(plan.min_investment);
+            if (maxAmountEl) maxAmountEl.textContent = formatBalance(plan.max_investment);
 
             // Update balances
             const fundBalanceEl = document.getElementById('managePlanFundBalance');
             const earningBalanceEl = document.getElementById('managePlanEarningBalance');
-            if (fundBalanceEl) fundBalanceEl.textContent = '$' + parseFloat(balances.fund_balance).toFixed(2);
-            if (earningBalanceEl) earningBalanceEl.textContent = '$' + parseFloat(balances.earning_balance).toFixed(2);
+            if (fundBalanceEl) fundBalanceEl.textContent = '$' + formatBalance(balances.fund_balance);
+            if (earningBalanceEl) earningBalanceEl.textContent = '$' + formatBalance(balances.earning_balance);
 
             // Update input hint with max additional
             const amountHintEl = document.getElementById('managePlanAmountHint');
             if (amountHintEl) {
                 const maxAdditional = parseFloat(data.max_additional);
-                amountHintEl.textContent = `Min: $0.01 - Max: $${maxAdditional.toFixed(2)}`;
+                // Helper function to format number without trailing zeros
+                const formatAmount = (num) => {
+                    return parseFloat(num).toFixed(2).replace(/\.?0+$/, '');
+                };
+                amountHintEl.textContent = `Min: $0.01 - Max: $${formatAmount(maxAdditional)}`;
             }
 
             // Validate and show/hide alert
@@ -1154,8 +1185,13 @@
             const existingAmount = parseFloat(currentInvestmentData.amount);
             const maxAdditional = parseFloat(currentPlanData.max_investment) - existingAmount;
 
+            // Helper function to format number without trailing zeros
+            const formatAmount = (num) => {
+                return parseFloat(num).toFixed(2).replace(/\.?0+$/, '');
+            };
+            
             if (amount > maxAdditional) {
-                showManagePlanAlert(`Additional amount cannot exceed $${maxAdditional.toFixed(2)}.`);
+                showManagePlanAlert(`Additional amount cannot exceed $${formatAmount(maxAdditional)}.`);
                 return;
             }
 

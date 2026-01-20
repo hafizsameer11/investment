@@ -3305,7 +3305,7 @@ ls-referrer-section-new {
     <div class="referrals-commission-section-new">
         <div class="referrals-commission-header-new">
             <h2 class="referrals-commission-title-new">Earning Commission Structure</h2>
-            <p class="referrals-commission-subtitle-new">Earn up to 18% commission across 5 levels</p>
+            <p class="referrals-commission-subtitle-new">Earn commissions on earning across 5 levels</p>
         </div>
 
         <!-- Desktop Grid View -->
