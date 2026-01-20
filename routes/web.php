@@ -82,6 +82,9 @@ Route::prefix('user/dashboard')->middleware('auth')->group(function () {
     Route::post('/notifications/read-all', [NotificationsController::class, 'markAllAsRead'])->name('notifications.mark-all-read');
     Route::get('/notifications/unread-count', [NotificationsController::class, 'getUnreadCount'])->name('notifications.unread-count');
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
+    Route::post('/profile/update-name', [ProfileController::class, 'updateName'])->name('profile.update-name');
+    Route::post('/profile/update-photo', [ProfileController::class, 'updatePhoto'])->name('profile.update-photo');
+    Route::post('/profile/update-password', [ProfileController::class, 'updatePassword'])->name('profile.update-password');
     Route::get('/support', [SupportController::class, 'index'])->name('support.index');
     Route::get('/withdraw-security', [WithdrawSecurityController::class, 'index'])->name('withdraw-security.index');
     Route::get('/settings', [SettingsController::class, 'index'])->name('settings.index');

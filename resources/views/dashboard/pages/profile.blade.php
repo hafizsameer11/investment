@@ -22,14 +22,14 @@
         <div class="profile-header-modern profile-header-desktop">
             <div class="profile-header-left-modern">
                 <div class="profile-avatar-modern">
-                    <img src="https://ui-avatars.com/api/?name=Rameez+Nazar&background=00FF88&color=000&size=200" alt="Profile Avatar">
+                    <img src="{{ auth()->user()->profile_photo ? asset(auth()->user()->profile_photo) : 'https://ui-avatars.com/api/?name=' . urlencode(auth()->user()->name) . '&background=00FF88&color=000&size=200' }}" alt="Profile Avatar">
                     <div class="profile-avatar-badge">
                         <i class="fas fa-camera"></i>
                     </div>
                 </div>
                 <div class="profile-info-modern">
-                    <h2 class="profile-name-modern">Rameez Nazar</h2>
-                    <p class="profile-email-modern">ramiznazar600@gmail.com</p>
+                    <h2 class="profile-name-modern">{{ auth()->user()->name }}</h2>
+                    <p class="profile-email-modern">{{ auth()->user()->email }}</p>
                     <div class="profile-rank-modern">
                         <div class="profile-rank-icon">
                             <i class="fas fa-star"></i>
@@ -38,20 +38,13 @@
                     </div>
                 </div>
             </div>
-            <div class="profile-header-actions-modern">
-                <button class="profile-edit-btn-modern" id="editProfileBtn">
-                    <i class="fas fa-edit"></i>
-                    <span>Edit Profile</span>
-                </button>
-            </div>
+            {{-- Edit Profile button removed - profile editing is now in Settings page --}}
         </div>
 
         <!-- Mobile Header -->
         <div class="profile-mobile-header">
             <h2 class="profile-mobile-title">Account</h2>
-            <button class="profile-mobile-edit-btn" id="editProfileBtnMobile">
-                Edit
-            </button>
+            {{-- Edit button removed - profile editing is now in Settings page --}}
         </div>
 
         <!-- Navigation Tabs -->
@@ -68,28 +61,18 @@
         <div class="profile-tab-content-modern active" id="accountTab">
             <div class="profile-tab-header-modern profile-tab-header-desktop">
                 <h3 class="profile-tab-title-modern">Account Information</h3>
-                <p class="profile-tab-subtitle-modern">Update your personal details and contact information</p>
+                <p class="profile-tab-subtitle-modern">View your personal details. To edit your profile, go to Settings page.</p>
             </div>
 
             <div class="profile-form-modern">
                 <div class="profile-form-grid-modern">
                     <div class="profile-form-group-modern">
                         <label class="profile-form-label-modern">
-                            <span>First Name</span>
+                            <span>Full Name</span>
                         </label>
                         <div class="profile-input-wrapper">
                             <i class="fas fa-user profile-input-icon"></i>
-                            <input type="text" class="profile-form-input-modern" id="firstName" value="Rameez Nazar" placeholder="Enter your First Name" readonly>
-                        </div>
-                    </div>
-
-                    <div class="profile-form-group-modern">
-                        <label class="profile-form-label-modern">
-                            <span>Last Name</span>
-                        </label>
-                        <div class="profile-input-wrapper">
-                            <i class="fas fa-user profile-input-icon"></i>
-                            <input type="text" class="profile-form-input-modern" id="lastName" placeholder="Enter your Last Name" readonly>
+                            <input type="text" class="profile-form-input-modern" value="{{ auth()->user()->name }}" readonly>
                         </div>
                     </div>
 
@@ -99,7 +82,7 @@
                         </label>
                         <div class="profile-input-wrapper">
                             <i class="fas fa-envelope profile-input-icon"></i>
-                            <input type="email" class="profile-form-input-modern" id="email" value="ramiznazar600@gmail.com" readonly>
+                            <input type="email" class="profile-form-input-modern" value="{{ auth()->user()->email }}" readonly>
                         </div>
                     </div>
 
@@ -109,19 +92,26 @@
                         </label>
                         <div class="profile-input-wrapper">
                             <i class="fas fa-phone profile-input-icon"></i>
-                            <input type="tel" class="profile-form-input-modern" id="phone" value="+923262853600" readonly>
+                            <input type="tel" class="profile-form-input-modern" value="{{ auth()->user()->phone ?? 'N/A' }}" readonly>
+                        </div>
+                    </div>
+
+                    <div class="profile-form-group-modern">
+                        <label class="profile-form-label-modern">
+                            <span>Referral Code (UID)</span>
+                        </label>
+                        <div class="profile-input-wrapper">
+                            <i class="fas fa-id-card profile-input-icon"></i>
+                            <input type="text" class="profile-form-input-modern" value="{{ auth()->user()->refer_code }}" readonly>
                         </div>
                     </div>
                 </div>
 
                 <div class="profile-form-actions-modern">
-                    <button class="profile-save-btn-modern" id="saveProfileBtn" style="display: none;">
-                        <i class="fas fa-save"></i>
-                        <span>Save Changes</span>
-                    </button>
-                    <button class="profile-cancel-btn-modern" id="cancelProfileBtn" style="display: none;">
-                        <span>Cancel</span>
-                    </button>
+                    <a href="{{ route('settings.index') }}" class="profile-save-btn-modern" style="text-decoration: none; display: inline-flex;">
+                        <i class="fas fa-cog"></i>
+                        <span>Go to Settings to Edit Profile</span>
+                    </a>
                 </div>
             </div>
         </div>
@@ -193,6 +183,10 @@
 </div>
 
 @push('scripts')
+<script>
+    // Pass route URL to JavaScript
+    const updatePasswordRoute = '{{ route("profile.update-password") }}';
+</script>
 <script src="{{ asset('assets/dashboard/js/profile.js') }}"></script>
 @endpush
 @endsection

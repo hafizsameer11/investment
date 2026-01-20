@@ -33,6 +33,7 @@ class User extends Authenticatable implements CanResetPassword
         'referral_earning',
         'net_balance',
         'total_invested',
+        'profile_photo',
     ];
 
     /**

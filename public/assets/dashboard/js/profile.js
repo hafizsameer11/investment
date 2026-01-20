@@ -9,19 +9,13 @@
     // DOM Elements
     const tabs = document.querySelectorAll('.profile-tab-modern, .profile-tab');
     const tabContents = document.querySelectorAll('.profile-tab-content-modern, .profile-tab-content');
-    const editBtn = document.getElementById('editProfileBtn');
-    const editBtnMobile = document.getElementById('editProfileBtnMobile');
-    const saveBtn = document.getElementById('saveProfileBtn');
-    const cancelBtn = document.getElementById('cancelProfileBtn');
     const savePasswordBtn = document.getElementById('savePasswordBtn');
-    const formInputs = document.querySelectorAll('.profile-form-input-modern, .profile-form-input');
-    let isEditMode = false;
 
     // Initialize
     document.addEventListener('DOMContentLoaded', function() {
         highlightActiveNavItem();
         initTabs();
-        initEditMode();
+        initPasswordChange();
     });
 
     /**
@@ -82,93 +76,9 @@
     }
 
     /**
-     * Toggle Edit Mode
+     * Initialize Password Change
      */
-    function toggleEditMode() {
-        isEditMode = !isEditMode;
-        
-        if (isEditMode) {
-            // Enable edit mode
-            formInputs.forEach(input => {
-                if (input.id !== 'email' && input.closest('#accountTab')) { // Keep email read-only, only edit account tab
-                    input.removeAttribute('readonly');
-                    input.classList.add('editable');
-                }
-            });
-            
-            // Show save and cancel buttons
-            if (saveBtn) saveBtn.style.display = 'flex';
-            if (cancelBtn) cancelBtn.style.display = 'flex';
-            
-            // Hide edit buttons
-            if (editBtn) editBtn.style.display = 'none';
-            if (editBtnMobile) editBtnMobile.style.display = 'none';
-        }
-    }
-
-    /**
-     * Initialize Edit Mode
-     */
-    function initEditMode() {
-        // Desktop edit button
-        if (editBtn) {
-            editBtn.addEventListener('click', toggleEditMode);
-        }
-
-        // Mobile edit button
-        if (editBtnMobile) {
-            editBtnMobile.addEventListener('click', toggleEditMode);
-        }
-
-        // Save button handler
-        if (saveBtn) {
-            saveBtn.addEventListener('click', function() {
-                // Disable edit mode
-                formInputs.forEach(input => {
-                    if (input.closest('#accountTab')) {
-                        input.setAttribute('readonly', 'readonly');
-                        input.classList.remove('editable');
-                    }
-                });
-                
-                // Hide save and cancel buttons
-                this.style.display = 'none';
-                if (cancelBtn) cancelBtn.style.display = 'none';
-                
-                // Show edit buttons
-                if (editBtn) editBtn.style.display = 'flex';
-                if (editBtnMobile) editBtnMobile.style.display = 'block';
-                
-                isEditMode = false;
-                
-                // Show success message
-                showNotification('Profile updated successfully!', 'success');
-            });
-        }
-
-        // Cancel button handler
-        if (cancelBtn) {
-            cancelBtn.addEventListener('click', function() {
-                // Disable edit mode
-                formInputs.forEach(input => {
-                    if (input.closest('#accountTab')) {
-                        input.setAttribute('readonly', 'readonly');
-                        input.classList.remove('editable');
-                    }
-                });
-                
-                // Hide save and cancel buttons
-                this.style.display = 'none';
-                if (saveBtn) saveBtn.style.display = 'none';
-                
-                // Show edit buttons
-                if (editBtn) editBtn.style.display = 'flex';
-                if (editBtnMobile) editBtnMobile.style.display = 'block';
-                
-                isEditMode = false;
-            });
-        }
-
+    function initPasswordChange() {
         // Save password button handler
         if (savePasswordBtn) {
             savePasswordBtn.addEventListener('click', function() {
@@ -177,8 +87,18 @@
                 const confirmPassword = document.getElementById('confirmPassword');
                 
                 // Basic validation
-                if (!currentPassword.value || !newPassword.value || !confirmPassword.value) {
-                    showNotification('Please fill in all password fields', 'error');
+                if (!currentPassword || !currentPassword.value) {
+                    showNotification('Please enter your current password', 'error');
+                    return;
+                }
+                
+                if (!newPassword || !newPassword.value) {
+                    showNotification('Please enter a new password', 'error');
+                    return;
+                }
+                
+                if (!confirmPassword || !confirmPassword.value) {
+                    showNotification('Please confirm your new password', 'error');
                     return;
                 }
                 
@@ -192,13 +112,55 @@
                     return;
                 }
                 
-                // Clear password fields
-                currentPassword.value = '';
-                newPassword.value = '';
-                confirmPassword.value = '';
+                // Disable button during submission
+                const originalText = this.innerHTML;
+                this.disabled = true;
+                this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> <span>Updating...</span>';
                 
-                // Show success message
-                showNotification('Password updated successfully!', 'success');
+                // Get CSRF token
+                const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
+                
+                // Update password via AJAX
+                fetch(typeof updatePasswordRoute !== 'undefined' ? updatePasswordRoute : '/user/dashboard/profile/update-password', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': csrfToken || '',
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        current_password: currentPassword.value,
+                        new_password: newPassword.value,
+                        new_password_confirmation: confirmPassword.value
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Clear password fields
+                        currentPassword.value = '';
+                        newPassword.value = '';
+                        confirmPassword.value = '';
+                        
+                        // Show success message
+                        showNotification('Password updated successfully!', 'success');
+                    } else {
+                        showNotification(data.message || 'Failed to update password', 'error');
+                    }
+                    
+                    // Re-enable button
+                    this.disabled = false;
+                    this.innerHTML = originalText;
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    showNotification('An error occurred while updating password', 'error');
+                    
+                    // Re-enable button
+                    this.disabled = false;
+                    this.innerHTML = originalText;
+                });
             });
         }
     }
