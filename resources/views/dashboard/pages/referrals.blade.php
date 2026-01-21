@@ -3121,7 +3121,7 @@ ls-referrer-section-new {
     </div>
 
     <!-- Earning Wallet Card -->
-    <div class="referrals-wallet-section-new">
+    {{-- <div class="referrals-wallet-section-new">
         <div class="referrals-wallet-header-new">
             <div class="referrals-wallet-title-section-new">
                 <h3 class="referrals-wallet-title-new">Referral Earnings Wallet</h3>
@@ -3159,7 +3159,7 @@ ls-referrer-section-new {
                 <span>Claim Earnings</span>
             </button>
         </div>
-    </div>
+    </div> --}}
 
     <!-- Referral Tools Section -->
     <div class="referrals-tools-section-new">
@@ -3718,10 +3718,10 @@ ls-referrer-section-new {
         // Close dropdown
         const dropdown = document.querySelector('.referrals-network-dropdown-new');
         dropdown.classList.remove('active');
-        
+
         // Save current scroll position
         const scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
-        
+
         // Update URL without reloading
         const url = new URL(window.location.href);
         if (level === 'all') {
@@ -3731,13 +3731,13 @@ ls-referrer-section-new {
         }
         url.searchParams.delete('page'); // Reset to first page when filtering
         window.history.pushState({ level: level }, '', url.toString());
-        
+
         // Update filter button text
         const filterText = document.getElementById('levelFilterText');
         if (filterText) {
             filterText.textContent = level === 'all' ? 'All' : 'Level ' + level;
         }
-        
+
         // Update active state in dropdown
         document.querySelectorAll('.referrals-network-dropdown-item-new').forEach(item => {
             item.classList.remove('active');
@@ -3746,7 +3746,7 @@ ls-referrer-section-new {
                 checkIcon.remove();
             }
         });
-        
+
         // Find and activate the selected item
         const selectedItem = Array.from(document.querySelectorAll('.referrals-network-dropdown-item-new')).find(item => {
             const span = item.querySelector('span');
@@ -3755,19 +3755,19 @@ ls-referrer-section-new {
                 (level !== 'all' && span.textContent.trim() === 'Level ' + level)
             );
         });
-        
+
         if (selectedItem) {
             selectedItem.classList.add('active');
             const checkIcon = document.createElement('i');
             checkIcon.className = 'fas fa-check';
             selectedItem.appendChild(checkIcon);
         }
-        
+
         // Show loading state
         const tableWrapper = document.querySelector('.referrals-network-table-wrapper-new');
         const originalContent = tableWrapper.innerHTML;
         tableWrapper.innerHTML = '<div style="padding: 3rem; text-align: center; color: var(--text-secondary);"><i class="fas fa-spinner fa-spin" style="font-size: 2rem; margin-bottom: 1rem;"></i><p>Loading...</p></div>';
-        
+
         // Make AJAX request
         fetch(url.toString(), {
             method: 'GET',
@@ -3781,7 +3781,7 @@ ls-referrer-section-new {
             if (data.success) {
                 // Update table content
                 updateReferralsTable(data.referrals, data.pagination);
-                
+
                 // Restore scroll position
                 window.scrollTo(0, scrollPosition);
             } else {
@@ -3795,15 +3795,15 @@ ls-referrer-section-new {
             alert('Failed to load referrals. Please try again.');
         });
     }
-    
+
     function updateReferralsTable(referrals, pagination) {
         const tableWrapper = document.querySelector('.referrals-network-table-wrapper-new');
         let html = '<table class="referrals-network-table-new">';
-        
+
         if (referrals.length > 0) {
             html += '<thead><tr><th>User Info</th><th>Invested Amount</th><th>Referral Earning</th></tr></thead>';
             html += '<tbody>';
-            
+
             referrals.forEach(referral => {
                 const referralData = JSON.parse(JSON.stringify(referral));
                 const name = referralData.name || 'N/A';
@@ -3814,7 +3814,7 @@ ls-referrer-section-new {
                 const referralEarning = parseFloat(referralData.referral_earning || 0);
                 const createdAt = new Date(referralData.created_at);
                 const formattedDate = createdAt.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
-                
+
                 html += `<tr class="referral-row-clickable" data-referral='${JSON.stringify(referralData)}' style="cursor: pointer;">`;
                 html += '<td>';
                 html += '<div class="referrals-network-mobile-user-info" style="display: flex; align-items: center; gap: 1rem;">';
@@ -3835,7 +3835,7 @@ ls-referrer-section-new {
                 html += `<div class="referrals-network-mobile-date">${formattedDate}</div>`;
                 html += '</td></tr>';
             });
-            
+
             html += '</tbody>';
         } else {
             html += '<tbody><tr><td colspan="3" class="referrals-network-empty-new">';
@@ -3846,20 +3846,20 @@ ls-referrer-section-new {
             html += '<button class="referrals-network-invite-btn-new" onclick="copyReferralLink()"><i class="fas fa-share-alt"></i><span>Invite Now</span></button>';
             html += '</div></td></tr></tbody>';
         }
-        
+
         html += '</table>';
-        
+
         // Add pagination if needed
         if (pagination.last_page > 1) {
             html += '<div style="padding: 1.5rem; display: flex; justify-content: center; align-items: center; gap: 0.5rem; border-top: 1px solid rgba(255, 255, 255, 0.1);">';
-            
+
             // Previous button
             if (pagination.current_page === 1) {
                 html += '<button disabled style="padding: 0.5rem 1rem; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; color: var(--text-secondary); cursor: not-allowed;"><i class="fas fa-chevron-left"></i></button>';
             } else {
                 html += `<a href="${pagination.previous_page_url}" class="pagination-link" style="padding: 0.5rem 1rem; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; color: var(--text-primary); text-decoration: none;"><i class="fas fa-chevron-left"></i></a>`;
             }
-            
+
             // Page numbers
             Object.keys(pagination.url_range).forEach(page => {
                 const pageUrl = pagination.url_range[page];
@@ -3869,19 +3869,19 @@ ls-referrer-section-new {
                     html += `<a href="${pageUrl}" class="pagination-link" style="padding: 0.5rem 1rem; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; color: var(--text-primary); text-decoration: none;">${page}</a>`;
                 }
             });
-            
+
             // Next button
             if (pagination.has_more_pages) {
                 html += `<a href="${pagination.next_page_url}" class="pagination-link" style="padding: 0.5rem 1rem; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; color: var(--text-primary); text-decoration: none;"><i class="fas fa-chevron-right"></i></a>`;
             } else {
                 html += '<button disabled style="padding: 0.5rem 1rem; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; color: var(--text-secondary); cursor: not-allowed;"><i class="fas fa-chevron-right"></i></button>';
             }
-            
+
             html += '</div>';
         }
-        
+
         tableWrapper.innerHTML = html;
-        
+
         // Re-attach click handlers for referral rows
         document.querySelectorAll('.referral-row-clickable').forEach(row => {
             row.addEventListener('click', function(e) {
@@ -3906,7 +3906,7 @@ ls-referrer-section-new {
     function filterByLevel(level) {
         selectLevel(level);
     }
-    
+
     // Handle pagination links with AJAX
     document.addEventListener('click', function(e) {
         const paginationLink = e.target.closest('.pagination-link');
@@ -3916,15 +3916,15 @@ ls-referrer-section-new {
             if (url) {
                 // Save scroll position
                 const scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
-                
+
                 // Update URL
                 window.history.pushState({}, '', url);
-                
+
                 // Show loading state
                 const tableWrapper = document.querySelector('.referrals-network-table-wrapper-new');
                 const originalContent = tableWrapper.innerHTML;
                 tableWrapper.innerHTML = '<div style="padding: 3rem; text-align: center; color: var(--text-secondary);"><i class="fas fa-spinner fa-spin" style="font-size: 2rem; margin-bottom: 1rem;"></i><p>Loading...</p></div>';
-                
+
                 // Make AJAX request
                 fetch(url, {
                     method: 'GET',
