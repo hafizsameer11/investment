@@ -652,7 +652,7 @@
                         <div class="support-item-header-new">
                             <div class="support-item-label-new">WhatsApp Channel</div>
                         </div>
-                        <div class="support-item-value-new" id="whatsappChannel">https://whatsapp.com/channel/0029VbC0KoL5kg73qAwejl3L</div>
+                        <div class="support-item-value-new" id="whatsappChannel">https://whatsapp.com/channel/0029VbBThps8qIzqfqkJIu0u</div>
                         <div class="support-item-actions-new">
                             <button class="support-copy-btn-new" data-copy="whatsappChannel" title="Copy">
                                 <i class="fas fa-copy"></i>
@@ -688,7 +688,7 @@
                         <div class="support-item-header-new">
                             <div class="support-item-label-new">Telegram Channel</div>
                         </div>
-                        <div class="support-item-value-new" id="telegramChannel">https://t.me/yourchannel</div>
+                        <div class="support-item-value-new" id="telegramChannel">https://t.me/+Wu5iCxAajHdjODNk</div>
                         <div class="support-item-actions-new">
                             <button class="support-copy-btn-new" data-copy="telegramChannel" title="Copy">
                                 <i class="fas fa-copy"></i>
@@ -757,7 +757,7 @@
             const input = document.getElementById(targetId);
             if (input) {
                 const text = input.textContent || input.innerText;
-                
+
                 // Create temporary textarea for copying
                 const textarea = document.createElement('textarea');
                 textarea.value = text;
@@ -767,12 +767,12 @@
                 textarea.select();
                 document.execCommand('copy');
                 document.body.removeChild(textarea);
-                
+
                 // Visual feedback
                 const originalHTML = this.innerHTML;
                 this.classList.add('copied');
                 this.innerHTML = '<i class="fas fa-check"></i><span>Copied!</span>';
-                
+
                 setTimeout(() => {
                     this.classList.remove('copied');
                     this.innerHTML = originalHTML;

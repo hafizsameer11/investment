@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Dashboard;
 use App\Http\Controllers\Controller;
 use App\Models\RewardLevel;
 use App\Services\RewardLevelService;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class GoalsController extends Controller
@@ -46,12 +47,14 @@ class GoalsController extends Controller
         $levelsWithProgress = $rewardLevels->map(function ($level) use ($user, $achievedLevelIds, $currentWorkingLevelId) {
             $progress = RewardLevelService::getUserLevelProgress($user, $level);
             $isAchieved = in_array($level->id, $achievedLevelIds);
+            $isClaimed = $progress['is_claimed'] ?? false;
             // Only mark as current if it's the next uncompleted level (not achieved)
             $isCurrent = !$isAchieved && $currentWorkingLevelId && $level->id == $currentWorkingLevelId;
             
             return [
                 'level' => $level,
                 'is_achieved' => $isAchieved,
+                'is_claimed' => $isClaimed,
                 'is_current' => $isCurrent,
                 'progress_percentage' => $progress['progress_percentage'],
                 'current_progress' => $progress['current_progress'],
@@ -75,6 +78,29 @@ class GoalsController extends Controller
             'nextLevel' => $nextLevel,
             'nextLevelProgress' => $nextLevelProgress,
         ]);
+    }
+
+    /**
+     * Claim a reward for a completed level
+     */
+    public function claimReward(Request $request, int $levelId)
+    {
+        $user = Auth::user();
+        
+        $result = RewardLevelService::claimRewardLevel($user, $levelId);
+        
+        if ($result['success']) {
+            return response()->json([
+                'success' => true,
+                'message' => $result['message'],
+                'reward_amount' => $result['reward_amount'],
+            ]);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => $result['message'],
+            ], 400);
+        }
     }
 }
 

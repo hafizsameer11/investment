@@ -14,11 +14,15 @@ class UserRewardLevel extends Model
         'reward_level_id',
         'achieved_at',
         'reward_amount_credited',
+        'is_claimed',
+        'claimed_at',
     ];
 
     protected $casts = [
         'achieved_at' => 'datetime',
         'reward_amount_credited' => 'decimal:2',
+        'is_claimed' => 'boolean',
+        'claimed_at' => 'datetime',
     ];
 
     /**

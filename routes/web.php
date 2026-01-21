@@ -74,6 +74,7 @@ Route::prefix('user/dashboard')->middleware('auth')->group(function () {
     Route::post('/investments/{investment}/update', [InvestmentController::class, 'updateInvestment'])->name('investments.update');
 
     Route::get('/goals', [GoalsController::class, 'index'])->name('goals.index');
+    Route::post('/goals/{levelId}/claim', [GoalsController::class, 'claimReward'])->name('goals.claim');
     Route::get('/targets', [TargetsController::class, 'index'])->name('targets.index');
     Route::get('/referrals', [ReferralsController::class, 'index'])->name('referrals.index');
     Route::get('/referrals/claim-earnings', [ReferralsController::class, 'claimEarningsPage'])->name('referrals.claim-earnings');

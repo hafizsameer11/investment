@@ -1165,7 +1165,7 @@
         }
 
         .deposit-transaction-date {
-            font-size: 0.875rem;
+            font-size: 0.8rem;
             color: var(--text-secondary);
             margin: 0;
         }
@@ -1485,9 +1485,9 @@
                                     @if($deposit->status === 'approved') amount-success
                                     @elseif($deposit->status === 'rejected') amount-danger
                                     @else amount-warning
-                                    @endif">+${{ number_format($deposit->amount, 2) }}</div>
+                                    @endif">+${{ number_format(sprintf('%.2f', (float)$deposit->amount), 2, '.', ',') }}</div>
                                 @if($deposit->status === 'approved')
-                                    <p class="deposit-transaction-wallet">Fund Wallet: ${{ number_format(auth()->user()->fund_wallet ?? 0, 2) }}</p>
+                                    <p class="deposit-transaction-wallet">Fund Wallet: ${{ number_format(sprintf('%.2f', (float)(auth()->user()->fund_wallet ?? 0)), 2, '.', ',') }}</p>
                                 @else
                                     <p class="deposit-transaction-wallet">Fund Wallet: -</p>
                                 @endif

@@ -2239,7 +2239,7 @@
                 <span class="balance-amount-large" id="totalBalance">${{ number_format($user->net_balance) }}</span>
                 <!-- Telegram Group Box -->
                 <div class="telegram-support-box">
-                    <a href="https://t.me/YOUR_TELEGRAM_GROUP" target="_blank" rel="noopener noreferrer" class="telegram-link-box">
+                    <a href="https://t.me/+Wu5iCxAajHdjODNk" target="_blank" rel="noopener noreferrer" class="telegram-link-box">
                         <div class="telegram-icon-wrapper">
                             <i class="fab fa-telegram"></i>
                         </div>
@@ -2263,7 +2263,7 @@
 
                 <!-- WhatsApp Group Box -->
                 <div class="whatsapp-support-box">
-                    <a href="https://chat.whatsapp.com/YOUR_GROUP_INVITE_CODE" target="_blank" rel="noopener noreferrer" class="whatsapp-link-box">
+                    <a href="https://whatsapp.com/channel/0029VbBThps8qIzqfqkJIu0u" target="_blank" rel="noopener noreferrer" class="whatsapp-link-box">
                         <div class="whatsapp-icon-wrapper">
                             <i class="fab fa-whatsapp"></i>
                         </div>

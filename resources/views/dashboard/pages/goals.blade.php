@@ -468,7 +468,7 @@
         background: linear-gradient(135deg, #FFB21E 0%, #FF8A1D 100%);
         color: #000;
         border-radius: 20px;
-        font-size: 0.75rem;
+        font-size: 0.5rem;
         font-weight: 700;
         text-transform: uppercase;
         letter-spacing: 0.5px;
@@ -691,6 +691,17 @@
         background: linear-gradient(90deg, #22C55E 0%, #16A34A 100%);
     }
 
+    .goals-level-card-new.archived {
+        background: linear-gradient(135deg, rgba(107, 114, 128, 0.1) 0%, rgba(75, 85, 99, 0.05) 100%);
+        border: 2px solid rgba(107, 114, 128, 0.5);
+        opacity: 0.7;
+    }
+
+    .goals-level-card-new.archived::before {
+        transform: scaleX(1);
+        background: linear-gradient(90deg, #6B7280 0%, #4B5563 100%);
+    }
+
     .goals-level-badge-premium-new {
         position: absolute;
         top: 1rem;
@@ -815,6 +826,45 @@
         font-size: 0.75rem;
         color: var(--text-secondary);
         font-weight: 600;
+    }
+
+    .goals-level-claim-section-new {
+        text-align: center;
+    }
+
+    .goals-claim-btn-new {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.75rem 1.5rem;
+        background: linear-gradient(135deg, #22C55E 0%, #16A34A 100%);
+        color: #000;
+        border: none;
+        border-radius: 12px;
+        font-size: 0.9375rem;
+        font-weight: 700;
+        cursor: pointer;
+        transition: var(--transition);
+        box-shadow: 0 4px 16px rgba(34, 197, 94, 0.4);
+    }
+
+    .goals-claim-btn-new:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 24px rgba(34, 197, 94, 0.6);
+    }
+
+    .goals-claim-btn-new:active {
+        transform: translateY(0);
+    }
+
+    .goals-claim-btn-new:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        transform: none;
+    }
+
+    .goals-claim-btn-new i {
+        font-size: 1rem;
     }
 
     /* Mobile Redesign Styles */
@@ -1370,10 +1420,11 @@
                 @php
                     $level = $levelData['level'];
                     $isAchieved = $levelData['is_achieved'];
+                    $isClaimed = isset($levelData['is_claimed']) && $levelData['is_claimed'];
                     $progressPercentage = $levelData['progress_percentage'];
                     $currentProgress = $levelData['current_progress'];
                     $remainingNeeded = $levelData['remaining_needed'];
-                    
+
                     // Determine icon color class
                     $iconColorClass = 'goals-level-icon-gold-new';
                     if ($level->icon_color === 'silver') {
@@ -1387,9 +1438,11 @@
                 @php
                     $isCurrent = isset($levelData['is_current']) && $levelData['is_current'];
                 @endphp
-                <div class="goals-level-card-new {{ $isAchieved ? 'achieved' : '' }} {{ $isCurrent ? 'current' : '' }} {{ $level->is_premium ? 'premium' : '' }}">
-                    @if($isAchieved)
-                        <div class="goals-reward-badge-new" style="display: block;">Achieved</div>
+                <div class="goals-level-card-new {{ $isClaimed ? 'archived' : '' }} {{ $isAchieved && !$isClaimed ? 'achieved' : '' }} {{ $isCurrent ? 'current' : '' }} {{ $level->is_premium ? 'premium' : '' }}">
+                    @if($isClaimed)
+                        <div class="goals-reward-badge-new" style="display: block; background: linear-gradient(135deg, #6B7280 0%, #4B5563 100%);">Archived</div>
+                    @elseif($isAchieved)
+                        <div class="goals-reward-badge-new" style="display: block;">Ready to Claim</div>
                     @elseif($isCurrent)
                         <div class="goals-reward-badge-new" style="display: block; background: linear-gradient(135deg, #00AAFF 0%, #0088CC 100%);">Current</div>
                     @endif
@@ -1412,18 +1465,30 @@
                                 <span class="goals-level-detail-value-new goals-level-reward-new">${{ rtrim(rtrim(number_format($level->reward_amount, 2, '.', ''), '0'), '.') }}</span>
                             </div>
                         </div>
-                        <div class="goals-level-progress-new">
-                            <div class="goals-level-progress-bar-wrapper-new">
-                                <div class="goals-level-progress-fill-new" style="width: {{ $progressPercentage }}%"></div>
-                            </div>
-                            <div class="goals-level-progress-text-new">
-                                @if($isAchieved)
-                                    Achieved
-                                @else
-                                    {{ number_format($progressPercentage, 1) }}%
+                        @if(!$isClaimed)
+                            <div class="goals-level-progress-new">
+                                @if($isCurrent)
+                                    <div class="goals-level-progress-bar-wrapper-new">
+                                        <div class="goals-level-progress-fill-new" style="width: {{ $progressPercentage }}%"></div>
+                                    </div>
+                                    <div class="goals-level-progress-text-new">
+                                        {{ number_format($progressPercentage, 1) }}%
+                                    </div>
+                                @elseif($isAchieved)
+                                    <div class="goals-level-progress-text-new" style="color: var(--success-color); font-weight: 700;">
+                                        Ready to Claim
+                                    </div>
                                 @endif
                             </div>
-                        </div>
+                        @endif
+                        @if($isAchieved && !$isClaimed)
+                            <div class="goals-level-claim-section-new" style="margin-top: 1rem;">
+                                <button class="goals-claim-btn-new" data-level-id="{{ $level->id }}" data-level-name="{{ $level->level_name }}" data-reward-amount="{{ $level->reward_amount }}">
+                                    <i class="fas fa-gift"></i>
+                                    <span>Claim Reward</span>
+                                </button>
+                            </div>
+                        @endif
                     </div>
                 </div>
             @endforeach
@@ -1433,5 +1498,64 @@
 
 @push('scripts')
 <script src="{{ asset('assets/dashboard/js/goals.js') }}"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Handle claim button clicks
+        const claimButtons = document.querySelectorAll('.goals-claim-btn-new');
+
+        claimButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                if (this.disabled) {
+                    return;
+                }
+
+                const levelId = this.getAttribute('data-level-id');
+                const levelName = this.getAttribute('data-level-name');
+                const rewardAmount = this.getAttribute('data-reward-amount');
+
+                // Disable button and show loading state
+                this.disabled = true;
+                const originalHTML = this.innerHTML;
+                this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> <span>Claiming...</span>';
+
+                // Make AJAX request
+                const claimUrl = `/user/dashboard/goals/${levelId}/claim`;
+                fetch(claimUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                        'Accept': 'application/json'
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Show success message
+                        alert('Success! ' + data.message);
+
+                        // Reload page to update balances and UI
+                        window.location.reload();
+                    } else {
+                        // Show error message
+                        alert('Error: ' + (data.message || 'Failed to claim reward. Please try again.'));
+
+                        // Re-enable button
+                        this.disabled = false;
+                        this.innerHTML = originalHTML;
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('An error occurred. Please try again.');
+
+                    // Re-enable button
+                    this.disabled = false;
+                    this.innerHTML = originalHTML;
+                });
+            });
+        });
+    });
+</script>
 @endpush
 @endsection

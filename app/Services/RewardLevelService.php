@@ -7,6 +7,7 @@ use App\Models\RewardLevel;
 use App\Models\UserRewardLevel;
 use App\Models\Investment;
 use App\Models\Transaction;
+use App\Services\NotificationService;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
@@ -130,28 +131,19 @@ class RewardLevelService
                     // Complete this level
                     $rewardAmount = (float) $level->reward_amount;
                     
-                    // Mark level as achieved
+                    // Mark level as achieved (but not claimed yet)
                     UserRewardLevel::create([
                         'user_id' => $user->id,
                         'reward_level_id' => $level->id,
                         'achieved_at' => now(),
                         'reward_amount_credited' => $rewardAmount,
+                        'is_claimed' => false,
                     ]);
                     
-                    // Add reward to referral earning
-                    $user->referral_earning += $rewardAmount;
-                    $user->updateNetBalance();
+                    // Send notification that level is completed
+                    NotificationService::sendRewardLevelCompleted($user, $level);
                     
-                    // Create transaction record for referral earning
-                    Transaction::create([
-                        'user_id' => $user->id,
-                        'type' => 'referral_earning',
-                        'amount' => $rewardAmount,
-                        'description' => "Reward for completing {$level->level_name}",
-                        'reference_id' => $level->id,
-                        'reference_type' => RewardLevel::class,
-                        'status' => 'completed',
-                    ]);
+                    // DO NOT add reward to referral earning yet - user must claim it
                     
                     $completedLevels[] = [
                         'level_id' => $level->id,
@@ -248,28 +240,19 @@ class RewardLevelService
                         ->first();
                     
                     if (!$existingAchievement) {
-                        // Mark level as achieved
+                        // Mark level as achieved (but not claimed yet)
                         UserRewardLevel::create([
                             'user_id' => $user->id,
                             'reward_level_id' => $level->id,
                             'achieved_at' => now(),
                             'reward_amount_credited' => $rewardAmount,
+                            'is_claimed' => false,
                         ]);
                         
-                        // Add reward to referral earning
-                        $user->referral_earning += $rewardAmount;
-                        $user->updateNetBalance();
+                        // Send notification that level is completed
+                        NotificationService::sendRewardLevelCompleted($user, $level);
                         
-                        // Create transaction record for referral earning
-                        Transaction::create([
-                            'user_id' => $user->id,
-                            'type' => 'referral_earning',
-                            'amount' => $rewardAmount,
-                            'description' => "Reward for completing {$level->level_name}",
-                            'reference_id' => $level->id,
-                            'reference_type' => RewardLevel::class,
-                            'status' => 'completed',
-                        ]);
+                        // DO NOT add reward to referral earning yet - user must claim it
                         
                         $completedLevels[] = [
                             'level_id' => $level->id,
@@ -341,14 +324,121 @@ class RewardLevelService
         $currentProgress = max(0, $totalReferralInvestment - $previousLevelsInvestment);
         $progressPercentage = $isAchieved ? 100 : min(100, ($currentProgress / $remainingNeeded) * 100);
         
+        // Get claim status if achieved
+        $isClaimed = false;
+        if ($isAchieved) {
+            $userRewardLevel = UserRewardLevel::where('user_id', $user->id)
+                ->where('reward_level_id', $level->id)
+                ->first();
+            $isClaimed = $userRewardLevel ? $userRewardLevel->is_claimed : false;
+        }
+        
         return [
             'is_achieved' => $isAchieved,
+            'is_claimed' => $isClaimed,
             'total_referral_investment' => $totalReferralInvestment,
             'previous_levels_investment' => $previousLevelsInvestment,
             'current_progress' => $currentProgress,
             'remaining_needed' => max(0, $remainingNeeded),
             'progress_percentage' => $progressPercentage,
         ];
+    }
+
+    /**
+     * Claim a reward level - add reward to referral earnings
+     *
+     * @param User $user
+     * @param int $levelId
+     * @return array
+     */
+    public static function claimRewardLevel(User $user, int $levelId): array
+    {
+        try {
+            DB::beginTransaction();
+            
+            // Get the reward level
+            $level = RewardLevel::findOrFail($levelId);
+            
+            // Check if user has achieved this level
+            $userRewardLevel = UserRewardLevel::where('user_id', $user->id)
+                ->where('reward_level_id', $levelId)
+                ->first();
+            
+            if (!$userRewardLevel) {
+                DB::rollBack();
+                return [
+                    'success' => false,
+                    'message' => 'You have not completed this reward level yet.',
+                ];
+            }
+            
+            // Check if already claimed
+            if ($userRewardLevel->is_claimed) {
+                DB::rollBack();
+                return [
+                    'success' => false,
+                    'message' => 'This reward has already been claimed.',
+                ];
+            }
+            
+            // Claim the reward
+            $rewardAmount = (float) $userRewardLevel->reward_amount_credited;
+            
+            // Update user reward level record
+            $userRewardLevel->is_claimed = true;
+            $userRewardLevel->claimed_at = now();
+            $userRewardLevel->save();
+            
+            // Add reward to referral earning
+            $user->referral_earning += $rewardAmount;
+            $user->updateNetBalance();
+            
+            // Create transaction record for referral earning
+            Transaction::create([
+                'user_id' => $user->id,
+                'type' => 'referral_earning',
+                'amount' => $rewardAmount,
+                'description' => "Reward claimed for completing {$level->level_name}",
+                'reference_id' => $level->id,
+                'reference_type' => RewardLevel::class,
+                'status' => 'completed',
+            ]);
+            
+            DB::commit();
+            
+            return [
+                'success' => true,
+                'message' => "Reward of \${$rewardAmount} has been added to your referral earnings.",
+                'reward_amount' => $rewardAmount,
+            ];
+            
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error('Error claiming reward level: ' . $e->getMessage(), [
+                'user_id' => $user->id,
+                'level_id' => $levelId,
+                'trace' => $e->getTraceAsString(),
+            ]);
+            
+            return [
+                'success' => false,
+                'message' => 'An error occurred while claiming the reward. Please try again.',
+            ];
+        }
+    }
+
+    /**
+     * Get claimable levels for a user (completed but not claimed)
+     *
+     * @param User $user
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public static function getClaimableLevels(User $user)
+    {
+        return UserRewardLevel::where('user_id', $user->id)
+            ->where('is_claimed', false)
+            ->with('rewardLevel')
+            ->get();
     }
 }
 

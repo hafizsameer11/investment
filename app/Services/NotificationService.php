@@ -6,6 +6,7 @@ use App\Models\Notification;
 use App\Models\Deposit;
 use App\Models\Withdrawal;
 use App\Models\User;
+use App\Models\RewardLevel;
 
 class NotificationService
 {
@@ -116,6 +117,24 @@ class NotificationService
 
         // Bulk insert for better performance
         Notification::insert($notifications);
+    }
+
+    /**
+     * Send notification when reward level is completed
+     */
+    public static function sendRewardLevelCompleted(User $user, RewardLevel $level)
+    {
+        $rewardAmount = number_format($level->reward_amount, 2);
+        $investmentRequired = number_format($level->investment_required, 2);
+        
+        Notification::create([
+            'user_id' => $user->id,
+            'type' => 'reward_level_completed',
+            'title' => 'Reward Level Completed',
+            'message' => "Hi {$user->name}, Congratulations! You have completed the {$level->level_name} level. Your total referral investment has reached \${$investmentRequired}. You can now claim your reward of \${$rewardAmount}.",
+            'related_id' => $level->id,
+            'related_type' => RewardLevel::class,
+        ]);
     }
 }
 
