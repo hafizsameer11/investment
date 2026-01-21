@@ -230,10 +230,12 @@ class WalletController extends Controller
         }
 
         // Check user balance
+        // Note: net_balance only shows mining + referral, but withdrawals can use all wallets
         $user = auth()->user();
-        if ($user->net_balance < $amount) {
+        $totalAvailableBalance = ($user->fund_wallet ?? 0) + ($user->mining_earning ?? 0) + ($user->referral_earning ?? 0);
+        if ($totalAvailableBalance < $amount) {
             return redirect()->route('withdraw.index')
-                ->with('error', 'Insufficient balance. Your available balance is $' . number_format($user->net_balance, 2));
+                ->with('error', 'Insufficient balance. Your available balance is $' . number_format($totalAvailableBalance, 2));
         }
 
         return view('dashboard.pages.withdraw-confirm', compact('paymentMethod', 'amount'));
@@ -283,17 +285,19 @@ class WalletController extends Controller
                 ], 422);
             }
 
+            // Calculate total available balance (fund_wallet + mining_earning + referral_earning)
+            // Note: net_balance only shows mining + referral, but withdrawals can use all wallets
+            $totalAvailableBalance = ($user->fund_wallet ?? 0) + ($user->mining_earning ?? 0) + ($user->referral_earning ?? 0);
+            
             // Check user has sufficient balance
-            if ($user->net_balance < $request->amount) {
+            if ($totalAvailableBalance < $request->amount) {
                 return response()->json([
                     'success' => false,
-                    'message' => 'Insufficient balance. Your available balance is $' . number_format($user->net_balance, 2),
+                    'message' => 'Insufficient balance. Your available balance is $' . number_format($totalAvailableBalance, 2),
                 ], 422);
             }
 
-            // Deduct amount from net_balance immediately
-            // We need to deduct from the appropriate wallet(s)
-            // Since net_balance = fund_wallet + mining_earning + referral_earning
+            // Deduct amount from wallets
             // We'll deduct from fund_wallet first, then mining_earning, then referral_earning
             $remainingAmount = $request->amount;
             
@@ -315,7 +319,7 @@ class WalletController extends Controller
                 $remainingAmount -= $deductFromReferral;
             }
 
-            // Update net balance
+            // Update net balance (mining + referral only, excludes fund_wallet)
             $user->updateNetBalance();
 
             // Create withdrawal record

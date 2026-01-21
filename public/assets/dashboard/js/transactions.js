@@ -9,7 +9,7 @@
     // DOM Elements
     const searchInput = document.getElementById('transactionSearch');
     const dateFilter = document.getElementById('transactionDateFilter');
-    const filterBtn = document.querySelector('.transactions-filter-btn-modern, .transactions-filter-btn');
+    const filterBtn = document.querySelector('.transactions-filter-btn-new');
     const tableBody = document.getElementById('transactionsTableBody');
     const prevPageBtn = document.getElementById('prevPage');
     const nextPageBtn = document.getElementById('nextPage');
@@ -24,8 +24,7 @@
     document.addEventListener('DOMContentLoaded', function() {
         highlightActiveNavItem();
         initSearch();
-        initDateFilter();
-        initFilter();
+        initFilters();
         initPagination();
     });
 
@@ -71,34 +70,202 @@
         if (!searchInput) return;
 
         searchInput.addEventListener('input', function(e) {
-            const searchTerm = e.target.value.toLowerCase();
-            filterTransactions(searchTerm);
+            applyFilters();
         });
     }
 
     /**
-     * Initialize Date Filter
+     * Get start and end of week (Monday to Sunday)
      */
-    function initDateFilter() {
-        if (!dateFilter) return;
+    function getWeekRange(weekType) {
+        const now = new Date();
+        const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+        
+        // Get Monday of current week
+        const dayOfWeek = today.getDay();
+        const diffToMonday = dayOfWeek === 0 ? -6 : 1 - dayOfWeek; // If Sunday, go back 6 days, else go to Monday
+        
+        if (weekType === 'this_week') {
+            const weekStart = new Date(today);
+            weekStart.setDate(today.getDate() + diffToMonday);
+            weekStart.setHours(0, 0, 0, 0);
+            
+            const weekEnd = new Date(weekStart);
+            weekEnd.setDate(weekStart.getDate() + 6);
+            weekEnd.setHours(23, 59, 59, 999);
+            
+            return {
+                start: Math.floor(weekStart.getTime() / 1000),
+                end: Math.floor(weekEnd.getTime() / 1000)
+            };
+        } else if (weekType === 'last_week') {
+            const thisWeekStart = new Date(today);
+            thisWeekStart.setDate(today.getDate() + diffToMonday);
+            
+            const lastWeekStart = new Date(thisWeekStart);
+            lastWeekStart.setDate(thisWeekStart.getDate() - 7);
+            lastWeekStart.setHours(0, 0, 0, 0);
+            
+            const lastWeekEnd = new Date(lastWeekStart);
+            lastWeekEnd.setDate(lastWeekStart.getDate() + 6);
+            lastWeekEnd.setHours(23, 59, 59, 999);
+            
+            return {
+                start: Math.floor(lastWeekStart.getTime() / 1000),
+                end: Math.floor(lastWeekEnd.getTime() / 1000)
+            };
+        }
+        
+        return null;
+    }
 
-        dateFilter.addEventListener('change', function(e) {
-            const days = e.target.value;
-            filterByDate(days);
+    /**
+     * Apply filters to transaction table
+     */
+    function applyFilters() {
+        const dateFilterEl = document.getElementById('transactionDateFilter');
+        const typeFilter = document.querySelector('input[name="transactionTypeFilter"]:checked');
+        const searchInputEl = document.getElementById('transactionSearch');
+        const tableRows = document.querySelectorAll('.transactions-table-new tbody tr');
+        
+        const selectedDays = dateFilterEl ? dateFilterEl.value : 'all';
+        const selectedType = typeFilter ? typeFilter.value : 'all';
+        const searchTerm = searchInputEl ? searchInputEl.value.toLowerCase().trim() : '';
+        const now = Math.floor(Date.now() / 1000);
+        
+        // Calculate date range based on filter type
+        let dateRange = null;
+        if (selectedDays === 'this_week' || selectedDays === 'last_week') {
+            dateRange = getWeekRange(selectedDays);
+        } else if (selectedDays !== 'all') {
+            const daysInSeconds = parseInt(selectedDays) * 24 * 60 * 60;
+            dateRange = {
+                start: now - daysInSeconds,
+                end: now
+            };
+        }
+        
+        tableRows.forEach(row => {
+            // Check date filter
+            let passesDateFilter = true;
+            if (dateRange) {
+                const timestamp = parseInt(row.getAttribute('data-transaction-timestamp'));
+                if (timestamp) {
+                    passesDateFilter = timestamp >= dateRange.start && timestamp <= dateRange.end;
+                } else {
+                    passesDateFilter = false;
+                }
+            }
+            
+            // Check type filter
+            let passesTypeFilter = true;
+            if (selectedType !== 'all') {
+                const rowType = row.getAttribute('data-transaction-type');
+                passesTypeFilter = rowType === selectedType;
+            }
+            
+            // Check search filter
+            let passesSearchFilter = true;
+            if (searchTerm) {
+                const text = row.textContent.toLowerCase();
+                passesSearchFilter = text.includes(searchTerm);
+            }
+            
+            // Show row only if it passes all filters
+            row.style.display = (passesDateFilter && passesTypeFilter && passesSearchFilter) ? '' : 'none';
         });
     }
 
     /**
-     * Initialize Filter Button
+     * Initialize Filter Functionality
      */
-    function initFilter() {
-        if (!filterBtn) return;
+    function initFilters() {
+        const dateFilterEl = document.getElementById('transactionDateFilter');
+        const filterBtnEl = document.querySelector('.transactions-filter-btn-new');
+        
+        // Date filter functionality
+        if (dateFilterEl) {
+            dateFilterEl.addEventListener('change', function() {
+                applyFilters();
+            });
+        }
 
-        filterBtn.addEventListener('click', function() {
-            // Placeholder for filter modal
-            console.log('Filter button clicked');
-            // You can add a filter modal here
-        });
+        // Type filter button functionality
+        if (filterBtnEl) {
+            // Create filter dropdown/modal
+            let filterDropdown = document.getElementById('transactionsFilterDropdown');
+            if (!filterDropdown) {
+                filterDropdown = document.createElement('div');
+                filterDropdown.id = 'transactionsFilterDropdown';
+                filterDropdown.className = 'transactions-filter-dropdown';
+                
+                const filterTypes = [
+                    { value: 'all', label: 'All Types' },
+                    { value: 'deposit', label: 'Deposits' },
+                    { value: 'withdrawal', label: 'Withdrawals' },
+                    { value: 'referral_earning', label: 'Referral Earnings' },
+                    { value: 'mining_earning', label: 'Mining Earnings' },
+                ];
+                
+                filterTypes.forEach(type => {
+                    const label = document.createElement('label');
+                    
+                    const input = document.createElement('input');
+                    input.type = 'radio';
+                    input.name = 'transactionTypeFilter';
+                    input.value = type.value;
+                    if (type.value === 'all') {
+                        input.checked = true;
+                    }
+                    
+                    const span = document.createElement('span');
+                    span.textContent = type.label;
+                    
+                    label.appendChild(input);
+                    label.appendChild(span);
+                    filterDropdown.appendChild(label);
+                });
+                
+                // Insert after filter button's parent (controls container)
+                const controlsContainer = filterBtnEl.closest('.transactions-history-controls-new');
+                if (controlsContainer) {
+                    controlsContainer.style.position = 'relative';
+                    controlsContainer.appendChild(filterDropdown);
+                }
+            }
+            
+            // Explicitly hide dropdown on initialization (ensure it's hidden on page load)
+            filterDropdown.style.display = 'none';
+            
+            // Toggle filter dropdown
+            filterBtnEl.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const isVisible = filterDropdown.style.display === 'block' || filterDropdown.style.display === 'flex';
+                if (isVisible) {
+                    filterDropdown.style.display = 'none';
+                } else {
+                    // Check if mobile view (window width <= 480px)
+                    const isMobile = window.innerWidth <= 480;
+                    filterDropdown.style.display = isMobile ? 'block' : 'block';
+                }
+            });
+            
+            // Close dropdown when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!filterBtnEl.contains(e.target) && !filterDropdown.contains(e.target)) {
+                    filterDropdown.style.display = 'none';
+                }
+            });
+            
+            // Handle type filter selection
+            const typeInputs = filterDropdown.querySelectorAll('input[name="transactionTypeFilter"]');
+            typeInputs.forEach(input => {
+                input.addEventListener('change', function() {
+                    applyFilters();
+                    filterDropdown.style.display = 'none';
+                });
+            });
+        }
     }
 
     /**
@@ -120,44 +287,6 @@
                 updatePagination();
             });
         }
-    }
-
-    /**
-     * Filter Transactions by Search Term
-     */
-    function filterTransactions(searchTerm) {
-        const rows = tableBody.querySelectorAll('tr');
-        
-        rows.forEach(row => {
-            const text = row.textContent.toLowerCase();
-            if (text.includes(searchTerm)) {
-                row.style.display = '';
-            } else {
-                row.style.display = 'none';
-            }
-        });
-    }
-
-    /**
-     * Filter Transactions by Date
-     */
-    function filterByDate(days) {
-        if (days === 'all') {
-            // Show all transactions
-            const rows = tableBody.querySelectorAll('tr');
-            rows.forEach(row => {
-                row.style.display = '';
-            });
-            return;
-        }
-
-        const daysAgo = parseInt(days);
-        const cutoffDate = new Date();
-        cutoffDate.setDate(cutoffDate.getDate() - daysAgo);
-
-        // Filter logic would go here
-        // For now, just log the filter
-        console.log('Filtering by date:', daysAgo, 'days');
     }
 
     /**

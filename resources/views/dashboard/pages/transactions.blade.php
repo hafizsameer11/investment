@@ -273,6 +273,45 @@
         color: var(--primary-color);
     }
 
+    .transactions-filter-dropdown {
+        position: absolute;
+        top: 100%;
+        right: 0;
+        margin-top: 0.5rem;
+        background: rgba(20, 20, 25, 0.98);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 12px;
+        padding: 0.75rem;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+        z-index: 1000;
+        min-width: 200px;
+        backdrop-filter: blur(10px);
+        display: none;
+    }
+
+    .transactions-filter-dropdown label {
+        display: flex;
+        align-items: center;
+        padding: 0.75rem;
+        cursor: pointer;
+        border-radius: 8px;
+        transition: var(--transition);
+        color: var(--text-primary);
+    }
+
+    .transactions-filter-dropdown label:hover {
+        background: rgba(255, 178, 30, 0.1);
+    }
+
+    .transactions-filter-dropdown label input[type="radio"] {
+        margin-right: 0.75rem;
+        cursor: pointer;
+    }
+
+    .transactions-filter-dropdown label span {
+        font-size: 0.9375rem;
+    }
+
     .transactions-date-filter-new {
         padding: 0.875rem 1.25rem;
         background: rgba(255, 255, 255, 0.03);
@@ -282,12 +321,26 @@
         font-size: 0.9375rem;
         cursor: pointer;
         transition: var(--transition);
+        appearance: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23ffffff' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 1rem center;
+        padding-right: 2.75rem;
     }
 
     .transactions-date-filter-new:focus {
         outline: none;
         border-color: var(--primary-color);
         box-shadow: 0 0 0 3px rgba(255, 178, 30, 0.1);
+        background-color: rgba(255, 255, 255, 0.05);
+    }
+
+    .transactions-date-filter-new option {
+        background: rgba(20, 20, 25, 0.98);
+        color: var(--text-primary);
+        padding: 0.75rem;
     }
 
     .transactions-history-card-new {
@@ -1161,6 +1214,58 @@
             display: none;
         }
 
+        /* Mobile filter dropdown styling */
+        .transactions-filter-dropdown {
+            position: fixed;
+            top: auto;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            margin-top: 0;
+            margin-bottom: 0;
+            background: rgba(20, 20, 25, 0.98);
+            border: none;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px 20px 0 0;
+            padding: 1.5rem 1rem;
+            padding-bottom: calc(1.5rem + env(safe-area-inset-bottom, 0px));
+            box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.5);
+            z-index: 10000;
+            min-width: auto;
+            max-width: 100%;
+            width: 100%;
+            backdrop-filter: blur(20px);
+            animation: slideUp 0.3s ease-out;
+            max-height: 80vh;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .transactions-filter-dropdown label {
+            padding: 1rem;
+            font-size: 1rem;
+            border-radius: 12px;
+            margin-bottom: 0.5rem;
+            min-height: 48px;
+            display: flex;
+            align-items: center;
+        }
+
+        .transactions-filter-dropdown label:active {
+            background: rgba(255, 178, 30, 0.15);
+        }
+
         .transactions-date-filter-new {
             padding: 0.75rem 0.875rem;
             font-size: 0.8125rem;
@@ -1168,6 +1273,16 @@
             min-width: auto;
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.1);
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23ffffff' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 0.75rem center;
+            padding-right: 2.5rem;
+            width: 100%;
+            box-sizing: border-box;
+            transition: all 0.3s ease;
             color: var(--text-primary);
             cursor: pointer;
             appearance: none;
@@ -1399,7 +1514,7 @@
                 </div>
             <div class="transactions-summary-content-new">
                 <div class="transactions-summary-label-new">Total Earning</div>
-                <div class="transactions-summary-value-new">$0</div>
+                <div class="transactions-summary-value-new">${{ number_format($totalEarning ?? 0, 2) }}</div>
                 </div>
             </div>
 
@@ -1410,7 +1525,7 @@
                 </div>
             <div class="transactions-summary-content-new">
                 <div class="transactions-summary-label-new">Referral Earning</div>
-                <div class="transactions-summary-value-new">$0</div>
+                <div class="transactions-summary-value-new">${{ number_format($referralEarning ?? 0, 2) }}</div>
                 </div>
             </div>
 
@@ -1421,7 +1536,7 @@
                 </div>
             <div class="transactions-summary-content-new">
                 <div class="transactions-summary-label-new">Total Deposit</div>
-                <div class="transactions-summary-value-new">$0</div>
+                <div class="transactions-summary-value-new">${{ number_format($totalDeposits ?? 0, 2) }}</div>
                 </div>
             </div>
 
@@ -1432,7 +1547,7 @@
                 </div>
             <div class="transactions-summary-content-new">
                 <div class="transactions-summary-label-new">Total Withdrawn</div>
-                <div class="transactions-summary-value-new">$0</div>
+                <div class="transactions-summary-value-new">${{ number_format($totalWithdrawals ?? 0, 2) }}</div>
             </div>
         </div>
     </div>
@@ -1454,10 +1569,12 @@
                     <span>Filter</span>
                 </button>
                 <select class="transactions-date-filter-new" id="transactionDateFilter">
-                    <option value="3">3 Days</option>
-                    <option value="7">7 Days</option>
-                    <option value="30">30 Days</option>
                     <option value="all">All Time</option>
+                    <option value="this_week" selected>This Week</option>
+                    <option value="last_week">Last Week</option>
+                    <option value="7">Last 7 Days</option>
+                    <option value="30">Last 30 Days</option>
+                    <option value="90">Last 90 Days</option>
                 </select>
             </div>
         </div>
@@ -1473,34 +1590,94 @@
                         </tr>
                     </thead>
                     <tbody id="transactionsTableBody">
-                        <tr>
-                            <td>
-                                <div class="transactions-type-cell-new">
-                                    <div class="transactions-type-icon-new transactions-type-icon-success-new">
-                                        <i class="fas fa-gift"></i>
+                        @forelse($transactions ?? [] as $transaction)
+                            @php
+                                $type = $transaction['type'];
+                                $amount = $transaction['amount'];
+                                $description = $transaction['description'] ?? '';
+                                $status = $transaction['status'] ?? 'completed';
+                                $createdAt = $transaction['created_at'];
+                                
+                                // Determine icon and styling based on transaction type
+                                $isCredit = in_array($type, ['deposit', 'referral_earning', 'mining_earning']);
+                                $iconClass = 'transactions-type-icon-success-new';
+                                $icon = 'fa-arrow-down';
+                                $amountClass = 'transactions-amount-success-new';
+                                $amountPrefix = '+';
+                                
+                                if ($type === 'withdrawal') {
+                                    $iconClass = 'transactions-type-icon-danger-new';
+                                    $icon = 'fa-arrow-up';
+                                    $amountClass = 'transactions-amount-danger-new';
+                                    $amountPrefix = '-';
+                                } elseif ($type === 'referral_earning') {
+                                    $icon = 'fa-trophy';
+                                } elseif ($type === 'mining_earning') {
+                                    $icon = 'fa-coins';
+                                } elseif ($type === 'deposit') {
+                                    $icon = 'fa-plus-circle';
+                                }
+                                
+                                // Format date
+                                $date = $createdAt instanceof \Carbon\Carbon ? $createdAt : \Carbon\Carbon::parse($createdAt);
+                                $dateFormatted = $date->format('M d, Y');
+                                $timeFormatted = $date->format('h:i A');
+                                $dateTimeFormatted = $dateFormatted . ', ' . $timeFormatted;
+                                
+                                // Status badge class
+                                $statusBadgeClass = 'transactions-status-' . $status;
+                                $statusBadgeClassNew = 'transactions-status-' . $status . '-new';
+                            @endphp
+                            <tr data-transaction-type="{{ $type }}" data-transaction-date="{{ $date->format('Y-m-d') }}" data-transaction-timestamp="{{ $date->timestamp }}">
+                                <td>
+                                    <div class="transactions-type-cell-new">
+                                        <div class="transactions-type-icon-new {{ $iconClass }}">
+                                            <i class="fas {{ $icon }}"></i>
+                                        </div>
+                                        <div class="transactions-type-info-new">
+                                            <div class="transactions-type-name-new">{{ $description ?: ucfirst(str_replace('_', ' ', $type)) }}</div>
+                                            <div class="transactions-type-date-new">{{ $dateTimeFormatted }}</div>
+                                        </div>
                                     </div>
-                                    <div class="transactions-type-info-new">
-                                        <div class="transactions-type-name-new">Bonus</div>
-                                        <div class="transactions-type-date-new">Dec 28, 2025, 11:11 PM</div>
+                                </td>
+                                <td>
+                                    <div class="transactions-amount-cell-new">
+                                        <div class="transactions-amount-value-new {{ $amountClass }}">{{ $amountPrefix }}${{ number_format($amount, 2) }}</div>
+                                        <div class="transactions-amount-wallet-new">
+                                            @if($type === 'deposit')
+                                                Fund Wallet: ${{ number_format($balances['fund_wallet'] ?? 0, 2) }}
+                                            @elseif($type === 'withdrawal')
+                                                Net Balance: ${{ number_format($balances['net_balance'] ?? 0, 2) }}
+                                            @elseif($type === 'referral_earning')
+                                                Referral Earning: ${{ number_format($balances['referral_earning'] ?? 0, 2) }}
+                                            @elseif($type === 'mining_earning')
+                                                Mining Earning: ${{ number_format($balances['mining_earning'] ?? 0, 2) }}
+                                            @else
+                                                Net Balance: ${{ number_format($balances['net_balance'] ?? 0, 2) }}
+                                            @endif
+                                        </div>
+                                        <div class="transactions-status-mobile {{ $statusBadgeClass }}">{{ ucfirst($status) }}</div>
                                     </div>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="transactions-amount-cell-new">
-                                    <div class="transactions-amount-value-new transactions-amount-success-new">+$0</div>
-                                    <div class="transactions-amount-wallet-new">Earning Wallet: $0</div>
-                                    <div class="transactions-status-mobile transactions-status-completed">Completed</div>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="transactions-status-cell-new">
-                                    <span class="transactions-status-badge-new transactions-status-completed-new">
-                                        <span>Completed</span>
-                                    </span>
-                                    <div class="transactions-status-time-new">2 hours ago</div>
-                                </div>
-                            </td>
-                        </tr>
+                                </td>
+                                <td>
+                                    <div class="transactions-status-cell-new">
+                                        <span class="transactions-status-badge-new {{ $statusBadgeClassNew }}">
+                                            <span>{{ ucfirst($status) }}</span>
+                                        </span>
+                                        <div class="transactions-status-time-new">{{ $date->diffForHumans() }}</div>
+                                    </div>
+                                </td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="3" style="text-align: center; padding: 2rem;">
+                                    <div style="color: var(--text-secondary);">
+                                        <i class="fas fa-inbox" style="font-size: 2rem; margin-bottom: 1rem; opacity: 0.5;"></i>
+                                        <p>No transactions found</p>
+                                    </div>
+                                </td>
+                            </tr>
+                        @endforelse
                     </tbody>
                 </table>
             </div>
@@ -1527,33 +1704,5 @@
 
 @push('scripts')
 <script src="{{ asset('assets/dashboard/js/transactions.js') }}"></script>
-<script>
-    // Search functionality
-    const searchInput = document.getElementById('transactionSearch');
-    if (searchInput) {
-        searchInput.addEventListener('input', function(e) {
-            const searchTerm = e.target.value.toLowerCase();
-            const rows = document.querySelectorAll('.transactions-table-new tbody tr');
-
-            rows.forEach(row => {
-                const text = row.textContent.toLowerCase();
-                if (text.includes(searchTerm)) {
-                    row.style.display = '';
-                } else {
-                    row.style.display = 'none';
-                }
-            });
-        });
-    }
-
-    // Date filter functionality
-    const dateFilter = document.getElementById('transactionDateFilter');
-    if (dateFilter) {
-        dateFilter.addEventListener('change', function(e) {
-            // Filter logic can be implemented here
-            console.log('Filter changed to:', e.target.value);
-        });
-    }
-</script>
 @endpush
 @endsection

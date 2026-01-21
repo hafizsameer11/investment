@@ -314,13 +314,13 @@ class User extends Authenticatable implements CanResetPassword
 
     /**
      * Recalculate and update the net balance
-     * Net Balance = Fund Wallet + Mining Earning + Referral Earning
+     * Net Balance = Mining Earning + Referral Earning (does NOT include Fund Wallet)
      *
      * @return void
      */
     public function updateNetBalance()
     {
-        $this->net_balance = $this->fund_wallet + $this->mining_earning + $this->referral_earning;
+        $this->net_balance = ($this->mining_earning ?? 0) + ($this->referral_earning ?? 0);
         $this->save();
     }
 

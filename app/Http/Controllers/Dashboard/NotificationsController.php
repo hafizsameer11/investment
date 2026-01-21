@@ -14,11 +14,6 @@ class NotificationsController extends Controller
      */
     public function index(Request $request)
     {
-        $notifications = Auth::user()
-            ->notifications()
-            ->orderBy('created_at', 'desc')
-            ->paginate(20);
-
         // Return JSON for AJAX requests (used by header dropdown)
         if ($request->ajax()) {
             // Get recent notifications (not paginated) for dropdown
@@ -42,6 +37,19 @@ class NotificationsController extends Controller
                 }),
             ]);
         }
+
+        // Mark all notifications as read when the page is accessed
+        Notification::where('user_id', Auth::id())
+            ->where('is_read', false)
+            ->update([
+                'is_read' => true,
+                'read_at' => now(),
+            ]);
+
+        $notifications = Auth::user()
+            ->notifications()
+            ->orderBy('created_at', 'desc')
+            ->paginate(20);
 
         return view('dashboard.pages.notifications', compact('notifications'));
     }

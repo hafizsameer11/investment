@@ -1629,7 +1629,11 @@
             updateWithdrawPKRAmount();
 
             const amount = parseFloat(this.value);
-            const userBalance = {{ auth()->user()->net_balance ?? 0 }};
+            // Note: net_balance only shows mining + referral, but withdrawals can use all wallets
+            const fundWallet = {{ auth()->user()->fund_wallet ?? 0 }};
+            const miningEarning = {{ auth()->user()->mining_earning ?? 0 }};
+            const referralEarning = {{ auth()->user()->referral_earning ?? 0 }};
+            const userBalance = fundWallet + miningEarning + referralEarning;
 
             if (!selectedPaymentMethod) {
                 continueBtn.disabled = true;

@@ -498,6 +498,44 @@
     padding-left: 3rem;
 }
 
+/* Password fields don't have left icon, so no left padding */
+#currentPassword,
+#newPassword,
+#confirmPassword {
+    padding-left: 1rem;
+    padding-right: 3rem;
+}
+
+/* Password Toggle Button */
+.profile-password-toggle {
+    position: absolute;
+    right: 1rem;
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    cursor: pointer;
+    padding: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition-fast);
+    z-index: 2;
+    font-size: 1rem;
+}
+
+.profile-password-toggle:hover {
+    color: var(--text-primary);
+}
+
+.profile-password-toggle:focus {
+    outline: none;
+    color: var(--primary-color);
+}
+
+.profile-password-toggle i {
+    pointer-events: none;
+}
+
 /* ============================================
    Mobile Header
    ============================================ */
@@ -740,8 +778,19 @@
         display: none;
     }
 
-    .profile-form-actions-modern {
+    /* Hide form actions only for Account tab on mobile */
+    #accountTab .profile-form-actions-modern {
         display: none !important;
+    }
+
+    /* Show form actions for Password tab on mobile */
+    #passwordTab .profile-form-actions-modern {
+        display: flex !important;
+        flex-direction: column;
+        gap: 1rem;
+        padding-top: 1.5rem;
+        margin-top: 1.5rem;
+        border-top: 1px solid var(--card-border);
     }
 
     /* Ensure mobile edit button is visible */

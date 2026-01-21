@@ -78,7 +78,7 @@
                         <span class="nav-icon-wrapper">
                             <i class="fas fa-bullseye"></i>
                         </span>
-                        <span class="nav-text">Goals</span>
+                        <span class="nav-text">Victory Rewards</span>
                         <span class="nav-indicator"></span>
                     </a>
                 </li>
@@ -96,7 +96,7 @@
                         <span class="nav-icon-wrapper">
                             <i class="fas fa-exchange-alt"></i>
                         </span>
-                        <span class="nav-text">Transactions</span>
+                        <span class="nav-text">Financial Records</span>
                         <span class="nav-indicator"></span>
                     </a>
                 </li>
@@ -114,7 +114,7 @@
                         <span class="nav-icon-wrapper">
                             <i class="fas fa-headset"></i>
                         </span>
-                        <span class="nav-text">Help & Support</span>
+                        <span class="nav-text">Technical Support</span>
                         <span class="nav-indicator"></span>
                     </a>
                 </li>

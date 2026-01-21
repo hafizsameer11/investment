@@ -453,6 +453,11 @@
 
 @push('scripts')
 <script>
+    // Update unread count badge when page loads (all notifications are marked as read)
+    document.addEventListener('DOMContentLoaded', function() {
+        updateUnreadCount();
+    });
+
     function markAsRead(notificationId) {
         fetch(`{{ route('notifications.mark-read', '') }}/${notificationId}`, {
             method: 'POST',

@@ -114,6 +114,27 @@
                     </a>
                 </div>
             </div>
+
+            <!-- Contact Upliner Section (Account Tab Only) -->
+            <div class="profile-contact-section-modern">
+                <button class="profile-contact-btn-modern profile-contact-btn-mobile">
+                    <span>Contact with upliner</span>
+                </button>
+                <!-- Desktop Contact Card -->
+                <div class="profile-contact-card-modern profile-contact-card-desktop">
+                    <div class="profile-contact-icon-modern">
+                        <i class="fas fa-user-tie"></i>
+                    </div>
+                    <div class="profile-contact-content-modern">
+                        <h3 class="profile-contact-title-modern">Need Help?</h3>
+                        <p class="profile-contact-subtitle-modern">Contact your upliner for assistance</p>
+                    </div>
+                    <button class="profile-contact-btn-modern">
+                        <i class="fas fa-comments"></i>
+                        <span>Contact Upliner</span>
+                    </button>
+                </div>
+            </div>
         </div>
 
         <!-- Change Password Tab Content -->
@@ -130,7 +151,12 @@
                             <i class="fas fa-lock"></i>
                             <span>Current Password</span>
                         </label>
-                        <input type="password" class="profile-form-input-modern" id="currentPassword" placeholder="Enter current password">
+                        <div class="profile-input-wrapper">
+                            <input type="password" class="profile-form-input-modern" id="currentPassword" placeholder="Enter current password">
+                            <button type="button" class="profile-password-toggle" data-target="currentPassword" aria-label="Toggle password visibility">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
                     </div>
 
                     <div class="profile-form-group-modern">
@@ -138,7 +164,12 @@
                             <i class="fas fa-lock"></i>
                             <span>New Password</span>
                         </label>
-                        <input type="password" class="profile-form-input-modern" id="newPassword" placeholder="Enter new password">
+                        <div class="profile-input-wrapper">
+                            <input type="password" class="profile-form-input-modern" id="newPassword" placeholder="Enter new password">
+                            <button type="button" class="profile-password-toggle" data-target="newPassword" aria-label="Toggle password visibility">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
                     </div>
 
                     <div class="profile-form-group-modern">
@@ -146,7 +177,12 @@
                             <i class="fas fa-lock"></i>
                             <span>Confirm New Password</span>
                         </label>
-                        <input type="password" class="profile-form-input-modern" id="confirmPassword" placeholder="Confirm new password">
+                        <div class="profile-input-wrapper">
+                            <input type="password" class="profile-form-input-modern" id="confirmPassword" placeholder="Confirm new password">
+                            <button type="button" class="profile-password-toggle" data-target="confirmPassword" aria-label="Toggle password visibility">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
                     </div>
                 </div>
 
@@ -156,27 +192,6 @@
                         <span>Update Password</span>
                     </button>
                 </div>
-            </div>
-        </div>
-
-        <!-- Contact Upliner Section -->
-        <div class="profile-contact-section-modern">
-            <button class="profile-contact-btn-modern profile-contact-btn-mobile">
-                <span>Contact with upliner</span>
-            </button>
-            <!-- Desktop Contact Card -->
-            <div class="profile-contact-card-modern profile-contact-card-desktop">
-                <div class="profile-contact-icon-modern">
-                    <i class="fas fa-user-tie"></i>
-                </div>
-                <div class="profile-contact-content-modern">
-                    <h3 class="profile-contact-title-modern">Need Help?</h3>
-                    <p class="profile-contact-subtitle-modern">Contact your upliner for assistance</p>
-                </div>
-                <button class="profile-contact-btn-modern">
-                    <i class="fas fa-comments"></i>
-                    <span>Contact Upliner</span>
-                </button>
             </div>
         </div>
     </div>

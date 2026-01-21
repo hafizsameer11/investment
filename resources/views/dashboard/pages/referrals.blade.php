@@ -3497,13 +3497,13 @@ ls-referrer-section-new {
                 </table>
 
                 @if($referrals->hasPages())
-                <div style="padding: 1.5rem; display: flex; justify-content: center; align-items: center; gap: 0.5rem; border-top: 1px solid rgba(255, 255, 255, 0.1);">
+                <div class="referrals-pagination-wrapper" style="padding: 1.5rem; display: flex; justify-content: center; align-items: center; gap: 0.5rem; border-top: 1px solid rgba(255, 255, 255, 0.1);">
                     @if($referrals->onFirstPage())
                         <button disabled style="padding: 0.5rem 1rem; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; color: var(--text-secondary); cursor: not-allowed;">
                             <i class="fas fa-chevron-left"></i>
                         </button>
                     @else
-                        <a href="{{ $referrals->previousPageUrl() }}" style="padding: 0.5rem 1rem; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; color: var(--text-primary); text-decoration: none;">
+                        <a href="{{ $referrals->previousPageUrl() }}" class="pagination-link" style="padding: 0.5rem 1rem; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; color: var(--text-primary); text-decoration: none;">
                             <i class="fas fa-chevron-left"></i>
                         </a>
                     @endif
@@ -3512,12 +3512,12 @@ ls-referrer-section-new {
                         @if($page == $referrals->currentPage())
                             <span style="padding: 0.5rem 1rem; background: rgba(255, 178, 30, 0.2); border: 1px solid rgba(255, 178, 30, 0.4); border-radius: 8px; color: var(--primary-color); font-weight: 600;">{{ $page }}</span>
                         @else
-                            <a href="{{ $url }}" style="padding: 0.5rem 1rem; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; color: var(--text-primary); text-decoration: none;">{{ $page }}</a>
+                            <a href="{{ $url }}" class="pagination-link" style="padding: 0.5rem 1rem; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; color: var(--text-primary); text-decoration: none;">{{ $page }}</a>
                         @endif
                     @endforeach
 
                     @if($referrals->hasMorePages())
-                        <a href="{{ $referrals->nextPageUrl() }}" style="padding: 0.5rem 1rem; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; color: var(--text-primary); text-decoration: none;">
+                        <a href="{{ $referrals->nextPageUrl() }}" class="pagination-link" style="padding: 0.5rem 1rem; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; color: var(--text-primary); text-decoration: none;">
                             <i class="fas fa-chevron-right"></i>
                         </a>
                     @else
@@ -3596,6 +3596,118 @@ ls-referrer-section-new {
         });
     });
 
+    // Copy referral link function (for Invite Now button in empty state)
+    function copyReferralLink() {
+        const referralLink = '{{ url("/register?ref=" . auth()->user()->refer_code) }}';
+
+        // Use modern Clipboard API
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(referralLink).then(function() {
+                // Show success notification
+                showNotification('Referral link copied to clipboard!', 'success');
+            }).catch(function(err) {
+                // Fallback for older browsers
+                fallbackCopyToClipboard(referralLink);
+            });
+        } else {
+            // Fallback for older browsers
+            fallbackCopyToClipboard(referralLink);
+        }
+    }
+
+    // Fallback copy to clipboard function for older browsers
+    function fallbackCopyToClipboard(text) {
+        const textArea = document.createElement('textarea');
+        textArea.value = text;
+        textArea.style.position = 'fixed';
+        textArea.style.left = '-999999px';
+        textArea.style.top = '-999999px';
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+
+        try {
+            const successful = document.execCommand('copy');
+            if (successful) {
+                showNotification('Referral link copied to clipboard!', 'success');
+            } else {
+                showNotification('Failed to copy. Please copy manually: ' + text, 'error');
+            }
+        } catch (err) {
+            showNotification('Failed to copy. Please copy manually: ' + text, 'error');
+        }
+
+        document.body.removeChild(textArea);
+    }
+
+    // Show notification function
+    function showNotification(message, type = 'success') {
+        // Remove existing notification if any
+        const existingNotification = document.querySelector('.referrals-notification');
+        if (existingNotification) {
+            existingNotification.remove();
+        }
+
+        // Create notification element
+        const notification = document.createElement('div');
+        notification.className = 'referrals-notification';
+        notification.style.cssText = `
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: ${type === 'success' ? 'linear-gradient(135deg, #4CAF50 0%, #45a049 100%)' : 'linear-gradient(135deg, #FF4444 0%, #cc0000 100%)'};
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            z-index: 10000;
+            font-weight: 600;
+            font-size: 0.9375rem;
+            animation: slideInRight 0.3s ease-out;
+            max-width: 300px;
+        `;
+        notification.textContent = message;
+
+        // Add animation keyframes if not already added
+        if (!document.getElementById('referrals-notification-styles')) {
+            const style = document.createElement('style');
+            style.id = 'referrals-notification-styles';
+            style.textContent = `
+                @keyframes slideInRight {
+                    from {
+                        transform: translateX(100%);
+                        opacity: 0;
+                    }
+                    to {
+                        transform: translateX(0);
+                        opacity: 1;
+                    }
+                }
+                @keyframes slideOutRight {
+                    from {
+                        transform: translateX(0);
+                        opacity: 1;
+                    }
+                    to {
+                        transform: translateX(100%);
+                        opacity: 0;
+                    }
+                }
+            `;
+            document.head.appendChild(style);
+        }
+
+        document.body.appendChild(notification);
+
+        // Remove notification after 3 seconds
+        setTimeout(() => {
+            notification.style.animation = 'slideOutRight 0.3s ease-out';
+            setTimeout(() => {
+                notification.remove();
+            }, 300);
+        }, 3000);
+    }
+
     // Custom dropdown functionality
     function toggleLevelDropdown() {
         const dropdown = document.querySelector('.referrals-network-dropdown-new');
@@ -3603,6 +3715,14 @@ ls-referrer-section-new {
     }
 
     function selectLevel(level) {
+        // Close dropdown
+        const dropdown = document.querySelector('.referrals-network-dropdown-new');
+        dropdown.classList.remove('active');
+        
+        // Save current scroll position
+        const scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
+        
+        // Update URL without reloading
         const url = new URL(window.location.href);
         if (level === 'all') {
             url.searchParams.delete('level');
@@ -3610,7 +3730,168 @@ ls-referrer-section-new {
             url.searchParams.set('level', level);
         }
         url.searchParams.delete('page'); // Reset to first page when filtering
-        window.location.href = url.toString();
+        window.history.pushState({ level: level }, '', url.toString());
+        
+        // Update filter button text
+        const filterText = document.getElementById('levelFilterText');
+        if (filterText) {
+            filterText.textContent = level === 'all' ? 'All' : 'Level ' + level;
+        }
+        
+        // Update active state in dropdown
+        document.querySelectorAll('.referrals-network-dropdown-item-new').forEach(item => {
+            item.classList.remove('active');
+            const checkIcon = item.querySelector('i.fa-check');
+            if (checkIcon) {
+                checkIcon.remove();
+            }
+        });
+        
+        // Find and activate the selected item
+        const selectedItem = Array.from(document.querySelectorAll('.referrals-network-dropdown-item-new')).find(item => {
+            const span = item.querySelector('span');
+            return span && (
+                (level === 'all' && span.textContent.trim() === 'All') ||
+                (level !== 'all' && span.textContent.trim() === 'Level ' + level)
+            );
+        });
+        
+        if (selectedItem) {
+            selectedItem.classList.add('active');
+            const checkIcon = document.createElement('i');
+            checkIcon.className = 'fas fa-check';
+            selectedItem.appendChild(checkIcon);
+        }
+        
+        // Show loading state
+        const tableWrapper = document.querySelector('.referrals-network-table-wrapper-new');
+        const originalContent = tableWrapper.innerHTML;
+        tableWrapper.innerHTML = '<div style="padding: 3rem; text-align: center; color: var(--text-secondary);"><i class="fas fa-spinner fa-spin" style="font-size: 2rem; margin-bottom: 1rem;"></i><p>Loading...</p></div>';
+        
+        // Make AJAX request
+        fetch(url.toString(), {
+            method: 'GET',
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest',
+                'Accept': 'application/json',
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Update table content
+                updateReferralsTable(data.referrals, data.pagination);
+                
+                // Restore scroll position
+                window.scrollTo(0, scrollPosition);
+            } else {
+                throw new Error('Failed to load referrals');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            // Restore original content on error
+            tableWrapper.innerHTML = originalContent;
+            alert('Failed to load referrals. Please try again.');
+        });
+    }
+    
+    function updateReferralsTable(referrals, pagination) {
+        const tableWrapper = document.querySelector('.referrals-network-table-wrapper-new');
+        let html = '<table class="referrals-network-table-new">';
+        
+        if (referrals.length > 0) {
+            html += '<thead><tr><th>User Info</th><th>Invested Amount</th><th>Referral Earning</th></tr></thead>';
+            html += '<tbody>';
+            
+            referrals.forEach(referral => {
+                const referralData = JSON.parse(JSON.stringify(referral));
+                const name = referralData.name || 'N/A';
+                const initial = name.charAt(0).toUpperCase();
+                const level = referralData.level || 0;
+                const levelName = referralData.level_name || 'level' + level;
+                const investedAmount = parseFloat(referralData.invested_amount || 0);
+                const referralEarning = parseFloat(referralData.referral_earning || 0);
+                const createdAt = new Date(referralData.created_at);
+                const formattedDate = createdAt.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+                
+                html += `<tr class="referral-row-clickable" data-referral='${JSON.stringify(referralData)}' style="cursor: pointer;">`;
+                html += '<td>';
+                html += '<div class="referrals-network-mobile-user-info" style="display: flex; align-items: center; gap: 1rem;">';
+                html += `<div style="width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, rgba(255, 178, 30, 0.2) 0%, rgba(255, 138, 29, 0.1) 100%); display: flex; align-items: center; justify-content: center; color: var(--primary-color); font-weight: 600; flex-shrink: 0;">${initial}</div>`;
+                html += '<div>';
+                html += `<div class="referrals-network-mobile-user-name" style="font-weight: 600; color: var(--text-primary); margin-bottom: 0.25rem;">${name}</div>`;
+                html += `<div class="referrals-network-mobile-user-level referrals-network-level-${level}" style="font-size: 0.75rem;">${levelName}</div>`;
+                html += '</div></div>';
+                html += '<div class="referrals-network-mobile-value">';
+                html += `<div class="referrals-network-mobile-earning">$${referralEarning.toFixed(2)}</div>`;
+                html += `<div class="referrals-network-mobile-invested">Invested Amount: $${investedAmount.toFixed(2)}</div>`;
+                html += '</div></td>';
+                html += '<td>';
+                html += `<div style="font-weight: 600; color: var(--text-primary);">$${investedAmount.toFixed(2)}</div>`;
+                html += '</td>';
+                html += '<td>';
+                html += `<div class="desktop-earning" style="font-weight: 600; color: #10B981;">$${referralEarning.toFixed(2)}</div>`;
+                html += `<div class="referrals-network-mobile-date">${formattedDate}</div>`;
+                html += '</td></tr>';
+            });
+            
+            html += '</tbody>';
+        } else {
+            html += '<tbody><tr><td colspan="3" class="referrals-network-empty-new">';
+            html += '<div class="referrals-network-empty-content-new">';
+            html += '<div class="referrals-network-empty-icon-new referrals-network-empty-icon-desktop"><i class="fas fa-users"></i></div>';
+            html += '<div class="referrals-network-empty-icon-new referrals-network-empty-icon-mobile"><i class="fas fa-users"></i></div>';
+            html += '<p class="referrals-network-empty-message-new">You don\'t have any referrals yet</p>';
+            html += '<button class="referrals-network-invite-btn-new" onclick="copyReferralLink()"><i class="fas fa-share-alt"></i><span>Invite Now</span></button>';
+            html += '</div></td></tr></tbody>';
+        }
+        
+        html += '</table>';
+        
+        // Add pagination if needed
+        if (pagination.last_page > 1) {
+            html += '<div style="padding: 1.5rem; display: flex; justify-content: center; align-items: center; gap: 0.5rem; border-top: 1px solid rgba(255, 255, 255, 0.1);">';
+            
+            // Previous button
+            if (pagination.current_page === 1) {
+                html += '<button disabled style="padding: 0.5rem 1rem; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; color: var(--text-secondary); cursor: not-allowed;"><i class="fas fa-chevron-left"></i></button>';
+            } else {
+                html += `<a href="${pagination.previous_page_url}" class="pagination-link" style="padding: 0.5rem 1rem; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; color: var(--text-primary); text-decoration: none;"><i class="fas fa-chevron-left"></i></a>`;
+            }
+            
+            // Page numbers
+            Object.keys(pagination.url_range).forEach(page => {
+                const pageUrl = pagination.url_range[page];
+                if (parseInt(page) === pagination.current_page) {
+                    html += `<span style="padding: 0.5rem 1rem; background: rgba(255, 178, 30, 0.2); border: 1px solid rgba(255, 178, 30, 0.4); border-radius: 8px; color: var(--primary-color); font-weight: 600;">${page}</span>`;
+                } else {
+                    html += `<a href="${pageUrl}" class="pagination-link" style="padding: 0.5rem 1rem; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; color: var(--text-primary); text-decoration: none;">${page}</a>`;
+                }
+            });
+            
+            // Next button
+            if (pagination.has_more_pages) {
+                html += `<a href="${pagination.next_page_url}" class="pagination-link" style="padding: 0.5rem 1rem; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; color: var(--text-primary); text-decoration: none;"><i class="fas fa-chevron-right"></i></a>`;
+            } else {
+                html += '<button disabled style="padding: 0.5rem 1rem; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; color: var(--text-secondary); cursor: not-allowed;"><i class="fas fa-chevron-right"></i></button>';
+            }
+            
+            html += '</div>';
+        }
+        
+        tableWrapper.innerHTML = html;
+        
+        // Re-attach click handlers for referral rows
+        document.querySelectorAll('.referral-row-clickable').forEach(row => {
+            row.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A' || e.target.tagName === 'BUTTON') {
+                    return;
+                }
+                const referralData = JSON.parse(this.getAttribute('data-referral'));
+                openReferralModal(referralData);
+            });
+        });
     }
 
     // Close dropdown when clicking outside
@@ -3625,6 +3906,51 @@ ls-referrer-section-new {
     function filterByLevel(level) {
         selectLevel(level);
     }
+    
+    // Handle pagination links with AJAX
+    document.addEventListener('click', function(e) {
+        const paginationLink = e.target.closest('.pagination-link');
+        if (paginationLink) {
+            e.preventDefault();
+            const url = paginationLink.getAttribute('href');
+            if (url) {
+                // Save scroll position
+                const scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
+                
+                // Update URL
+                window.history.pushState({}, '', url);
+                
+                // Show loading state
+                const tableWrapper = document.querySelector('.referrals-network-table-wrapper-new');
+                const originalContent = tableWrapper.innerHTML;
+                tableWrapper.innerHTML = '<div style="padding: 3rem; text-align: center; color: var(--text-secondary);"><i class="fas fa-spinner fa-spin" style="font-size: 2rem; margin-bottom: 1rem;"></i><p>Loading...</p></div>';
+                
+                // Make AJAX request
+                fetch(url, {
+                    method: 'GET',
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'Accept': 'application/json',
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        updateReferralsTable(data.referrals, data.pagination);
+                        // Restore scroll position
+                        window.scrollTo(0, scrollPosition);
+                    } else {
+                        throw new Error('Failed to load referrals');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    tableWrapper.innerHTML = originalContent;
+                    alert('Failed to load referrals. Please try again.');
+                });
+            }
+        }
+    });
 
     // Referral detail modal functionality
     document.querySelectorAll('.referral-row-clickable').forEach(row => {

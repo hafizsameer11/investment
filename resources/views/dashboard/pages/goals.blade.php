@@ -1216,7 +1216,7 @@
                         <div class="goals-progress-info-new">
                             <span class="goals-progress-current-new">${{ number_format($nextLevelProgress['current_progress'], 2) }}</span>
                             <span class="goals-progress-separator-new">/</span>
-                            <span class="goals-progress-target-new">${{ number_format($nextLevel->investment_required, 2) }}</span>
+                            <span class="goals-progress-target-new">${{ rtrim(rtrim(number_format($nextLevel->investment_required, 2, '.', ''), '0'), '.') }}</span>
                         </div>
                         <div class="goals-progress-message-new">
                             @if($nextLevelProgress['progress_percentage'] >= 100)
@@ -1342,7 +1342,7 @@
                                         Level Complete!
                                     @endif
                                 </span>
-                                <span class="goals-next-goal-target-new">${{ number_format($nextLevel->investment_required, 2) }}</span>
+                                <span class="goals-next-goal-target-new">${{ rtrim(rtrim(number_format($nextLevel->investment_required, 2, '.', ''), '0'), '.') }}</span>
                             </div>
                         @else
                             <div class="goals-next-goal-progress-row-new">
@@ -1405,11 +1405,11 @@
                         <div class="goals-level-details-new">
                             <div class="goals-level-detail-item-new">
                                 <span class="goals-level-detail-label-new">Total Referral Investment</span>
-                                <span class="goals-level-detail-value-new">${{ number_format($level->investment_required, 2) }}</span>
+                                <span class="goals-level-detail-value-new">${{ rtrim(rtrim(number_format($level->investment_required, 2, '.', ''), '0'), '.') }}</span>
                             </div>
                             <div class="goals-level-detail-item-new">
                                 <span class="goals-level-detail-label-new">Reward</span>
-                                <span class="goals-level-detail-value-new goals-level-reward-new">${{ number_format($level->reward_amount, 2) }}</span>
+                                <span class="goals-level-detail-value-new goals-level-reward-new">${{ rtrim(rtrim(number_format($level->reward_amount, 2, '.', ''), '0'), '.') }}</span>
                             </div>
                         </div>
                         <div class="goals-level-progress-new">

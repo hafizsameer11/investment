@@ -10,12 +10,14 @@
     const tabs = document.querySelectorAll('.profile-tab-modern, .profile-tab');
     const tabContents = document.querySelectorAll('.profile-tab-content-modern, .profile-tab-content');
     const savePasswordBtn = document.getElementById('savePasswordBtn');
+    const passwordToggles = document.querySelectorAll('.profile-password-toggle');
 
     // Initialize
     document.addEventListener('DOMContentLoaded', function() {
         highlightActiveNavItem();
         initTabs();
         initPasswordChange();
+        initPasswordToggles();
     });
 
     /**
@@ -70,6 +72,31 @@
                 const targetContent = document.getElementById(targetTab + 'Tab');
                 if (targetContent) {
                     targetContent.classList.add('active');
+                }
+            });
+        });
+    }
+
+    /**
+     * Initialize Password Toggles
+     */
+    function initPasswordToggles() {
+        passwordToggles.forEach(toggle => {
+            toggle.addEventListener('click', function() {
+                const targetId = this.getAttribute('data-target');
+                const passwordInput = document.getElementById(targetId);
+                const icon = this.querySelector('i');
+                
+                if (passwordInput && icon) {
+                    if (passwordInput.type === 'password') {
+                        passwordInput.type = 'text';
+                        icon.classList.remove('fa-eye');
+                        icon.classList.add('fa-eye-slash');
+                    } else {
+                        passwordInput.type = 'password';
+                        icon.classList.remove('fa-eye-slash');
+                        icon.classList.add('fa-eye');
+                    }
                 }
             });
         });

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Dashboard;
 use App\Http\Controllers\Controller;
 use App\Models\Investment;
 use App\Models\MiningPlan;
+use App\Services\EarningCommissionService;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Carbon\Carbon;
@@ -74,6 +75,18 @@ class PlansController extends Controller
                             $userUpdated = true;
                             
                             DB::commit();
+
+                            // Calculate and distribute earning commissions
+                            try {
+                                EarningCommissionService::calculateAndDistributeCommissions($user, $investment, $totalProfitForPeriod);
+                            } catch (\Exception $e) {
+                                // Log error but don't fail the profit calculation
+                                Log::error('Error calculating earning commissions: ' . $e->getMessage(), [
+                                    'user_id' => $user->id,
+                                    'investment_id' => $investment->id,
+                                    'earning_amount' => $totalProfitForPeriod,
+                                ]);
+                            }
                         } catch (\Exception $e) {
                             DB::rollBack();
                             Log::error("Error calculating profit for investment ID {$investment->id}: " . $e->getMessage());

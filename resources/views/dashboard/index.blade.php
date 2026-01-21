@@ -2293,11 +2293,11 @@
                 </div>
                 <span class="wallet-action-label">Cash Out</span>
             </div>
-            <div class="wallet-action-btn" data-action="wallet">
+            <div class="wallet-action-btn" data-action="claim-referral-earnings">
                 <div class="wallet-action-icon">
-                    <i class="fas fa-coins"></i>
+                    <i class="fas fa-gift"></i>
                 </div>
-                <span class="wallet-action-label">Balance</span>
+                <span class="wallet-action-label">Claim</span>
             </div>
             <div class="wallet-action-btn" data-action="refer">
                 <div class="wallet-action-icon">
@@ -2507,8 +2507,8 @@
                 window.location.href = '{{ route("deposit.index") }}';
             } else if (action === 'withdraw') {
                 window.location.href = '{{ route("withdraw.index") }}';
-            } else if (action === 'wallet') {
-                window.location.href = '{{ route("wallet.index") }}';
+            } else if (action === 'claim-referral-earnings') {
+                window.location.href = '{{ route("referrals.claim-earnings") }}';
             } else if (action === 'refer') {
                 // Copy referral link to clipboard
                 const referralLink = '{{ url("/register?ref=" . auth()->user()->refer_code) }}';

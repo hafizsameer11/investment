@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\InvestmentCommissionStructure;
 use App\Models\EarningCommissionStructure;
 use App\Models\PendingReferralCommission;
+use App\Models\PendingEarningCommission;
 use App\Models\Investment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -47,11 +48,17 @@ class ReferralsController extends Controller
             
             // Calculate referral earning from pending commissions for this specific referral
             $level = $referral->referral_level ?? 0;
-            $referralEarning = PendingReferralCommission::where('referrer_id', $user->id)
+            $investmentCommission = PendingReferralCommission::where('referrer_id', $user->id)
                 ->where('investor_id', $referral->id)
                 ->where('level', $level)
                 ->where('is_claimed', false)
                 ->sum('commission_amount');
+            $earningCommission = PendingEarningCommission::where('referrer_id', $user->id)
+                ->where('investor_id', $referral->id)
+                ->where('level', $level)
+                ->where('is_claimed', false)
+                ->sum('commission_amount');
+            $referralEarning = $investmentCommission + $earningCommission;
             
             // Get level name from commission structure
             $levelName = 'level' . $level;
@@ -112,24 +119,74 @@ class ReferralsController extends Controller
         // Calculate total referrals count
         $totalReferrals = $allReferrals->count();
         
-        // Calculate pending referral earnings (unclaimed)
-        $pendingReferralEarnings = PendingReferralCommission::where('referrer_id', $user->id)
+        // Calculate pending investment commissions (unclaimed)
+        $pendingInvestmentCommissions = PendingReferralCommission::where('referrer_id', $user->id)
             ->where('is_claimed', false)
             ->sum('commission_amount');
         
-        // Calculate total claimed referral earnings
-        $claimedReferralEarnings = PendingReferralCommission::where('referrer_id', $user->id)
+        // Calculate pending earning commissions (unclaimed)
+        $pendingEarningCommissions = PendingEarningCommission::where('referrer_id', $user->id)
+            ->where('is_claimed', false)
+            ->sum('commission_amount');
+        
+        // Combined pending referral earnings
+        $pendingReferralEarnings = $pendingInvestmentCommissions + $pendingEarningCommissions;
+        
+        // Calculate total claimed investment commissions
+        $claimedInvestmentCommissions = PendingReferralCommission::where('referrer_id', $user->id)
             ->where('is_claimed', true)
             ->sum('commission_amount');
         
-        // Get pending commissions breakdown by level
-        $pendingCommissionsByLevel = PendingReferralCommission::where('referrer_id', $user->id)
+        // Calculate total claimed earning commissions
+        $claimedEarningCommissions = PendingEarningCommission::where('referrer_id', $user->id)
+            ->where('is_claimed', true)
+            ->sum('commission_amount');
+        
+        // Combined claimed referral earnings
+        $claimedReferralEarnings = $claimedInvestmentCommissions + $claimedEarningCommissions;
+        
+        // Get pending investment commissions breakdown by level
+        $pendingInvestmentCommissionsByLevel = PendingReferralCommission::where('referrer_id', $user->id)
             ->where('is_claimed', false)
             ->select('level', DB::raw('SUM(commission_amount) as total'))
             ->groupBy('level')
             ->orderBy('level')
             ->pluck('total', 'level')
             ->toArray();
+        
+        // Get pending earning commissions breakdown by level
+        $pendingEarningCommissionsByLevel = PendingEarningCommission::where('referrer_id', $user->id)
+            ->where('is_claimed', false)
+            ->select('level', DB::raw('SUM(commission_amount) as total'))
+            ->groupBy('level')
+            ->orderBy('level')
+            ->pluck('total', 'level')
+            ->toArray();
+        
+        // Combine both breakdowns by level
+        $pendingCommissionsByLevel = [];
+        for ($i = 1; $i <= 5; $i++) {
+            $pendingCommissionsByLevel[$i] = ($pendingInvestmentCommissionsByLevel[$i] ?? 0) + ($pendingEarningCommissionsByLevel[$i] ?? 0);
+        }
+        
+        // Return JSON for AJAX requests
+        if ($request->ajax()) {
+            return response()->json([
+                'success' => true,
+                'referrals' => $paginator->items(),
+                'pagination' => [
+                    'current_page' => $paginator->currentPage(),
+                    'last_page' => $paginator->lastPage(),
+                    'per_page' => $paginator->perPage(),
+                    'total' => $paginator->total(),
+                    'has_more_pages' => $paginator->hasMorePages(),
+                    'previous_page_url' => $paginator->previousPageUrl(),
+                    'next_page_url' => $paginator->nextPageUrl(),
+                    'url_range' => $paginator->getUrlRange(1, $paginator->lastPage()),
+                ],
+                'current_level' => $filterLevel,
+            ]);
+        }
         
         return view('dashboard.pages.referrals', [
             'referrals' => $paginator,
@@ -146,6 +203,57 @@ class ReferralsController extends Controller
     }
 
     /**
+     * Show the referral earnings claim page (only the wallet section)
+     */
+    public function claimEarningsPage()
+    {
+        $user = Auth::user();
+        
+        // Calculate pending investment commissions (unclaimed)
+        $pendingInvestmentCommissions = PendingReferralCommission::where('referrer_id', $user->id)
+            ->where('is_claimed', false)
+            ->sum('commission_amount');
+        
+        // Calculate pending earning commissions (unclaimed)
+        $pendingEarningCommissions = PendingEarningCommission::where('referrer_id', $user->id)
+            ->where('is_claimed', false)
+            ->sum('commission_amount');
+        
+        // Combined pending referral earnings
+        $pendingReferralEarnings = $pendingInvestmentCommissions + $pendingEarningCommissions;
+        
+        // Get pending investment commissions breakdown by level
+        $pendingInvestmentCommissionsByLevel = PendingReferralCommission::where('referrer_id', $user->id)
+            ->where('is_claimed', false)
+            ->select('level', DB::raw('SUM(commission_amount) as total'))
+            ->groupBy('level')
+            ->orderBy('level')
+            ->pluck('total', 'level')
+            ->toArray();
+        
+        // Get pending earning commissions breakdown by level
+        $pendingEarningCommissionsByLevel = PendingEarningCommission::where('referrer_id', $user->id)
+            ->where('is_claimed', false)
+            ->select('level', DB::raw('SUM(commission_amount) as total'))
+            ->groupBy('level')
+            ->orderBy('level')
+            ->pluck('total', 'level')
+            ->toArray();
+        
+        // Combine both breakdowns by level
+        $pendingCommissionsByLevel = [];
+        for ($i = 1; $i <= 5; $i++) {
+            $pendingCommissionsByLevel[$i] = ($pendingInvestmentCommissionsByLevel[$i] ?? 0) + ($pendingEarningCommissionsByLevel[$i] ?? 0);
+        }
+        
+        return view('dashboard.pages.referral-earnings-claim', [
+            'pendingReferralEarnings' => $pendingReferralEarnings,
+            'pendingCommissionsByLevel' => $pendingCommissionsByLevel,
+            'user' => $user,
+        ]);
+    }
+
+    /**
      * Claim all pending referral earnings
      *
      * @param Request $request
@@ -156,20 +264,27 @@ class ReferralsController extends Controller
         try {
             $user = Auth::user();
             
-            // Get all pending commissions for this user
-            $pendingCommissions = PendingReferralCommission::where('referrer_id', $user->id)
+            // Get all pending investment commissions for this user
+            $pendingInvestmentCommissions = PendingReferralCommission::where('referrer_id', $user->id)
                 ->where('is_claimed', false)
                 ->get();
             
-            if ($pendingCommissions->isEmpty()) {
+            // Get all pending earning commissions for this user
+            $pendingEarningCommissions = PendingEarningCommission::where('referrer_id', $user->id)
+                ->where('is_claimed', false)
+                ->get();
+            
+            // Calculate total amounts
+            $investmentAmount = $pendingInvestmentCommissions->sum('commission_amount');
+            $earningAmount = $pendingEarningCommissions->sum('commission_amount');
+            $totalAmount = $investmentAmount + $earningAmount;
+            
+            if ($totalAmount <= 0) {
                 return response()->json([
                     'success' => false,
                     'message' => 'No pending earnings to claim.',
                 ], 422);
             }
-            
-            // Calculate total amount to claim
-            $totalAmount = $pendingCommissions->sum('commission_amount');
             
             DB::beginTransaction();
             
@@ -179,14 +294,26 @@ class ReferralsController extends Controller
                 $user->updateNetBalance();
                 $user->save();
                 
-                // Mark all pending commissions as claimed
+                // Mark all pending investment commissions as claimed
                 $now = now();
-                PendingReferralCommission::where('referrer_id', $user->id)
-                    ->where('is_claimed', false)
-                    ->update([
-                        'is_claimed' => true,
-                        'claimed_at' => $now,
-                    ]);
+                if ($pendingInvestmentCommissions->isNotEmpty()) {
+                    PendingReferralCommission::where('referrer_id', $user->id)
+                        ->where('is_claimed', false)
+                        ->update([
+                            'is_claimed' => true,
+                            'claimed_at' => $now,
+                        ]);
+                }
+                
+                // Mark all pending earning commissions as claimed
+                if ($pendingEarningCommissions->isNotEmpty()) {
+                    PendingEarningCommission::where('referrer_id', $user->id)
+                        ->where('is_claimed', false)
+                        ->update([
+                            'is_claimed' => true,
+                            'claimed_at' => $now,
+                        ]);
+                }
                 
                 DB::commit();
                 
