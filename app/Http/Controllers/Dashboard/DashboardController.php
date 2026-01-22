@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
 use App\Models\Investment;
+use App\Models\PendingReferralCommission;
+use App\Models\PendingEarningCommission;
 use App\Services\EarningCommissionService;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -157,12 +159,15 @@ class DashboardController extends Controller
         // This is for display purposes on the dashboard homepage
         $totalNetBalance = ($user->mining_earning ?? 0) + ($user->referral_earning ?? 0);
         
+        // Fetch referral activities for Recent Activity section with pagination
+        $referralActivitiesData = $this->getReferralActivities($user);
+        
         // Ensure variables are always set
         $totalUnclaimedProfit = $totalUnclaimedProfit ?? 0;
         $secondsUntilNextHour = $secondsUntilNextHour ?? 3600;
         $initialCountdown = $initialCountdown ?? '01:00:00';
         
-        return view('dashboard.index', compact('user', 'hasActivePlan', 'totalUnclaimedProfit', 'initialCountdown', 'secondsUntilNextHour', 'chartData', 'totalNetBalance'));
+        return view('dashboard.index', compact('user', 'hasActivePlan', 'totalUnclaimedProfit', 'initialCountdown', 'secondsUntilNextHour', 'chartData', 'totalNetBalance', 'referralActivitiesData'));
     }
 
     /**
@@ -228,6 +233,144 @@ class DashboardController extends Controller
             'earnings' => $earningsData,
             'investments' => $investmentData,
         ];
+    }
+
+    /**
+     * Get referral activities (investment and earning commissions) for the user
+     * Only shows completed (claimed) records with pagination
+     *
+     * @param \App\Models\User $user
+     * @return array
+     */
+    private function getReferralActivities($user)
+    {
+        // Get investment commissions - only completed (claimed) ones with actual earnings
+        // Only show levels 1-5 and filter out zero amounts
+        $investmentCommissions = PendingReferralCommission::where('referrer_id', $user->id)
+            ->where('is_claimed', true)
+            ->where('commission_amount', '>', 0) // Only show records with actual earnings
+            ->whereBetween('level', [1, 5]) // Only levels 1-5
+            ->with(['investor', 'investment', 'miningPlan'])
+            ->orderBy('created_at', 'desc')
+            ->get()
+            ->filter(function ($commission) {
+                // Filter out records where investor doesn't exist
+                return $commission->investor !== null;
+            })
+            ->map(function ($commission) {
+                return [
+                    'type' => 'referral_investment_commission',
+                    'type_label' => 'Referral-Investment',
+                    'amount' => $commission->commission_amount,
+                    'created_at' => $commission->created_at,
+                    'is_claimed' => $commission->is_claimed,
+                    'investor' => $commission->investor,
+                    'investor_refer_code' => $commission->investor->refer_code ?? 'N/A',
+                    'level' => $commission->level,
+                    'investment_amount' => $commission->investment_amount,
+                    'mining_plan' => $commission->miningPlan,
+                    'plan_name' => $commission->miningPlan->name ?? 'N/A',
+                ];
+            });
+
+        // Get earning commissions - only completed (claimed) ones with actual earnings
+        // Only show levels 1-5 and filter out zero amounts
+        $earningCommissions = PendingEarningCommission::where('referrer_id', $user->id)
+            ->where('is_claimed', true)
+            ->where('commission_amount', '>', 0) // Only show records with actual earnings
+            ->whereBetween('level', [1, 5]) // Only levels 1-5
+            ->with(['investor', 'investment', 'miningPlan'])
+            ->orderBy('created_at', 'desc')
+            ->get()
+            ->filter(function ($commission) {
+                // Filter out records where investor doesn't exist
+                return $commission->investor !== null;
+            })
+            ->map(function ($commission) {
+                return [
+                    'type' => 'referral_earning_commission',
+                    'type_label' => 'Referral-Earning',
+                    'amount' => $commission->commission_amount,
+                    'created_at' => $commission->created_at,
+                    'is_claimed' => $commission->is_claimed,
+                    'investor' => $commission->investor,
+                    'investor_refer_code' => $commission->investor->refer_code ?? 'N/A',
+                    'level' => $commission->level,
+                    'earning_amount' => $commission->earning_amount,
+                    'mining_plan' => $commission->miningPlan,
+                    'plan_name' => $commission->miningPlan->name ?? 'N/A',
+                ];
+            });
+
+        // Combine all activities and filter out any with zero or negative amounts
+        $allActivities = $investmentCommissions->concat($earningCommissions)
+            ->filter(function ($activity) {
+                // Only keep activities with actual earnings (amount > 0)
+                return isset($activity['amount']) && $activity['amount'] > 0;
+            });
+
+        // Calculate referral wallet balance at the time of each commission
+        // Sort by created_at ascending to calculate cumulative balance correctly
+        $sortedActivities = $allActivities->sortBy(function ($activity) {
+            return $activity['created_at']->timestamp;
+        })->values();
+
+        $runningBalance = 0;
+        $activitiesWithBalance = collect();
+
+        foreach ($sortedActivities as $activity) {
+            // Add this commission amount to running balance
+            $runningBalance += $activity['amount'];
+            
+            // Store the balance at this point in time (before this commission was added)
+            // The balance shown should be the balance AFTER this commission
+            $activity['referral_wallet_balance'] = $runningBalance;
+            $activitiesWithBalance->push($activity);
+        }
+
+        // Sort by created_at descending (most recent first)
+        $sortedActivities = $activitiesWithBalance->sortByDesc(function ($activity) {
+            return $activity['created_at']->timestamp;
+        })->values();
+
+        // Paginate with 6 records per page
+        $currentPage = request()->get('page', 1);
+        $perPage = 6;
+        $total = $sortedActivities->count();
+        $items = $sortedActivities->forPage($currentPage, $perPage);
+        $totalPages = ceil($total / $perPage);
+
+        return [
+            'data' => $items,
+            'current_page' => (int)$currentPage,
+            'per_page' => $perPage,
+            'total' => $total,
+            'last_page' => $totalPages,
+            'from' => ($currentPage - 1) * $perPage + 1,
+            'to' => min($currentPage * $perPage, $total),
+        ];
+    }
+
+    /**
+     * Get referral activities HTML for AJAX pagination
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getReferralActivitiesAjax()
+    {
+        $user = Auth::user();
+        $referralActivitiesData = $this->getReferralActivities($user);
+        
+        // Render the activity list HTML
+        $html = view('dashboard.partials.referral-activities', [
+            'referralActivitiesData' => $referralActivitiesData
+        ])->render();
+        
+        return response()->json([
+            'success' => true,
+            'html' => $html,
+            'pagination' => $referralActivitiesData
+        ]);
     }
 
     /**

@@ -1114,6 +1114,550 @@
         margin: 0;
     }
 
+    /* Activity List Styles */
+    .mining-activity-list {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+
+    .mining-activity-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 1rem;
+        padding: 1rem;
+        background: rgba(255, 255, 255, 0.02);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        border-radius: 12px;
+        transition: all 0.2s ease;
+    }
+
+    .mining-activity-item:hover {
+        background: rgba(255, 255, 255, 0.04);
+        border-color: rgba(255, 178, 30, 0.2);
+    }
+
+    .mining-activity-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 10px;
+        background: rgba(76, 175, 80, 0.15);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+    }
+
+    .mining-activity-icon i {
+        font-size: 1rem;
+        color: #4CAF50;
+    }
+
+    .mining-activity-content-wrapper {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+        min-width: 0;
+    }
+
+    .mining-activity-type {
+        font-size: 0.9375rem;
+        font-weight: 600;
+        color: var(--text-primary);
+        margin: 0;
+    }
+
+    .mining-activity-date {
+        font-size: 0.8125rem;
+        color: var(--text-secondary);
+        margin: 0;
+    }
+
+    .mining-activity-status {
+        font-size: 0.75rem;
+        color: #4CAF50;
+        margin: 0;
+        margin-top: 0.125rem;
+    }
+
+    .mining-activity-status.pending {
+        color: var(--text-secondary);
+    }
+
+    .mining-activity-amount-wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 0.25rem;
+        flex-shrink: 0;
+    }
+
+    .mining-activity-amount {
+        font-size: 0.9375rem;
+        font-weight: 600;
+        color: #4CAF50;
+        margin: 0;
+    }
+
+    .mining-activity-wallet-balance {
+        font-size: 0.8125rem;
+        color: var(--text-primary);
+        margin: 0;
+    }
+
+    .mining-activity-status.pending {
+        color: var(--text-secondary);
+    }
+
+    @media (max-width: 768px) {
+        .mining-activity-item {
+            padding: 0.875rem;
+            gap: 0.75rem;
+        }
+
+        .mining-activity-icon {
+            width: 36px;
+            height: 36px;
+        }
+
+        .mining-activity-icon i {
+            font-size: 0.875rem;
+        }
+
+        .mining-activity-type {
+            font-size: 0.875rem;
+        }
+
+        .mining-activity-date {
+            font-size: 0.75rem;
+        }
+
+        .mining-activity-amount {
+            font-size: 0.875rem;
+        }
+
+        .mining-activity-wallet-balance {
+            font-size: 0.75rem;
+        }
+
+        .mining-activity-status {
+            font-size: 0.6875rem;
+        }
+    }
+
+    @media (max-width: 390px) {
+        .mining-activity-item {
+            padding: 0.75rem;
+            gap: 0.625rem;
+        }
+
+        .mining-activity-icon {
+            width: 32px;
+            height: 32px;
+        }
+
+        .mining-activity-icon i {
+            font-size: 0.75rem;
+        }
+
+        .mining-activity-type {
+            font-size: 0.7rem;
+        }
+
+        .mining-activity-date {
+            font-size: 0.6875rem;
+        }
+
+        .mining-activity-amount {
+            font-size: 0.8125rem;
+        }
+
+        .mining-activity-wallet-balance {
+            font-size: 0.6875rem;
+        }
+
+        .mining-activity-status {
+            font-size: 0.625rem;
+        }
+    }
+
+    /* Pagination Styles */
+    .mining-activity-pagination {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 1.5rem 1rem;
+        margin-top: 1rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.05);
+        flex-wrap: wrap;
+    }
+
+    /* Loading state for activities */
+    .mining-activity-content.loading {
+        position: relative;
+        opacity: 0.5;
+        pointer-events: none;
+    }
+
+    .mining-activity-content.loading::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 40px;
+        height: 40px;
+        border: 3px solid rgba(255, 178, 30, 0.3);
+        border-top-color: var(--primary-color);
+        border-radius: 50%;
+        animation: spin 0.8s linear infinite;
+        z-index: 10;
+    }
+
+    @keyframes spin {
+        to {
+            transform: translate(-50%, -50%) rotate(360deg);
+        }
+    }
+
+    .pagination-btn {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--text-primary);
+        text-decoration: none;
+        transition: all 0.2s ease;
+        cursor: pointer;
+    }
+
+    .pagination-btn:hover:not(.disabled) {
+        background: rgba(255, 178, 30, 0.1);
+        border-color: rgba(255, 178, 30, 0.3);
+        color: var(--primary-color);
+    }
+
+    .pagination-btn.disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+        color: var(--text-secondary);
+    }
+
+    .pagination-number {
+        min-width: 36px;
+        height: 36px;
+        padding: 0 0.75rem;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--text-primary);
+        text-decoration: none;
+        font-size: 0.875rem;
+        font-weight: 500;
+        transition: all 0.2s ease;
+        cursor: pointer;
+    }
+
+    .pagination-number:hover {
+        background: rgba(255, 178, 30, 0.1);
+        border-color: rgba(255, 178, 30, 0.3);
+        color: var(--primary-color);
+    }
+
+    .pagination-number.active {
+        background: rgba(255, 178, 30, 0.2);
+        border-color: rgba(255, 178, 30, 0.4);
+        color: var(--primary-color);
+        font-weight: 600;
+        cursor: default;
+    }
+
+    .pagination-ellipsis {
+        padding: 0 0.5rem;
+        color: var(--text-secondary);
+        font-size: 0.875rem;
+    }
+
+    @media (max-width: 768px) {
+        .mining-activity-pagination {
+            padding: 1rem 0.5rem;
+            gap: 0.375rem;
+        }
+
+        .pagination-btn,
+        .pagination-number {
+            width: 32px;
+            height: 32px;
+            min-width: 32px;
+            padding: 0 0.5rem;
+            font-size: 0.8125rem;
+        }
+    }
+
+    @media (max-width: 390px) {
+        .mining-activity-pagination {
+            padding: 0.875rem 0.25rem;
+            gap: 0.25rem;
+        }
+
+        .pagination-btn,
+        .pagination-number {
+            width: 28px;
+            height: 28px;
+            min-width: 28px;
+            padding: 0 0.375rem;
+            font-size: 0.75rem;
+        }
+
+        .pagination-ellipsis {
+            padding: 0 0.25rem;
+            font-size: 0.75rem;
+        }
+    }
+
+    /* Referral Activity Modal Styles */
+    .referral-activity-modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 10000;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .referral-activity-modal.show {
+        display: flex;
+        opacity: 1;
+    }
+
+    .referral-activity-modal-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.7);
+        backdrop-filter: blur(4px);
+    }
+
+    .referral-activity-modal-content {
+        position: relative;
+        background: var(--card-bg);
+        border: 1px solid var(--card-border);
+        border-radius: 20px;
+        width: 90%;
+        max-width: 420px;
+        max-height: 90vh;
+        overflow-y: auto;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+        transform: scale(0.9);
+        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .referral-activity-modal.show .referral-activity-modal-content {
+        transform: scale(1);
+    }
+
+    .referral-activity-modal-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1.5rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .referral-activity-modal-title-wrapper {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+    }
+
+    .referral-activity-modal-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: rgba(76, 175, 80, 0.15);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .referral-activity-modal-icon i {
+        color: #4CAF50;
+        font-size: 1.125rem;
+    }
+
+    .referral-activity-modal-title {
+        font-size: 1.125rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin: 0;
+    }
+
+    .referral-activity-modal-close {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--text-primary);
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+
+    .referral-activity-modal-close:hover {
+        background: rgba(255, 255, 255, 0.1);
+        transform: scale(1.1);
+    }
+
+    .referral-activity-modal-close i {
+        font-size: 1rem;
+    }
+
+    .referral-activity-modal-body {
+        padding: 1.5rem;
+    }
+
+    .referral-activity-plan-badge {
+        display: inline-block;
+        padding: 0.5rem 1rem;
+        background: rgba(138, 43, 226, 0.15);
+        border: 1px solid rgba(138, 43, 226, 0.3);
+        border-radius: 20px;
+        margin-bottom: 1rem;
+    }
+
+    .referral-activity-plan-badge span {
+        font-size: 0.875rem;
+        font-weight: 600;
+        color: #8a2be2;
+    }
+
+    .referral-activity-amount-large {
+        font-size: 1.75rem;
+        font-weight: 700;
+        color: #4CAF50;
+        margin-bottom: 1.5rem;
+        font-variant-numeric: tabular-nums;
+    }
+
+    .referral-activity-details {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .referral-activity-detail-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.75rem 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .referral-activity-detail-item:last-child {
+        border-bottom: none;
+    }
+
+    .referral-activity-detail-label {
+        font-size: 0.875rem;
+        color: var(--text-secondary);
+        font-weight: 500;
+    }
+
+    .referral-activity-detail-value {
+        font-size: 0.875rem;
+        color: var(--text-primary);
+        font-weight: 600;
+        text-align: right;
+    }
+
+    .referral-activity-modal-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-top: 1rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .referral-activity-status-badge {
+        padding: 0.5rem 1rem;
+        background: rgba(76, 175, 80, 0.15);
+        border: 1px solid rgba(76, 175, 80, 0.3);
+        border-radius: 20px;
+        font-size: 0.875rem;
+        font-weight: 600;
+        color: #4CAF50;
+    }
+
+    @media (max-width: 768px) {
+        .referral-activity-modal-content {
+            width: 95%;
+            max-width: 100%;
+            border-radius: 20px 20px 0 0;
+            max-height: 85vh;
+        }
+
+        .referral-activity-modal-header {
+            padding: 1.25rem;
+        }
+
+        .referral-activity-modal-body {
+            padding: 1.25rem;
+        }
+
+        .referral-activity-amount-large {
+            font-size: 1.5rem;
+        }
+    }
+
+    @media (max-width: 390px) {
+        .referral-activity-modal-content {
+            width: 100%;
+            border-radius: 20px 20px 0 0;
+        }
+
+        .referral-activity-modal-header {
+            padding: 1rem;
+        }
+
+        .referral-activity-modal-body {
+            padding: 1rem;
+        }
+
+        .referral-activity-amount-large {
+            font-size: 1.375rem;
+        }
+
+        .referral-activity-detail-item {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.25rem;
+        }
+
+        .referral-activity-detail-value {
+            text-align: left;
+        }
+    }
+
     @media (max-width: 768px) {
         .mining-dashboard {
             padding: 0.75rem;
@@ -2600,7 +3144,7 @@
     </div>
 
     <!-- Recent Activity -->
-    {{-- <div class="mining-activity-section collapsed" id="activitySection">
+    <div class="mining-activity-section collapsed" id="activitySection">
         <div class="mining-activity-header">
             <h2 class="mining-activity-title">Recent Activity</h2>
             <div class="mining-activity-toggle" onclick="toggleActivitySection()">
@@ -2608,15 +3152,55 @@
             </div>
         </div>
 
-        <div class="mining-activity-content">
-            <div class="mining-empty-state">
-                <div class="mining-empty-icon">
-                    <i class="fas fa-chart-area"></i>
+        <div class="mining-activity-content" id="referralActivitiesContent">
+            @include('dashboard.partials.referral-activities', ['referralActivitiesData' => $referralActivitiesData ?? null])
+        </div>
+    </div>
+
+    <!-- Referral Activity Detail Modal -->
+    <div id="referralActivityModal" class="referral-activity-modal">
+        <div class="referral-activity-modal-overlay" onclick="closeReferralActivityModal()"></div>
+        <div class="referral-activity-modal-content">
+            <div class="referral-activity-modal-header">
+                <div class="referral-activity-modal-title-wrapper">
+                    <div class="referral-activity-modal-icon">
+                        <i class="fas fa-check"></i>
+                    </div>
+                    <h3 class="referral-activity-modal-title" id="modalActivityTitle">Referral Earning</h3>
                 </div>
-                <p class="mining-empty-text">No activity yet. Start mining to see transactions.</p>
+                <button class="referral-activity-modal-close" onclick="closeReferralActivityModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="referral-activity-modal-body">
+                <div class="referral-activity-plan-badge" id="modalPlanBadge" style="display: none;">
+                    <span id="modalPlanName">-</span>
+                </div>
+                <div class="referral-activity-amount-large" id="modalActivityAmount">+ $0.000000</div>
+                <div class="referral-activity-details">
+                    <div class="referral-activity-detail-item">
+                        <span class="referral-activity-detail-label">Time:</span>
+                        <span class="referral-activity-detail-value" id="modalActivityTime">-</span>
+                    </div>
+                    <div class="referral-activity-detail-item">
+                        <span class="referral-activity-detail-label">Referred By:</span>
+                        <span class="referral-activity-detail-value" id="modalReferredBy">-</span>
+                    </div>
+                    <div class="referral-activity-detail-item">
+                        <span class="referral-activity-detail-label">Earned By:</span>
+                        <span class="referral-activity-detail-value" id="modalEarnedBy">-</span>
+                    </div>
+                    <div class="referral-activity-detail-item">
+                        <span class="referral-activity-detail-label">Referral Wallet:</span>
+                        <span class="referral-activity-detail-value" id="modalReferralWallet">-</span>
+                    </div>
+                </div>
+                <div class="referral-activity-modal-footer">
+                    <div class="referral-activity-status-badge" id="modalActivityStatus">Completed</div>
+                </div>
             </div>
         </div>
-    </div> --}}
+    </div>
 </div>
 @endsection
 
@@ -3200,6 +3784,177 @@
                     btn.innerHTML = originalText;
                 });
             });
+        }
+    });
+
+    // AJAX Pagination for Referral Activities
+    document.addEventListener('DOMContentLoaded', function() {
+        const activitiesContent = document.getElementById('referralActivitiesContent');
+
+        if (activitiesContent) {
+            // Use event delegation for pagination links
+            activitiesContent.addEventListener('click', function(e) {
+                const paginationLink = e.target.closest('a[data-page]');
+
+                if (paginationLink) {
+                    e.preventDefault();
+
+                    const page = paginationLink.getAttribute('data-page');
+                    if (!page) return;
+
+                    // Store current scroll position
+                    const scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
+
+                    // Show loading state
+                    const originalContent = activitiesContent.innerHTML;
+                    activitiesContent.classList.add('loading');
+
+                    // Make AJAX request
+                    fetch('{{ route("dashboard.referral-activities") }}?page=' + page, {
+                        method: 'GET',
+                        headers: {
+                            'X-Requested-With': 'XMLHttpRequest',
+                            'Accept': 'application/json',
+                        }
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success && data.html) {
+                            // Update content
+                            activitiesContent.innerHTML = data.html;
+
+                            // Remove loading state
+                            activitiesContent.classList.remove('loading');
+
+                            // Maintain scroll position - restore to exact same position
+                            window.scrollTo({
+                                top: scrollPosition,
+                                behavior: 'instant'
+                            });
+
+                            // Update URL without reloading
+                            const url = new URL(window.location);
+                            if (page == 1) {
+                                url.searchParams.delete('page');
+                            } else {
+                                url.searchParams.set('page', page);
+                            }
+                            window.history.pushState({}, '', url);
+                        } else {
+                            // Error handling
+                            activitiesContent.innerHTML = originalContent;
+                            activitiesContent.classList.remove('loading');
+                            console.error('Failed to load activities');
+                        }
+                    })
+                    .catch(error => {
+                        // Error handling
+                        console.error('Error loading activities:', error);
+                        activitiesContent.innerHTML = originalContent;
+                        activitiesContent.classList.remove('loading');
+                    });
+                }
+            });
+        }
+    });
+
+    // Referral Activity Modal Functionality
+    document.addEventListener('DOMContentLoaded', function() {
+        const activitiesContent = document.getElementById('referralActivitiesContent');
+
+        if (activitiesContent) {
+            // Use event delegation for activity item clicks (works with dynamically loaded content)
+            activitiesContent.addEventListener('click', function(e) {
+                // Don't trigger if clicking on pagination links
+                if (e.target.closest('a[data-page]') || e.target.closest('.mining-activity-pagination')) {
+                    return;
+                }
+
+                const activityItem = e.target.closest('.mining-activity-item');
+                if (activityItem) {
+                    try {
+                        const activityData = JSON.parse(activityItem.getAttribute('data-activity'));
+                        openReferralActivityModal(activityData);
+                    } catch (error) {
+                        console.error('Error parsing activity data:', error);
+                    }
+                }
+            });
+        }
+    });
+
+    function openReferralActivityModal(activity) {
+        const modal = document.getElementById('referralActivityModal');
+        if (!modal) return;
+
+        // Set title
+        const title = activity.type_label || 'Referral Activity';
+        document.getElementById('modalActivityTitle').textContent = title;
+
+        // Set plan badge
+        const planBadge = document.getElementById('modalPlanBadge');
+        const planName = activity.plan_name || 'N/A';
+        if (planName && planName !== 'N/A') {
+            document.getElementById('modalPlanName').textContent = planName;
+            planBadge.style.display = 'inline-block';
+        } else {
+            planBadge.style.display = 'none';
+        }
+
+        // Set amount
+        const amount = parseFloat(activity.amount || 0);
+        const amountFormatted = '+' + amount.toFixed(6);
+        document.getElementById('modalActivityAmount').textContent = '$' + amountFormatted;
+
+        // Set time
+        let timeFormatted = 'N/A';
+        if (activity.created_at) {
+            const date = new Date(activity.created_at);
+            if (!isNaN(date.getTime())) {
+                const options = {
+                    year: 'numeric',
+                    month: 'short',
+                    day: 'numeric',
+                    hour: 'numeric',
+                    minute: '2-digit',
+                    hour12: true
+                };
+                timeFormatted = date.toLocaleString('en-US', options);
+            }
+        }
+        document.getElementById('modalActivityTime').textContent = timeFormatted;
+
+        // Set referred by (investor refer code)
+        const referredBy = activity.investor_refer_code || activity.investor?.refer_code || 'N/A';
+        document.getElementById('modalReferredBy').textContent = referredBy;
+
+        // Set earned by (level)
+        const level = activity.level || 'N/A';
+        const earnedBy = level !== 'N/A' ? 'level' + level : 'N/A';
+        document.getElementById('modalEarnedBy').textContent = earnedBy;
+
+        // Set referral wallet balance
+        const walletBalance = parseFloat(activity.referral_wallet_balance || 0);
+        const walletBalanceFormatted = walletBalance.toFixed(6);
+        document.getElementById('modalReferralWallet').textContent = '$' + walletBalanceFormatted;
+
+        // Show modal
+        modal.classList.add('show');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeReferralActivityModal() {
+        const modal = document.getElementById('referralActivityModal');
+        if (modal) {
+            modal.classList.remove('show');
+            document.body.style.overflow = '';
+        }
+    }
+
+    // Close modal on ESC key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            closeReferralActivityModal();
         }
     });
 </script>
