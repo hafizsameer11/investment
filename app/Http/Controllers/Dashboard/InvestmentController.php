@@ -77,17 +77,8 @@ class InvestmentController extends Controller
                             
                             DB::commit();
 
-                            // Calculate and distribute earning commissions
-                            try {
-                                EarningCommissionService::calculateAndDistributeCommissions($user, $investment, $totalProfitForPeriod);
-                            } catch (\Exception $e) {
-                                // Log error but don't fail the profit calculation
-                                Log::error('Error calculating earning commissions: ' . $e->getMessage(), [
-                                    'user_id' => $user->id,
-                                    'investment_id' => $investment->id,
-                                    'earning_amount' => $totalProfitForPeriod,
-                                ]);
-                            }
+                            // Note: Earning commissions are calculated when the user claims their mining earnings,
+                            // not when the earnings are calculated. This ensures commissions only appear after claims.
                         } catch (\Exception $e) {
                             DB::rollBack();
                             Log::error("Error calculating profit for investment ID {$investment->id}: " . $e->getMessage());
@@ -500,6 +491,19 @@ class InvestmentController extends Controller
                 $user->updateNetBalance();
 
                 DB::commit();
+
+                // Calculate and distribute earning commissions AFTER the claim is successful
+                // Commissions are only created when the user claims their earnings
+                try {
+                    EarningCommissionService::calculateAndDistributeCommissions($user, $investment, $unclaimedProfit);
+                } catch (\Exception $e) {
+                    // Log error but don't fail the claim process
+                    Log::error('Error calculating earning commissions after claim: ' . $e->getMessage(), [
+                        'user_id' => $user->id,
+                        'investment_id' => $investment->id,
+                        'claimed_amount' => $unclaimedProfit,
+                    ]);
+                }
 
                 return response()->json([
                     'success' => true,

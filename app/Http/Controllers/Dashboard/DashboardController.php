@@ -76,17 +76,8 @@ class DashboardController extends Controller
                             
                             DB::commit();
 
-                            // Calculate and distribute earning commissions
-                            try {
-                                EarningCommissionService::calculateAndDistributeCommissions($user, $investment, $totalProfitForPeriod);
-                            } catch (\Exception $e) {
-                                // Log error but don't fail the profit calculation
-                                Log::error('Error calculating earning commissions: ' . $e->getMessage(), [
-                                    'user_id' => $user->id,
-                                    'investment_id' => $investment->id,
-                                    'earning_amount' => $totalProfitForPeriod,
-                                ]);
-                            }
+                            // Note: Earning commissions are calculated when the user claims their mining earnings,
+                            // not when the earnings are calculated. This ensures commissions only appear after claims.
                         } catch (\Exception $e) {
                             DB::rollBack();
                             Log::error("Error calculating profit for investment ID {$investment->id}: " . $e->getMessage());
@@ -411,12 +402,28 @@ class DashboardController extends Controller
                 // Add unclaimed profit to mining_earning
                 $user->mining_earning = ($user->mining_earning ?? 0) + $totalUnclaimedProfit;
                 
-                // Reset unclaimed_profit for all active investments
+                // Reset unclaimed_profit for all active investments and calculate earning commissions
                 foreach ($activeInvestments as $investment) {
                     if ($investment->unclaimed_profit > 0) {
+                        $claimedAmount = $investment->unclaimed_profit;
+                        
+                        // Reset unclaimed_profit
                         $investment->unclaimed_profit = 0;
                         $investment->last_claimed_at = now();
                         $investment->save();
+                        
+                        // Calculate and distribute earning commissions for this claimed amount
+                        // Commissions are only created when the user claims their earnings
+                        try {
+                            EarningCommissionService::calculateAndDistributeCommissions($user, $investment, $claimedAmount);
+                        } catch (\Exception $e) {
+                            // Log error but don't fail the claim process
+                            Log::error('Error calculating earning commissions after claim: ' . $e->getMessage(), [
+                                'user_id' => $user->id,
+                                'investment_id' => $investment->id,
+                                'claimed_amount' => $claimedAmount,
+                            ]);
+                        }
                     }
                 }
 

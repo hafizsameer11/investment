@@ -3,7 +3,6 @@
 namespace App\Console\Commands;
 
 use App\Models\Investment;
-use App\Services\EarningCommissionService;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -99,17 +98,8 @@ class CalculateMiningProfits extends Command
                             
                             DB::commit();
 
-                            // Calculate and distribute earning commissions
-                            try {
-                                EarningCommissionService::calculateAndDistributeCommissions($user, $investment, $totalProfitForPeriod);
-                            } catch (\Exception $e) {
-                                // Log error but don't fail the profit calculation
-                                Log::error('Error calculating earning commissions: ' . $e->getMessage(), [
-                                    'user_id' => $user->id,
-                                    'investment_id' => $investment->id,
-                                    'earning_amount' => $totalProfitForPeriod,
-                                ]);
-                            }
+                            // Note: Earning commissions are calculated when the user claims their mining earnings,
+                            // not when the earnings are calculated. This ensures commissions only appear after claims.
                         } catch (\Exception $e) {
                             DB::rollBack();
                             Log::error("Error saving profit for investment ID {$investment->id}: " . $e->getMessage());
