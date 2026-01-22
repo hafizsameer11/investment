@@ -112,16 +112,15 @@ class DashboardController extends Controller
     {
         $user = Auth::user();
         
-        // Calculate total invested from approved deposits if not set
-        if ($user->total_invested == 0) {
-            $totalInvested = $user->deposits()
-                ->where('status', 'approved')
-                ->sum('amount');
-            
-            if ($totalInvested > 0) {
-                $user->total_invested = $totalInvested;
-                $user->save();
-            }
+        // Calculate total invested from investments table (all investments in plans)
+        // This shows only the amount invested in mining plans, not deposits
+        $totalInvested = Investment::where('user_id', $user->id)
+            ->sum('amount');
+        
+        // Update user's total_invested field to match actual investments
+        if ($user->total_invested != $totalInvested) {
+            $user->total_invested = $totalInvested;
+            $user->save();
         }
         
         // Calculate mining profits on-demand to ensure earnings are up-to-date
@@ -151,12 +150,80 @@ class DashboardController extends Controller
         
         $hasActivePlan = $activeInvestments->count() > 0;
         
+        // Calculate daily earnings and investments for the last 7 days
+        $chartData = $this->calculateChartData($user);
+        
         // Ensure variables are always set
         $totalUnclaimedProfit = $totalUnclaimedProfit ?? 0;
         $secondsUntilNextHour = $secondsUntilNextHour ?? 3600;
         $initialCountdown = $initialCountdown ?? '01:00:00';
         
-        return view('dashboard.index', compact('user', 'hasActivePlan', 'totalUnclaimedProfit', 'initialCountdown', 'secondsUntilNextHour'));
+        return view('dashboard.index', compact('user', 'hasActivePlan', 'totalUnclaimedProfit', 'initialCountdown', 'secondsUntilNextHour', 'chartData'));
+    }
+
+    /**
+     * Calculate chart data for the last 7 days
+     * Returns daily earnings (mining + referral) and investments
+     */
+    private function calculateChartData($user)
+    {
+        $now = Carbon::now();
+        $days = [];
+        $earningsData = [];
+        $investmentData = [];
+        
+        // Get last 7 days (including today)
+        for ($i = 6; $i >= 0; $i--) {
+            $date = $now->copy()->subDays($i);
+            $startOfDay = $date->copy()->startOfDay();
+            $endOfDay = $date->copy()->endOfDay();
+            
+            // Get day name (Mon, Tue, etc.)
+            $days[] = $date->format('D');
+            
+            // Calculate cumulative earnings up to this day (mining + referral)
+            // Get from transactions table - cumulative total
+            $cumulativeMiningEarnings = \App\Models\Transaction::where('user_id', $user->id)
+                ->where('type', 'mining_earning')
+                ->where('created_at', '<=', $endOfDay)
+                ->where('status', 'completed')
+                ->sum('amount');
+            
+            $cumulativeReferralEarnings = \App\Models\Transaction::where('user_id', $user->id)
+                ->where('type', 'referral_earning')
+                ->where('created_at', '<=', $endOfDay)
+                ->where('status', 'completed')
+                ->sum('amount');
+            
+            // If no transactions found, calculate from investments' total_profit_earned
+            // This handles cases where earnings were claimed but not recorded as transactions
+            if ($cumulativeMiningEarnings == 0) {
+                $cumulativeMiningEarnings = Investment::where('user_id', $user->id)
+                    ->where('created_at', '<=', $endOfDay)
+                    ->sum('total_profit_earned');
+            }
+            
+            // For referral earnings, if no transactions, use current balance as fallback for today
+            if ($cumulativeReferralEarnings == 0 && $i == 0) {
+                $cumulativeReferralEarnings = $user->referral_earning ?? 0;
+            }
+            
+            $totalEarnings = ($cumulativeMiningEarnings ?? 0) + ($cumulativeReferralEarnings ?? 0);
+            
+            // Calculate cumulative investments up to this day
+            $cumulativeInvestments = Investment::where('user_id', $user->id)
+                ->where('created_at', '<=', $endOfDay)
+                ->sum('amount');
+            
+            $earningsData[] = round($totalEarnings, 2);
+            $investmentData[] = round($cumulativeInvestments, 2);
+        }
+        
+        return [
+            'days' => $days,
+            'earnings' => $earningsData,
+            'investments' => $investmentData,
+        ];
     }
 
     /**

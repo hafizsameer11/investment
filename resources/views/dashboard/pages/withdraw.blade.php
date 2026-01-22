@@ -1219,6 +1219,14 @@
 
 @section('content')
 <div class="withdraw-page">
+    <!-- Error Message Display -->
+    @if(session('error'))
+    <div class="withdraw-error-message" style="background: rgba(255, 68, 68, 0.1); border: 2px solid rgba(255, 68, 68, 0.3); border-radius: 12px; padding: 1rem 1.5rem; margin-bottom: 2rem; color: #FF4444; display: flex; align-items: center; gap: 0.75rem;">
+        <i class="fas fa-exclamation-circle" style="font-size: 1.25rem;"></i>
+        <span>{{ session('error') }}</span>
+    </div>
+    @endif
+
     <!-- Withdraw Header -->
     <div class="withdraw-header">
         <h1 class="withdraw-title">Get Money</h1>
@@ -1289,6 +1297,11 @@
                 </div>
                 @endif
                 {{-- <div id="withdraw-limit-info" style="font-size: 0.875rem; color: var(--text-secondary); margin-bottom: 1rem; display: none;"></div> --}}
+                <!-- Insufficient Balance Message -->
+                <div id="withdraw-insufficient-balance-message" style="display: none; background: rgba(255, 68, 68, 0.1); border: 2px solid rgba(255, 68, 68, 0.3); border-radius: 12px; padding: 1rem 1.5rem; margin-bottom: 1rem; color: #FF4444; font-size: 0.875rem;">
+                    <i class="fas fa-exclamation-circle" style="margin-right: 0.5rem;"></i>
+                    <span id="withdraw-insufficient-balance-text"></span>
+                </div>
                 <button class="withdraw-continue-btn" id="withdraw-continue-btn" disabled>
                     Continue Withdrawal
                 </button>
@@ -1629,38 +1642,66 @@
             updateWithdrawPKRAmount();
 
             const amount = parseFloat(this.value);
-            // Note: net_balance only shows mining + referral, but withdrawals can use all wallets
-            const fundWallet = {{ auth()->user()->fund_wallet ?? 0 }};
+            // Note: Withdrawals can only use mining_earning + referral_earning (NOT fund_wallet)
             const miningEarning = {{ auth()->user()->mining_earning ?? 0 }};
             const referralEarning = {{ auth()->user()->referral_earning ?? 0 }};
-            const userBalance = fundWallet + miningEarning + referralEarning;
+            const userBalance = miningEarning + referralEarning;
+
+            // Get message elements
+            const insufficientBalanceMsg = document.getElementById('withdraw-insufficient-balance-message');
+            const insufficientBalanceText = document.getElementById('withdraw-insufficient-balance-text');
 
             if (!selectedPaymentMethod) {
                 continueBtn.disabled = true;
+                if (insufficientBalanceMsg) insufficientBalanceMsg.style.display = 'none';
                 return;
             }
 
             if (!amount || amount <= 0) {
                 continueBtn.disabled = true;
+                if (insufficientBalanceMsg) insufficientBalanceMsg.style.display = 'none';
                 return;
             }
 
             // Check minimum
             if (selectedPaymentMethod.minWithdrawal > 0 && amount < selectedPaymentMethod.minWithdrawal) {
                 continueBtn.disabled = true;
+                if (insufficientBalanceMsg && insufficientBalanceText) {
+                    if (userBalance < selectedPaymentMethod.minWithdrawal) {
+                        insufficientBalanceText.textContent = `Minimum withdrawal amount is $${selectedPaymentMethod.minWithdrawal.toFixed(2)}, but your available balance is only $${userBalance.toFixed(2)}. You can only withdraw from mining and referral earnings.`;
+                        insufficientBalanceMsg.style.display = 'block';
+                    } else {
+                        insufficientBalanceMsg.style.display = 'none';
+                    }
+                }
                 return;
             }
 
             // Check maximum
             if (selectedPaymentMethod.maxWithdrawal && amount > selectedPaymentMethod.maxWithdrawal) {
                 continueBtn.disabled = true;
+                if (insufficientBalanceMsg) insufficientBalanceMsg.style.display = 'none';
                 return;
             }
 
             // Check user balance
+            
             if (amount > userBalance) {
                 continueBtn.disabled = true;
+                if (insufficientBalanceMsg && insufficientBalanceText) {
+                    const minRequired = selectedPaymentMethod.minWithdrawal || 0;
+                    if (minRequired > 0 && userBalance < minRequired) {
+                        insufficientBalanceText.textContent = `Minimum withdrawal amount is $${minRequired.toFixed(2)}, but your available balance is only $${userBalance.toFixed(2)}. You can only withdraw from mining and referral earnings.`;
+                    } else {
+                        insufficientBalanceText.textContent = `Insufficient balance. Your available withdrawal balance is $${userBalance.toFixed(2)}. You can only withdraw from mining and referral earnings.`;
+                    }
+                    insufficientBalanceMsg.style.display = 'block';
+                }
                 return;
+            } else {
+                if (insufficientBalanceMsg) {
+                    insufficientBalanceMsg.style.display = 'none';
+                }
             }
 
             continueBtn.disabled = false;

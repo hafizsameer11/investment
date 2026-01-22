@@ -230,12 +230,12 @@ class WalletController extends Controller
         }
 
         // Check user balance
-        // Note: net_balance only shows mining + referral, but withdrawals can use all wallets
+        // Note: Withdrawals can only use mining_earning + referral_earning (NOT fund_wallet)
         $user = auth()->user();
-        $totalAvailableBalance = ($user->fund_wallet ?? 0) + ($user->mining_earning ?? 0) + ($user->referral_earning ?? 0);
+        $totalAvailableBalance = ($user->mining_earning ?? 0) + ($user->referral_earning ?? 0);
         if ($totalAvailableBalance < $amount) {
             return redirect()->route('withdraw.index')
-                ->with('error', 'Insufficient balance. Your available balance is $' . number_format($totalAvailableBalance, 2));
+                ->with('error', 'Insufficient balance. Your available withdrawal balance is $' . number_format($totalAvailableBalance, 2) . '. You can only withdraw from mining and referral earnings.');
         }
 
         return view('dashboard.pages.withdraw-confirm', compact('paymentMethod', 'amount'));
@@ -285,27 +285,21 @@ class WalletController extends Controller
                 ], 422);
             }
 
-            // Calculate total available balance (fund_wallet + mining_earning + referral_earning)
-            // Note: net_balance only shows mining + referral, but withdrawals can use all wallets
-            $totalAvailableBalance = ($user->fund_wallet ?? 0) + ($user->mining_earning ?? 0) + ($user->referral_earning ?? 0);
+            // Calculate total available balance (mining_earning + referral_earning only)
+            // Note: Withdrawals can only use mining_earning + referral_earning (NOT fund_wallet)
+            $totalAvailableBalance = ($user->mining_earning ?? 0) + ($user->referral_earning ?? 0);
             
             // Check user has sufficient balance
             if ($totalAvailableBalance < $request->amount) {
                 return response()->json([
                     'success' => false,
-                    'message' => 'Insufficient balance. Your available balance is $' . number_format($totalAvailableBalance, 2),
+                    'message' => 'Insufficient balance. Your available withdrawal balance is $' . number_format($totalAvailableBalance, 2) . '. You can only withdraw from mining and referral earnings.',
                 ], 422);
             }
 
-            // Deduct amount from wallets
-            // We'll deduct from fund_wallet first, then mining_earning, then referral_earning
+            // Deduct amount from wallets (only from mining_earning and referral_earning)
+            // Deduct proportionally from mining_earning and referral_earning
             $remainingAmount = $request->amount;
-            
-            if ($user->fund_wallet > 0 && $remainingAmount > 0) {
-                $deductFromFund = min($user->fund_wallet, $remainingAmount);
-                $user->fund_wallet -= $deductFromFund;
-                $remainingAmount -= $deductFromFund;
-            }
             
             if ($user->mining_earning > 0 && $remainingAmount > 0) {
                 $deductFromMining = min($user->mining_earning, $remainingAmount);

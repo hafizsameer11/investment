@@ -589,6 +589,57 @@
         }
     }
 
+    /* Mobile Icon Animations */
+    @keyframes iconPulse {
+        0%, 100% {
+            transform: scale(1);
+            opacity: 1;
+        }
+        50% {
+            transform: scale(1.1);
+            opacity: 0.9;
+        }
+    }
+
+    @keyframes iconBounce {
+        0%, 100% {
+            transform: translateY(0);
+        }
+        50% {
+            transform: translateY(-5px);
+        }
+    }
+
+    @keyframes iconRotate {
+        0% {
+            transform: rotate(0deg);
+        }
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+
+    @keyframes iconShake {
+        0%, 100% {
+            transform: translateX(0);
+        }
+        25% {
+            transform: translateX(-3px);
+        }
+        75% {
+            transform: translateX(3px);
+        }
+    }
+
+    @keyframes iconFloat {
+        0%, 100% {
+            transform: translateY(0) scale(1);
+        }
+        50% {
+            transform: translateY(-8px) scale(1.05);
+        }
+    }
+
     /* Smooth scroll behavior */
     html {
         scroll-behavior: smooth;
@@ -1146,6 +1197,23 @@
 
         .wallet-action-icon i {
             font-size: 1.25rem;
+            animation: iconFloat 3s ease-in-out infinite;
+        }
+
+        .wallet-action-icon:nth-child(1) i {
+            animation-delay: 0s;
+        }
+
+        .wallet-action-icon:nth-child(2) i {
+            animation-delay: 0.3s;
+        }
+
+        .wallet-action-icon:nth-child(3) i {
+            animation-delay: 0.6s;
+        }
+
+        .wallet-action-icon:nth-child(4) i {
+            animation-delay: 0.9s;
         }
 
         .wallet-action-label {
@@ -1167,6 +1235,35 @@
 
         .stat-icon i {
             font-size: 1rem;
+            animation: iconPulse 2s ease-in-out infinite;
+        }
+
+        .mining-stat-item:nth-child(1) .stat-icon i {
+            animation-delay: 0s;
+        }
+
+        .mining-stat-item:nth-child(2) .stat-icon i {
+            animation-delay: 0.5s;
+        }
+
+        /* WhatsApp and Telegram Icons Animation */
+        .whatsapp-icon-wrapper i,
+        .telegram-icon-wrapper i {
+            animation: iconBounce 2.5s ease-in-out infinite;
+        }
+
+        .telegram-icon-wrapper i {
+            animation-delay: 0.3s;
+        }
+
+        /* Balance Label Icons Animation */
+        .balance-label i {
+            animation: iconPulse 2s ease-in-out infinite;
+        }
+
+        .balance-trend-up,
+        .balance-toggle-icon {
+            animation: iconFloat 2s ease-in-out infinite;
         }
 
         .stat-label {
@@ -1382,13 +1479,30 @@
                 height: 44px;
             }
 
-            .wallet-action-icon i {
-                font-size: 1.125rem;
-            }
+        .wallet-action-icon i {
+            font-size: 1.125rem;
+            animation: iconFloat 3s ease-in-out infinite;
+        }
 
-            .wallet-action-label {
-                font-size: 0.6875rem;
-            }
+        .wallet-action-btn:nth-child(1) .wallet-action-icon i {
+            animation-delay: 0s;
+        }
+
+        .wallet-action-btn:nth-child(2) .wallet-action-icon i {
+            animation-delay: 0.3s;
+        }
+
+        .wallet-action-btn:nth-child(3) .wallet-action-icon i {
+            animation-delay: 0.6s;
+        }
+
+        .wallet-action-btn:nth-child(4) .wallet-action-icon i {
+            animation-delay: 0.9s;
+        }
+
+        .wallet-action-label {
+            font-size: 0.6875rem;
+        }
         }
 
         /* Logo Header - Flat Minimal */
@@ -1508,10 +1622,39 @@
 
         .stat-icon i {
             font-size: 1rem;
+            animation: iconPulse 2s ease-in-out infinite;
+        }
+
+        .mining-stat-item:nth-child(1) .stat-icon i {
+            animation-delay: 0s;
+        }
+
+        .mining-stat-item:nth-child(2) .stat-icon i {
+            animation-delay: 0.5s;
         }
 
         .stat-label {
             font-size: 0.6rem;
+        }
+
+        /* WhatsApp and Telegram Icons Animation */
+        .whatsapp-icon-wrapper i,
+        .telegram-icon-wrapper i {
+            animation: iconBounce 2.5s ease-in-out infinite;
+        }
+
+        .telegram-icon-wrapper i {
+            animation-delay: 0.3s;
+        }
+
+        /* Balance Label Icons Animation */
+        .balance-label i {
+            animation: iconPulse 2s ease-in-out infinite;
+        }
+
+        .balance-trend-up,
+        .balance-toggle-icon {
+            animation: iconFloat 2s ease-in-out infinite;
         }
 
         .stat-value {
@@ -1828,6 +1971,20 @@
             transition: all 0.1s ease;
         }
 
+        /* Enhanced icon animations on touch */
+        .wallet-action-btn:active .wallet-action-icon i {
+            animation: iconBounce 0.3s ease-in-out;
+        }
+
+        .mining-stat-item:active .stat-icon i {
+            animation: iconShake 0.3s ease-in-out;
+        }
+
+        .whatsapp-link-box:active .whatsapp-icon-wrapper i,
+        .telegram-link-box:active .telegram-icon-wrapper i {
+            animation: iconBounce 0.3s ease-in-out;
+        }
+
         .mining-stat-card:active {
             transform: scale(0.98);
         }
@@ -2133,6 +2290,23 @@
             justify-content: center;
         }
 
+        /* Live Earning Section Icons Animation */
+        .live-earning-title i {
+            animation: iconPulse 2s ease-in-out infinite;
+        }
+
+        .live-earning-timer i {
+            animation: iconFloat 2s ease-in-out infinite;
+        }
+
+        .live-earning-btn i {
+            animation: iconBounce 2s ease-in-out infinite;
+        }
+
+        .animated-box-icon {
+            animation: iconRotate 3s linear infinite;
+        }
+
         .live-earning-actions {
             flex-direction: column;
             align-items: stretch;
@@ -2173,10 +2347,24 @@
 
         .animated-box-icon {
             font-size: 1.25rem;
+            animation: iconRotate 3s linear infinite;
         }
 
         .animated-box-text {
             font-size: 0.6875rem;
+        }
+
+        /* Live Earning Section Icons */
+        .live-earning-title i {
+            animation: iconPulse 2s ease-in-out infinite;
+        }
+
+        .live-earning-timer i {
+            animation: iconFloat 2s ease-in-out infinite;
+        }
+
+        .live-earning-btn i {
+            animation: iconBounce 2s ease-in-out infinite;
         }
 
         .live-earning-title {
@@ -2377,7 +2565,7 @@
                 <div class="stat-icon"><i class="fas fa-chart-line"></i></div>
                 <div class="stat-content">
                     <div class="stat-label">Total Earnings</div>
-                    <div class="stat-value">$0</div>
+                    <div class="stat-value">${{ number_format(($user->mining_earning ?? 0) + ($user->referral_earning ?? 0), 2) }}</div>
                 </div>
             </div>
             <div class="mining-stat-item">
@@ -2412,7 +2600,7 @@
     </div>
 
     <!-- Recent Activity -->
-    <div class="mining-activity-section collapsed" id="activitySection">
+    {{-- <div class="mining-activity-section collapsed" id="activitySection">
         <div class="mining-activity-header">
             <h2 class="mining-activity-title">Recent Activity</h2>
             <div class="mining-activity-toggle" onclick="toggleActivitySection()">
@@ -2428,7 +2616,7 @@
                 <p class="mining-empty-text">No activity yet. Start mining to see transactions.</p>
             </div>
         </div>
-    </div>
+    </div> --}}
 </div>
 @endsection
 
@@ -2690,14 +2878,25 @@
             const investmentColor = '#FF8A1D';
             const isMobile = window.innerWidth <= 390;
 
+            // Get real chart data from server
+            @php
+                $defaultChartData = [
+                    'days' => ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                    'earnings' => [0, 0, 0, 0, 0, 0, 0],
+                    'investments' => [0, 0, 0, 0, 0, 0, 0]
+                ];
+                $chartDataToUse = $chartData ?? $defaultChartData;
+            @endphp
+            const chartData = @json($chartDataToUse);
+
             new Chart(chartCtx, {
                 type: 'line',
                 data: {
-                    labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                    labels: chartData.days,
                     datasets: [
                         {
                             label: 'Earnings',
-                            data: [120, 190, 300, 250, 400, 350, 450],
+                            data: chartData.earnings,
                             borderColor: earningsColor,
                             backgroundColor: 'rgba(255, 178, 30, 0.1)',
                             borderWidth: 2,
@@ -2711,7 +2910,7 @@
                         },
                         {
                             label: 'Investment',
-                            data: [80, 150, 200, 180, 280, 240, 320],
+                            data: chartData.investments,
                             borderColor: investmentColor,
                             backgroundColor: 'rgba(255, 138, 29, 0.1)',
                             borderWidth: 2,
@@ -2796,14 +2995,25 @@
                 const investmentColor = '#FF8A1D';
                 const isMobile = window.innerWidth <= 390;
 
+                // Get real chart data from server (same as desktop)
+                @php
+                    $defaultChartData = [
+                        'days' => ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                        'earnings' => [0, 0, 0, 0, 0, 0, 0],
+                        'investments' => [0, 0, 0, 0, 0, 0, 0]
+                    ];
+                    $chartDataToUse = $chartData ?? $defaultChartData;
+                @endphp
+                const chartData = @json($chartDataToUse);
+
                 new Chart(chartCtx, {
                     type: 'line',
                     data: {
-                        labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                        labels: chartData.days,
                         datasets: [
                             {
                                 label: 'Earnings',
-                                data: [120, 190, 300, 250, 400, 350, 450],
+                                data: chartData.earnings,
                                 borderColor: earningsColor,
                                 backgroundColor: 'rgba(255, 178, 30, 0.1)',
                                 borderWidth: 2,
@@ -2817,7 +3027,7 @@
                             },
                             {
                                 label: 'Investment',
-                                data: [80, 150, 200, 180, 280, 240, 320],
+                                data: chartData.investments,
                                 borderColor: investmentColor,
                                 backgroundColor: 'rgba(255, 138, 29, 0.1)',
                                 borderWidth: 2,

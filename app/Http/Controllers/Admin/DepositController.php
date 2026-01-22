@@ -69,11 +69,10 @@ class DepositController extends Controller
                 'admin_notes' => $request->admin_notes,
             ]);
 
-            // Update user wallet and total invested
+            // Update user wallet
             $user = $deposit->user;
             $user->fund_wallet += $deposit->amount;
-            // Increment total invested (this should only increase, never decrease)
-            $user->total_invested += $deposit->amount;
+            // Note: total_invested is now calculated from investments table only (plan investments)
             $user->updateNetBalance(); // This will save the user
 
             // Create transaction record

@@ -3846,5 +3846,175 @@ body {
     .settings-earnings-card {
         margin-bottom: 1rem;
     }
+
+    /* ============================================
+       Mobile Icon Animations - Applied Globally
+       ============================================ */
+
+    /* Icon Animation Keyframes */
+    @keyframes iconPulse {
+        0%, 100% {
+            transform: scale(1);
+            opacity: 1;
+        }
+        50% {
+            transform: scale(1.1);
+            opacity: 0.9;
+        }
+    }
+
+    @keyframes iconBounce {
+        0%, 100% {
+            transform: translateY(0);
+        }
+        50% {
+            transform: translateY(-5px);
+        }
+    }
+
+    @keyframes iconRotate {
+        0% {
+            transform: rotate(0deg);
+        }
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+
+    @keyframes iconShake {
+        0%, 100% {
+            transform: translateX(0);
+        }
+        25% {
+            transform: translateX(-3px);
+        }
+        75% {
+            transform: translateX(3px);
+        }
+    }
+
+    @keyframes iconFloat {
+        0%, 100% {
+            transform: translateY(0) scale(1);
+        }
+        50% {
+            transform: translateY(-8px) scale(1.05);
+        }
+    }
+
+    /* Apply animations to common icon elements */
+    /* Navigation Icons */
+    .nav-icon-wrapper i {
+        animation: iconFloat 3s ease-in-out infinite;
+    }
+
+    .nav-item:nth-child(1) .nav-icon-wrapper i {
+        animation-delay: 0s;
+    }
+
+    .nav-item:nth-child(2) .nav-icon-wrapper i {
+        animation-delay: 0.2s;
+    }
+
+    .nav-item:nth-child(3) .nav-icon-wrapper i {
+        animation-delay: 0.4s;
+    }
+
+    .nav-item:nth-child(4) .nav-icon-wrapper i {
+        animation-delay: 0.6s;
+    }
+
+    .nav-item:nth-child(5) .nav-icon-wrapper i {
+        animation-delay: 0.8s;
+    }
+
+    /* Mobile Navigation Icons */
+    .mobile-nav-icon i {
+        animation: iconPulse 2s ease-in-out infinite;
+    }
+
+    .mobile-nav-item:nth-child(1) .mobile-nav-icon i {
+        animation-delay: 0s;
+    }
+
+    .mobile-nav-item:nth-child(2) .mobile-nav-icon i {
+        animation-delay: 0.2s;
+    }
+
+    .mobile-nav-item:nth-child(3) .mobile-nav-icon i {
+        animation-delay: 0.4s;
+    }
+
+    .mobile-nav-item:nth-child(4) .mobile-nav-icon i {
+        animation-delay: 0.6s;
+    }
+
+    .mobile-nav-item:nth-child(5) .mobile-nav-icon i {
+        animation-delay: 0.8s;
+    }
+
+    /* Header Icons */
+    .notification-icon i {
+        animation: iconBounce 2.5s ease-in-out infinite;
+    }
+
+    /* Card Icons - Summary Cards */
+    .summary-icon i,
+    .quick-stat-icon i,
+    .hero-stat-icon i,
+    .financial-icon i {
+        animation: iconFloat 3s ease-in-out infinite;
+    }
+
+    /* Activity/Transaction Icons */
+    .activity-type i,
+    .transaction-icon-modern i {
+        animation: iconPulse 2s ease-in-out infinite;
+    }
+
+    /* Social Link Icons */
+    .social-link-icon i,
+    .social-btn i {
+        animation: iconBounce 2.5s ease-in-out infinite;
+    }
+
+    /* Button Icons */
+    .hero-btn i,
+    .investment-btn i,
+    .btn i {
+        animation: iconFloat 2s ease-in-out infinite;
+    }
+
+    /* Touch feedback for icons */
+    .mobile-nav-item:active .mobile-nav-icon i {
+        animation: iconBounce 0.3s ease-in-out;
+    }
+
+    .nav-link:active .nav-icon-wrapper i {
+        animation: iconShake 0.3s ease-in-out;
+    }
+}
+
+/* Mobile Icon Animations for max-width: 390px */
+@media (max-width: 390px) {
+    /* Enhanced animations for smaller screens */
+    .nav-icon-wrapper i,
+    .mobile-nav-icon i,
+    .summary-icon i,
+    .quick-stat-icon i,
+    .hero-stat-icon i,
+    .financial-icon i {
+        animation-duration: 2.5s;
+    }
+
+    /* More pronounced animations on very small screens */
+    .notification-icon i {
+        animation: iconBounce 2s ease-in-out infinite;
+    }
+
+    .activity-type i,
+    .transaction-icon-modern i {
+        animation: iconPulse 1.8s ease-in-out infinite;
+    }
 }
 

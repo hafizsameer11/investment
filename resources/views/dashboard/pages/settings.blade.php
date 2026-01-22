@@ -768,7 +768,10 @@
                 </div>
                 <div class="settings-earnings-content">
                     <div class="settings-earnings-label">USD Earnings</div>
-                    <div class="settings-earnings-value">$0</div>
+                    <div class="settings-earnings-value">${{ number_format($totalEarningsUSD ?? 0, 2) }}</div>
+                    {{-- <div style="font-size: 0.7rem; color: var(--text-secondary); margin-top: 0.25rem;">
+                        Mining: ${{ number_format($miningEarning ?? 0, 2) }} | Referral: ${{ number_format($referralEarning ?? 0, 2) }}
+                    </div> --}}
                 </div>
             </div>
             <div class="settings-earnings-item">
@@ -777,7 +780,10 @@
                 </div>
                 <div class="settings-earnings-content">
                     <div class="settings-earnings-label">PKR Earnings</div>
-                    <div class="settings-earnings-value">Rs0</div>
+                    <div class="settings-earnings-value">Rs{{ number_format($totalEarningsPKR ) }}</div>
+                    {{-- <div style="font-size: 0.7rem; color: var(--text-secondary); margin-top: 0.25rem;">
+                        Rate: 1 USD = Rs{{ number_format($conversionRate ?? 0, 2) }}
+                    </div> --}}
                 </div>
             </div>
         </div>
