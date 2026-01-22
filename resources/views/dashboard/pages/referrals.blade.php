@@ -1047,7 +1047,7 @@
     }
 
     .referrals-investment-mobile-percentage-new {
-        font-size: 1.75rem;
+        font-size: 1.3rem;
         font-weight: 700;
         margin: 0 0 0.75rem 0;
     }
@@ -2861,7 +2861,7 @@ ls-referrer-section-new {
         }
 
         .referrals-commission-mobile-rate-new {
-            font-size: 1.375rem;
+            font-size: 1.2rem;
         }
 
         .referrals-rules-card-new {
@@ -3267,7 +3267,7 @@ ls-referrer-section-new {
                 <div class="referrals-investment-mobile-card-new referrals-investment-level-{{ $commission->level }}">
                     <h3 class="referrals-investment-mobile-title-new">{{ $commission->level_name }}</h3>
                     <p class="referrals-investment-mobile-label-new">Commission Rate</p>
-                    <div class="referrals-investment-mobile-percentage-new">{{ number_format($commission->commission_rate, 0) }}%</div>
+                    <div class="referrals-investment-mobile-percentage-new">{{ number_format($commission->commission_rate, 2) }}%</div>
                     <div class="referrals-investment-mobile-footer-new">
                         <span>Earning</span>
                         <span>Level {{ $commission->level }}</span>
@@ -3290,7 +3290,7 @@ ls-referrer-section-new {
                 <div class="referrals-investment-mobile-card-new referrals-investment-level-{{ $commission->level }}">
                     <h3 class="referrals-investment-mobile-title-new">{{ $commission->level_name }}</h3>
                     <p class="referrals-investment-mobile-label-new">Commission Rate</p>
-                    <div class="referrals-investment-mobile-percentage-new">{{ number_format($commission->commission_rate, 0) }}%</div>
+                    <div class="referrals-investment-mobile-percentage-new">{{ number_format($commission->commission_rate, 2) }}%</div>
                     <div class="referrals-investment-mobile-footer-new">
                         <span>Earning</span>
                         <span>Level {{ $commission->level }}</span>
@@ -3330,7 +3330,7 @@ ls-referrer-section-new {
                 </div>
                 <div class="referrals-commission-level-name-new">{{ $commission->level_name }}</div>
                 <div class="referrals-commission-rate-new">
-                    <span class="referrals-commission-rate-value-new">{{ number_format($commission->commission_rate, 0) }}%</span>
+                    <span class="referrals-commission-rate-value-new">{{ number_format($commission->commission_rate, 2) }}%</span>
                     <span class="referrals-commission-rate-label-new">Commission Rate</span>
                 </div>
                 <div class="referrals-commission-earning-label-new">Earning</div>
@@ -3369,7 +3369,7 @@ ls-referrer-section-new {
                     </div>
                     <div class="referrals-commission-mobile-content-new">
                         <div class="referrals-commission-mobile-name-new">{{ $commission->level_name }}</div>
-                        <div class="referrals-commission-mobile-rate-new">{{ number_format($commission->commission_rate, 0) }}%</div>
+                        <div class="referrals-commission-mobile-rate-new">{{ number_format($commission->commission_rate, 2) }}%</div>
                     </div>
                 </div>
                 @endforeach
