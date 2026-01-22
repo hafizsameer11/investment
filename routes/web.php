@@ -220,12 +220,21 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
 // Access: /run-seeders?token=YOUR_SECRET_TOKEN
 Route::get('/run-seeders', function () {
     $token = request()->query('token');
-    $secretToken = env('SEEDER_SECRET_TOKEN', 'change-this-secret-token-in-production');
+    $secretToken = config('seeder.secret_token');
+
+    // Check if token is provided
+    if (empty($token)) {
+        return response()->json([
+            'error' => 'Unauthorized. Token is required.',
+            'message' => 'Please provide a token in the query string: /run-seeders?token=YOUR_SECRET_TOKEN',
+        ], 401);
+    }
 
     // Check if token matches
     if ($token !== $secretToken) {
         return response()->json([
             'error' => 'Unauthorized. Invalid token.',
+            'message' => 'The provided token does not match the configured secret token.',
         ], 401);
     }
 
@@ -236,7 +245,7 @@ Route::get('/run-seeders', function () {
             '--force' => true,
         ]);
 
-        $output = \Illuminate\Support\Facades\Artisan::output();
+        $output = Artisan::output();
 
         return response()->json([
             'success' => true,
