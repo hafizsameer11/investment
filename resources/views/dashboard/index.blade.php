@@ -2424,7 +2424,7 @@
             </div>
             <div class="balance-amount-display" style="display: flex; align-items: center; justify-content: space-between; gap: 15px; flex-wrap: wrap;">
                 {{-- <span class="balance-amount-large" id="totalBalance">${{ number_format($user->net_balance ?? 0, 2) }}</span> --}}
-                <span class="balance-amount-large" id="totalBalance">${{ number_format($user->net_balance) }}</span>
+                <span class="balance-amount-large" id="totalBalance">${{ number_format($totalNetBalance ?? (($user->mining_earning ?? 0) + ($user->referral_earning ?? 0)), 2) }}</span>
                 <!-- Telegram Group Box -->
                 <div class="telegram-support-box">
                     <a href="https://t.me/+Wu5iCxAajHdjODNk" target="_blank" rel="noopener noreferrer" class="telegram-link-box">
@@ -2628,7 +2628,7 @@
     const totalBalanceEl = document.getElementById('totalBalance');
     const depositWalletAmount = document.getElementById('fundWalletAmount');
 
-    // Store original values
+    // Store original values (totalNetBalance includes fund_wallet + mining_earning + referral_earning)
     const originalNetBalance = totalBalanceEl ? totalBalanceEl.textContent : '$0.00';
     const originalFundWallet = depositWalletAmount ? depositWalletAmount.textContent : '$0.00';
 

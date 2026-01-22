@@ -153,12 +153,16 @@ class DashboardController extends Controller
         // Calculate daily earnings and investments for the last 7 days
         $chartData = $this->calculateChartData($user);
         
+        // Calculate total net balance (mining_earning + referral_earning only, excluding fund_wallet)
+        // This is for display purposes on the dashboard homepage
+        $totalNetBalance = ($user->mining_earning ?? 0) + ($user->referral_earning ?? 0);
+        
         // Ensure variables are always set
         $totalUnclaimedProfit = $totalUnclaimedProfit ?? 0;
         $secondsUntilNextHour = $secondsUntilNextHour ?? 3600;
         $initialCountdown = $initialCountdown ?? '01:00:00';
         
-        return view('dashboard.index', compact('user', 'hasActivePlan', 'totalUnclaimedProfit', 'initialCountdown', 'secondsUntilNextHour', 'chartData'));
+        return view('dashboard.index', compact('user', 'hasActivePlan', 'totalUnclaimedProfit', 'initialCountdown', 'secondsUntilNextHour', 'chartData', 'totalNetBalance'));
     }
 
     /**
