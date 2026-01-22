@@ -593,32 +593,41 @@
 }
 
 .deposit-detail-label {
-    font-size: 0.875rem;
+    font-size: 0.6rem;
     color: var(--text-secondary);
     font-weight: 500;
 }
 
 .deposit-detail-value {
-    font-size: 1rem;
+    font-size: 0.8rem;
     color: var(--text-primary);
     font-weight: 600;
 }
 
 .deposit-copy-btn {
     background: transparent;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 8px;
-    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 0;
+    padding: 0;
     color: var(--primary-gradient-start);
-    font-size: 0.875rem;
+    font-size: 1rem;
     cursor: pointer;
     transition: var(--transition);
-    margin-left: 0.5rem;
+    margin-left: -20px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: right;
+    width: auto;
+    height: auto;
 }
 
 .deposit-copy-btn:hover {
-    background: rgba(255, 178, 30, 0.1);
-    border-color: var(--primary-gradient-start);
+    color: var(--primary-gradient-end);
+    transform: scale(1.1);
+}
+
+.deposit-copy-btn:active {
+    transform: scale(0.95);
 }
 
 /* ============================================
