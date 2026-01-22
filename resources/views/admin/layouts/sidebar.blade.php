@@ -116,7 +116,7 @@
 
                         <li>
                             <a href="{{ route('admin.withdrawals.index') }}" class="waves-effect">
-                                <i class="mdi mdi-cash-refund"></i>
+                                <i class="mdi mdi-bank"></i>
                                 <span> Withdrawals </span>
                             </a>
                         </li>
