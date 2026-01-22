@@ -61,6 +61,19 @@
                             </div>
 
                             <div class="form-group mb-0">
+                                <label class="my-2 py-1">Mining Plan <span class="text-muted">(Optional)</span></label>
+                                <select class="form-control" name="mining_plan_id">
+                                    <option value="">Global (Applies to all plans)</option>
+                                    @foreach($plans as $plan)
+                                        <option value="{{ $plan->id }}" {{ old('mining_plan_id') == $plan->id ? 'selected' : '' }}>
+                                            {{ $plan->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                <small class="form-text text-muted">Select a specific plan or leave blank for global commission rate (applies to all plans).</small>
+                            </div>
+
+                            <div class="form-group mb-0">
                                 <label class="my-2 py-1">Commission Rate (%) <span class="text-danger">*</span></label>
                                 <input type="number" step="0.01" class="form-control" name="commission_rate" value="{{ old('commission_rate') }}" required
                                     placeholder="Enter commission rate (e.g., 6.00)" min="0" max="100" />

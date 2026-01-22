@@ -292,29 +292,29 @@
 
 @section('content')
     <div class="referral-earnings-claim-page">
-        <!-- Earning Wallet Card -->
-        <div class="referrals-wallet-section-new">
+        <!-- Investment Commission Wallet Card -->
+        <div class="referrals-wallet-section-new" style="margin-bottom: 2rem;">
             <div class="referrals-wallet-header-new">
                 <div class="referrals-wallet-title-section-new">
-                    <h3 class="referrals-wallet-title-new">Referral Earnings Wallet</h3>
-                    <p class="referrals-wallet-subtitle-new">Your pending earnings ready to claim</p>
+                    <h3 class="referrals-wallet-title-new">Investment Commission Earnings</h3>
+                    <p class="referrals-wallet-subtitle-new">Earnings from referral investments</p>
                 </div>
             </div>
             <div class="referrals-wallet-body-new">
                 <div class="referrals-balance-display-new">
                     <div class="referrals-balance-amount-wrapper-new">
                         <span class="referrals-balance-value-new"
-                            id="pendingEarningsAmount">${{ number_format($pendingReferralEarnings ?? 0, 2) }}</span>
+                            id="pendingInvestmentAmount">${{ number_format($pendingInvestmentCommissions ?? 0, 2) }}</span>
                         <div class="referrals-minimum-badge-new">Minimum $1</div>
                     </div>
-                    @if(($pendingReferralEarnings ?? 0) < 1)
-                        <div class="referrals-minimum-needed-new">${{ number_format(1 - ($pendingReferralEarnings ?? 0), 2) }}
+                    @if(($pendingInvestmentCommissions ?? 0) < 1)
+                        <div class="referrals-minimum-needed-new">${{ number_format(max(0, 1 - ($pendingInvestmentCommissions ?? 0)), 2) }}
                             more needed to claim</div>
                     @else
                         <div class="referrals-minimum-needed-new" style="color: #10B981;">Ready to claim!</div>
                     @endif
                 </div>
-                @if(isset($pendingCommissionsByLevel) && count($pendingCommissionsByLevel) > 0)
+                @if(isset($pendingInvestmentCommissionsByLevel) && count($pendingInvestmentCommissionsByLevel) > 0)
                     <div class="referrals-commission-breakdown-new">
                         <p style="margin: 0 0 0.75rem 0; font-size: 0.875rem; color: var(--text-secondary);">Breakdown by Level:
                         </p>
@@ -324,16 +324,62 @@
                                     <div style="font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 0.25rem;">Level
                                         {{ $i }}</div>
                                     <div style="font-weight: 600; color: #FFB21E;">
-                                        ${{ number_format($pendingCommissionsByLevel[$i] ?? 0, 2) }}</div>
+                                        ${{ number_format($pendingInvestmentCommissionsByLevel[$i] ?? 0, 2) }}</div>
                                 </div>
                             @endfor
                         </div>
                     </div>
                 @endif
-                <p class="referrals-claim-note-new">You can claim referral earnings when balance reaches $1 or more</p>
-                <button class="referrals-claim-btn-new" id="claimEarningsBtn" {{ ($pendingReferralEarnings ?? 0) < 1 ? 'disabled' : '' }}>
+                <p class="referrals-claim-note-new">You can claim investment commission earnings when balance reaches $1 or more</p>
+                <button class="referrals-claim-btn-new" id="claimInvestmentBtn" data-type="investment" {{ ($pendingInvestmentCommissions ?? 0) < 1 ? 'disabled' : '' }}>
                     <i class="fas fa-gift"></i>
-                    <span>Claim Earnings</span>
+                    <span>Claim Investment Commission</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Earning Commission Wallet Card -->
+        <div class="referrals-wallet-section-new">
+            <div class="referrals-wallet-header-new">
+                <div class="referrals-wallet-title-section-new">
+                    <h3 class="referrals-wallet-title-new">Earning Commission Earnings</h3>
+                    <p class="referrals-wallet-subtitle-new">Earnings from referral mining profits</p>
+                </div>
+            </div>
+            <div class="referrals-wallet-body-new">
+                <div class="referrals-balance-display-new">
+                    <div class="referrals-balance-amount-wrapper-new">
+                        <span class="referrals-balance-value-new"
+                            id="pendingEarningAmount">${{ number_format($pendingEarningCommissions ?? 0, 2) }}</span>
+                        <div class="referrals-minimum-badge-new">Minimum $1</div>
+                    </div>
+                    @if(($pendingEarningCommissions ?? 0) < 1)
+                        <div class="referrals-minimum-needed-new">${{ number_format(max(0, 1 - ($pendingEarningCommissions ?? 0)), 2) }}
+                            more needed to claim</div>
+                    @else
+                        <div class="referrals-minimum-needed-new" style="color: #10B981;">Ready to claim!</div>
+                    @endif
+                </div>
+                @if(isset($pendingEarningCommissionsByLevel) && count($pendingEarningCommissionsByLevel) > 0)
+                    <div class="referrals-commission-breakdown-new">
+                        <p style="margin: 0 0 0.75rem 0; font-size: 0.875rem; color: var(--text-secondary);">Breakdown by Level:
+                        </p>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 0.75rem;">
+                            @for($i = 1; $i <= 5; $i++)
+                                <div style="text-align: center;">
+                                    <div style="font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 0.25rem;">Level
+                                        {{ $i }}</div>
+                                    <div style="font-weight: 600; color: #FFB21E;">
+                                        ${{ number_format($pendingEarningCommissionsByLevel[$i] ?? 0, 2) }}</div>
+                                </div>
+                            @endfor
+                        </div>
+                    </div>
+                @endif
+                <p class="referrals-claim-note-new">You can claim earning commission earnings when balance reaches $1 or more</p>
+                <button class="referrals-claim-btn-new" id="claimEarningBtn" data-type="earning" {{ ($pendingEarningCommissions ?? 0) < 1 ? 'disabled' : '' }}>
+                    <i class="fas fa-gift"></i>
+                    <span>Claim Earning Commission</span>
                 </button>
             </div>
         </div>
@@ -343,53 +389,75 @@
         <script>
             // Claim Earnings functionality
             document.addEventListener('DOMContentLoaded', function () {
-                const claimBtn = document.getElementById('claimEarningsBtn');
-                if (claimBtn) {
-                    claimBtn.addEventListener('click', function () {
+                // Handle Investment Commission Claim
+                const claimInvestmentBtn = document.getElementById('claimInvestmentBtn');
+                if (claimInvestmentBtn) {
+                    claimInvestmentBtn.addEventListener('click', function () {
                         if (this.disabled) {
                             return;
                         }
 
-                        // Disable button and show loading state
-                        this.disabled = true;
-                        const originalHTML = this.innerHTML;
-                        this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> <span>Claiming...</span>';
+                        const claimType = this.getAttribute('data-type');
+                        claimEarnings(claimType, this);
+                    });
+                }
 
-                        // Make AJAX request
-                        fetch('{{ route("referrals.claim") }}', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                                'Accept': 'application/json'
-                            }
+                // Handle Earning Commission Claim
+                const claimEarningBtn = document.getElementById('claimEarningBtn');
+                if (claimEarningBtn) {
+                    claimEarningBtn.addEventListener('click', function () {
+                        if (this.disabled) {
+                            return;
+                        }
+
+                        const claimType = this.getAttribute('data-type');
+                        claimEarnings(claimType, this);
+                    });
+                }
+
+                function claimEarnings(type, button) {
+                    // Disable button and show loading state
+                    button.disabled = true;
+                    const originalHTML = button.innerHTML;
+                    button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> <span>Claiming...</span>';
+
+                    // Make AJAX request
+                    fetch('{{ route("referrals.claim") }}', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                            'Accept': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            type: type
                         })
-                            .then(response => response.json())
-                            .then(data => {
-                                if (data.success) {
-                                    // Show success message
-                                    alert('Success! ' + data.message + ' Amount claimed: $' + data.claimed_amount);
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                // Show success message
+                                alert('Success! ' + data.message + ' Amount claimed: $' + data.claimed_amount);
 
-                                    // Reload page to update balances
-                                    window.location.reload();
-                                } else {
-                                    // Show error message
-                                    alert('Error: ' + (data.message || 'Failed to claim earnings. Please try again.'));
-
-                                    // Re-enable button
-                                    this.disabled = false;
-                                    this.innerHTML = originalHTML;
-                                }
-                            })
-                            .catch(error => {
-                                console.error('Error:', error);
-                                alert('An error occurred. Please try again.');
+                                // Reload page to update balances
+                                window.location.reload();
+                            } else {
+                                // Show error message
+                                alert('Error: ' + (data.message || 'Failed to claim earnings. Please try again.'));
 
                                 // Re-enable button
-                                this.disabled = false;
-                                this.innerHTML = originalHTML;
-                            });
-                    });
+                                button.disabled = false;
+                                button.innerHTML = originalHTML;
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            alert('An error occurred. Please try again.');
+
+                            // Re-enable button
+                            button.disabled = false;
+                            button.innerHTML = originalHTML;
+                        });
                 }
             });
         </script>
