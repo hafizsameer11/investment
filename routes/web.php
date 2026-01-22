@@ -273,10 +273,12 @@ Route::get('/optimize-app', function () {
 
     return "Application optimized and caches cleared successfully!";
 });
+
 Route::get('/migrate', function () {
     Artisan::call('migrate');
     return response()->json(['message' => 'Migration successful'], 200);
 });
+
 Route::get('/migrate/rollback', function () {
     Artisan::call('migrate:rollback');
     return response()->json(['message' => 'Migration rollback successfully'], 200);
