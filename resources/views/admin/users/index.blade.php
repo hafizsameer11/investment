@@ -84,6 +84,12 @@
                                             <a href="{{ route('admin.users.edit', $user->id) }}" class="btn btn-sm btn-primary waves-effect waves-light" title="Edit">
                                                 <i class="mdi mdi-pencil"></i>
                                             </a>
+                                            <button type="button" class="btn btn-sm btn-danger waves-effect waves-light delete-user-btn" 
+                                                    data-user-id="{{ $user->id }}" 
+                                                    data-user-name="{{ $user->name }}"
+                                                    title="Delete">
+                                                <i class="mdi mdi-delete"></i>
+                                            </button>
                                         </td>
                                     </tr>
                                     @empty
@@ -118,6 +124,51 @@ $(function() {
     setTimeout(function() {
         $('.table-wrapper .btn-toolbar').hide();
     }, 100);
+    
+    // Handle delete user button clicks
+    $(document).on('click', '.delete-user-btn', function(e) {
+        e.preventDefault();
+        
+        const button = $(this);
+        const userId = button.data('user-id');
+        const userName = button.data('user-name');
+        
+        // Confirm deletion
+        if (!confirm('Are you sure you want to delete user "' + userName + '"?\n\nThis action cannot be undone!')) {
+            return;
+        }
+        
+        // Disable button and show loading state
+        button.prop('disabled', true);
+        const originalHtml = button.html();
+        button.html('<i class="mdi mdi-loading mdi-spin"></i>');
+        
+        // Make AJAX DELETE request
+        $.ajax({
+            url: '{{ url("/admin/users") }}/' + userId,
+            type: 'POST',
+            data: {
+                _method: 'DELETE',
+                _token: '{{ csrf_token() }}'
+            },
+            success: function(response) {
+                // Reload page to show success message and updated table
+                window.location.reload();
+            },
+            error: function(xhr) {
+                // Re-enable button
+                button.prop('disabled', false);
+                button.html(originalHtml);
+                
+                // Show error message
+                let errorMsg = 'Failed to delete user. Please try again.';
+                if (xhr.responseJSON && xhr.responseJSON.message) {
+                    errorMsg = xhr.responseJSON.message;
+                }
+                alert(errorMsg);
+            }
+        });
+    });
 });
 </script>
 @endpush

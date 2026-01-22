@@ -141,5 +141,33 @@ class UserController extends Controller
         return redirect()->route('admin.users.index')
             ->with('success', 'User updated successfully.');
     }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(Request $request, $id)
+    {
+        try {
+            $user = User::findOrFail($id);
+            
+            $userName = $user->name;
+            $user->delete();
+            
+            $message = "User '{$userName}' has been deleted successfully.";
+            if ($request->ajax() || $request->wantsJson()) {
+                return response()->json(['success' => true, 'message' => $message]);
+            }
+            
+            return redirect()->route('admin.users.index')
+                ->with('success', $message);
+        } catch (\Exception $e) {
+            $message = 'Failed to delete user. Please try again.';
+            if ($request->ajax() || $request->wantsJson()) {
+                return response()->json(['success' => false, 'message' => $message], 500);
+            }
+            return redirect()->route('admin.users.index')
+                ->with('error', $message);
+        }
+    }
 }
 
