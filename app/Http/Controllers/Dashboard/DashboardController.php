@@ -60,10 +60,8 @@ class DashboardController extends Controller
                         DB::beginTransaction();
                         
                         try {
-                            // Add profit to user's mining_earning (total)
-                            $user->mining_earning = ($user->mining_earning ?? 0) + $totalProfitForPeriod;
-                            
                             // Add profit to investment's unclaimed_profit (per investment)
+                            // DO NOT add to mining_earning yet - user must claim it first
                             $investment->unclaimed_profit = ($investment->unclaimed_profit ?? 0) + $totalProfitForPeriod;
                             
                             // Update investment's total profit earned
@@ -196,6 +194,9 @@ class DashboardController extends Controller
             DB::beginTransaction();
 
             try {
+                // Add unclaimed profit to mining_earning
+                $user->mining_earning = ($user->mining_earning ?? 0) + $totalUnclaimedProfit;
+                
                 // Reset unclaimed_profit for all active investments
                 foreach ($activeInvestments as $investment) {
                     if ($investment->unclaimed_profit > 0) {
@@ -205,8 +206,8 @@ class DashboardController extends Controller
                     }
                 }
 
-                // Refresh user to get updated mining_earning (already updated by profit calculation)
-                $user->refresh();
+                // Save user and update net balance
+                $user->save();
                 $user->updateNetBalance();
 
                 DB::commit();

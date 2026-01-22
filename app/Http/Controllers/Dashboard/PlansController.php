@@ -60,10 +60,8 @@ class PlansController extends Controller
                         DB::beginTransaction();
                         
                         try {
-                            // Add profit to user's mining_earning (total)
-                            $user->mining_earning = ($user->mining_earning ?? 0) + $totalProfitForPeriod;
-                            
                             // Add profit to investment's unclaimed_profit (per investment)
+                            // DO NOT add to mining_earning yet - user must claim it first
                             $investment->unclaimed_profit = ($investment->unclaimed_profit ?? 0) + $totalProfitForPeriod;
                             
                             // Update investment's total profit earned

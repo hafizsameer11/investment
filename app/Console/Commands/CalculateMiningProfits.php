@@ -79,22 +79,17 @@ class CalculateMiningProfits extends Command
                         DB::beginTransaction();
                         
                         try {
-                            // Add profit to user's mining_earning (total)
                             $user = $investment->user;
-                            $user->mining_earning = ($user->mining_earning ?? 0) + $totalProfitForPeriod;
                             
                             // Add profit to investment's unclaimed_profit (per investment)
+                            // DO NOT add to mining_earning yet - user must claim it first
                             $investment->unclaimed_profit = ($investment->unclaimed_profit ?? 0) + $totalProfitForPeriod;
                             
                             // Update investment's total profit earned
                             $investment->total_profit_earned = ($investment->total_profit_earned ?? 0) + $totalProfitForPeriod;
                             $investment->last_profit_calculated_at = $now;
                             
-                            // Update user's net balance
-                            $user->updateNetBalance();
-                            
                             // Save changes
-                            $user->save();
                             $investment->save();
 
                             $totalProfit += $totalProfitForPeriod;
