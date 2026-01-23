@@ -2590,7 +2590,7 @@
     /* Animated Box - Right Top */
     .live-earning-animated-box {
         position: absolute;
-        top: -20px;
+        /* top: -20px; */
         right: 20px;
         width: 100px;
         height: 100px;
