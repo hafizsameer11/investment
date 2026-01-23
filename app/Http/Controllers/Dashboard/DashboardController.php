@@ -147,8 +147,30 @@ class DashboardController extends Controller
         $chartData = $this->calculateChartData($user);
         
         // Calculate total net balance (mining_earning + referral_earning only, excluding fund_wallet)
-        // This is for display purposes on the dashboard homepage
+        // This is for display purposes on the dashboard homepage (current available balance)
         $totalNetBalance = ($user->mining_earning ?? 0) + ($user->referral_earning ?? 0);
+        
+        // Calculate all-time Total Earnings from transactions (not affected by withdrawals)
+        // Sum all mining_earning and referral_earning transactions
+        $allTimeMiningEarnings = \App\Models\Transaction::where('user_id', $user->id)
+            ->where('type', 'mining_earning')
+            ->where('status', 'completed')
+            ->sum('amount');
+        
+        $allTimeReferralEarnings = \App\Models\Transaction::where('user_id', $user->id)
+            ->where('type', 'referral_earning')
+            ->where('status', 'completed')
+            ->sum('amount');
+        
+        // Fallback: If no transactions found, use investments' total_profit_earned for mining
+        // This handles cases where earnings were claimed but not recorded as transactions
+        if ($allTimeMiningEarnings == 0) {
+            $allTimeMiningEarnings = Investment::where('user_id', $user->id)
+                ->sum('total_profit_earned');
+        }
+        
+        // Calculate all-time Total Earnings (All Time) - not affected by withdrawals
+        $allTimeTotalEarnings = ($allTimeMiningEarnings ?? 0) + ($allTimeReferralEarnings ?? 0);
         
         // Fetch referral activities for Recent Activity section with pagination
         $referralActivitiesData = $this->getReferralActivities($user);
@@ -158,7 +180,7 @@ class DashboardController extends Controller
         $secondsUntilNextHour = $secondsUntilNextHour ?? 3600;
         $initialCountdown = $initialCountdown ?? '01:00:00';
         
-        return view('dashboard.index', compact('user', 'hasActivePlan', 'totalUnclaimedProfit', 'initialCountdown', 'secondsUntilNextHour', 'chartData', 'totalNetBalance', 'referralActivitiesData'));
+        return view('dashboard.index', compact('user', 'hasActivePlan', 'totalUnclaimedProfit', 'initialCountdown', 'secondsUntilNextHour', 'chartData', 'totalNetBalance', 'referralActivitiesData', 'allTimeTotalEarnings'));
     }
 
     /**

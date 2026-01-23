@@ -17,10 +17,32 @@ class TransactionsController extends Controller
     {
         $user = Auth::user();
         
-        // Get user balances
+        // Calculate all-time Total Earnings from transactions (not affected by withdrawals)
+        // Sum all mining_earning and referral_earning transactions
+        $allTimeMiningEarnings = Transaction::where('user_id', $user->id)
+            ->where('type', 'mining_earning')
+            ->where('status', 'completed')
+            ->sum('amount');
+        
+        $allTimeReferralEarnings = Transaction::where('user_id', $user->id)
+            ->where('type', 'referral_earning')
+            ->where('status', 'completed')
+            ->sum('amount');
+        
+        // Fallback: If no transactions found, use investments' total_profit_earned for mining
+        // This handles cases where earnings were claimed but not recorded as transactions
+        if ($allTimeMiningEarnings == 0) {
+            $allTimeMiningEarnings = \App\Models\Investment::where('user_id', $user->id)
+                ->sum('total_profit_earned');
+        }
+        
+        // Calculate all-time Total Earnings (All Time) - not affected by withdrawals
+        $totalEarning = ($allTimeMiningEarnings ?? 0) + ($allTimeReferralEarnings ?? 0);
+        $referralEarning = $allTimeReferralEarnings ?? 0;
+        
+        // Get current user balances for display in transaction details
         $miningEarning = $user->mining_earning ?? 0;
-        $referralEarning = $user->referral_earning ?? 0;
-        $totalEarning = $miningEarning + $referralEarning; // Net Balance (mining + referral)
+        $currentReferralEarning = $user->referral_earning ?? 0;
         
         // Calculate total deposits (all-time approved)
         $totalDeposits = Deposit::where('user_id', $user->id)
