@@ -3200,7 +3200,7 @@
                 <span class="balance-amount-large" id="totalBalance">${{ number_format($totalNetBalance ?? (($user->mining_earning ?? 0) + ($user->referral_earning ?? 0)), 2) }}</span>
                 <!-- Telegram Group Box -->
                 <div class="telegram-support-box">
-                    <a href="https://t.me/+Wu5iCxAajHdjODNk" target="_blank" rel="noopener noreferrer" class="telegram-link-box">
+                    <a href="https://t.me/+qwvSIQ9ROCQxMDI8" target="_blank" rel="noopener noreferrer" class="telegram-link-box">
                         <div class="telegram-icon-wrapper">
                             <i class="fab fa-telegram"></i>
                         </div>

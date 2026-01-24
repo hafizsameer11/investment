@@ -688,7 +688,7 @@
                         <div class="support-item-header-new">
                             <div class="support-item-label-new">Telegram Channel</div>
                         </div>
-                        <div class="support-item-value-new" id="telegramChannel">https://t.me/+Wu5iCxAajHdjODNk</div>
+                        <div class="support-item-value-new" id="telegramChannel">https://t.me/+qwvSIQ9ROCQxMDI8</div>
                         <div class="support-item-actions-new">
                             <button class="support-copy-btn-new" data-copy="telegramChannel" title="Copy">
                                 <i class="fas fa-copy"></i>
