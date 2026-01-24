@@ -108,56 +108,41 @@ class RewardLevelService
                     continue;
                 }
                 
-                // Calculate how much investment has already been counted for previous levels
-                // Since investment_required is cumulative, we need the highest achieved level's requirement
-                $previousLevelsInvestment = 0;
-                foreach ($rewardLevels as $prevLevel) {
-                    if ($prevLevel->id == $level->id) {
-                        break;
-                    }
-                    if (in_array($prevLevel->id, $achievedLevelIds)) {
-                        // Since requirements are cumulative, use the highest one
-                        $previousLevelsInvestment = max($previousLevelsInvestment, (float) $prevLevel->investment_required);
-                    }
-                }
-                
-                // Calculate remaining investment needed for this level
-                // Level 1 needs $10, Level 2 needs $40 total (so $30 more after Level 1)
-                $remainingNeeded = (float) $level->investment_required - $previousLevelsInvestment;
-                
                 // Check if we have enough total investment to complete this level
-                // We check if total referral investment meets or exceeds this level's requirement
                 if ($totalReferralInvestment >= (float) $level->investment_required) {
-                    // Complete this level
-                    $rewardAmount = (float) $level->reward_amount;
-                    
+                    // Calculate total reward to credit (cumulative)
+                    // We sum rewards for this level and all previous levels that weren't achieved yet
+                    $rewardToCredit = 0;
+                    foreach ($rewardLevels as $l) {
+                        if ($l->sort_order <= $level->sort_order) {
+                            if (!in_array($l->id, $achievedLevelIds)) {
+                                $rewardToCredit += (float) $l->reward_amount;
+                            }
+                        }
+                    }
+
                     // Mark level as achieved (but not claimed yet)
                     UserRewardLevel::create([
                         'user_id' => $user->id,
                         'reward_level_id' => $level->id,
                         'achieved_at' => now(),
-                        'reward_amount_credited' => $rewardAmount,
+                        'reward_amount_credited' => (float) $level->reward_amount,
                         'is_claimed' => false,
                     ]);
                     
                     // Send notification that level is completed
                     NotificationService::sendRewardLevelCompleted($user, $level);
                     
-                    // DO NOT add reward to referral earning yet - user must claim it
-                    
                     $completedLevels[] = [
                         'level_id' => $level->id,
                         'level_name' => $level->level_name,
-                        'reward_amount' => $rewardAmount,
+                        'reward_amount' => (float) $level->reward_amount,
                     ];
                     
                     // Update achieved levels list for next iteration
                     $achievedLevelIds[] = $level->id;
-                    
-                    // Continue to next level (investment carries forward)
                 } else {
                     // Not enough total investment to complete this level, stop processing
-                    // This ensures only the current level is being worked on
                     break;
                 }
             }
@@ -216,19 +201,6 @@ class RewardLevelService
                     continue;
                 }
                 
-                // Calculate how much investment has already been counted for previous levels
-                // Since investment_required is cumulative, we need the highest achieved level's requirement
-                $previousLevelsInvestment = 0;
-                foreach ($rewardLevels as $prevLevel) {
-                    if ($prevLevel->id == $level->id) {
-                        break;
-                    }
-                    if (in_array($prevLevel->id, $achievedLevelIds)) {
-                        // Since requirements are cumulative, use the highest one
-                        $previousLevelsInvestment = max($previousLevelsInvestment, (float) $prevLevel->investment_required);
-                    }
-                }
-                
                 // Check if we have enough total investment to complete this level
                 if ($totalReferralInvestment >= (float) $level->investment_required) {
                     // Complete this level
@@ -252,8 +224,6 @@ class RewardLevelService
                         // Send notification that level is completed
                         NotificationService::sendRewardLevelCompleted($user, $level);
                         
-                        // DO NOT add reward to referral earning yet - user must claim it
-                        
                         $completedLevels[] = [
                             'level_id' => $level->id,
                             'level_name' => $level->level_name,
@@ -263,8 +233,6 @@ class RewardLevelService
                     
                     // Update achieved levels list for next iteration
                     $achievedLevelIds[] = $level->id;
-                    
-                    // Continue to next level (investment carries forward)
                 } else {
                     // Not enough total investment to complete this level, stop processing
                     break;
@@ -319,10 +287,14 @@ class RewardLevelService
         }
         
         // Calculate progress for this level
-        // remainingNeeded is the difference between this level's requirement and previous levels' requirement
-        $remainingNeeded = (float) $level->investment_required - $previousLevelsInvestment;
-        $currentProgress = max(0, $totalReferralInvestment - $previousLevelsInvestment);
-        $progressPercentage = $isAchieved ? 100 : min(100, ($currentProgress / $remainingNeeded) * 100);
+        $targetAmount = (float) $level->investment_required;
+        $currentProgress = (float) $totalReferralInvestment;
+        
+        // remainingNeeded is how much is LEFT to reach the target
+        $remainingNeeded = max(0, $targetAmount - $currentProgress);
+        
+        // progressPercentage is based on the total target
+        $progressPercentage = $isAchieved ? 100 : ($targetAmount > 0 ? min(100, ($currentProgress / $targetAmount) * 100) : 0);
         
         // Get claim status if achieved
         $isClaimed = false;
@@ -339,7 +311,7 @@ class RewardLevelService
             'total_referral_investment' => $totalReferralInvestment,
             'previous_levels_investment' => $previousLevelsInvestment,
             'current_progress' => $currentProgress,
-            'remaining_needed' => max(0, $remainingNeeded),
+            'remaining_needed' => $remainingNeeded,
             'progress_percentage' => $progressPercentage,
         ];
     }
