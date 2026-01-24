@@ -99,10 +99,14 @@
             });
         }
 
-        // Phone validation (optional)
+        // Phone validation (required)
         if (phoneInput) {
             phoneInput.addEventListener('blur', function() {
-                if (this.value.trim()) {
+                validatePhone(this);
+            });
+
+            phoneInput.addEventListener('input', function() {
+                if (this.classList.contains('input-error')) {
                     validatePhone(this);
                 }
             });
@@ -179,10 +183,10 @@
      */
     function validatePhone(input) {
         if (!input.value.trim()) {
-            // Phone is optional, so empty is valid
-            input.classList.remove('input-error');
-            hideFieldError(input);
-            return true;
+            // Phone is required
+            input.classList.add('input-error');
+            showFieldError(input, 'Phone number is required');
+            return false;
         }
 
         let phone = input.value.trim();
@@ -284,7 +288,7 @@
             // Validate all fields
             const isNameValid = nameInput ? validateName(nameInput) : true;
             const isEmailValid = emailInput ? validateEmail(emailInput) : true;
-            const isPhoneValid = phoneInput && phoneInput.value.trim() ? validatePhone(phoneInput) : true;
+            const isPhoneValid = phoneInput ? validatePhone(phoneInput) : true;
             const isPasswordValid = passwordInput ? validatePassword(passwordInput) : true;
             const isPasswordMatchValid = validatePasswordMatch();
             const isTermsAccepted = termsCheckbox ? termsCheckbox.checked : false;

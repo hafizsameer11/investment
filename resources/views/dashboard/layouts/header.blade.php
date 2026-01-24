@@ -73,7 +73,7 @@
             @if($isHomePage && Auth::check())
             <div class="mobile-user-profile mobile-user-profile-visible">
                 <div class="mobile-user-avatar">
-                    <img src="{{ Auth::user()->profile_photo ? asset(Auth::user()->profile_photo) : 'https://ui-avatars.com/api/?name=' . urlencode(Auth::user()->name ?? 'User') . '&background=00FF88&color=000&size=128' }}" alt="User Avatar">
+                    <img src="{{ Auth::user()->profile_photo ? asset(Auth::user()->profile_photo) : asset('assets/dashboard/images/logo/logo.jpeg') }}" alt="User Avatar">
                 </div>
                 <div class="mobile-user-info">
                     <div class="mobile-user-name">{{ Auth::user()->name ?? 'User' }}</div>
@@ -111,7 +111,7 @@
             @auth
             <div class="user-profile">
                 <div class="user-avatar">
-                    <img src="{{ Auth::user()->profile_photo ? asset(Auth::user()->profile_photo) : 'https://ui-avatars.com/api/?name=' . urlencode(Auth::user()->name ?? 'User') . '&background=00FF88&color=000&size=128' }}" alt="User Avatar">
+                    <img src="{{ Auth::user()->profile_photo ? asset(Auth::user()->profile_photo) : asset('assets/dashboard/images/logo/logo.jpeg') }}" alt="User Avatar">
                 </div>
                 <div class="user-info">
                     <div class="user-name">{{ Auth::user()->name ?? 'User' }}</div>

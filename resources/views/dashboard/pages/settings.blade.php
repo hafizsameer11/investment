@@ -727,7 +727,7 @@
     <div class="settings-profile-card">
         <div class="settings-profile-header">
             <div class="settings-profile-avatar-wrapper" id="settings-avatar-wrapper">
-                <img src="{{ auth()->user()->profile_photo ? asset(auth()->user()->profile_photo) : 'https://ui-avatars.com/api/?name=' . urlencode(auth()->user()->name) . '&background=00FF88&color=000&size=200' }}" alt="Profile" class="settings-profile-avatar" id="settings-profile-avatar-img">
+                <img src="{{ auth()->user()->profile_photo ? asset(auth()->user()->profile_photo) : asset('assets/dashboard/images/logo/logo.jpeg') }}" alt="Profile" class="settings-profile-avatar" id="settings-profile-avatar-img">
                 <div class="settings-avatar-camera">
                     <i class="fas fa-camera"></i>
                 </div>
@@ -795,7 +795,7 @@
             <div class="settings-menu-icon">
                 <i class="fas fa-user"></i>
             </div>
-            <span class="settings-menu-text">Profile</span>
+            <span class="settings-menu-text">Profile & Password</span>
             <i class="fas fa-chevron-right settings-menu-arrow"></i>
         </a>
 

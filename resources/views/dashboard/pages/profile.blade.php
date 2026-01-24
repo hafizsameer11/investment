@@ -22,7 +22,7 @@
         <div class="profile-header-modern profile-header-desktop">
             <div class="profile-header-left-modern">
                 <div class="profile-avatar-modern">
-                    <img src="{{ auth()->user()->profile_photo ? asset(auth()->user()->profile_photo) : 'https://ui-avatars.com/api/?name=' . urlencode(auth()->user()->name) . '&background=00FF88&color=000&size=200' }}" alt="Profile Avatar">
+                    <img src="{{ auth()->user()->profile_photo ? asset(auth()->user()->profile_photo) : asset('assets/dashboard/images/logo/logo.jpeg') }}" alt="Profile Avatar">
                     <div class="profile-avatar-badge">
                         <i class="fas fa-camera"></i>
                     </div>
@@ -116,7 +116,7 @@
             </div>
 
             <!-- Contact Upliner Section (Account Tab Only) -->
-            <div class="profile-contact-section-modern">
+            {{-- <div class="profile-contact-section-modern">
                 <button class="profile-contact-btn-modern profile-contact-btn-mobile">
                     <span>Contact with upliner</span>
                 </button>
@@ -134,7 +134,7 @@
                         <span>Contact Upliner</span>
                     </button>
                 </div>
-            </div>
+            </div> --}}
         </div>
 
         <!-- Change Password Tab Content -->

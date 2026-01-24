@@ -105,7 +105,7 @@
                         <span class="nav-icon-wrapper">
                             <i class="fas fa-user"></i>
                         </span>
-                        <span class="nav-text">Profile</span>
+                        <span class="nav-text">Profile & Password</span>
                         <span class="nav-indicator"></span>
                     </a>
                 </li>

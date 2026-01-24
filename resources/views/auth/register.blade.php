@@ -94,52 +94,6 @@
                         @enderror
                     </div>
 
-                    <!-- Username Field -->
-                    <div class="form-group">
-                        <label for="username" class="form-label">Username</label>
-                        <div class="input-wrapper">
-                            <svg class="input-icon" viewBox="0 0 20 20" fill="currentColor">
-                                <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"/>
-                            </svg>
-                            <input
-                                type="text"
-                                id="username"
-                                name="username"
-                                class="form-input @error('username') is-invalid @enderror"
-                                placeholder="Choose a username"
-                                value="{{ old('username') }}"
-                                required
-                                autocomplete="username"
-                            >
-                        </div>
-                        @error('username')
-                            <div class="text-danger mt-1" style="font-size: 0.75rem; color: #ef4444 !important;">{{ $message }}</div>
-                        @enderror
-                    </div>
-
-                    <!-- Referral Code Field -->
-                    <div class="form-group">
-                        <label for="referral_code" class="form-label">Referral Code <span class="text-danger">*</span></label>
-                        <div class="input-wrapper">
-                            <svg class="input-icon" viewBox="0 0 20 20" fill="currentColor">
-                                <path d="M8 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM15 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z"/>
-                                <path d="M3 4a1 1 0 00-1 1v10a1 1 0 001 1h1.05a2.5 2.5 0 014.9 0H10a1 1 0 001-1V5a1 1 0 00-1-1H3zM14 7a1 1 0 00-1 1v6.05A2.5 2.5 0 0115.95 16H17a1 1 0 001-1v-5a1 1 0 00-.293-.707l-2-2A1 1 0 0015 7h-1z"/>
-                            </svg>
-                            <input
-                                type="text"
-                                id="referral_code"
-                                name="referral_code"
-                                class="form-input @error('referral_code') is-invalid @enderror"
-                                placeholder="Enter referral code"
-                                value="{{ old('referral_code') }}"
-                                required
-                            >
-                        </div>
-                        @error('referral_code')
-                            <div class="text-danger mt-1" style="font-size: 0.75rem; color: #ef4444 !important;">{{ $message }}</div>
-                        @enderror
-                    </div>
-
                     <!-- Email Field -->
                     <div class="form-group">
                         <label for="email" class="form-label">Email</label>
@@ -160,6 +114,29 @@
                             >
                         </div>
                         @error('email')
+                            <div class="text-danger mt-1" style="font-size: 0.75rem; color: #ef4444 !important;">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                     <!-- Phone Field -->
+                     <div class="form-group">
+                        <label for="phone" class="form-label">Phone</label>
+                        <div class="input-wrapper">
+                            <svg class="input-icon" viewBox="0 0 20 20" fill="currentColor">
+                                <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l1.703 8.827a1 1 0 01-.54 1.06l-6.43 3.655a1 1 0 01-1.25-.518L.879 12.5a1 1 0 01.54-1.06l6.43-3.655a1 1 0 01.986.836L9.5 9.5V7a1 1 0 011-1h2a1 1 0 011 1v2.5l1.153.836a1 1 0 01.986-.836l6.43 3.655a1 1 0 01.54 1.06l-1.25 2.518a1 1 0 01-1.25.518l-6.43-3.655a1 1 0 01-.54-1.06l1.703-8.827A1 1 0 0115.153 2H17a1 1 0 011 1v14a1 1 0 01-1 1H3a1 1 0 01-1-1V3z"/>
+                            </svg>
+                            <input
+                                type="tel"
+                                id="phone"
+                                name="phone"
+                                class="form-input @error('phone') is-invalid @enderror"
+                                placeholder="03001234567 or +92 300 1234567"
+                                value="{{ old('phone') }}"
+                                required
+                                autocomplete="tel"
+                            >
+                        </div>
+                        @error('phone')
                             <div class="text-danger mt-1" style="font-size: 0.75rem; color: #ef4444 !important;">{{ $message }}</div>
                         @enderror
                     </div>
@@ -185,6 +162,30 @@
                             <div class="text-danger mt-1" style="font-size: 0.75rem; color: #ef4444 !important;">{{ $message }}</div>
                         @enderror
                     </div> --}}
+                    
+                    <!-- Referral Code Field -->
+                    <div class="form-group">
+                        <label for="referral_code" class="form-label">Referral Code <span class="text-danger">*</span></label>
+                        <div class="input-wrapper">
+                            <svg class="input-icon" viewBox="0 0 20 20" fill="currentColor">
+                                <path d="M8 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM15 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z"/>
+                                <path d="M3 4a1 1 0 00-1 1v10a1 1 0 001 1h1.05a2.5 2.5 0 014.9 0H10a1 1 0 001-1V5a1 1 0 00-1-1H3zM14 7a1 1 0 00-1 1v6.05A2.5 2.5 0 0115.95 16H17a1 1 0 001-1v-5a1 1 0 00-.293-.707l-2-2A1 1 0 0015 7h-1z"/>
+                            </svg>
+                            <input
+                                type="text"
+                                id="referral_code"
+                                name="referral_code"
+                                class="form-input @error('referral_code') is-invalid @enderror"
+                                placeholder="Enter referral code"
+                                value="{{ old('referral_code') }}"
+                                required
+                            >
+                        </div>
+                        @error('referral_code')
+                            <div class="text-danger mt-1" style="font-size: 0.75rem; color: #ef4444 !important;">{{ $message }}</div>
+                        @enderror
+                    </div>
+
 
                     <!-- Password Field -->
                     <div class="form-group">

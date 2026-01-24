@@ -47,9 +47,9 @@ class AuthController extends Controller
     {
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'username' => ['required', 'string', 'max:255', 'unique:users,username'],
+            'username' => ['nullable', 'string', 'max:255', 'unique:users,username'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
-            'phone' => ['nullable', 'string', 'max:20'],
+            'phone' => ['required', 'string', 'max:20'],
             'password' => ['required', 'string', 'min:8'],
             'referral_code' => ['required', 'string', 'exists:users,refer_code'],
         ], [
@@ -57,20 +57,18 @@ class AuthController extends Controller
         ]);
 
         // Custom validation for Pakistani phone number
-        if ($request->filled('phone')) {
-            $phone = $request->input('phone');
-            // Remove spaces, dashes, and parentheses
-            $cleanPhone = preg_replace('/[\s\-()]/', '', $phone);
-            // Remove +92 country code if present
-            $cleanPhone = preg_replace('/^\+?92/', '', $cleanPhone);
+        $phone = $request->input('phone');
+        // Remove spaces, dashes, and parentheses
+        $cleanPhone = preg_replace('/[\s\-()]/', '', $phone);
+        // Remove +92 country code if present
+        $cleanPhone = preg_replace('/^\+?92/', '', $cleanPhone);
 
-            // Check if it's a valid Pakistani number (10-11 digits)
-            // Should be 11 digits if starts with 0, or 10 digits without 0
-            if (!preg_match('/^(0[0-9]{10}|[0-9]{10})$/', $cleanPhone)) {
-                return redirect()->back()
-                    ->withInput()
-                    ->withErrors(['phone' => 'Please enter a valid Pakistani phone number. Format: 03001234567 (11 digits starting with 0) or +92 300 1234567.']);
-            }
+        // Check if it's a valid Pakistani number (10-11 digits)
+        // Should be 11 digits if starts with 0, or 10 digits without 0
+        if (!preg_match('/^(0[0-9]{10}|[0-9]{10})$/', $cleanPhone)) {
+            return redirect()->back()
+                ->withInput()
+                ->withErrors(['phone' => 'Please enter a valid Pakistani phone number. Format: 03001234567 (11 digits starting with 0) or +92 300 1234567.']);
         }
 
         // Generate referral code for the new user
@@ -79,9 +77,9 @@ class AuthController extends Controller
         // Create user
         $user = User::create([
             'name' => $validated['name'],
-            'username' => $validated['username'],
+            'username' => $validated['username'] ?? null,
             'email' => $validated['email'],
-            'phone' => $validated['phone'] ?? null,
+            'phone' => $validated['phone'],
             'password' => Hash::make($validated['password']),
             'role' => 'user',
             'refer_code' => $referCode,

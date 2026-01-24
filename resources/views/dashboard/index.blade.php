@@ -2947,6 +2947,235 @@
             width: 100%;
         }
     }
+
+    /* Facebook HelpLine Modal Styles */
+    .helpline-modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.85);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        z-index: 10000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 1rem;
+        animation: fadeIn 0.3s ease-out;
+    }
+
+    .helpline-modal-overlay.hidden {
+        display: none;
+    }
+
+    .helpline-modal {
+        background: var(--card-bg);
+        border-radius: 20px;
+        overflow: hidden;
+        max-width: 500px;
+        width: 100%;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.9);
+        animation: slideUp 0.4s ease-out;
+        border: 1px solid rgba(255, 178, 30, 0.2);
+    }
+
+    .helpline-modal-banner {
+        background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 50%, var(--secondary-color) 100%);
+        padding: 1.5rem 1.25rem;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .helpline-modal-banner-content {
+        flex: 1;
+        color: #FFFFFF;
+    }
+
+    .helpline-modal-banner-title {
+        font-size: 0.9rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+        line-height: 1.4;
+    }
+
+    .helpline-modal-banner-subtitle {
+        font-size: 0.875rem;
+        opacity: 0.95;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .helpline-modal-close {
+        background: rgba(255, 255, 255, 0.2);
+        border: none;
+        color: #FFFFFF;
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        flex-shrink: 0;
+        margin-left: 1rem;
+    }
+
+    .helpline-modal-close:hover {
+        background: rgba(255, 255, 255, 0.3);
+        transform: scale(1.1);
+    }
+
+    .helpline-modal-body {
+        padding: 1.5rem;
+        background: var(--card-bg);
+    }
+
+    .helpline-modal-section-title {
+        font-size: 1.125rem;
+        font-weight: 600;
+        color: var(--text-primary);
+        margin-bottom: 1rem;
+    }
+
+    .helpline-whatsapp-card {
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 178, 30, 0.15);
+        border-radius: 12px;
+        padding: 1rem;
+        margin-bottom: 1.25rem;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .helpline-whatsapp-icon {
+        width: 40px;
+        height: 40px;
+        background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #FFFFFF;
+        font-size: 1.25rem;
+        flex-shrink: 0;
+    }
+
+    .helpline-whatsapp-content {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .helpline-whatsapp-label {
+        font-size: 0.875rem;
+        color: var(--text-secondary);
+        margin-bottom: 0.25rem;
+    }
+
+    .helpline-whatsapp-url {
+        font-size: 0.8125rem;
+        color: var(--text-primary);
+        word-break: break-all;
+        font-family: 'Courier New', monospace;
+    }
+
+    .helpline-copy-btn {
+        background: transparent;
+        border: none;
+        color: var(--text-secondary);
+        cursor: pointer;
+        padding: 0.5rem;
+        transition: all 0.2s ease;
+        flex-shrink: 0;
+    }
+
+    .helpline-copy-btn:hover {
+        color: var(--primary-color);
+        transform: scale(1.1);
+    }
+
+    .helpline-join-btn {
+        width: 100%;
+        padding: 1rem;
+        background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 50%, var(--secondary-color) 100%);
+        border: none;
+        border-radius: 12px;
+        color: #000000;
+        font-weight: 700;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 20px rgba(255, 178, 30, 0.4);
+    }
+
+    .helpline-join-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 30px rgba(255, 178, 30, 0.6);
+    }
+
+    .helpline-join-btn:active {
+        transform: translateY(0);
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
+    }
+
+    @keyframes slideUp {
+        from {
+            transform: translateY(30px);
+            opacity: 0;
+        }
+        to {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    }
+
+    /* Mobile Styles */
+    @media (max-width: 768px) {
+        .helpline-modal {
+            max-width: 100%;
+            border-radius: 16px;
+            margin: 0;
+        }
+
+        .helpline-modal-banner {
+            padding: 1.25rem 1rem;
+        }
+
+        .helpline-modal-banner-title {
+            font-size: 0.6rem;
+        }
+
+        .helpline-modal-banner-subtitle {
+            font-size: 0.8125rem;
+        }
+
+        .helpline-modal-body {
+            padding: 1.25rem 1rem;
+        }
+
+        .helpline-whatsapp-card {
+            padding: 0.875rem;
+        }
+
+        .helpline-join-btn {
+            padding: 0.875rem;
+            font-size: 0.9375rem;
+        }
+    }
 </style>
 @endpush
 
@@ -3199,6 +3428,48 @@
                     <div class="referral-activity-status-badge" id="modalActivityStatus">Completed</div>
                 </div>
             </div>
+        </div>
+    </div>
+</div>
+
+<!-- Facebook HelpLine Modal -->
+<div class="helpline-modal-overlay" id="helplineModal">
+    <div class="helpline-modal">
+        <div class="helpline-modal-banner">
+            <div class="helpline-modal-banner-content">
+                <div class="helpline-modal-banner-title">
+                    Facebook HelpLine For Special V-VIP Members Only
+                </div>
+                <div class="helpline-modal-banner-subtitle">
+                    {{-- <span>📢</span>
+                    <span>📞</span>
+                    <span>👑</span>
+                    <span>🤝</span>
+                    <span>🎁</span> --}}
+                    <span>Message us here 👉</span>
+                </div>
+            </div>
+            <button class="helpline-modal-close" id="helplineModalClose" aria-label="Close">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="helpline-modal-body">
+            <div class="helpline-modal-section-title">Whatsapp</div>
+            <div class="helpline-whatsapp-card">
+                <div class="helpline-whatsapp-icon">
+                    <i class="fab fa-whatsapp"></i>
+                </div>
+                <div class="helpline-whatsapp-content">
+                    <div class="helpline-whatsapp-label">WhatsApp Channel</div>
+                    <div class="helpline-whatsapp-url" id="whatsappUrl">https://whatsapp.com/channel/0029VbBThps8qIzqfqkJIu0u</div>
+                </div>
+                <button class="helpline-copy-btn" id="copyUrlBtn" aria-label="Copy URL">
+                    <i class="fas fa-copy"></i>
+                </button>
+            </div>
+            <button class="helpline-join-btn" id="joinNowBtn">
+                Join Now
+            </button>
         </div>
     </div>
 </div>
@@ -3957,6 +4228,119 @@
             closeReferralActivityModal();
         }
     });
+
+    // Facebook HelpLine Modal Functionality
+    (function() {
+        const helplineModal = document.getElementById('helplineModal');
+        const helplineModalClose = document.getElementById('helplineModalClose');
+        const copyUrlBtn = document.getElementById('copyUrlBtn');
+        const joinNowBtn = document.getElementById('joinNowBtn');
+        const whatsappUrl = document.getElementById('whatsappUrl');
+
+        if (!helplineModal) return;
+
+        // Show modal on page load
+        function showHelplineModal() {
+            helplineModal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Hide modal
+        function hideHelplineModal() {
+            helplineModal.classList.add('hidden');
+            document.body.style.overflow = '';
+        }
+
+        // Show modal immediately on page load
+        showHelplineModal();
+
+        // Auto-hide after 6 seconds
+        setTimeout(function() {
+            hideHelplineModal();
+        }, 6000);
+
+        // Close button handler
+        if (helplineModalClose) {
+            helplineModalClose.addEventListener('click', function() {
+                hideHelplineModal();
+            });
+        }
+
+        // Close on overlay click (outside modal)
+        helplineModal.addEventListener('click', function(e) {
+            if (e.target === helplineModal) {
+                hideHelplineModal();
+            }
+        });
+
+        // Copy URL functionality
+        if (copyUrlBtn && whatsappUrl) {
+            copyUrlBtn.addEventListener('click', function() {
+                const url = whatsappUrl.textContent.trim();
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    navigator.clipboard.writeText(url).then(function() {
+                        // Show feedback
+                        const originalIcon = copyUrlBtn.innerHTML;
+                        copyUrlBtn.innerHTML = '<i class="fas fa-check"></i>';
+                        copyUrlBtn.style.color = '#10B981';
+                        setTimeout(function() {
+                            copyUrlBtn.innerHTML = originalIcon;
+                            copyUrlBtn.style.color = '';
+                        }, 2000);
+                    }).catch(function(err) {
+                        console.error('Failed to copy:', err);
+                        fallbackCopyToClipboard(url);
+                    });
+                } else {
+                    fallbackCopyToClipboard(url);
+                }
+            });
+        }
+
+        // Fallback copy function
+        function fallbackCopyToClipboard(text) {
+            const textArea = document.createElement('textarea');
+            textArea.value = text;
+            textArea.style.position = 'fixed';
+            textArea.style.left = '-999999px';
+            textArea.style.top = '-999999px';
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+
+            try {
+                const successful = document.execCommand('copy');
+                if (successful) {
+                    const originalIcon = copyUrlBtn.innerHTML;
+                    copyUrlBtn.innerHTML = '<i class="fas fa-check"></i>';
+                    copyUrlBtn.style.color = '#10B981';
+                    setTimeout(function() {
+                        copyUrlBtn.innerHTML = originalIcon;
+                        copyUrlBtn.style.color = '';
+                    }, 2000);
+                }
+            } catch (err) {
+                console.error('Fallback copy failed:', err);
+            }
+
+            document.body.removeChild(textArea);
+        }
+
+        // Join Now button handler
+        if (joinNowBtn && whatsappUrl) {
+            joinNowBtn.addEventListener('click', function() {
+                const url = whatsappUrl.textContent.trim();
+                window.open(url, '_blank', 'noopener,noreferrer');
+            });
+        }
+
+        // Close on ESC key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && !helplineModal.classList.contains('hidden')) {
+                hideHelplineModal();
+            }
+        });
+    })();
 </script>
 @endpush
 

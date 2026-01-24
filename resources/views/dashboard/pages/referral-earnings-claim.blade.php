@@ -351,10 +351,10 @@
                     <div class="referrals-balance-amount-wrapper-new">
                         <span class="referrals-balance-value-new"
                             id="pendingEarningAmount">${{ number_format($pendingEarningCommissions ?? 0, 2) }}</span>
-                        <div class="referrals-minimum-badge-new">Minimum $1</div>
+                        <div class="referrals-minimum-badge-new">Minimum $0.40</div>
                     </div>
-                    @if(($pendingEarningCommissions ?? 0) < 1)
-                        <div class="referrals-minimum-needed-new">${{ number_format(max(0, 1 - ($pendingEarningCommissions ?? 0)), 2) }}
+                    @if(($pendingEarningCommissions ?? 0) < 0.40)
+                        <div class="referrals-minimum-needed-new">${{ number_format(max(0, 0.40 - ($pendingEarningCommissions ?? 0)), 2) }}
                             more needed to claim</div>
                     @else
                         <div class="referrals-minimum-needed-new" style="color: #10B981;">Ready to claim!</div>
@@ -376,8 +376,8 @@
                         </div>
                     </div>
                 @endif
-                <p class="referrals-claim-note-new">You can claim earning commission earnings when balance reaches $1 or more</p>
-                <button class="referrals-claim-btn-new" id="claimEarningBtn" data-type="earning" {{ ($pendingEarningCommissions ?? 0) < 1 ? 'disabled' : '' }}>
+                <p class="referrals-claim-note-new">You can claim earning commission earnings when balance reaches $0.40 or more</p>
+                <button class="referrals-claim-btn-new" id="claimEarningBtn" data-type="earning" {{ ($pendingEarningCommissions ?? 0) < 0.40 ? 'disabled' : '' }}>
                     <i class="fas fa-gift"></i>
                     <span>Claim Earning Commission</span>
                 </button>
