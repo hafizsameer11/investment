@@ -8,6 +8,7 @@ use App\Models\CurrencyConversion;
 use App\Models\Deposit;
 use App\Models\Withdrawal;
 use App\Models\Transaction;
+use App\Models\CryptoWallet;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -134,8 +135,15 @@ class WalletController extends Controller
      */
     public function deposit()
     {
+        // Order payment methods: rast first, then bank, then crypto
         $paymentMethods = DepositPaymentMethod::where('is_active', true)
             ->where('allowed_for_deposit', true)
+            ->orderByRaw("CASE 
+                WHEN type = 'rast' THEN 1 
+                WHEN type = 'bank' THEN 2 
+                WHEN type = 'crypto' THEN 3 
+                ELSE 4 
+            END")
             ->orderBy('created_at', 'asc')
             ->get();
         
@@ -169,6 +177,15 @@ class WalletController extends Controller
         }
 
         $paymentMethod = DepositPaymentMethod::findOrFail($paymentMethodId);
+        
+        // If crypto payment method, redirect to crypto network selection
+        if ($paymentMethod->type === 'crypto') {
+            return redirect()->route('deposit.crypto.network', [
+                'method_id' => $paymentMethodId,
+                'amount' => $amount
+            ]);
+        }
+        
         $currencyConversion = CurrencyConversion::where('is_active', true)->first();
         
         // Convert USD to PKR
@@ -178,12 +195,111 @@ class WalletController extends Controller
     }
 
     /**
+     * Show crypto deposit network selection page.
+     */
+    public function cryptoDepositNetwork(Request $request)
+    {
+        $paymentMethodId = $request->query('method_id');
+        $amount = $request->query('amount');
+
+        if (!$paymentMethodId || !$amount) {
+            return redirect()->route('deposit.index')
+                ->with('error', 'Please select a payment method and enter an amount.');
+        }
+
+        $paymentMethod = DepositPaymentMethod::findOrFail($paymentMethodId);
+        
+        // Get active crypto wallets for deposits
+        $cryptoWallets = CryptoWallet::where('is_active', true)
+            ->where('allowed_for_deposit', true)
+            ->orderBy('network', 'asc')
+            ->get();
+
+        if ($cryptoWallets->isEmpty()) {
+            return redirect()->route('deposit.index')
+                ->with('error', 'No crypto wallets available for deposits.');
+        }
+
+        // Get currency conversion for display
+        $currencyConversion = CurrencyConversion::where('is_active', true)->first();
+        $conversionRate = $currencyConversion ? (float) $currencyConversion->rate : 0;
+        $pkrAmount = $conversionRate ? ($amount * $conversionRate) : $amount;
+
+        return view('dashboard.pages.crypto-deposit-network', compact(
+            'paymentMethod',
+            'amount',
+            'pkrAmount',
+            'cryptoWallets',
+            'conversionRate'
+        ));
+    }
+
+    /**
+     * Show crypto deposit confirmation page with wallet address and QR code.
+     */
+    public function cryptoDepositConfirm(Request $request)
+    {
+        $paymentMethodId = $request->query('method_id');
+        $amount = $request->query('amount');
+        $cryptoWalletId = $request->query('crypto_wallet_id');
+
+        if (!$paymentMethodId || !$amount || !$cryptoWalletId) {
+            return redirect()->route('deposit.index')
+                ->with('error', 'Please select a payment method, amount, and crypto network.');
+        }
+
+        $paymentMethod = DepositPaymentMethod::findOrFail($paymentMethodId);
+        $cryptoWallet = CryptoWallet::findOrFail($cryptoWalletId);
+
+        // Validate crypto wallet is active and allowed for deposit
+        if (!$cryptoWallet->is_active || !$cryptoWallet->allowed_for_deposit) {
+            return redirect()->route('deposit.index')
+                ->with('error', 'Selected crypto network is not available for deposits.');
+        }
+
+        // Validate amount against limits
+        if ($cryptoWallet->minimum_deposit && $amount < $cryptoWallet->minimum_deposit) {
+            return redirect()->route('deposit.crypto.network', [
+                'method_id' => $paymentMethodId,
+                'amount' => $amount
+            ])->with('error', 'Amount must be at least $' . number_format($cryptoWallet->minimum_deposit, 2));
+        }
+
+        if ($cryptoWallet->maximum_deposit && $amount > $cryptoWallet->maximum_deposit) {
+            return redirect()->route('deposit.crypto.network', [
+                'method_id' => $paymentMethodId,
+                'amount' => $amount
+            ])->with('error', 'Amount cannot exceed $' . number_format($cryptoWallet->maximum_deposit, 2));
+        }
+
+        // Get currency conversion for display
+        $currencyConversion = CurrencyConversion::where('is_active', true)->first();
+        $conversionRate = $currencyConversion ? (float) $currencyConversion->rate : 0;
+        $pkrAmount = $conversionRate ? ($amount * $conversionRate) : $amount;
+
+        return view('dashboard.pages.crypto-deposit-confirm', compact(
+            'paymentMethod',
+            'cryptoWallet',
+            'amount',
+            'pkrAmount',
+            'conversionRate'
+        ));
+    }
+
+    /**
      * Show the withdrawal page.
      */
     public function withdraw()
     {
+        // Order payment methods: rast first, then bank, then crypto
         $paymentMethods = DepositPaymentMethod::where('is_active', true)
             ->where('allowed_for_withdrawal', true)
+            ->orderByRaw("CASE 
+                WHEN type = 'rast' THEN 1 
+                WHEN type = 'bank' THEN 2 
+                WHEN type = 'crypto' THEN 3 
+                ELSE 4 
+            END")
             ->orderBy('created_at', 'asc')
             ->get();
         
@@ -218,6 +334,14 @@ class WalletController extends Controller
 
         $paymentMethod = DepositPaymentMethod::findOrFail($paymentMethodId);
         
+        // If crypto payment method, redirect to crypto network selection
+        if ($paymentMethod->type === 'crypto') {
+            return redirect()->route('withdraw.crypto.network', [
+                'method_id' => $paymentMethodId,
+                'amount' => $amount
+            ]);
+        }
+        
         // Validate amount against limits
         if ($paymentMethod->minimum_withdrawal_amount && $amount < $paymentMethod->minimum_withdrawal_amount) {
             return redirect()->route('withdraw.index')
@@ -242,10 +366,119 @@ class WalletController extends Controller
     }
 
     /**
+     * Show crypto withdrawal network selection page.
+     */
+    public function cryptoWithdrawNetwork(Request $request)
+    {
+        $paymentMethodId = $request->query('method_id');
+        $amount = $request->query('amount');
+
+        if (!$paymentMethodId || !$amount) {
+            return redirect()->route('withdraw.index')
+                ->with('error', 'Please select a payment method and enter an amount.');
+        }
+
+        $paymentMethod = DepositPaymentMethod::findOrFail($paymentMethodId);
+        
+        // Get active crypto wallets for withdrawals
+        $cryptoWallets = CryptoWallet::where('is_active', true)
+            ->where('allowed_for_withdrawal', true)
+            ->orderBy('network', 'asc')
+            ->get();
+
+        if ($cryptoWallets->isEmpty()) {
+            return redirect()->route('withdraw.index')
+                ->with('error', 'No crypto wallets available for withdrawals.');
+        }
+
+        // Check user balance
+        $user = auth()->user();
+        $totalAvailableBalance = ($user->mining_earning ?? 0) + ($user->referral_earning ?? 0);
+        if ($totalAvailableBalance < $amount) {
+            return redirect()->route('withdraw.index')
+                ->with('error', 'Insufficient balance. Your available withdrawal balance is $' . number_format($totalAvailableBalance, 2) . '. You can only withdraw from mining and referral earnings.');
+        }
+
+        return view('dashboard.pages.crypto-withdraw-network', compact(
+            'paymentMethod',
+            'amount',
+            'cryptoWallets'
+        ));
+    }
+
+    /**
+     * Show crypto withdrawal confirmation page with wallet address and QR code.
+     */
+    public function cryptoWithdrawConfirm(Request $request)
+    {
+        $paymentMethodId = $request->query('method_id');
+        $amount = $request->query('amount');
+        $cryptoWalletId = $request->query('crypto_wallet_id');
+
+        if (!$paymentMethodId || !$amount || !$cryptoWalletId) {
+            return redirect()->route('withdraw.index')
+                ->with('error', 'Please select a payment method, amount, and crypto network.');
+        }
+
+        $paymentMethod = DepositPaymentMethod::findOrFail($paymentMethodId);
+        $cryptoWallet = CryptoWallet::findOrFail($cryptoWalletId);
+
+        // Validate crypto wallet is active and allowed for withdrawal
+        if (!$cryptoWallet->is_active || !$cryptoWallet->allowed_for_withdrawal) {
+            return redirect()->route('withdraw.index')
+                ->with('error', 'Selected crypto network is not available for withdrawals.');
+        }
+
+        // Validate amount against limits
+        if ($cryptoWallet->minimum_withdrawal && $amount < $cryptoWallet->minimum_withdrawal) {
+            return redirect()->route('withdraw.crypto.network', [
+                'method_id' => $paymentMethodId,
+                'amount' => $amount
+            ])->with('error', 'Amount must be at least $' . number_format($cryptoWallet->minimum_withdrawal, 2));
+        }
+
+        if ($cryptoWallet->maximum_withdrawal && $amount > $cryptoWallet->maximum_withdrawal) {
+            return redirect()->route('withdraw.crypto.network', [
+                'method_id' => $paymentMethodId,
+                'amount' => $amount
+            ])->with('error', 'Amount cannot exceed $' . number_format($cryptoWallet->maximum_withdrawal, 2));
+        }
+
+        // Check user balance
+        $user = auth()->user();
+        $totalAvailableBalance = ($user->mining_earning ?? 0) + ($user->referral_earning ?? 0);
+        if ($totalAvailableBalance < $amount) {
+            return redirect()->route('withdraw.index')
+                ->with('error', 'Insufficient balance. Your available withdrawal balance is $' . number_format($totalAvailableBalance, 2) . '. You can only withdraw from mining and referral earnings.');
+        }
+
+        return view('dashboard.pages.crypto-withdraw-confirm', compact(
+            'paymentMethod',
+            'cryptoWallet',
+            'amount'
+        ));
+    }
+
+    /**
      * Store a new withdrawal request.
      */
     public function storeWithdrawal(Request $request)
     {
+        $paymentMethod = DepositPaymentMethod::findOrFail($request->payment_method_id);
+        $isCrypto = $paymentMethod->type === 'crypto';
+
+        // Different validation rules for crypto vs regular withdrawals
+        if ($isCrypto) {
+            $request->validate([
+                'payment_method_id' => 'required|exists:deposit_payment_methods,id',
+                'amount' => 'required|numeric|min:0.01',
+                'crypto_wallet_id' => 'required|exists:crypto_wallets,id',
+                'user_wallet_address' => 'required|string|max:255',
+            ], [
+                'crypto_wallet_id.required' => 'Please select a crypto network.',
+                'user_wallet_address.required' => 'Please enter your wallet address for receiving the withdrawal.',
+            ]);
+        } else {
         $request->validate([
             'payment_method_id' => 'required|exists:deposit_payment_methods,id',
             'amount' => 'required|numeric|min:0.01',
@@ -255,11 +488,11 @@ class WalletController extends Controller
             'account_number.required' => 'Account number is required.',
             'account_holder_name.required' => 'Account holder name is required.',
         ]);
+        }
 
         try {
             DB::beginTransaction();
 
-            $paymentMethod = DepositPaymentMethod::findOrFail($request->payment_method_id);
             $user = auth()->user();
 
             // Validate payment method is allowed for withdrawal
@@ -270,7 +503,36 @@ class WalletController extends Controller
                 ], 422);
             }
 
-            // Validate amount against limits
+            // For crypto withdrawals, validate crypto wallet
+            if ($isCrypto) {
+                $cryptoWallet = CryptoWallet::findOrFail($request->crypto_wallet_id);
+                
+                if (!$cryptoWallet->is_active || !$cryptoWallet->allowed_for_withdrawal) {
+                    DB::rollBack();
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'Selected crypto network is not available for withdrawals.',
+                    ], 422);
+                }
+
+                // Validate amount against crypto wallet limits
+                if ($cryptoWallet->minimum_withdrawal && $request->amount < $cryptoWallet->minimum_withdrawal) {
+                    DB::rollBack();
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'Amount must be at least $' . number_format($cryptoWallet->minimum_withdrawal, 2),
+                    ], 422);
+                }
+
+                if ($cryptoWallet->maximum_withdrawal && $request->amount > $cryptoWallet->maximum_withdrawal) {
+                    DB::rollBack();
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'Amount cannot exceed $' . number_format($cryptoWallet->maximum_withdrawal, 2),
+                    ], 422);
+                }
+            } else {
+                // Validate amount against payment method limits (non-crypto)
             if ($paymentMethod->minimum_withdrawal_amount && $request->amount < $paymentMethod->minimum_withdrawal_amount) {
                 return response()->json([
                     'success' => false,
@@ -283,6 +545,7 @@ class WalletController extends Controller
                     'success' => false,
                     'message' => 'Amount cannot exceed $' . number_format($paymentMethod->maximum_withdrawal_amount, 2),
                 ], 422);
+                }
             }
 
             // Calculate total available balance (mining_earning + referral_earning only)
@@ -317,14 +580,23 @@ class WalletController extends Controller
             $user->updateNetBalance();
 
             // Create withdrawal record
-            $withdrawal = Withdrawal::create([
+            $withdrawalData = [
                 'user_id' => $user->id,
                 'deposit_payment_method_id' => $request->payment_method_id,
                 'amount' => $request->amount,
-                'account_holder_name' => $request->account_holder_name,
-                'account_number' => $request->account_number,
                 'status' => 'pending',
-            ]);
+            ];
+
+            if ($isCrypto) {
+                $withdrawalData['crypto_wallet_id'] = $request->crypto_wallet_id;
+                $withdrawalData['user_wallet_address'] = $request->user_wallet_address;
+                $withdrawalData['crypto_network'] = $cryptoWallet->network;
+            } else {
+                $withdrawalData['account_holder_name'] = $request->account_holder_name;
+                $withdrawalData['account_number'] = $request->account_number;
+            }
+
+            $withdrawal = Withdrawal::create($withdrawalData);
 
             DB::commit();
 
@@ -349,6 +621,22 @@ class WalletController extends Controller
      */
     public function storeDeposit(Request $request)
     {
+        $paymentMethod = DepositPaymentMethod::findOrFail($request->payment_method_id);
+        $isCrypto = $paymentMethod->type === 'crypto';
+
+        // Different validation rules for crypto vs regular deposits
+        if ($isCrypto) {
+            $request->validate([
+                'payment_method_id' => 'required|exists:deposit_payment_methods,id',
+                'amount' => 'required|numeric|min:0.01',
+                'pkr_amount' => 'required|numeric|min:0.01',
+                'crypto_wallet_id' => 'required|exists:crypto_wallets,id',
+                'user_wallet_address' => 'required|string|max:255',
+            ], [
+                'crypto_wallet_id.required' => 'Please select a crypto network.',
+                'user_wallet_address.required' => 'Please enter your wallet address.',
+            ]);
+        } else {
         $request->validate([
             'payment_method_id' => 'required|exists:deposit_payment_methods,id',
             'amount' => 'required|numeric|min:0.01',
@@ -361,11 +649,41 @@ class WalletController extends Controller
             'account_number.required' => 'Account number is required.',
             'account_holder_name.required' => 'Account holder name is required.',
         ]);
+        }
 
         try {
             DB::beginTransaction();
 
-            // Check for duplicate transaction ID for this user
+            // For crypto deposits, validate crypto wallet
+            if ($isCrypto) {
+                $cryptoWallet = CryptoWallet::findOrFail($request->crypto_wallet_id);
+                
+                if (!$cryptoWallet->is_active || !$cryptoWallet->allowed_for_deposit) {
+                    DB::rollBack();
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'Selected crypto network is not available for deposits.',
+                    ], 422);
+                }
+
+                // Validate amount against crypto wallet limits
+                if ($cryptoWallet->minimum_deposit && $request->amount < $cryptoWallet->minimum_deposit) {
+                    DB::rollBack();
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'Amount must be at least $' . number_format($cryptoWallet->minimum_deposit, 2),
+                    ], 422);
+                }
+
+                if ($cryptoWallet->maximum_deposit && $request->amount > $cryptoWallet->maximum_deposit) {
+                    DB::rollBack();
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'Amount cannot exceed $' . number_format($cryptoWallet->maximum_deposit, 2),
+                    ], 422);
+                }
+            } else {
+                // Check for duplicate transaction ID for this user (non-crypto)
             $existingDeposit = Deposit::where('user_id', auth()->id())
                 ->where('transaction_id', $request->transaction_id)
                 ->first();
@@ -376,11 +694,12 @@ class WalletController extends Controller
                     'success' => false,
                     'message' => 'A deposit with this transaction ID already exists.',
                 ], 422);
+                }
             }
 
-            // Handle file upload
+            // Handle file upload (only for non-crypto deposits)
             $paymentProofPath = null;
-            if ($request->hasFile('payment_proof')) {
+            if (!$isCrypto && $request->hasFile('payment_proof')) {
                 try {
                     $file = $request->file('payment_proof');
                     $fileName = Str::random(40) . '.' . $file->getClientOriginalExtension();
@@ -460,19 +779,35 @@ class WalletController extends Controller
             }
 
             // Create deposit record
-            $deposit = Deposit::create([
+            $depositData = [
                 'user_id' => auth()->id(),
                 'deposit_payment_method_id' => $request->payment_method_id,
                 'amount' => $request->amount,
                 'pkr_amount' => $request->pkr_amount,
-                'transaction_id' => $request->transaction_id,
-                'account_number' => $request->account_number,
-                'account_holder_name' => $request->account_holder_name,
-                'payment_proof' => $paymentProofPath,
                 'status' => 'pending',
-            ]);
+            ];
+
+            if ($isCrypto) {
+                $depositData['crypto_wallet_id'] = $request->crypto_wallet_id;
+                $depositData['user_wallet_address'] = $request->user_wallet_address;
+                $depositData['crypto_network'] = $cryptoWallet->network;
+                // Generate a unique transaction ID for crypto deposits
+                $depositData['transaction_id'] = 'CRYPTO-' . strtoupper(Str::random(16));
+            } else {
+                $depositData['transaction_id'] = $request->transaction_id;
+                $depositData['account_number'] = $request->account_number;
+                $depositData['account_holder_name'] = $request->account_holder_name;
+                $depositData['payment_proof'] = $paymentProofPath;
+            }
+
+            $deposit = Deposit::create($depositData);
 
             DB::commit();
+
+            // Send notification for crypto deposits
+            if ($isCrypto) {
+                \App\Services\NotificationService::sendCryptoDepositSubmitted($deposit);
+            }
 
             return response()->json([
                 'success' => true,

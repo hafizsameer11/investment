@@ -26,6 +26,7 @@ use App\Http\Controllers\Admin\DepositPaymentMethodController;
 use App\Http\Controllers\Admin\InvestmentCommissionController;
 use App\Http\Controllers\Admin\WithdrawalController;
 use App\Http\Controllers\Admin\NotificationController;
+use App\Http\Controllers\Admin\CryptoWalletController;
 use App\Http\Controllers\Dashboard\WithdrawSecurityController;
 use App\Http\Controllers\Admin\AuthController as AdminAuthController;
 
@@ -60,9 +61,13 @@ Route::prefix('user/dashboard')->middleware('auth')->group(function () {
     Route::get('/wallet', [WalletController::class, 'index'])->name('wallet.index');
     Route::get('/deposit', [WalletController::class, 'deposit'])->name('deposit.index');
     Route::get('/deposit/confirm', [WalletController::class, 'depositConfirm'])->name('deposit.confirm');
+    Route::get('/deposit/crypto/network', [WalletController::class, 'cryptoDepositNetwork'])->name('deposit.crypto.network');
+    Route::get('/deposit/crypto/confirm', [WalletController::class, 'cryptoDepositConfirm'])->name('deposit.crypto.confirm');
     Route::post('/deposit', [WalletController::class, 'storeDeposit'])->name('deposit.store');
     Route::get('/withdraw', [WalletController::class, 'withdraw'])->name('withdraw.index');
     Route::get('/withdraw/confirm', [WalletController::class, 'withdrawConfirm'])->name('withdraw.confirm');
+    Route::get('/withdraw/crypto/network', [WalletController::class, 'cryptoWithdrawNetwork'])->name('withdraw.crypto.network');
+    Route::get('/withdraw/crypto/confirm', [WalletController::class, 'cryptoWithdrawConfirm'])->name('withdraw.crypto.confirm');
     Route::post('/withdraw', [WalletController::class, 'storeWithdrawal'])->name('withdraw.store');
     Route::get('/plans', [PlansController::class, 'index'])->name('plans.index');
 
@@ -182,6 +187,16 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
         Route::get('/{id}/edit', [DepositPaymentMethodController::class, 'edit'])->name('edit');
         Route::put('/{id}', [DepositPaymentMethodController::class, 'update'])->name('update');
         Route::delete('/{id}', [DepositPaymentMethodController::class, 'destroy'])->name('destroy');
+    });
+
+    // Admin Crypto Wallet Routes
+    Route::prefix('crypto-wallet')->name('admin.crypto-wallet.')->group(function () {
+        Route::get('/', [CryptoWalletController::class, 'index'])->name('index');
+        Route::get('/create', [CryptoWalletController::class, 'create'])->name('create');
+        Route::post('/', [CryptoWalletController::class, 'store'])->name('store');
+        Route::get('/{id}/edit', [CryptoWalletController::class, 'edit'])->name('edit');
+        Route::put('/{id}', [CryptoWalletController::class, 'update'])->name('update');
+        Route::delete('/{id}', [CryptoWalletController::class, 'destroy'])->name('destroy');
     });
 
     // Admin Currency Conversion Routes

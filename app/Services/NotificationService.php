@@ -136,5 +136,24 @@ class NotificationService
             'related_type' => RewardLevel::class,
         ]);
     }
+
+    /**
+     * Send notification when crypto deposit is submitted
+     */
+    public static function sendCryptoDepositSubmitted(Deposit $deposit)
+    {
+        $user = $deposit->user;
+        $amount = number_format($deposit->amount, 2);
+        $network = $deposit->cryptoWallet ? $deposit->cryptoWallet->network_display_name : 'Crypto';
+        
+        Notification::create([
+            'user_id' => $user->id,
+            'type' => 'crypto_deposit_submitted',
+            'title' => 'Crypto Deposit Submitted',
+            'message' => "Hi {$user->name}, Your crypto deposit of \${$amount} via {$network} has been submitted successfully. Your request will be reviewed and you will receive a response within 24 hours.",
+            'related_id' => $deposit->id,
+            'related_type' => Deposit::class,
+        ]);
+    }
 }
 

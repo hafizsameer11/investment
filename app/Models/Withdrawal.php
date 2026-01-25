@@ -12,9 +12,12 @@ class Withdrawal extends Model
     protected $fillable = [
         'user_id',
         'deposit_payment_method_id',
+        'crypto_wallet_id',
         'amount',
         'account_holder_name',
         'account_number',
+        'user_wallet_address',
+        'crypto_network',
         'status',
         'admin_notes',
         'admin_proof_image',
@@ -41,6 +44,14 @@ class Withdrawal extends Model
     public function paymentMethod()
     {
         return $this->belongsTo(DepositPaymentMethod::class, 'deposit_payment_method_id');
+    }
+
+    /**
+     * Get the crypto wallet used for this withdrawal (if applicable)
+     */
+    public function cryptoWallet()
+    {
+        return $this->belongsTo(CryptoWallet::class);
     }
 
     /**

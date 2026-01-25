@@ -107,6 +107,16 @@
                             </ul>
                         </li>
 
+                        <li class="has_sub">
+                            <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-bitcoin"></i> <span>
+                                    Crypto Wallets </span> <span class="float-right"><i
+                                        class="mdi mdi-chevron-right"></i></span></a>
+                            <ul class="list-unstyled">
+                                <li><a href="{{ route('admin.crypto-wallet.index') }}">All Crypto Wallets</a></li>
+                                <li><a href="{{ route('admin.crypto-wallet.create') }}">Add Crypto Wallet</a></li>
+                            </ul>
+                        </li>
+
                         <li>
                             <a href="{{ route('admin.deposits.index') }}" class="waves-effect">
                                 <i class="mdi mdi-cash-multiple"></i>

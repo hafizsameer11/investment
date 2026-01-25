@@ -1348,13 +1348,18 @@
                         <div class="deposit-payment-method"
                              data-method-id="{{ $paymentMethod->id }}"
                              data-method-name="{{ $paymentMethod->account_type }}"
+                             data-method-type="{{ $paymentMethod->type }}"
                              data-min-deposit="{{ $paymentMethod->minimum_deposit ?? 0 }}"
                              data-max-deposit="{{ $paymentMethod->maximum_deposit ?? 0 }}">
                             <div class="deposit-payment-icon">
                                 @if($paymentMethod->image)
                                     <img src="{{ asset($paymentMethod->image) }}" alt="{{ $paymentMethod->account_type }}">
                                 @else
-                                    <i class="fab fa-bitcoin"></i>
+                                    @if($paymentMethod->type === 'crypto')
+                                        <i class="fab fa-bitcoin" style="font-size: 2rem; color: #F7931A;"></i>
+                                    @else
+                                        <i class="fab fa-bitcoin"></i>
+                                    @endif
                                 @endif
                             </div>
                             <p class="deposit-payment-name">{{ $paymentMethod->account_type }}</p>
@@ -1618,6 +1623,7 @@
             selectedPaymentMethod = {
                 id: this.dataset.methodId,
                 name: this.dataset.methodName,
+                type: this.dataset.methodType || 'rast',
                 minDeposit: parseFloat(this.dataset.minDeposit) || 2,
                 maxDeposit: parseFloat(this.dataset.maxDeposit) || null
             };

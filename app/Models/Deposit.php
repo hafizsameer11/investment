@@ -12,11 +12,14 @@ class Deposit extends Model
     protected $fillable = [
         'user_id',
         'deposit_payment_method_id',
+        'crypto_wallet_id',
         'amount',
         'pkr_amount',
         'transaction_id',
         'account_number',
         'account_holder_name',
+        'user_wallet_address',
+        'crypto_network',
         'payment_proof',
         'status',
         'admin_notes',
@@ -44,6 +47,14 @@ class Deposit extends Model
     public function paymentMethod()
     {
         return $this->belongsTo(DepositPaymentMethod::class, 'deposit_payment_method_id');
+    }
+
+    /**
+     * Get the crypto wallet used for this deposit (if applicable)
+     */
+    public function cryptoWallet()
+    {
+        return $this->belongsTo(CryptoWallet::class);
     }
 
     /**

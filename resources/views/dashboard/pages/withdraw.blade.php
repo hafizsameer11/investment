@@ -1244,13 +1244,18 @@
                         <div class="withdraw-payment-method"
                              data-method-id="{{ $paymentMethod->id }}"
                              data-method-name="{{ $paymentMethod->account_type }}"
+                             data-method-type="{{ $paymentMethod->type }}"
                              data-min-withdrawal="{{ $paymentMethod->minimum_withdrawal_amount ?? 0 }}"
                              data-max-withdrawal="{{ $paymentMethod->maximum_withdrawal_amount ?? 0 }}">
                             <div class="withdraw-payment-icon">
                                 @if($paymentMethod->image)
                                     <img src="{{ asset($paymentMethod->image) }}" alt="{{ $paymentMethod->account_type }}">
                                 @else
-                                    <i class="fab fa-bitcoin"></i>
+                                    @if($paymentMethod->type === 'crypto')
+                                        <i class="fab fa-bitcoin" style="font-size: 2rem; color: #F7931A;"></i>
+                                    @else
+                                        <i class="fab fa-bitcoin"></i>
+                                    @endif
                                 @endif
                             </div>
                             <p class="withdraw-payment-name">{{ $paymentMethod->account_type }}</p>
@@ -1531,6 +1536,7 @@
             selectedPaymentMethod = {
                 id: this.dataset.methodId,
                 name: this.dataset.methodName,
+                type: this.dataset.methodType || 'rast',
                 minWithdrawal: parseFloat(this.dataset.minWithdrawal) || 0,
                 maxWithdrawal: parseFloat(this.dataset.maxWithdrawal) || null
             };
