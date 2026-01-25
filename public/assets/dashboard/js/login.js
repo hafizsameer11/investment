@@ -95,7 +95,7 @@
 
         if (!isValid) {
             input.classList.add('input-error');
-            showFieldError(input, 'Please enter your email or username');
+            showFieldError(input, 'Please enter your email');
             return false;
         } else {
             input.classList.remove('input-error');
@@ -164,7 +164,7 @@
             if (!hasEmail || !hasPassword) {
                 e.preventDefault();
                 if (!hasEmail) {
-                    showFieldError(emailInput, 'Please enter your email or username');
+                    showFieldError(emailInput, 'Please enter your email');
                 }
                 if (!hasPassword) {
                     showFieldError(passwordInput, 'Please enter your password');

@@ -45,6 +45,12 @@
                     <span class="deposit-detail-label">Payment Method</span>
                     <span class="deposit-detail-value">{{ $paymentMethod->account_type }}</span>
                 </div>
+                @if($paymentMethod->type == 'bank' && $paymentMethod->bank_name)
+                <div class="deposit-detail-row">
+                    <span class="deposit-detail-label">Bank Name</span>
+                    <span class="deposit-detail-value">{{ $paymentMethod->bank_name }}</span>
+                </div>
+                @endif
                 @if($paymentMethod->account_name)
                 <div class="deposit-detail-row">
                     <span class="deposit-detail-label">Account Name</span>

@@ -63,14 +63,31 @@
                             </div>
 
                             <div class="form-group mb-0">
-                                <label class="my-2 py-1">Account Type <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" name="account_type" value="{{ old('account_type') }}" required
-                                    placeholder="Enter account type (e.g., Bank Account, Easypaisa, Jazzcash)" />
-                                <small class="form-text text-muted">The type of payment account.</small>
+                                <label class="my-2 py-1">Type <span class="text-danger">*</span></label>
+                                <select class="form-control" name="type" id="payment_type" required>
+                                    <option value="rast" {{ old('type') == 'rast' ? 'selected' : '' }}>Rast</option>
+                                    <option value="bank" {{ old('type') == 'bank' ? 'selected' : '' }}>Bank</option>
+                                    <option value="crypto" {{ old('type') == 'crypto' ? 'selected' : '' }}>Crypto</option>
+                                </select>
+                                <small class="form-text text-muted">Select the category of the payment method.</small>
                             </div>
 
-                            <div class="form-group mb-0">
-                                <label class="my-2 py-1">Account Name</label>
+                            <div class="form-group mb-0" id="account_type_group">
+                                <label class="my-2 py-1">Service Name <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" name="account_type" value="{{ old('account_type') }}" required
+                                    placeholder="Enter service name (e.g., Easypaisa, Jazzcash, Bank Transfer)" />
+                                <small class="form-text text-muted">The name of the payment service.</small>
+                            </div>
+
+                            <div class="form-group mb-0" id="bank_name_group">
+                                <label class="my-2 py-1">Bank Name <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" name="bank_name" value="{{ old('bank_name') }}"
+                                    placeholder="Enter bank name" />
+                                <small class="form-text text-muted">The name of the bank.</small>
+                            </div>
+
+                            <div class="form-group mb-0" id="account_name_group">
+                                <label class="my-2 py-1">Account Holder Name</label>
                                 <input type="text" class="form-control" name="account_name" value="{{ old('account_name') }}"
                                     placeholder="Enter account holder name" />
                                 <small class="form-text text-muted">The name of the account holder.</small>
@@ -158,3 +175,33 @@
 </div> <!-- Page content Wrapper -->
 @endsection
 
+@push('scripts')
+<script>
+    $(document).ready(function() {
+        function toggleFields() {
+            var type = $('#payment_type').val();
+            
+            // Service Name (account_type) is now always shown and required
+            $('#account_type_group').show();
+            $('#account_type_group input').prop('required', true);
+
+            if (type === 'rast') {
+                $('#bank_name_group').hide();
+                $('#bank_name_group input').prop('required', false);
+                $('#account_name_group').show();
+            } else if (type === 'bank') {
+                $('#bank_name_group').show();
+                $('#bank_name_group input').prop('required', true);
+                $('#account_name_group').show();
+            } else {
+                $('#bank_name_group').hide();
+                $('#bank_name_group input').prop('required', false);
+                $('#account_name_group').hide();
+            }
+        }
+
+        $('#payment_type').change(toggleFields);
+        toggleFields(); // Run on page load
+    });
+</script>
+@endpush

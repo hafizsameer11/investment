@@ -617,7 +617,7 @@
             </div>
             <div class="support-quick-action-content-new">
                 <h3 class="support-quick-action-title-new">Live Chat</h3>
-                <p class="support-quick-action-desc-new">Instant responses via WhatsApp and Facebook</p>
+                <p class="support-quick-action-desc-new">Instant responses via WhatsApp and Telegram</p>
             </div>
         </div>
         {{-- <div class="support-quick-action-new">

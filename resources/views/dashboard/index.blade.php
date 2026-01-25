@@ -3438,7 +3438,7 @@
         <div class="helpline-modal-banner">
             <div class="helpline-modal-banner-content">
                 <div class="helpline-modal-banner-title">
-                    Facebook HelpLine For Special V-VIP Members Only
+                    Whatsapp HelpLine For Special V-VIP Members Only
                 </div>
                 <div class="helpline-modal-banner-subtitle">
                     {{-- <span>📢</span>

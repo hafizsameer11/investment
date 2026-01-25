@@ -94,11 +94,11 @@
                                 <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/>
                             </svg>
                             <input
-                                type="text"
+                                type="email"
                                 id="email"
                                 name="email"
                                 class="form-input @error('email') is-invalid @enderror"
-                                placeholder="Enter your email or username"
+                                placeholder="Enter your email"
                                 value="{{ old('email') }}"
                                 required
                                 autocomplete="email"

@@ -74,7 +74,8 @@
                                         <th>#</th>
                                         <th data-priority="1">Image</th>
                                         <th data-priority="2">Type</th>
-                                        <th data-priority="2">Name</th>
+                                        <th data-priority="2">Service/Bank</th>
+                                        <th data-priority="2">Account Holder</th>
                                         <th data-priority="3">Number</th>
                                         <th data-priority="4">Min Deposit</th>
                                         <th data-priority="4">Max Deposit</th>
@@ -94,7 +95,16 @@
                                                 <span class="text-muted">No Image</span>
                                             @endif
                                         </td>
-                                        <td>{{ $paymentMethod->account_type }}</td>
+                                        <td><span class="badge badge-soft-primary">{{ ucfirst($paymentMethod->type) }}</span></td>
+                                        <td>
+                                            @if($paymentMethod->type == 'rast')
+                                                {{ $paymentMethod->account_type }}
+                                            @elseif($paymentMethod->type == 'bank')
+                                                {{ $paymentMethod->bank_name }}
+                                            @else
+                                                <span class="text-muted">-</span>
+                                            @endif
+                                        </td>
                                         <td>{{ $paymentMethod->account_name }}</td>
                                         <td>{{ $paymentMethod->account_number }}</td>
                                         <td>

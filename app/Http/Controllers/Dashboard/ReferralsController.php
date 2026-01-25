@@ -312,8 +312,8 @@ class ReferralsController extends Controller
                     
                     $amount = $pendingEarningCommissions->sum('commission_amount');
                     
-                    // Minimum amount required to claim earning commissions is $0.40
-                    $minimumAmount = 0.40;
+                    // Minimum amount required to claim earning commissions is $0.2
+                    $minimumAmount = 0.2;
                     
                     if ($amount < $minimumAmount) {
                         DB::rollBack();

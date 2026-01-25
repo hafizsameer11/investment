@@ -98,15 +98,13 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         $request->validate([
-            'email' => ['required', 'string'],
+            'email' => ['required', 'string', 'email'],
             'password' => ['required', 'string'],
         ]);
 
-        // Try to authenticate with email or username
+        // Try to authenticate with email only
         $credentials = $request->only('email', 'password');
-        $user = User::where('email', $credentials['email'])
-            ->orWhere('username', $credentials['email'])
-            ->first();
+        $user = User::where('email', $credentials['email'])->first();
 
         if (!$user || !Hash::check($credentials['password'], $user->password)) {
             throw ValidationException::withMessages([

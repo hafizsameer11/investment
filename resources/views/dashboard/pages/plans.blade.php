@@ -2540,7 +2540,7 @@
             <div class="plans-hero-stats-new">
                 <div class="plans-hero-stat-new">
                     <div class="plans-hero-stat-label-new">Daily ROI</div>
-                    <div class="plans-hero-stat-value-new">3/4%</div>
+                    <div class="plans-hero-stat-value-new">3.6/3.7%</div>
                 </div>
                 <div class="plans-hero-stat-new">
                     <div class="plans-hero-stat-label-new">Minimum Investment</div>
