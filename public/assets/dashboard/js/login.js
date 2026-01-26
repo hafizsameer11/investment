@@ -18,6 +18,9 @@
     const emailInput = document.getElementById('email');
     const rememberCheckbox = document.getElementById('remember');
 
+    // Navigation flag to prevent validation when clicking links
+    let isNavigating = false;
+
     // Initialize
     document.addEventListener('DOMContentLoaded', function() {
         initPasswordToggle();
@@ -26,6 +29,7 @@
         initInputAnimations();
         initPasswordResetForms();
         restoreFormData();
+        preventFormValidationOnLinks();
     });
 
     /**
@@ -63,6 +67,11 @@
 
         // Email validation
         emailInput.addEventListener('blur', function() {
+            // Don't validate if user is navigating away via links
+            if (isNavigating) {
+                isNavigating = false;
+                return;
+            }
             validateEmail(this);
         });
 
@@ -75,6 +84,11 @@
         // Password validation
         if (passwordInput) {
             passwordInput.addEventListener('blur', function() {
+                // Don't validate if user is navigating away via links
+                if (isNavigating) {
+                    isNavigating = false;
+                    return;
+                }
                 validatePassword(this);
             });
 
@@ -157,6 +171,12 @@
         if (!loginForm) return;
 
         loginForm.addEventListener('submit', function(e) {
+            // Don't submit if user is navigating away
+            if (isNavigating) {
+                e.preventDefault();
+                return false;
+            }
+
             // Basic validation - just check if fields are filled
             const hasEmail = emailInput && emailInput.value.trim().length > 0;
             const hasPassword = passwordInput && passwordInput.value.length > 0;
@@ -182,6 +202,18 @@
                 saveFormData();
             } else {
                 clearFormData();
+            }
+        });
+        
+        // Prevent form from interfering with link clicks
+        loginForm.addEventListener('click', function(e) {
+            const target = e.target;
+            if (target.classList.contains('forgot-password-link') || 
+                target.classList.contains('signup-link-text') ||
+                target.closest('.forgot-password-link') ||
+                target.closest('.signup-link-text')) {
+                isNavigating = true;
+                e.stopPropagation();
             }
         });
     }
@@ -355,6 +387,83 @@
         } else {
             button.classList.remove('loading');
             button.disabled = false;
+        }
+    }
+
+    /**
+     * Prevent Form Validation on Navigation Links
+     */
+    function preventFormValidationOnLinks() {
+        // Get all links inside the form
+        const forgotPasswordLink = document.querySelector('.forgot-password-link');
+        const signUpLink = document.querySelector('.signup-link-text');
+        
+        // Prevent form validation when clicking Forgot Password link
+        if (forgotPasswordLink) {
+            forgotPasswordLink.addEventListener('mousedown', function(e) {
+                isNavigating = true;
+                // Remove required attributes and clear any errors immediately
+                if (emailInput) {
+                    emailInput.removeAttribute('required');
+                    emailInput.classList.remove('input-error');
+                    // Clear any error messages
+                    const emailError = emailInput.parentElement.parentElement.querySelector('.field-error');
+                    if (emailError) emailError.remove();
+                }
+                if (passwordInput) {
+                    passwordInput.removeAttribute('required');
+                    passwordInput.classList.remove('input-error');
+                    // Clear any error messages
+                    const passwordError = passwordInput.parentElement.parentElement.querySelector('.field-error');
+                    if (passwordError) passwordError.remove();
+                }
+            });
+            
+            forgotPasswordLink.addEventListener('click', function(e) {
+                e.stopPropagation();
+                isNavigating = true;
+                // Clear errors one more time
+                const fieldErrors = document.querySelectorAll('.field-error');
+                fieldErrors.forEach(error => error.remove());
+                // Navigate immediately
+                setTimeout(() => {
+                    window.location.href = this.href;
+                }, 0);
+            });
+        }
+        
+        // Prevent form validation when clicking Sign Up link
+        if (signUpLink) {
+            signUpLink.addEventListener('mousedown', function(e) {
+                isNavigating = true;
+                // Remove required attributes and clear any errors immediately
+                if (emailInput) {
+                    emailInput.removeAttribute('required');
+                    emailInput.classList.remove('input-error');
+                    // Clear any error messages
+                    const emailError = emailInput.parentElement.parentElement.querySelector('.field-error');
+                    if (emailError) emailError.remove();
+                }
+                if (passwordInput) {
+                    passwordInput.removeAttribute('required');
+                    passwordInput.classList.remove('input-error');
+                    // Clear any error messages
+                    const passwordError = passwordInput.parentElement.parentElement.querySelector('.field-error');
+                    if (passwordError) passwordError.remove();
+                }
+            });
+            
+            signUpLink.addEventListener('click', function(e) {
+                e.stopPropagation();
+                isNavigating = true;
+                // Clear errors one more time
+                const fieldErrors = document.querySelectorAll('.field-error');
+                fieldErrors.forEach(error => error.remove());
+                // Navigate immediately
+                setTimeout(() => {
+                    window.location.href = this.href;
+                }, 0);
+            });
         }
     }
 

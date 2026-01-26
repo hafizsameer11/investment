@@ -1,6 +1,6 @@
 @extends('dashboard.layouts.main')
 
-@section('title', 'Core Mining - Deposit Confirmation')
+@section('title', 'Core Mining ⛏️- AI Gold Mining ⛏️')
 
 @push('styles')
 <link rel="stylesheet" href="{{ asset('assets/dashboard/css/deposit-confirm.css') }}">

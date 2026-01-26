@@ -71,10 +71,7 @@ class AuthController extends Controller
                 ->withErrors(['phone' => 'Please enter a valid Pakistani phone number. Format: 03001234567 (11 digits starting with 0) or +92 300 1234567.']);
         }
 
-        // Generate referral code for the new user
-        $referCode = User::generateReferralCode($validated['name']);
-
-        // Create user
+        // Create user first (without referral code)
         $user = User::create([
             'name' => $validated['name'],
             'username' => $validated['username'] ?? null,
@@ -82,9 +79,15 @@ class AuthController extends Controller
             'phone' => $validated['phone'],
             'password' => Hash::make($validated['password']),
             'role' => 'user',
-            'refer_code' => $referCode,
             'referred_by' => $validated['referral_code'],
         ]);
+
+        // Generate referral code using user's real name and ID
+        $referCode = User::generateReferralCode($validated['name'], $user->id);
+        
+        // Update user with referral code
+        $user->update(['refer_code' => $referCode]);
+        $user->refresh();
 
         // Auto-login user after registration
         Auth::login($user);

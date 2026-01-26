@@ -1,7 +1,23 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="csrf-token" content="{{ csrf_token() }}">
-<title>@yield('title', 'Core Mining - Dashboard')</title>
+<title>@yield('title', 'Core Mining ⛏️- AI Gold Mining ⛏️')</title>
+<!-- Favicon -->
+<link rel="icon" type="image/jpeg" href="{{ asset('assets/dashboard/images/meta/logo.jfif') }}">
+<!-- Apple Touch Icons for iOS -->
+<link rel="apple-touch-icon" sizes="180x180" href="{{ asset('assets/dashboard/images/meta/logo.jfif') }}">
+<link rel="apple-touch-icon" sizes="152x152" href="{{ asset('assets/dashboard/images/meta/logo.jfif') }}">
+<link rel="apple-touch-icon" sizes="144x144" href="{{ asset('assets/dashboard/images/meta/logo.jfif') }}">
+<link rel="apple-touch-icon" sizes="120x120" href="{{ asset('assets/dashboard/images/meta/logo.jfif') }}">
+<link rel="apple-touch-icon" sizes="114x114" href="{{ asset('assets/dashboard/images/meta/logo.jfif') }}">
+<link rel="apple-touch-icon" sizes="76x76" href="{{ asset('assets/dashboard/images/meta/logo.jfif') }}">
+<link rel="apple-touch-icon" sizes="72x72" href="{{ asset('assets/dashboard/images/meta/logo.jfif') }}">
+<link rel="apple-touch-icon" sizes="60x60" href="{{ asset('assets/dashboard/images/meta/logo.jfif') }}">
+<link rel="apple-touch-icon" sizes="57x57" href="{{ asset('assets/dashboard/images/meta/logo.jfif') }}">
+<!-- Mobile Web App Meta Tags -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Core Mining ⛏️">
 <link rel="stylesheet" href="{{ asset('assets/dashboard/css/dashboard.css') }}">
 @stack('styles')
 <style>

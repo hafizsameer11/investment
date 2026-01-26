@@ -1,6 +1,6 @@
 @extends('dashboard.layouts.main')
 
-@section('title', 'Core Mining - Goals')
+@section('title', 'Core Mining ⛏️- AI Gold Mining ⛏️')
 
 @push('styles')
 <link rel="stylesheet" href="{{ asset('assets/dashboard/css/goals.css') }}">
@@ -1211,7 +1211,7 @@
     <!-- Hero Section -->
     <div class="goals-hero-new">
         <div class="goals-hero-content-new">
-            <h1 class="goals-hero-title-new">Goals & Rewards</h1>
+            <h1 class="goals-hero-title-new">Victory Reward History</h1>
             <p class="goals-hero-subtitle-new">Unlock higher levels and earn bigger rewards through referrals and team building</p>
         </div>
     </div>

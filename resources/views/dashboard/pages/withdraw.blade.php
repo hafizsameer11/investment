@@ -1,6 +1,6 @@
 @extends('dashboard.layouts.main')
 
-@section('title', 'Core Mining - Get Money')
+@section('title', 'Core Mining ⛏️- AI Gold Mining ⛏️')
 
 @push('styles')
 <link rel="stylesheet" href="{{ asset('assets/dashboard/css/dashboard.css') }}">
@@ -1333,7 +1333,7 @@
                     </li>
                     <li class="withdraw-instruction-item">
                         <span class="withdraw-instruction-bullet"></span>
-                        <span>Minimum withdrawal amount varies by payment method.</span>
+                        <span id="withdraw-min-amount-text">Minimum withdrawal amount varies by payment method.</span>
                     </li>
                 </ul>
             </div>
@@ -1568,6 +1568,15 @@
                 }
                 limitInfo.textContent = limitText;
                 limitInfo.style.display = limitText ? 'block' : 'none';
+            }
+
+            // Update minimum withdrawal instruction text
+            const minAmountText = document.getElementById('withdraw-min-amount-text');
+            if (minAmountText && selectedPaymentMethod) {
+                const formattedMinWithdrawal = selectedPaymentMethod.minWithdrawal > 0 
+                    ? selectedPaymentMethod.minWithdrawal.toFixed(2) 
+                    : '0.00';
+                minAmountText.textContent = `Minimum withdrawal for ${selectedPaymentMethod.name} is $${formattedMinWithdrawal}`;
             }
 
             // Update input min/max attributes and clear previous selections

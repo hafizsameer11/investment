@@ -44,20 +44,23 @@ class UserController extends Controller
             'referral_code.exists' => 'The referral code does not exist. Please enter a valid referral code.',
         ]);
 
-        // Generate referral code for the new user
-        $referCode = User::generateReferralCode($validated['name']);
-
-        // Create user
-        User::create([
+        // Create user first (without referral code)
+        $user = User::create([
             'name' => $validated['name'],
             'username' => $validated['username'],
             'email' => $validated['email'],
             'phone' => $validated['phone'] ?? null,
             'password' => Hash::make($validated['password']),
             'role' => 'user',
-            'refer_code' => $referCode,
             'referred_by' => $validated['referral_code'],
         ]);
+
+        // Generate referral code using user's real name and ID
+        $referCode = User::generateReferralCode($validated['name'], $user->id);
+        
+        // Update user with referral code
+        $user->update(['refer_code' => $referCode]);
+        $user->refresh();
 
         return redirect()->route('admin.users.index')
             ->with('success', 'User created successfully.');

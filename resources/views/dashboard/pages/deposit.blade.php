@@ -1,6 +1,6 @@
 @extends('dashboard.layouts.main')
 
-@section('title', 'Core Mining - Add Money')
+@section('title', 'Core Mining ⛏️- AI Gold Mining ⛏️')
 
 @push('styles')
 <link rel="stylesheet" href="{{ asset('assets/dashboard/css/dashboard.css') }}">
@@ -1431,7 +1431,7 @@
                     </li>
                     <li class="deposit-instruction-item">
                         <span class="deposit-instruction-bullet"></span>
-                        <span>Minimum deposit is $1</span>
+                        <span id="deposit-min-amount-text">Minimum deposit is $1</span>
                     </li>
                 </ul>
             </div>
@@ -1638,6 +1638,13 @@
             const continueBtn = document.getElementById('deposit-continue-btn');
             if (continueBtn && selectedPaymentMethod) {
                 continueBtn.textContent = `Continue Deposit with ${selectedPaymentMethod.name}`;
+            }
+
+            // Update minimum deposit instruction text
+            const minAmountText = document.getElementById('deposit-min-amount-text');
+            if (minAmountText && selectedPaymentMethod) {
+                const formattedMinDeposit = selectedPaymentMethod.minDeposit.toFixed(2);
+                minAmountText.textContent = `Minimum deposit for ${selectedPaymentMethod.name} is $${formattedMinDeposit}`;
             }
 
             // Update input min/max attributes

@@ -1,6 +1,6 @@
 @extends('dashboard.layouts.main')
 
-@section('title', 'Core Mining - Support')
+@section('title', 'Core Mining ⛏️- AI Gold Mining ⛏️')
 
 @push('styles')
 <link rel="stylesheet" href="{{ asset('assets/dashboard/css/support.css') }}">
@@ -688,7 +688,7 @@
                         <div class="support-item-header-new">
                             <div class="support-item-label-new">Telegram Channel</div>
                         </div>
-                        <div class="support-item-value-new" id="telegramChannel">https://t.me/+qwvSIQ9ROCQxMDI8</div>
+                        <div class="support-item-value-new" id="telegramChannel">https://t.me/+QTjJdyGyg7lkY2Zk</div>
                         <div class="support-item-actions-new">
                             <button class="support-copy-btn-new" data-copy="telegramChannel" title="Copy">
                                 <i class="fas fa-copy"></i>

@@ -1,6 +1,6 @@
 @extends('dashboard.layouts.main')
 
-@section('title', 'Core Mining - Dashboard')
+@section('title', 'Core Mining ⛏️- AI Gold Mining ⛏️')
 
 @push('styles')
 <link rel="stylesheet" href="{{ asset('assets/dashboard/css/dashboard.css') }}">
@@ -486,8 +486,8 @@
         width: 56px;
         height: 56px;
         border-radius: 50%;
-        background: rgba(255, 255, 255, 0.05);
-        border: 1px solid rgba(255, 255, 255, 0.1);
+        background: rgba(255, 178, 30, 0.1);
+        border: 1px solid rgba(255, 178, 30, 0.3);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -495,14 +495,19 @@
     }
 
     .wallet-action-btn:hover .wallet-action-icon {
-        background: rgba(255, 178, 30, 0.1);
-        border-color: rgba(255, 178, 30, 0.3);
+        background: rgba(255, 178, 30, 0.2);
+        border-color: rgba(255, 178, 30, 0.5);
         transform: scale(1.05);
+        box-shadow: 0 4px 16px rgba(255, 178, 30, 0.3);
+    }
+    
+    .wallet-action-btn:hover .wallet-action-icon i {
+        color: #FF8A1D;
     }
 
     .wallet-action-icon i {
         font-size: 1.5rem;
-        color: var(--text-primary);
+        color: #FFB21E;
     }
 
     .wallet-action-label {
@@ -3200,7 +3205,7 @@
                 <span class="balance-amount-large" id="totalBalance">${{ number_format($totalNetBalance ?? (($user->mining_earning ?? 0) + ($user->referral_earning ?? 0)), 2) }}</span>
                 <!-- Telegram Group Box -->
                 <div class="telegram-support-box">
-                    <a href="https://t.me/+qwvSIQ9ROCQxMDI8" target="_blank" rel="noopener noreferrer" class="telegram-link-box">
+                    <a href="https://t.me/+QTjJdyGyg7lkY2Zk" target="_blank" rel="noopener noreferrer" class="telegram-link-box">
                         <div class="telegram-icon-wrapper">
                             <i class="fab fa-telegram"></i>
                         </div>

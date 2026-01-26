@@ -62,36 +62,35 @@ class User extends Authenticatable implements CanResetPassword
     ];
 
     /**
-     * Generate a unique referral code from user name
-     * Format: FirstNameUppercase + LastNamePascalCase + 4RandomDigits
-     * Example: "Ramiz Nazar" -> "RAMEEZNazar2473"
+     * Generate a unique referral code from user name and ID
+     * Format: RealName + LastTwoDigitsOfID
+     * Example: "Ramiz Nazar" with ID 123 -> "RamizNazar23"
      *
      * @param string $name
+     * @param int $userId
      * @return string
      */
-    public static function generateReferralCode(string $name): string
+    public static function generateReferralCode(string $name, int $userId): string
     {
-        $nameParts = explode(' ', trim($name));
-        $firstName = strtoupper($nameParts[0] ?? 'USER');
-        $lastName = '';
+        // Get the user's real name (remove extra spaces, keep as is)
+        $realName = preg_replace('/\s+/', '', trim($name));
         
-        if (count($nameParts) > 1) {
-            $lastName = ucfirst(strtolower($nameParts[count($nameParts) - 1]));
-        } else {
-            // If no last name, use first 4 chars of first name
-            $lastName = substr($firstName, 0, 4);
+        // If name is empty, use default
+        if (empty($realName)) {
+            $realName = 'USER';
         }
+        
+        // Get last two digits of user ID
+        $lastTwoDigits = str_pad((string) ($userId % 100), 2, '0', STR_PAD_LEFT);
 
-        // Generate 4 random digits
-        $randomDigits = str_pad((string) rand(0, 9999), 4, '0', STR_PAD_LEFT);
+        $referralCode = $realName . $lastTwoDigits;
 
-        $referralCode = $firstName . $lastName . $randomDigits;
-
-        // Ensure uniqueness
+        // Ensure uniqueness (in case of duplicate names with same last 2 digits)
         $attempts = 0;
+        $originalCode = $referralCode;
         while (static::where('refer_code', $referralCode)->exists() && $attempts < 10) {
-            $randomDigits = str_pad((string) rand(0, 9999), 4, '0', STR_PAD_LEFT);
-            $referralCode = $firstName . $lastName . $randomDigits;
+            // If duplicate, append a random digit
+            $referralCode = $originalCode . rand(0, 9);
             $attempts++;
         }
 

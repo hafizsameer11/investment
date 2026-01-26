@@ -1,6 +1,6 @@
 @extends('dashboard.layouts.main')
 
-@section('title', 'Core Mining - Crypto Deposit')
+@section('title', 'Core Mining ⛏️- AI Gold Mining ⛏️')
 
 @push('styles')
 <link rel="stylesheet" href="{{ asset('assets/dashboard/css/dashboard.css') }}">
@@ -603,7 +603,7 @@
                 <input type="text" 
                        class="crypto-form-input" 
                        id="userWalletAddress" 
-                       placeholder="Enter the wallet address or ID you used to send the payment"
+                       placeholder="Enter/copy TXID Of Transaction"
                        required>
             </div>
             <button class="crypto-submit-btn" id="submitDepositBtn">

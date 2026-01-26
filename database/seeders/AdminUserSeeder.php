@@ -18,22 +18,29 @@ class AdminUserSeeder extends Seeder
 
         if (!$adminExists) {
             $adminName = 'Admin';
-            $referCode = User::generateReferralCode($adminName);
-
-            User::create([
+            
+            // Create admin user first (without referral code)
+            $admin = User::create([
                 'name' => $adminName,
                 'email' => 'admin@gmail.com',
                 'username' => 'admin',
                 'password' => Hash::make('admin123'),
                 'role' => 'admin',
-                'refer_code' => $referCode,
                 'phone' => null,
             ]);
 
+            // Generate referral code using admin's name and ID
+            $referCode = User::generateReferralCode($adminName, $admin->id);
+            
+            // Update admin with referral code
+            $admin->update(['refer_code' => $referCode]);
+            $admin->refresh();
+
             $this->command->info('Admin user created successfully!');
-            $this->command->info('Email: admin@example.com');
+            $this->command->info('Email: admin@gmail.com');
             $this->command->info('Username: admin');
-            $this->command->info('Password: password');
+            $this->command->info('Password: admin123');
+            $this->command->info('Referral Code: ' . $referCode);
             $this->command->warn('Please change the password after first login!');
         } else {
             $this->command->info('Admin user already exists.');
