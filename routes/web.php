@@ -100,10 +100,7 @@ Route::prefix('user/dashboard')->middleware('auth')->group(function () {
     Route::get('/withdraw-security', [WithdrawSecurityController::class, 'index'])->name('withdraw-security.index');
     Route::get('/settings', [SettingsController::class, 'index'])->name('settings.index');
     
-    // Chat Routes (Protected)
-    Route::get('/chat/active', [ChatController::class, 'getActiveChat'])->name('chat.active');
-    Route::get('/chat/unread-count', [ChatController::class, 'getUnreadCount'])->name('chat.unread-count');
-    Route::post('/chat/start', [ChatController::class, 'startChat'])->name('chat.start');
+    // Chat Routes (Protected - authenticated users only)
     Route::get('/chat/{id}', [ChatController::class, 'getChat'])->name('chat.get');
     Route::post('/chat/{id}/message', [ChatController::class, 'sendMessage'])->name('chat.send-message');
     Route::post('/chat/{id}/mark-read', [ChatController::class, 'markMessagesAsRead'])->name('chat.mark-read');
@@ -118,14 +115,10 @@ Route::middleware('guest')->group(function () {
     Route::post('/password/reset', [AuthController::class, 'resetPassword'])->name('password.update');
 });
 
-// Chat Routes (Public - accessible from login page)
+// Chat Routes (Public - accessible from login page and for guest users)
 Route::get('/chat/active', [ChatController::class, 'getActiveChat'])->name('chat.active');
 Route::get('/chat/unread-count', [ChatController::class, 'getUnreadCount'])->name('chat.unread-count');
 Route::post('/chat/start', [ChatController::class, 'startChat'])->name('chat.start');
-Route::get('/chat/{id}', [ChatController::class, 'getChat'])->name('chat.get');
-Route::post('/chat/{id}/message', [ChatController::class, 'sendMessage'])->name('chat.send-message');
-Route::post('/chat/{id}/mark-read', [ChatController::class, 'markMessagesAsRead'])->name('chat.mark-read');
-Route::get('/chat/{id}/messages', [ChatController::class, 'getMessages'])->name('chat.messages');
 
 // Home route - redirect to login
 Route::get('/', function () {
