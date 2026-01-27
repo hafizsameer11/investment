@@ -22,6 +22,10 @@ class MessageSent implements ShouldBroadcast
      */
     public function __construct(ChatMessage $message)
     {
+        // Load chat relationship if not already loaded
+        if (!$message->relationLoaded('chat')) {
+            $message->load('chat');
+        }
         $this->message = $message;
     }
 
@@ -32,9 +36,21 @@ class MessageSent implements ShouldBroadcast
      */
     public function broadcastOn(): array
     {
-        return [
+        $channels = [
             new PrivateChannel('chat.' . $this->message->chat_id),
         ];
+        
+        // Also broadcast to user-specific channel if admin sends message
+        // This allows the badge to update even when chat window is closed
+        if ($this->message->sender_type === 'admin') {
+            $chat = $this->message->chat;
+            if ($chat && $chat->user_id) {
+                // Authenticated user
+                $channels[] = new PrivateChannel('user.' . $chat->user_id . '.chats');
+            }
+        }
+        
+        return $channels;
     }
 
     /**
@@ -56,9 +72,10 @@ class MessageSent implements ShouldBroadcast
                 'chat_id' => $this->message->chat_id,
                 'sender_id' => $this->message->sender_id,
                 'sender_type' => $this->message->sender_type,
-                'sender_name' => $this->message->sender->name ?? 'Guest',
+                'sender_name' => $this->message->sender->name ?? ($this->message->sender_id ? 'Guest' : 'Guest'),
                 'message' => $this->message->message,
                 'is_read' => $this->message->is_read,
+                'read_at' => $this->message->read_at ? $this->message->read_at->toIso8601String() : null,
                 'created_at' => $this->message->created_at->toIso8601String(),
             ],
         ];

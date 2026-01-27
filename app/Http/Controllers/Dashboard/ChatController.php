@@ -96,9 +96,10 @@ class ChatController extends Controller
                     'id' => $message->id,
                     'sender_id' => $message->sender_id,
                     'sender_type' => $message->sender_type,
-                    'sender_name' => $message->sender->name ?? 'Guest',
+                    'sender_name' => $message->sender->name ?? ($message->sender_id ? 'Guest' : 'Guest'),
                     'message' => $message->message,
                     'is_read' => $message->is_read,
+                    'read_at' => $message->read_at ? $message->read_at->toIso8601String() : null,
                     'created_at' => $message->created_at->toIso8601String(),
                 ];
             }),
@@ -157,9 +158,10 @@ class ChatController extends Controller
                 'id' => $chatMessage->id,
                 'sender_id' => $chatMessage->sender_id,
                 'sender_type' => $chatMessage->sender_type,
-                'sender_name' => $chatMessage->sender->name ?? 'Guest',
+                'sender_name' => $chatMessage->sender->name ?? ($chatMessage->sender_id ? 'Guest' : 'Guest'),
                 'message' => $chatMessage->message,
                 'is_read' => $chatMessage->is_read,
+                'read_at' => $chatMessage->read_at ? $chatMessage->read_at->toIso8601String() : null,
                 'created_at' => $chatMessage->created_at->toIso8601String(),
             ],
         ]);
@@ -180,7 +182,7 @@ class ChatController extends Controller
                 ->first();
                 
             // Check if chat should be auto-closed
-            if ($chat && $chat->shouldAutoClose(2.5)) {
+            if ($chat && $chat->shouldAutoClose(8)) {
                 $chat->close();
                 return response()->json([
                     'success' => true,
@@ -198,7 +200,7 @@ class ChatController extends Controller
                     ->first();
                     
                 // Check if chat should be auto-closed
-                if ($chat && $chat->shouldAutoClose(2.5)) {
+                if ($chat && $chat->shouldAutoClose(8)) {
                     $chat->close();
                     return response()->json([
                         'success' => true,
@@ -224,6 +226,78 @@ class ChatController extends Controller
         return response()->json([
             'success' => true,
             'has_active_chat' => false,
+        ]);
+    }
+
+    /**
+     * Get unread admin message count for current user.
+     */
+    public function getUnreadCount(Request $request)
+    {
+        $userId = Auth::id();
+        
+        if ($userId) {
+            // For authenticated users, check chats by user_id
+            $unreadCount = ChatMessage::whereHas('chat', function ($query) use ($userId) {
+                $query->where('user_id', $userId)
+                    ->whereIn('status', ['pending', 'active']);
+            })
+            ->where('sender_type', 'admin')
+            ->where('is_read', false)
+            ->count();
+        } else {
+            // For guest users, check by email from request
+            $userEmail = $request->input('email');
+            if ($userEmail) {
+                $unreadCount = ChatMessage::whereHas('chat', function ($query) use ($userEmail) {
+                    $query->where('guest_email', $userEmail)
+                        ->whereNull('user_id')
+                        ->whereIn('status', ['pending', 'active']);
+                })
+                ->where('sender_type', 'admin')
+                ->where('is_read', false)
+                ->count();
+            } else {
+                $unreadCount = 0;
+            }
+        }
+
+        return response()->json([
+            'success' => true,
+            'unread_count' => $unreadCount,
+        ]);
+    }
+
+    /**
+     * Mark admin messages as read in a chat.
+     */
+    public function markMessagesAsRead($id)
+    {
+        $chat = Chat::findOrFail($id);
+
+        // Check if user has access to this chat
+        if (Auth::check()) {
+            if ($chat->user_id !== Auth::id()) {
+                abort(403, 'Unauthorized access to this chat');
+            }
+        } else {
+            if ($chat->user_id !== null) {
+                abort(403, 'Unauthorized access to this chat');
+            }
+        }
+
+        // Mark all admin messages in this chat as read
+        $updated = ChatMessage::where('chat_id', $chat->id)
+            ->where('sender_type', 'admin')
+            ->where('is_read', false)
+            ->update([
+                'is_read' => true,
+                'read_at' => now(),
+            ]);
+
+        return response()->json([
+            'success' => true,
+            'updated_count' => $updated,
         ]);
     }
 
@@ -257,9 +331,10 @@ class ChatController extends Controller
                     'id' => $message->id,
                     'sender_id' => $message->sender_id,
                     'sender_type' => $message->sender_type,
-                    'sender_name' => $message->sender->name ?? 'Guest',
+                    'sender_name' => $message->sender->name ?? ($message->sender_id ? 'Guest' : 'Guest'),
                     'message' => $message->message,
                     'is_read' => $message->is_read,
+                    'read_at' => $message->read_at ? $message->read_at->toIso8601String() : null,
                     'created_at' => $message->created_at->toIso8601String(),
                 ];
             }),

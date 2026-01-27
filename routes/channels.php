@@ -42,3 +42,8 @@ Broadcast::channel('chat.{chatId}', function ($user, $chatId) {
 Broadcast::channel('admin.chats', function ($user) {
     return $user->role === 'admin';
 });
+
+// User chats channel - user can access their own channel
+Broadcast::channel('user.{userId}.chats', function ($user, $userId) {
+    return (int) $user->id === (int) $userId;
+});

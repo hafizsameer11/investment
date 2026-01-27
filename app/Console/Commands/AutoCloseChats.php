@@ -12,14 +12,14 @@ class AutoCloseChats extends Command
      *
      * @var string
      */
-    protected $signature = 'chats:auto-close {--hours=2.5 : Hours of inactivity before closing}';
+    protected $signature = 'chats:auto-close {--hours=8 : Hours of inactivity before closing}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Auto-close chats that have been inactive for a specified time (default 2.5 hours)';
+    protected $description = 'Auto-close chats that have been inactive for a specified time (default 8 hours)';
 
     /**
      * Execute the console command.

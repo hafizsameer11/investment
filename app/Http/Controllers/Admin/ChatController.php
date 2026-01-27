@@ -119,6 +119,15 @@ class ChatController extends Controller
             ]);
         }
 
+        // Mark all user messages in this chat as read (since admin is replying)
+        ChatMessage::where('chat_id', $chat->id)
+            ->where('sender_type', 'user')
+            ->where('is_read', false)
+            ->update([
+                'is_read' => true,
+                'read_at' => now(),
+            ]);
+
         // Create message
         $chatMessage = ChatMessage::create([
             'chat_id' => $chat->id,
@@ -130,6 +139,9 @@ class ChatController extends Controller
 
         // Broadcast message
         event(new MessageSent($chatMessage));
+        
+        // Broadcast read status update for user messages
+        event(new \App\Events\MessagesRead($chat->id));
 
         // Send notification to user if authenticated
         if ($chat->user_id) {
@@ -145,6 +157,7 @@ class ChatController extends Controller
                 'sender_name' => $chatMessage->sender->name,
                 'message' => $chatMessage->message,
                 'is_read' => $chatMessage->is_read,
+                'read_at' => $chatMessage->read_at ? $chatMessage->read_at->toIso8601String() : null,
                 'created_at' => $chatMessage->created_at->toIso8601String(),
             ],
         ]);
@@ -205,14 +218,19 @@ class ChatController extends Controller
         $chat = Chat::with(['messages.sender', 'user', 'assignedAdmin'])
             ->findOrFail($id);
 
-        // Mark admin messages as read
-        ChatMessage::where('chat_id', $chat->id)
+        // Mark all user messages as read when admin views the chat
+        $updated = ChatMessage::where('chat_id', $chat->id)
             ->where('sender_type', 'user')
             ->where('is_read', false)
             ->update([
                 'is_read' => true,
                 'read_at' => now(),
             ]);
+            
+        // Broadcast read status if messages were updated
+        if ($updated > 0) {
+            event(new \App\Events\MessagesRead($chat->id));
+        }
 
         return response()->json([
             'success' => true,
@@ -229,9 +247,10 @@ class ChatController extends Controller
                     'id' => $message->id,
                     'sender_id' => $message->sender_id,
                     'sender_type' => $message->sender_type,
-                    'sender_name' => $message->sender->name ?? 'Guest',
+                    'sender_name' => $message->sender->name ?? ($message->sender_id ? 'Guest' : 'Guest'),
                     'message' => $message->message,
                     'is_read' => $message->is_read,
+                    'read_at' => $message->read_at ? $message->read_at->toIso8601String() : null,
                     'created_at' => $message->created_at->toIso8601String(),
                 ];
             }),

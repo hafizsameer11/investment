@@ -2,6 +2,7 @@
 <div class="chat-button-container" id="chatButtonContainer">
     <button class="chat-button" id="chatButton" aria-label="Start a chat">
         <i class="fas fa-comments"></i>
+        <span class="chat-notification-badge" id="chatNotificationBadge" style="display: none;"></span>
     </button>
 </div>
 
@@ -90,6 +91,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    position: relative;
 }
 
 .chat-button:hover {
@@ -99,6 +101,30 @@
 
 .chat-button:active {
     transform: scale(0.95);
+}
+
+.chat-notification-badge {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    width: 12px;
+    height: 12px;
+    background: #ef4444;
+    border-radius: 50%;
+    border: 2px solid white;
+    display: none;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.8;
+        transform: scale(1.1);
+    }
 }
 
 /* Chat Modal Styles */
@@ -345,7 +371,15 @@
 
 .chat-message-status {
     font-size: 0.75rem;
-    color: #666;
+    margin-left: 0.25rem;
+}
+
+.chat-message-status.unread {
+    color: #999;
+}
+
+.chat-message-status.read {
+    color: #4CAF50;
 }
 
 .live-chat-input-container {

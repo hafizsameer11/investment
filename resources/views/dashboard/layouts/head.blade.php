@@ -1,6 +1,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="csrf-token" content="{{ csrf_token() }}">
+@auth
+<meta name="user-id" content="{{ auth()->user()->id }}">
+@endauth
 <title>@yield('title', 'Core Mining ⛏️- AI Gold Mining ⛏️')</title>
 <!-- Favicon -->
 <link rel="icon" type="image/jpeg" href="{{ asset('assets/dashboard/images/meta/logo.jfif') }}">

@@ -15,8 +15,8 @@ class Kernel extends ConsoleKernel
         // Calculate mining profits every hour
         $schedule->command('mining:calculate-profits')->hourly();
         
-        // Auto-close inactive chats every hour (2.5 hours of inactivity)
-        $schedule->command('chats:auto-close --hours=2.5')->hourly();
+        // Auto-close inactive chats every hour (8 hours of inactivity)
+        $schedule->command('chats:auto-close --hours=8')->hourly();
     }
 
     /**

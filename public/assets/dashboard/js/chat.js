@@ -13,6 +13,7 @@
 
     // Chat Button and Modal
     const chatButton = document.getElementById('chatButton');
+    const chatNotificationBadge = document.getElementById('chatNotificationBadge');
     const startChatModal = document.getElementById('startChatModal');
     const closeStartChatModal = document.getElementById('closeStartChatModal');
     const startChatForm = document.getElementById('startChatForm');
@@ -61,6 +62,8 @@
                     liveChatWindow.style.display = 'flex';
                     loadChatMessages();
                     subscribeToChat();
+                    // Mark admin messages as read when opening chat
+                    markAdminMessagesAsRead();
                 } else {
                     // Open start chat form
                     if (startChatModal) {
@@ -145,6 +148,9 @@
                 
                 // Subscribe to chat channel
                 subscribeToChat();
+                
+                // Mark admin messages as read when opening chat
+                markAdminMessagesAsRead();
             };
 
             // Helper function to handle error
@@ -303,6 +309,7 @@
 
         const messageDiv = document.createElement('div');
         messageDiv.className = `chat-message ${message.sender_type}`;
+        messageDiv.setAttribute('data-message-id', message.id);
         
         const bubble = document.createElement('div');
         bubble.className = 'chat-message-bubble';
@@ -311,9 +318,22 @@
         const timeDiv = document.createElement('div');
         timeDiv.className = 'chat-message-time';
         const time = new Date(message.created_at);
+        
+        // Show single tick (unread) or double tick (read) for user messages
+        let statusIcon = '';
+        if (message.sender_type === 'user') {
+            if (message.is_read) {
+                // Double tick - message read by admin
+                statusIcon = '<span class="chat-message-status read"><i class="fas fa-check-double"></i></span>';
+            } else {
+                // Single tick - message sent but not read
+                statusIcon = '<span class="chat-message-status unread"><i class="fas fa-check"></i></span>';
+            }
+        }
+        
         timeDiv.innerHTML = `
             ${time.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}
-            ${message.sender_type === 'user' ? '<span class="chat-message-status"><i class="fas fa-check"></i></span>' : ''}
+            ${statusIcon}
         `;
         
         messageDiv.appendChild(bubble);
@@ -321,6 +341,32 @@
         chatMessages.appendChild(messageDiv);
         
         scrollToBottom();
+    }
+
+    function updateMessageReadStatus(messageId) {
+        if (!chatMessages) return;
+        
+        const messageDiv = chatMessages.querySelector(`[data-message-id="${messageId}"]`);
+        if (messageDiv) {
+            const statusSpan = messageDiv.querySelector('.chat-message-status');
+            if (statusSpan) {
+                statusSpan.className = 'chat-message-status read';
+                statusSpan.innerHTML = '<i class="fas fa-check-double"></i>';
+            }
+        }
+    }
+
+    function markAllUserMessagesAsRead() {
+        if (!chatMessages) return;
+        
+        const userMessages = chatMessages.querySelectorAll('.chat-message.user');
+        userMessages.forEach(messageDiv => {
+            const statusSpan = messageDiv.querySelector('.chat-message-status');
+            if (statusSpan && statusSpan.classList.contains('unread')) {
+                statusSpan.className = 'chat-message-status read';
+                statusSpan.innerHTML = '<i class="fas fa-check-double"></i>';
+            }
+        });
     }
 
     function scrollToBottom() {
@@ -337,14 +383,32 @@
                 addMessageToUI(e.message);
                 
                 // Update status if admin replied
-                if (e.message.sender_type === 'admin' && chatStatus) {
-                    chatStatus.textContent = 'Agent is typing...';
-                    setTimeout(() => {
-                        if (chatStatus) {
-                            chatStatus.textContent = 'Agent is online';
-                        }
-                    }, 2000);
+                if (e.message.sender_type === 'admin') {
+                    if (chatStatus) {
+                        chatStatus.textContent = 'Agent is typing...';
+                        setTimeout(() => {
+                            if (chatStatus) {
+                                chatStatus.textContent = 'Agent is online';
+                            }
+                        }, 2000);
+                    }
+                    
+                    // Mark all user messages as read when admin replies
+                    markAllUserMessagesAsRead();
+                    
+                    // Update badge - show if chat window is not open
+                    const isChatOpen = liveChatWindow && liveChatWindow.style.display !== 'none';
+                    if (!isChatOpen) {
+                        updateUnreadBadge();
+                    } else {
+                        // Mark admin messages as read if chat is open
+                        markAdminMessagesAsRead();
+                    }
                 }
+            })
+            .listen('.messages.read', (e) => {
+                // Mark all user messages as read
+                markAllUserMessagesAsRead();
             })
             .listen('.chat.assigned', (e) => {
                 if (chatStatus) {
@@ -361,6 +425,126 @@
                 loadChatMessages();
             }
         });
+    }
+
+    // Check for unread admin messages and update badge
+    function updateUnreadBadge() {
+        // Check if user is authenticated
+        const csrfToken = document.querySelector('meta[name="csrf-token"]');
+        const isAuthenticated = csrfToken && window.location.pathname.includes('/user/dashboard');
+        
+        let url = '/chat/unread-count';
+        
+        // For guest users, try to get email from form if it exists
+        if (!isAuthenticated) {
+            const emailInput = document.getElementById('chatEmail');
+            if (emailInput && emailInput.value) {
+                url += '?email=' + encodeURIComponent(emailInput.value);
+            }
+        }
+        
+        fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                if (data.success && chatNotificationBadge) {
+                    // Only show badge if chat window is not open
+                    const isChatOpen = liveChatWindow && liveChatWindow.style.display !== 'none';
+                    
+                    if (data.unread_count > 0 && !isChatOpen) {
+                        chatNotificationBadge.style.display = 'block';
+                    } else {
+                        chatNotificationBadge.style.display = 'none';
+                    }
+                }
+            })
+            .catch(error => {
+                console.error('Error checking unread count:', error);
+            });
+    }
+
+    // Mark admin messages as read when chat is opened
+    function markAdminMessagesAsRead() {
+        if (!currentChatId) return;
+
+        fetch(`/chat/${currentChatId}/mark-read`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                updateUnreadBadge();
+            }
+        })
+        .catch(error => {
+            console.error('Error marking messages as read:', error);
+        });
+    }
+
+    // Update badge when chat window opens/closes
+    if (liveChatWindow) {
+        const observer = new MutationObserver(function(mutations) {
+            mutations.forEach(function(mutation) {
+                if (mutation.type === 'attributes' && mutation.attributeName === 'style') {
+                    const isOpen = liveChatWindow.style.display !== 'none';
+                    if (isOpen && currentChatId) {
+                        // Mark admin messages as read when chat is opened
+                        markAdminMessagesAsRead();
+                    } else if (!isOpen) {
+                        // Update badge when chat is closed
+                        updateUnreadBadge();
+                    }
+                }
+            });
+        });
+        
+        observer.observe(liveChatWindow, {
+            attributes: true,
+            attributeFilter: ['style']
+        });
+    }
+
+    // Subscribe to user-specific channel for badge updates (even when chat is closed)
+    function subscribeToUserChannel() {
+        if (!echo) return;
+        
+        // Get user ID from meta tag (only for authenticated users)
+        const userIdMeta = document.querySelector('meta[name="user-id"]');
+        if (!userIdMeta) return; // Guest users will rely on polling
+        
+        const userId = userIdMeta.getAttribute('content');
+        if (!userId) return;
+        
+        // Subscribe to user-specific channel
+        echo.private(`user.${userId}.chats`)
+            .listen('.message.sent', (e) => {
+                // Only handle admin messages
+                if (e.message && e.message.sender_type === 'admin') {
+                    // Update badge if chat window is not open
+                    const isChatOpen = liveChatWindow && liveChatWindow.style.display !== 'none';
+                    if (!isChatOpen && chatNotificationBadge) {
+                        // Show badge immediately
+                        chatNotificationBadge.style.display = 'block';
+                        // Also update count
+                        updateUnreadBadge();
+                    }
+                }
+            });
+    }
+
+    // Initialize user channel subscription on page load
+    subscribeToUserChannel();
+
+    // Update badge periodically and on page load
+    if (chatNotificationBadge) {
+        // Check immediately on load
+        updateUnreadBadge();
+        
+        // Check every 30 seconds
+        setInterval(updateUnreadBadge, 30000);
     }
 })();
 
