@@ -14,8 +14,11 @@ class Withdrawal extends Model
         'deposit_payment_method_id',
         'crypto_wallet_id',
         'amount',
+        'deducted_from_mining',
+        'deducted_from_referral',
         'account_holder_name',
         'account_number',
+        'bank_name',
         'user_wallet_address',
         'crypto_network',
         'status',
@@ -27,6 +30,8 @@ class Withdrawal extends Model
 
     protected $casts = [
         'amount' => 'decimal:2',
+        'deducted_from_mining' => 'decimal:2',
+        'deducted_from_referral' => 'decimal:2',
         'approved_at' => 'datetime',
     ];
 

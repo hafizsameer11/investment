@@ -80,7 +80,16 @@
                                         </tr>
                                         <tr>
                                             <th>Amount (USD):</th>
-                                            <td><strong class="text-primary">${{ number_format($withdrawal->amount, 2) }}</strong></td>
+                                            <td>
+                                                <strong class="text-primary">${{ number_format($withdrawal->amount, 2) }}</strong>
+                                                @if($conversionRate > 0 && $pkrAmount > 0)
+                                                    <br>
+                                                    <small class="text-muted">
+                                                        <strong class="text-success">Rs {{ number_format($pkrAmount, 2) }}</strong>
+                                                        <span class="text-muted">(Rate: 1 USD = Rs {{ number_format($conversionRate, 2) }})</span>
+                                                    </small>
+                                                @endif
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -96,6 +105,12 @@
                                             <th>Account Number:</th>
                                             <td><code>{{ $withdrawal->account_number }}</code></td>
                                         </tr>
+                                        @if($withdrawal->bank_name)
+                                        <tr>
+                                            <th>Bank Name:</th>
+                                            <td><strong>{{ $withdrawal->bank_name }}</strong></td>
+                                        </tr>
+                                        @endif
                                         <tr>
                                             <th>Submitted:</th>
                                             <td>

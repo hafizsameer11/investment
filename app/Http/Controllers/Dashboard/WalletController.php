@@ -316,7 +316,13 @@ class WalletController extends Controller
         }
         $conversionRate = $currencyConversion ? (float) $currencyConversion->rate : 0;
         
-        return view('dashboard.pages.withdraw', compact('paymentMethods', 'withdrawals', 'conversionRate'));
+        // Get active crypto wallets for withdrawals (to show minimum withdrawal amounts)
+        $cryptoWallets = CryptoWallet::where('is_active', true)
+            ->where('allowed_for_withdrawal', true)
+            ->orderBy('network', 'asc')
+            ->get();
+        
+        return view('dashboard.pages.withdraw', compact('paymentMethods', 'withdrawals', 'conversionRate', 'cryptoWallets'));
     }
 
     /**
@@ -392,6 +398,8 @@ class WalletController extends Controller
         }
 
         // Check user balance
+        // User selects amount, $1 fee is deducted automatically
+        // If user selects $5, they need $5 balance, fee is deducted, they receive $4
         $user = auth()->user();
         $totalAvailableBalance = ($user->mining_earning ?? 0) + ($user->referral_earning ?? 0);
         if ($totalAvailableBalance < $amount) {
@@ -430,21 +438,37 @@ class WalletController extends Controller
         }
 
         // Validate amount against limits
-        if ($cryptoWallet->minimum_withdrawal && $amount < $cryptoWallet->minimum_withdrawal) {
+        // User selects amount, $1 fee is deducted automatically
+        // If user selects $5, fee is deducted, they receive $4
+        // We validate that the amount after fee meets minimum/maximum requirements
+        $cryptoFee = 1.00;
+        $amountAfterFee = $amount - $cryptoFee;
+        
+        // Ensure user selects at least $1.01 (so they receive at least $0.01 after fee)
+        if ($amount < 1.01) {
             return redirect()->route('withdraw.crypto.network', [
                 'method_id' => $paymentMethodId,
                 'amount' => $amount
-            ])->with('error', 'Amount must be at least $' . number_format($cryptoWallet->minimum_withdrawal, 2));
+            ])->with('error', 'Amount must be at least $1.01. After $1.00 fee, you will receive $0.01.');
         }
-
-        if ($cryptoWallet->maximum_withdrawal && $amount > $cryptoWallet->maximum_withdrawal) {
+        
+        // Validate minimum withdrawal (check amount after fee)
+        if ($cryptoWallet->minimum_withdrawal && $amountAfterFee < $cryptoWallet->minimum_withdrawal) {
             return redirect()->route('withdraw.crypto.network', [
                 'method_id' => $paymentMethodId,
                 'amount' => $amount
-            ])->with('error', 'Amount cannot exceed $' . number_format($cryptoWallet->maximum_withdrawal, 2));
+            ])->with('error', 'Amount must be at least $' . number_format($cryptoWallet->minimum_withdrawal + $cryptoFee, 2) . '. After $' . number_format($cryptoFee, 2) . ' fee, you will receive $' . number_format($cryptoWallet->minimum_withdrawal, 2) . '.');
         }
 
-        // Check user balance
+        // Validate maximum withdrawal (check amount after fee)
+        if ($cryptoWallet->maximum_withdrawal && $amountAfterFee > $cryptoWallet->maximum_withdrawal) {
+            return redirect()->route('withdraw.crypto.network', [
+                'method_id' => $paymentMethodId,
+                'amount' => $amount
+            ])->with('error', 'Amount cannot exceed $' . number_format($cryptoWallet->maximum_withdrawal + $cryptoFee, 2) . '. After $' . number_format($cryptoFee, 2) . ' fee, you will receive $' . number_format($cryptoWallet->maximum_withdrawal, 2) . '.');
+        }
+
+        // Check user balance (user needs to have the full selected amount)
         $user = auth()->user();
         $totalAvailableBalance = ($user->mining_earning ?? 0) + ($user->referral_earning ?? 0);
         if ($totalAvailableBalance < $amount) {
@@ -479,15 +503,29 @@ class WalletController extends Controller
                 'user_wallet_address.required' => 'Please enter your wallet address for receiving the withdrawal.',
             ]);
         } else {
-        $request->validate([
-            'payment_method_id' => 'required|exists:deposit_payment_methods,id',
-            'amount' => 'required|numeric|min:0.01',
-            'account_number' => 'required|string|max:255',
-            'account_holder_name' => 'required|string|max:255',
-        ], [
-            'account_number.required' => 'Account number is required.',
-            'account_holder_name.required' => 'Account holder name is required.',
-        ]);
+            // For non-crypto withdrawals, bank_name is only required for bank type
+            $isBank = $paymentMethod->type === 'bank';
+            $validationRules = [
+                'payment_method_id' => 'required|exists:deposit_payment_methods,id',
+                'amount' => 'required|numeric|min:0.01',
+                'account_number' => 'required|string|max:255',
+                'account_holder_name' => 'required|string|max:255',
+            ];
+            
+            $validationMessages = [
+                'account_number.required' => 'Account number is required.',
+                'account_holder_name.required' => 'Account holder name is required.',
+            ];
+            
+            // Bank name is only required for bank type, optional for rast type
+            if ($isBank) {
+                $validationRules['bank_name'] = 'required|string|max:255';
+                $validationMessages['bank_name.required'] = 'Bank name is required.';
+            } else {
+                $validationRules['bank_name'] = 'nullable|string|max:255';
+            }
+            
+            $request->validate($validationRules, $validationMessages);
         }
 
         try {
@@ -515,20 +553,35 @@ class WalletController extends Controller
                     ], 422);
                 }
 
-                // Validate amount against crypto wallet limits
-                if ($cryptoWallet->minimum_withdrawal && $request->amount < $cryptoWallet->minimum_withdrawal) {
+                // For crypto withdrawals, $1 fee is deducted automatically from selected amount
+                // User selects $5, fee is deducted, they receive $4, we deduct $5 from balance
+                $cryptoFee = 1.00;
+                $amountAfterFee = $request->amount - $cryptoFee;
+                
+                // Ensure user selects at least $1.01 (so they receive at least $0.01 after fee)
+                if ($request->amount < 1.01) {
                     DB::rollBack();
                     return response()->json([
                         'success' => false,
-                        'message' => 'Amount must be at least $' . number_format($cryptoWallet->minimum_withdrawal, 2),
+                        'message' => 'Amount must be at least $1.01. After $1.00 fee, you will receive $0.01.',
+                    ], 422);
+                }
+                
+                // Validate minimum withdrawal (check amount after fee)
+                if ($cryptoWallet->minimum_withdrawal && $amountAfterFee < $cryptoWallet->minimum_withdrawal) {
+                    DB::rollBack();
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'Amount must be at least $' . number_format($cryptoWallet->minimum_withdrawal + $cryptoFee, 2) . '. After $' . number_format($cryptoFee, 2) . ' fee, you will receive $' . number_format($cryptoWallet->minimum_withdrawal, 2) . '.',
                     ], 422);
                 }
 
-                if ($cryptoWallet->maximum_withdrawal && $request->amount > $cryptoWallet->maximum_withdrawal) {
+                // Validate maximum withdrawal (check amount after fee)
+                if ($cryptoWallet->maximum_withdrawal && $amountAfterFee > $cryptoWallet->maximum_withdrawal) {
                     DB::rollBack();
                     return response()->json([
                         'success' => false,
-                        'message' => 'Amount cannot exceed $' . number_format($cryptoWallet->maximum_withdrawal, 2),
+                        'message' => 'Amount cannot exceed $' . number_format($cryptoWallet->maximum_withdrawal + $cryptoFee, 2) . '. After $' . number_format($cryptoFee, 2) . ' fee, you will receive $' . number_format($cryptoWallet->maximum_withdrawal, 2) . '.',
                     ], 422);
                 }
             } else {
@@ -552,8 +605,13 @@ class WalletController extends Controller
             // Note: Withdrawals can only use mining_earning + referral_earning (NOT fund_wallet)
             $totalAvailableBalance = ($user->mining_earning ?? 0) + ($user->referral_earning ?? 0);
             
+            // For crypto withdrawals: User selects amount, $1 fee is deducted automatically
+            // User selects $5, we deduct $5 from balance, fee is deducted, they receive $4
+            // For non-crypto: Deduct just the requested amount
+            $amountToDeduct = $request->amount;
+            
             // Check user has sufficient balance
-            if ($totalAvailableBalance < $request->amount) {
+            if ($totalAvailableBalance < $amountToDeduct) {
                 return response()->json([
                     'success' => false,
                     'message' => 'Insufficient balance. Your available withdrawal balance is $' . number_format($totalAvailableBalance, 2) . '. You can only withdraw from mining and referral earnings.',
@@ -562,7 +620,9 @@ class WalletController extends Controller
 
             // Deduct amount from wallets (only from mining_earning and referral_earning)
             // Deduct proportionally from mining_earning and referral_earning
-            $remainingAmount = $request->amount;
+            $remainingAmount = $amountToDeduct;
+            $deductFromMining = 0;
+            $deductFromReferral = 0;
             
             if ($user->mining_earning > 0 && $remainingAmount > 0) {
                 $deductFromMining = min($user->mining_earning, $remainingAmount);
@@ -578,12 +638,30 @@ class WalletController extends Controller
 
             // Update net balance (mining + referral only, excludes fund_wallet)
             $user->updateNetBalance();
+            
+            // Save user changes
+            $user->save();
 
             // Create withdrawal record
+            // For crypto: store actual amount (after $1 fee deduction)
+            // For non-crypto: store requested amount
+            $withdrawalAmount = $isCrypto ? ($request->amount - 1.00) : $request->amount;
+            
+            // Validate withdrawal amount is positive
+            if ($withdrawalAmount <= 0) {
+                DB::rollBack();
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Invalid withdrawal amount. Please try again.',
+                ], 422);
+            }
+            
             $withdrawalData = [
                 'user_id' => $user->id,
                 'deposit_payment_method_id' => $request->payment_method_id,
-                'amount' => $request->amount,
+                'amount' => $withdrawalAmount,
+                'deducted_from_mining' => $deductFromMining,
+                'deducted_from_referral' => $deductFromReferral,
                 'status' => 'pending',
             ];
 
@@ -591,27 +669,49 @@ class WalletController extends Controller
                 $withdrawalData['crypto_wallet_id'] = $request->crypto_wallet_id;
                 $withdrawalData['user_wallet_address'] = $request->user_wallet_address;
                 $withdrawalData['crypto_network'] = $cryptoWallet->network;
+                // Set account fields to null for crypto withdrawals
+                $withdrawalData['account_holder_name'] = null;
+                $withdrawalData['account_number'] = null;
+                $withdrawalData['bank_name'] = null;
             } else {
                 $withdrawalData['account_holder_name'] = $request->account_holder_name;
                 $withdrawalData['account_number'] = $request->account_number;
+                // Bank name is only required for bank type, optional for rast type
+                $withdrawalData['bank_name'] = $request->bank_name ?? null;
+                // Set crypto fields to null for non-crypto withdrawals
+                $withdrawalData['crypto_wallet_id'] = null;
+                $withdrawalData['user_wallet_address'] = null;
+                $withdrawalData['crypto_network'] = null;
             }
 
             $withdrawal = Withdrawal::create($withdrawalData);
 
             DB::commit();
 
+            $successMessage = 'Your withdrawal request has been submitted. After admin approval, the money will be transferred to your account.';
+            if ($isCrypto) {
+                $successMessage = 'Your withdrawal request for $' . number_format($withdrawalAmount, 2) . ' has been submitted (including $1.00 fee). After admin approval, the money will be transferred to your account.';
+            }
+            
             return response()->json([
                 'success' => true,
-                'message' => 'Your withdrawal request has been submitted. After admin approval, the money will be transferred to your account.',
+                'message' => $successMessage,
                 'redirect' => route('withdraw.index'),
             ], 200);
 
         } catch (\Exception $e) {
             DB::rollBack();
             
+            // Log the actual error for debugging
+            \Log::error('Withdrawal Error: ' . $e->getMessage(), [
+                'trace' => $e->getTraceAsString(),
+                'request' => $request->all()
+            ]);
+            
             return response()->json([
                 'success' => false,
                 'message' => 'An error occurred while submitting your withdrawal. Please try again.',
+                'error' => config('app.debug') ? $e->getMessage() : null,
             ], 500);
         }
     }

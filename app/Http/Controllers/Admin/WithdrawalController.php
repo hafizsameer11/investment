@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Withdrawal;
 use App\Models\Transaction;
+use App\Models\CurrencyConversion;
 use App\Services\NotificationService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -28,7 +29,14 @@ class WithdrawalController extends Controller
 
         $withdrawals = $query->get();
 
-        return view('admin.pages.withdrawal.index', compact('withdrawals'));
+        // Get active currency conversion rate (fallback to any rate if no active one)
+        $currencyConversion = CurrencyConversion::where('is_active', true)->first();
+        if (!$currencyConversion) {
+            $currencyConversion = CurrencyConversion::first();
+        }
+        $conversionRate = $currencyConversion ? (float) $currencyConversion->rate : 0;
+
+        return view('admin.pages.withdrawal.index', compact('withdrawals', 'conversionRate'));
     }
 
     /**
@@ -39,7 +47,15 @@ class WithdrawalController extends Controller
         $withdrawal = Withdrawal::with(['user', 'paymentMethod', 'approver'])
             ->findOrFail($id);
 
-        return view('admin.pages.withdrawal.show', compact('withdrawal'));
+        // Get active currency conversion rate (fallback to any rate if no active one)
+        $currencyConversion = CurrencyConversion::where('is_active', true)->first();
+        if (!$currencyConversion) {
+            $currencyConversion = CurrencyConversion::first();
+        }
+        $conversionRate = $currencyConversion ? (float) $currencyConversion->rate : 0;
+        $pkrAmount = $conversionRate > 0 ? ($withdrawal->amount * $conversionRate) : 0;
+
+        return view('admin.pages.withdrawal.show', compact('withdrawal', 'conversionRate', 'pkrAmount'));
     }
 
     /**
@@ -153,10 +169,42 @@ class WithdrawalController extends Controller
                     ->with('error', 'This withdrawal has already been processed.');
             }
 
-            // Refund the amount back to user's net_balance
-            // We'll add it back to fund_wallet
+            // Refund the amount back to earning wallets (mining_earning + referral_earning)
+            // Use tracked breakdown if available, otherwise refund proportionally
             $user = $withdrawal->user;
-            $user->fund_wallet += $withdrawal->amount;
+            
+            if ($withdrawal->deducted_from_mining !== null && $withdrawal->deducted_from_referral !== null) {
+                // Use tracked breakdown for accurate refund
+                $user->mining_earning += $withdrawal->deducted_from_mining;
+                $user->referral_earning += $withdrawal->deducted_from_referral;
+            } else {
+                // Fallback for old withdrawals without tracking data
+                // Refund proportionally based on current earning balances
+                $totalEarning = ($user->mining_earning ?? 0) + ($user->referral_earning ?? 0);
+                
+                if ($totalEarning > 0) {
+                    // Refund proportionally
+                    $miningRatio = ($user->mining_earning ?? 0) / $totalEarning;
+                    $referralRatio = ($user->referral_earning ?? 0) / $totalEarning;
+                    
+                    $refundToMining = $withdrawal->amount * $miningRatio;
+                    $refundToReferral = $withdrawal->amount * $referralRatio;
+                    
+                    // Adjust for rounding
+                    $totalRefunded = $refundToMining + $refundToReferral;
+                    if (abs($totalRefunded - $withdrawal->amount) > 0.01) {
+                        $difference = $withdrawal->amount - $totalRefunded;
+                        $refundToMining += $difference;
+                    }
+                    
+                    $user->mining_earning += $refundToMining;
+                    $user->referral_earning += $refundToReferral;
+                } else {
+                    // If no earning balance exists, refund all to mining_earning
+                    $user->mining_earning += $withdrawal->amount;
+                }
+            }
+            
             $user->updateNetBalance();
 
             // Update withdrawal status

@@ -272,6 +272,12 @@
 
 @section('content')
 <div class="crypto-network-page">
+    @if(session('error'))
+    <div style="background: rgba(255, 68, 68, 0.1); border: 2px solid rgba(255, 68, 68, 0.3); border-radius: 12px; padding: 1rem 1.25rem; margin-bottom: 1.5rem; color: var(--danger-color);">
+        <i class="fas fa-exclamation-circle"></i> {{ session('error') }}
+    </div>
+    @endif
+
     <div class="crypto-network-header">
         <h1 class="crypto-network-title">Select Crypto Network</h1>
         <p class="crypto-network-subtitle">Choose a network to withdraw crypto</p>
@@ -320,34 +326,91 @@
 
 @push('scripts')
 <script>
-    let selectedWalletId = null;
+    document.addEventListener('DOMContentLoaded', function() {
+        'use strict';
+        
+        let selectedWalletId = null;
+        const continueBtn = document.getElementById('continueBtn');
+        const paymentMethodIdEl = document.getElementById('paymentMethodId');
+        const amountEl = document.getElementById('amount');
 
-    document.querySelectorAll('.crypto-network-option').forEach(option => {
-        option.addEventListener('click', function() {
-            // Remove active class from all options
-            document.querySelectorAll('.crypto-network-option').forEach(opt => opt.classList.remove('active'));
-            
-            // Add active class to selected option
-            this.classList.add('active');
-            
-            // Store selected wallet ID
-            selectedWalletId = this.dataset.walletId;
-            
-            // Enable continue button
-            document.getElementById('continueBtn').disabled = false;
-        });
-    });
-
-    document.getElementById('continueBtn').addEventListener('click', function() {
-        if (!selectedWalletId) {
-            alert('Please select a crypto network');
+        if (!continueBtn || !paymentMethodIdEl || !amountEl) {
+            console.error('Required elements not found');
             return;
         }
 
-        const paymentMethodId = document.getElementById('paymentMethodId').value;
-        const amount = document.getElementById('amount').value;
+        // Network selection handlers
+        const networkOptions = document.querySelectorAll('.crypto-network-option');
+        if (networkOptions.length === 0) {
+            console.error('No network options found');
+            return;
+        }
 
-        window.location.href = `{{ route('withdraw.crypto.confirm') }}?method_id=${paymentMethodId}&amount=${amount}&crypto_wallet_id=${selectedWalletId}`;
+        networkOptions.forEach(option => {
+            option.addEventListener('click', function() {
+                // Remove active class from all options
+                networkOptions.forEach(opt => opt.classList.remove('active'));
+                
+                // Add active class to selected option
+                this.classList.add('active');
+                
+                // Store selected wallet ID
+                selectedWalletId = this.dataset.walletId;
+                
+                if (!selectedWalletId) {
+                    console.error('Wallet ID not found in dataset');
+                    return;
+                }
+                
+                // Enable continue button
+                continueBtn.disabled = false;
+                console.log('Network selected:', selectedWalletId);
+            });
+        });
+
+        // Continue button handler
+        continueBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            console.log('Continue button clicked');
+            console.log('Selected wallet ID:', selectedWalletId);
+            
+            if (!selectedWalletId) {
+                alert('Please select a crypto network');
+                return false;
+            }
+
+            const paymentMethodId = paymentMethodIdEl.value;
+            const amount = amountEl.value;
+
+            console.log('Payment Method ID:', paymentMethodId);
+            console.log('Amount:', amount);
+
+            if (!paymentMethodId || !amount) {
+                alert('Missing payment method or amount. Please go back and try again.');
+                return false;
+            }
+
+            // Disable button to prevent double clicks
+            continueBtn.disabled = true;
+            const originalText = continueBtn.textContent;
+            continueBtn.textContent = 'Loading...';
+
+            // Build URL
+            const baseUrl = '{{ route("withdraw.crypto.confirm") }}';
+            const url = `${baseUrl}?method_id=${encodeURIComponent(paymentMethodId)}&amount=${encodeURIComponent(amount)}&crypto_wallet_id=${encodeURIComponent(selectedWalletId)}`;
+            
+            console.log('Navigating to:', url);
+            
+            // Small delay to ensure button state is updated
+            setTimeout(function() {
+                // Navigate to next page
+                window.location.href = url;
+            }, 100);
+            
+            return false;
+        });
     });
 </script>
 @endpush

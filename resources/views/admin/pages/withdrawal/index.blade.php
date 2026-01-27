@@ -84,7 +84,7 @@
                                         <th>#</th>
                                         <th data-priority="1">User</th>
                                         <th data-priority="2">Payment Method</th>
-                                        <th data-priority="3">Amount (USD)</th>
+                                        <th data-priority="3">Amount</th>
                                         <th data-priority="4">Account Details</th>
                                         <th data-priority="2">Status</th>
                                         <th data-priority="1">Date</th>
@@ -100,10 +100,22 @@
                                             <small class="text-muted">{{ $withdrawal->user->email ?? 'N/A' }}</small>
                                         </td>
                                         <td>{{ $withdrawal->paymentMethod->account_type ?? 'N/A' }}</td>
-                                        <td>${{ number_format($withdrawal->amount, 2) }}</td>
+                                        <td>
+                                            <strong class="text-primary">${{ number_format($withdrawal->amount, 2) }}</strong>
+                                            @if($conversionRate > 0)
+                                                @php
+                                                    $pkrAmount = $withdrawal->amount * $conversionRate;
+                                                @endphp
+                                                <br>
+                                                <small class="text-success">Rs {{ number_format($pkrAmount, 2) }}</small>
+                                            @endif
+                                        </td>
                                         <td>
                                             <strong>{{ $withdrawal->account_holder_name }}</strong><br>
                                             <small class="text-muted">{{ $withdrawal->account_number }}</small>
+                                            @if($withdrawal->bank_name)
+                                            <br><small class="text-info"><i class="mdi mdi-bank"></i> {{ $withdrawal->bank_name }}</small>
+                                            @endif
                                         </td>
                                         <td>
                                             @if($withdrawal->status === 'pending')

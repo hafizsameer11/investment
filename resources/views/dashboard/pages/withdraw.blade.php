@@ -1489,6 +1489,10 @@
 <script>
     let selectedPaymentMethod = null;
     const conversionRate = parseFloat({{ $conversionRate ?? 0 }}) || 0;
+    
+    // Crypto wallets data for minimum withdrawal calculation
+    const cryptoWallets = @json($cryptoWallets ?? []);
+    const cryptoFee = 1.00;
 
     // Function to update PKR amount display
     function updateWithdrawPKRAmount() {
@@ -1533,12 +1537,43 @@
             this.classList.add('active');
 
             // Store selected payment method data
+            let minWithdrawal = parseFloat(this.dataset.minWithdrawal) || 0;
+            let maxWithdrawal = parseFloat(this.dataset.maxWithdrawal) || null;
+            const methodType = this.dataset.methodType || 'rast';
+            
+            // For crypto payment methods, calculate minimum from crypto wallets (accounting for fee)
+            if (methodType === 'crypto' && cryptoWallets.length > 0) {
+                const cryptoMinWithdrawals = cryptoWallets
+                    .filter(w => w.minimum_withdrawal)
+                    .map(w => parseFloat(w.minimum_withdrawal));
+                
+                if (cryptoMinWithdrawals.length > 0) {
+                    const minCryptoWithdrawal = Math.min(...cryptoMinWithdrawals);
+                    // User needs to select minimum + fee to receive the minimum
+                    minWithdrawal = minCryptoWithdrawal + cryptoFee;
+                } else {
+                    // No minimum set, but still need to account for fee
+                    minWithdrawal = cryptoFee + 0.01; // At least $1.01 to receive $0.01
+                }
+                
+                // For maximum, also account for fee if set
+                if (cryptoWallets.some(w => w.maximum_withdrawal)) {
+                    const cryptoMaxWithdrawals = cryptoWallets
+                        .filter(w => w.maximum_withdrawal)
+                        .map(w => parseFloat(w.maximum_withdrawal));
+                    if (cryptoMaxWithdrawals.length > 0) {
+                        const maxCryptoWithdrawal = Math.max(...cryptoMaxWithdrawals);
+                        maxWithdrawal = maxCryptoWithdrawal + cryptoFee;
+                    }
+                }
+            }
+            
             selectedPaymentMethod = {
                 id: this.dataset.methodId,
                 name: this.dataset.methodName,
-                type: this.dataset.methodType || 'rast',
-                minWithdrawal: parseFloat(this.dataset.minWithdrawal) || 0,
-                maxWithdrawal: parseFloat(this.dataset.maxWithdrawal) || null
+                type: methodType,
+                minWithdrawal: minWithdrawal,
+                maxWithdrawal: maxWithdrawal
             };
 
             // Show withdraw amount section with animation
@@ -1573,10 +1608,36 @@
             // Update minimum withdrawal instruction text
             const minAmountText = document.getElementById('withdraw-min-amount-text');
             if (minAmountText && selectedPaymentMethod) {
-                const formattedMinWithdrawal = selectedPaymentMethod.minWithdrawal > 0 
-                    ? selectedPaymentMethod.minWithdrawal.toFixed(2) 
-                    : '0.00';
-                minAmountText.textContent = `Minimum withdrawal for ${selectedPaymentMethod.name} is $${formattedMinWithdrawal}`;
+                let minWithdrawal = selectedPaymentMethod.minWithdrawal || 0;
+                let instructionText = '';
+                
+                // For crypto payment methods, use crypto wallet minimum (accounting for fee)
+                if (selectedPaymentMethod.type === 'crypto' && cryptoWallets.length > 0) {
+                    // Get the minimum withdrawal from all active crypto wallets
+                    // User needs to select: crypto_wallet_minimum + $1 fee
+                    const cryptoMinWithdrawals = cryptoWallets
+                        .filter(w => w.minimum_withdrawal)
+                        .map(w => parseFloat(w.minimum_withdrawal));
+                    
+                    if (cryptoMinWithdrawals.length > 0) {
+                        const minCryptoWithdrawal = Math.min(...cryptoMinWithdrawals);
+                        // User needs to select minimum + fee to receive the minimum
+                        minWithdrawal = minCryptoWithdrawal + cryptoFee;
+                        instructionText = `Minimum withdrawal for ${selectedPaymentMethod.name} is $${minWithdrawal.toFixed(2)} (including $${cryptoFee.toFixed(2)} fee). You will receive $${minCryptoWithdrawal.toFixed(2)}.`;
+                    } else {
+                        // No minimum set, but still need to account for fee
+                        minWithdrawal = cryptoFee + 0.01; // At least $1.01 to receive $0.01
+                        instructionText = `Minimum withdrawal for ${selectedPaymentMethod.name} is $${minWithdrawal.toFixed(2)} (including $${cryptoFee.toFixed(2)} fee).`;
+                    }
+                } else {
+                    // For non-crypto payment methods
+                    const formattedMinWithdrawal = minWithdrawal > 0 
+                        ? minWithdrawal.toFixed(2) 
+                        : '0.00';
+                    instructionText = `Minimum withdrawal for ${selectedPaymentMethod.name} is $${formattedMinWithdrawal}`;
+                }
+                
+                minAmountText.textContent = instructionText;
             }
 
             // Update input min/max attributes and clear previous selections

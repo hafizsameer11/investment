@@ -10,7 +10,8 @@
     let currentStep = 1;
     let formData = {
         accountHolderName: '',
-        accountNumber: ''
+        accountNumber: '',
+        bankName: ''
     };
 
     // DOM Elements
@@ -19,21 +20,42 @@
     const stepLines = document.querySelectorAll('.deposit-step-line');
     const accountHolderNameInput = document.getElementById('withdrawAccountHolderName');
     const accountNumberInput = document.getElementById('withdrawAccountNumber');
+    const bankNameInput = document.getElementById('withdrawBankName');
+    const bankNameField = document.getElementById('bankNameField');
     const continueStep2Btn = document.getElementById('continueToStep2');
     const submitWithdrawalBtn = document.getElementById('submitWithdrawal');
     const paymentDetailsSection = document.getElementById('withdrawPaymentDetails');
     const displayAccountName = document.getElementById('displayAccountName');
     const displayAccountNumber = document.getElementById('displayAccountNumber');
+    const displayBankName = document.getElementById('displayBankName');
+    const displayBankNameRow = document.getElementById('displayBankNameRow');
     
     const paymentMethodId = document.getElementById('withdrawPaymentMethodId')?.value;
+    const paymentMethodType = document.getElementById('withdrawPaymentMethodType')?.value;
     const amount = document.getElementById('withdrawAmount')?.value;
     const storeUrl = document.getElementById('withdrawStoreUrl')?.value;
     const indexUrl = document.getElementById('withdrawIndexUrl')?.value;
+    
+    // Check if bank name is required (only for bank type)
+    const isBankNameRequired = paymentMethodType === 'bank' && bankNameField !== null;
 
     // Initialize
     document.addEventListener('DOMContentLoaded', function() {
+        // Read initial form values if they exist (pre-filled)
+        if (accountHolderNameInput) {
+            formData.accountHolderName = accountHolderNameInput.value.trim();
+        }
+        if (accountNumberInput) {
+            formData.accountNumber = accountNumberInput.value.trim();
+        }
+        if (bankNameInput && isBankNameRequired) {
+            formData.bankName = bankNameInput.value.trim();
+        }
+        
         initStepNavigation();
         initFormValidation();
+        // Run initial validation to set button state
+        validateStep1();
     });
 
     /**
@@ -72,13 +94,25 @@
                 validateStep1();
             });
         }
+
+        if (bankNameInput && isBankNameRequired) {
+            bankNameInput.addEventListener('input', function() {
+                formData.bankName = this.value.trim();
+                validateStep1();
+            });
+        }
     }
 
     /**
      * Validate Step 1 (Account Details)
      */
     function validateStep1() {
-        const isValid = formData.accountHolderName.length > 0 && formData.accountNumber.length > 0;
+        let isValid = formData.accountHolderName.length > 0 && formData.accountNumber.length > 0;
+        
+        // Bank name is only required for bank type payment methods
+        if (isBankNameRequired) {
+            isValid = isValid && formData.bankName.length > 0;
+        }
         
         if (continueStep2Btn) {
             continueStep2Btn.disabled = !isValid;
@@ -136,6 +170,13 @@
                 if (displayAccountNumber && formData.accountNumber) {
                     displayAccountNumber.textContent = formData.accountNumber;
                 }
+                if (displayBankName && formData.bankName) {
+                    displayBankName.textContent = formData.bankName;
+                }
+                // Show/hide bank name row based on whether it's required
+                if (displayBankNameRow) {
+                    displayBankNameRow.style.display = isBankNameRequired && formData.bankName ? 'flex' : 'none';
+                }
             } else {
                 // Hide payment details on step 1
                 paymentDetailsSection.style.display = 'none';
@@ -153,7 +194,13 @@
         }
 
         if (!formData.accountHolderName || !formData.accountNumber) {
-            showNotification('Please fill in all account details.', 'error');
+            showNotification('Please fill in all required account details.', 'error');
+            return;
+        }
+        
+        // Bank name is only required for bank type
+        if (isBankNameRequired && !formData.bankName) {
+            showNotification('Please fill in all required account details.', 'error');
             return;
         }
 
@@ -169,6 +216,12 @@
         formDataToSend.append('amount', amount);
         formDataToSend.append('account_holder_name', formData.accountHolderName);
         formDataToSend.append('account_number', formData.accountNumber);
+        // Only include bank_name if it's required (bank type)
+        if (isBankNameRequired) {
+            formDataToSend.append('bank_name', formData.bankName || '');
+        } else {
+            formDataToSend.append('bank_name', '');
+        }
         formDataToSend.append('_token', document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '');
 
         // Submit via AJAX
