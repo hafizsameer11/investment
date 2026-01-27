@@ -308,17 +308,107 @@ Route::get('/run-seeders', function () {
 })->name('run.seeders');
 
 Route::get('/optimize-app', function () {
-    Artisan::call('optimize:clear');
-    Artisan::call('cache:clear');
-    Artisan::call('config:clear');
-    Artisan::call('route:clear');
-    Artisan::call('view:clear');
-    Artisan::call('config:cache');
-    Artisan::call('route:cache');
-    Artisan::call('view:cache');
-    Artisan::call('optimize');
-
-    return "Application optimized and caches cleared successfully!";
+    $results = [];
+    $errors = [];
+    
+    try {
+        // Fix storage permissions first
+        $storagePath = storage_path();
+        $logsPath = storage_path('logs');
+        $cachePath = base_path('bootstrap/cache');
+        
+        // Ensure directories exist
+        if (!is_dir($logsPath)) {
+            @mkdir($logsPath, 0755, true);
+        }
+        if (!is_dir($cachePath)) {
+            @mkdir($cachePath, 0755, true);
+        }
+        
+        // Try to set permissions (may fail on some servers, but continue anyway)
+        @chmod($logsPath, 0755);
+        @chmod($cachePath, 0755);
+        @chmod($storagePath, 0755);
+        
+        // Clear bootstrap cache first (this might fix trait conflicts)
+        try {
+            $files = glob($cachePath . '/*.php');
+            if ($files) {
+                foreach ($files as $file) {
+                    @unlink($file);
+                }
+            }
+            $results[] = 'Bootstrap cache cleared';
+        } catch (\Exception $e) {
+            $errors[] = 'Bootstrap cache clear: ' . $e->getMessage();
+        }
+        
+        // Run optimization commands with error handling
+        $commands = [
+            'optimize:clear' => 'Optimize clear',
+            'cache:clear' => 'Cache clear',
+            'config:clear' => 'Config clear',
+            'route:clear' => 'Route clear',
+            'view:clear' => 'View clear',
+        ];
+        
+        foreach ($commands as $command => $label) {
+            try {
+                Artisan::call($command);
+                $results[] = $label . ' completed';
+            } catch (\Exception $e) {
+                $errors[] = $label . ' failed: ' . $e->getMessage();
+            }
+        }
+        
+        // Cache commands
+        $cacheCommands = [
+            'config:cache' => 'Config cache',
+            'route:cache' => 'Route cache',
+            'view:cache' => 'View cache',
+        ];
+        
+        foreach ($cacheCommands as $command => $label) {
+            try {
+                Artisan::call($command);
+                $results[] = $label . ' completed';
+            } catch (\Exception $e) {
+                $errors[] = $label . ' failed: ' . $e->getMessage();
+            }
+        }
+        
+        // Run optimize command last
+        try {
+            Artisan::call('optimize');
+            $results[] = 'Optimize completed';
+        } catch (\Exception $e) {
+            $errors[] = 'Optimize failed: ' . $e->getMessage();
+        }
+        
+        // Return response
+        if (empty($errors)) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Application optimized and caches cleared successfully!',
+                'results' => $results,
+            ], 200);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'Optimization completed with some errors',
+                'results' => $results,
+                'errors' => $errors,
+            ], 200);
+        }
+        
+    } catch (\Exception $e) {
+        return response()->json([
+            'success' => false,
+            'message' => 'Optimization failed: ' . $e->getMessage(),
+            'results' => $results,
+            'errors' => array_merge($errors, [$e->getMessage()]),
+        ], 500);
+    }
 });
 
 Route::get('/migrate', function () {
