@@ -78,12 +78,10 @@
                     <span class="deposit-detail-label">Account Number</span>
                     <span class="deposit-detail-value" id="displayAccountNumber"></span>
                 </div>
-                @if($paymentMethod->type === 'bank')
-                <div class="deposit-detail-row" id="displayBankNameRow">
+                <div class="deposit-detail-row" id="displayBankNameRow" style="display: none;">
                     <span class="deposit-detail-label">Bank Name</span>
                     <span class="deposit-detail-value" id="displayBankName"></span>
                 </div>
-                @endif
                 <div class="deposit-detail-row">
                     <span class="deposit-detail-label">Withdrawal Amount</span>
                     <span class="deposit-detail-value">${{ number_format($amount, 2) }}</span>
@@ -98,7 +96,7 @@
                 <h2 class="deposit-step-title">Enter Account Details</h2>
                 <p class="deposit-step-subtitle">Enter the account details where you want to receive the money</p>
 
-                @if($paymentMethod->type === 'bank')
+                @if(strtolower($paymentMethod->type ?? '') === 'bank')
                 <div class="deposit-form" id="bankNameField">
                     <label class="deposit-form-label">Bank Name <span style="color: var(--danger-color);">*</span></label>
                     <div class="deposit-input-wrapper">

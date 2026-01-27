@@ -36,8 +36,8 @@
     const storeUrl = document.getElementById('withdrawStoreUrl')?.value;
     const indexUrl = document.getElementById('withdrawIndexUrl')?.value;
     
-    // Check if bank name is required (only for bank type)
-    const isBankNameRequired = paymentMethodType === 'bank' && bankNameField !== null;
+    // Check if bank name is required (only for bank type) - use case-insensitive comparison
+    const isBankNameRequired = paymentMethodType && paymentMethodType.toLowerCase() === 'bank' && bankNameField !== null;
 
     // Initialize
     document.addEventListener('DOMContentLoaded', function() {
@@ -50,6 +50,14 @@
         }
         if (bankNameInput && isBankNameRequired) {
             formData.bankName = bankNameInput.value.trim();
+        }
+        
+        // Initialize bank name row visibility
+        if (displayBankNameRow) {
+            // Hide bank name row initially if not required or no value
+            if (!isBankNameRequired || !formData.bankName || formData.bankName.trim().length === 0) {
+                displayBankNameRow.style.display = 'none';
+            }
         }
         
         initStepNavigation();
@@ -173,9 +181,13 @@
                 if (displayBankName && formData.bankName) {
                     displayBankName.textContent = formData.bankName;
                 }
-                // Show/hide bank name row based on whether it's required
+                // Show/hide bank name row based on whether it's required and has value
                 if (displayBankNameRow) {
-                    displayBankNameRow.style.display = isBankNameRequired && formData.bankName ? 'flex' : 'none';
+                    if (isBankNameRequired && formData.bankName && formData.bankName.trim().length > 0) {
+                        displayBankNameRow.style.display = 'flex';
+                    } else {
+                        displayBankNameRow.style.display = 'none';
+                    }
                 }
             } else {
                 // Hide payment details on step 1
