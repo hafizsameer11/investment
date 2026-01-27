@@ -9,6 +9,7 @@ use App\Models\EarningCommissionStructure;
 use App\Models\PendingReferralCommission;
 use App\Models\PendingEarningCommission;
 use App\Models\Investment;
+use App\Models\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -304,6 +305,15 @@ class ReferralsController extends Controller
                                 'claimed_at' => $now,
                             ]);
                     }
+                    
+                    // Create transaction record for referral earning
+                    Transaction::create([
+                        'user_id' => $user->id,
+                        'type' => 'referral_earning',
+                        'amount' => $amount,
+                        'description' => 'Investment commission earnings claimed',
+                        'status' => 'completed',
+                    ]);
                 } else { // earning
                     // Get all pending earning commissions for this user
                     $pendingEarningCommissions = PendingEarningCommission::where('referrer_id', $user->id)
@@ -337,6 +347,15 @@ class ReferralsController extends Controller
                                 'claimed_at' => $now,
                             ]);
                     }
+                    
+                    // Create transaction record for referral earning
+                    Transaction::create([
+                        'user_id' => $user->id,
+                        'type' => 'referral_earning',
+                        'amount' => $amount,
+                        'description' => 'Team earning commission earnings claimed',
+                        'status' => 'completed',
+                    ]);
                 }
                 
                 DB::commit();

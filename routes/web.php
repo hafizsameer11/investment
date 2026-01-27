@@ -28,6 +28,8 @@ use App\Http\Controllers\Admin\WithdrawalController;
 use App\Http\Controllers\Admin\NotificationController;
 use App\Http\Controllers\Admin\CryptoWalletController;
 use App\Http\Controllers\Dashboard\WithdrawSecurityController;
+use App\Http\Controllers\Dashboard\ChatController;
+use App\Http\Controllers\Admin\ChatController as AdminChatController;
 use App\Http\Controllers\Admin\AuthController as AdminAuthController;
 
 /*
@@ -97,6 +99,13 @@ Route::prefix('user/dashboard')->middleware('auth')->group(function () {
     Route::get('/support', [SupportController::class, 'index'])->name('support.index');
     Route::get('/withdraw-security', [WithdrawSecurityController::class, 'index'])->name('withdraw-security.index');
     Route::get('/settings', [SettingsController::class, 'index'])->name('settings.index');
+    
+    // Chat Routes (Protected)
+    Route::get('/chat/active', [ChatController::class, 'getActiveChat'])->name('chat.active');
+    Route::post('/chat/start', [ChatController::class, 'startChat'])->name('chat.start');
+    Route::get('/chat/{id}', [ChatController::class, 'getChat'])->name('chat.get');
+    Route::post('/chat/{id}/message', [ChatController::class, 'sendMessage'])->name('chat.send-message');
+    Route::get('/chat/{id}/messages', [ChatController::class, 'getMessages'])->name('chat.messages');
 });
 
 // Password Reset Routes
@@ -106,6 +115,13 @@ Route::middleware('guest')->group(function () {
     Route::get('/password/reset/{token}', [AuthController::class, 'showResetPasswordForm'])->name('password.reset');
     Route::post('/password/reset', [AuthController::class, 'resetPassword'])->name('password.update');
 });
+
+// Chat Routes (Public - accessible from login page)
+Route::get('/chat/active', [ChatController::class, 'getActiveChat'])->name('chat.active');
+Route::post('/chat/start', [ChatController::class, 'startChat'])->name('chat.start');
+Route::get('/chat/{id}', [ChatController::class, 'getChat'])->name('chat.get');
+Route::post('/chat/{id}/message', [ChatController::class, 'sendMessage'])->name('chat.send-message');
+Route::get('/chat/{id}/messages', [ChatController::class, 'getMessages'])->name('chat.messages');
 
 // Home route - redirect to login
 Route::get('/', function () {
@@ -229,6 +245,17 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::prefix('notifications')->name('admin.notifications.')->group(function () {
         Route::get('/create', [NotificationController::class, 'index'])->name('create');
         Route::post('/', [NotificationController::class, 'store'])->name('store');
+    });
+
+    // Admin Chat Routes
+    Route::prefix('chats')->name('admin.chats.')->group(function () {
+        Route::get('/', [AdminChatController::class, 'index'])->name('index');
+        Route::get('/{id}', [AdminChatController::class, 'show'])->name('show');
+        Route::get('/{id}/data', [AdminChatController::class, 'getChat'])->name('get');
+        Route::post('/{id}/assign', [AdminChatController::class, 'assignChat'])->name('assign');
+        Route::post('/{id}/message', [AdminChatController::class, 'sendMessage'])->name('send-message');
+        Route::post('/{id}/close', [AdminChatController::class, 'closeChat'])->name('close');
+        Route::get('/unread-count', [AdminChatController::class, 'getUnreadCount'])->name('unread-count');
     });
 });
 

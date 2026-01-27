@@ -7,6 +7,7 @@ use App\Models\Deposit;
 use App\Models\Withdrawal;
 use App\Models\User;
 use App\Models\RewardLevel;
+use App\Models\Chat;
 
 class NotificationService
 {
@@ -153,6 +154,41 @@ class NotificationService
             'message' => "Hi {$user->name}, Your crypto deposit of \${$amount} via {$network} has been submitted successfully. Your request will be reviewed and you will receive a response within 24 hours.",
             'related_id' => $deposit->id,
             'related_type' => Deposit::class,
+        ]);
+    }
+
+    /**
+     * Send notification to admins when a new chat is started
+     */
+    public static function sendChatStartedNotification(Chat $chat)
+    {
+        $admins = User::where('role', 'admin')->get();
+        $userName = $chat->user_name;
+        
+        foreach ($admins as $admin) {
+            Notification::create([
+                'user_id' => $admin->id,
+                'type' => 'chat_started',
+                'title' => 'New Chat Started',
+                'message' => "A new chat has been started by {$userName}. Please check the chat management page.",
+                'related_id' => $chat->id,
+                'related_type' => Chat::class,
+            ]);
+        }
+    }
+
+    /**
+     * Send notification to user when admin replies to chat
+     */
+    public static function sendChatReplyNotification(User $user, Chat $chat)
+    {
+        Notification::create([
+            'user_id' => $user->id,
+            'type' => 'chat_reply',
+            'title' => 'New Reply in Chat',
+            'message' => "You have received a new reply in your chat. Click to view the conversation.",
+            'related_id' => $chat->id,
+            'related_type' => Chat::class,
         ]);
     }
 }

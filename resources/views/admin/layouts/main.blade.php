@@ -11,5 +11,8 @@
 
 @include('admin.layouts.footer')
 
+<!-- Admin Chat Widget -->
+@include('components.admin-chat-widget')
 
 @include('admin.layouts.script')
+<script src="{{ asset('assets/dashboard/js/admin-chat.js') }}"></script>

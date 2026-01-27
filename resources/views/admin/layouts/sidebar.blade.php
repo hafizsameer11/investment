@@ -145,6 +145,13 @@
                             </a>
                         </li>
 
+                        <li>
+                            <a href="{{ route('admin.chats.index') }}" class="waves-effect">
+                                <i class="mdi mdi-message-text"></i>
+                                <span>Chats</span>
+                            </a>
+                        </li>
+
                         {{-- <li>
                             <a href="calendar.html" class="waves-effect"><i class="mdi mdi-calendar-clock"></i><span>
                                     Calendar </span></a>

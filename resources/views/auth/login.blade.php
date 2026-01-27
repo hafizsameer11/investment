@@ -180,7 +180,9 @@
         </div>
     </div>
 
+    @include('components.chat-button')
     <script src="{{ asset('assets/dashboard/js/login.js') }}"></script>
+    <script src="{{ asset('assets/dashboard/js/chat.js') }}"></script>
 </body>
 </html>
 

@@ -29,6 +29,10 @@
     <!-- Mobile Bottom Navigation -->
     @include('dashboard.layouts.mobile-nav')
 
+    <!-- Chat Button -->
+    @include('components.chat-button')
+
     @include('dashboard.layouts.script')
+    <script src="{{ asset('assets/dashboard/js/chat.js') }}"></script>
 </body>
 </html>
