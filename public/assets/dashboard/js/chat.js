@@ -244,9 +244,18 @@
         });
     }
 
-    // Send message
+    // Send message - use event delegation to ensure it works even if element is added dynamically
+    document.addEventListener('click', function(e) {
+        if (e.target && (e.target.id === 'sendChatMessage' || e.target.closest('#sendChatMessage'))) {
+            e.preventDefault();
+            sendMessage();
+        }
+    });
+
+    // Also attach directly to button if it exists
     if (sendChatMessage) {
-        sendChatMessage.addEventListener('click', function() {
+        sendChatMessage.addEventListener('click', function(e) {
+            e.preventDefault();
             sendMessage();
         });
     }
@@ -265,23 +274,60 @@
         const message = chatMessageInput.value.trim();
         if (!message) return;
 
+        // Disable send button while sending
+        if (sendChatMessage) {
+            sendChatMessage.disabled = true;
+            sendChatMessage.style.opacity = '0.6';
+            sendChatMessage.style.cursor = 'not-allowed';
+        }
+
+        const csrfToken = document.querySelector('meta[name="csrf-token"]');
+        if (!csrfToken) {
+            console.error('CSRF token not found');
+            if (sendChatMessage) {
+                sendChatMessage.disabled = false;
+                sendChatMessage.style.opacity = '1';
+                sendChatMessage.style.cursor = 'pointer';
+            }
+            alert('Security token not found. Please refresh the page.');
+            return;
+        }
+
         fetch(`/chat/${currentChatId}/message`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                'X-CSRF-TOKEN': csrfToken.getAttribute('content')
             },
             body: JSON.stringify({ message: message })
         })
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                return response.json().then(data => {
+                    throw new Error(data.message || 'Failed to send message');
+                });
+            }
+            return response.json();
+        })
         .then(data => {
             if (data.success) {
                 chatMessageInput.value = '';
                 addMessageToUI(data.message);
+            } else {
+                alert(data.message || 'Failed to send message');
             }
         })
         .catch(error => {
-            console.error('Error:', error);
+            console.error('Error sending message:', error);
+            alert('Error: ' + (error.message || 'Failed to send message. Please try again.'));
+        })
+        .finally(() => {
+            // Re-enable send button
+            if (sendChatMessage) {
+                sendChatMessage.disabled = false;
+                sendChatMessage.style.opacity = '1';
+                sendChatMessage.style.cursor = 'pointer';
+            }
         });
     }
 
@@ -289,7 +335,12 @@
         if (!currentChatId) return;
 
         fetch(`/chat/${currentChatId}/messages`)
-            .then(response => response.json())
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to load messages');
+                }
+                return response.json();
+            })
             .then(data => {
                 if (data.success && chatMessages) {
                     chatMessages.innerHTML = '';
@@ -300,7 +351,7 @@
                 }
             })
             .catch(error => {
-                console.error('Error:', error);
+                console.error('Error loading messages:', error);
             });
     }
 

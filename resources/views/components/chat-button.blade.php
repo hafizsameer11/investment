@@ -62,7 +62,7 @@
             </button>
         </div>
         <input type="text" id="chatMessageInput" class="live-chat-input" placeholder="Ask me anything...">
-        <button class="live-chat-send" id="sendChatMessage" aria-label="Send message">
+        <button type="button" class="live-chat-send" id="sendChatMessage" aria-label="Send message">
             <i class="fas fa-arrow-up"></i>
         </button>
     </div>

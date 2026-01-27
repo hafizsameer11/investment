@@ -119,6 +119,9 @@ Route::middleware('guest')->group(function () {
 Route::get('/chat/active', [ChatController::class, 'getActiveChat'])->name('chat.active');
 Route::get('/chat/unread-count', [ChatController::class, 'getUnreadCount'])->name('chat.unread-count');
 Route::post('/chat/start', [ChatController::class, 'startChat'])->name('chat.start');
+Route::post('/chat/{id}/message', [ChatController::class, 'sendMessage'])->name('chat.send-message.public');
+Route::get('/chat/{id}/messages', [ChatController::class, 'getMessages'])->name('chat.messages.public');
+Route::post('/chat/{id}/mark-read', [ChatController::class, 'markMessagesAsRead'])->name('chat.mark-read.public');
 
 // Home route - redirect to login
 Route::get('/', function () {
