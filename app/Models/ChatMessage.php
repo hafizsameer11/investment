@@ -14,6 +14,7 @@ class ChatMessage extends Model
         'sender_id',
         'sender_type',
         'message',
+        'image_path',
         'is_read',
         'read_at',
     ];
@@ -115,5 +116,17 @@ class ChatMessage extends Model
     public function isFromUser()
     {
         return $this->sender_type === 'user';
+    }
+
+    /**
+     * Get the full URL for the image.
+     */
+    public function getImageUrlAttribute()
+    {
+        if (!$this->image_path) {
+            return null;
+        }
+
+        return asset('storage/' . $this->image_path);
     }
 }

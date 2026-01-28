@@ -74,6 +74,8 @@ class MessageSent implements ShouldBroadcast
                 'sender_type' => $this->message->sender_type,
                 'sender_name' => $this->message->sender->name ?? ($this->message->sender_id ? 'Guest' : 'Guest'),
                 'message' => $this->message->message,
+                'image_path' => $this->message->image_path,
+                'image_url' => $this->message->image_url,
                 'is_read' => $this->message->is_read,
                 'read_at' => $this->message->read_at ? $this->message->read_at->toIso8601String() : null,
                 'created_at' => $this->message->created_at->toIso8601String(),

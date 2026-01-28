@@ -98,6 +98,8 @@ class ChatController extends Controller
                     'sender_type' => $message->sender_type,
                     'sender_name' => $message->sender->name ?? ($message->sender_id ? 'Guest' : 'Guest'),
                     'message' => $message->message,
+                    'image_path' => $message->image_path,
+                    'image_url' => $message->image_url,
                     'is_read' => $message->is_read,
                     'read_at' => $message->read_at ? $message->read_at->toIso8601String() : null,
                     'created_at' => $message->created_at->toIso8601String(),
@@ -111,9 +113,19 @@ class ChatController extends Controller
      */
     public function sendMessage(Request $request, $id)
     {
+        // Validate: either message or image is required
         $request->validate([
-            'message' => 'required|string|max:5000',
+            'message' => 'nullable|string|max:5000',
+            'image' => 'nullable|image|mimes:jpeg,jpg,png,gif,webp|max:5120', // 5MB max
         ]);
+
+        // Ensure at least one of message or image is provided
+        if (!$request->has('message') && !$request->hasFile('image')) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Either a message or an image is required',
+            ], 422);
+        }
 
         $chat = Chat::findOrFail($id);
 
@@ -141,12 +153,32 @@ class ChatController extends Controller
             $chat->markAsActive();
         }
 
+        // Handle image upload
+        $imagePath = null;
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $filename = 'chat_' . $chat->id . '_' . time() . '_' . uniqid() . '.' . $image->getClientOriginalExtension();
+            
+            // Create directory if it doesn't exist
+            $destinationPath = storage_path('app/public/chat-images');
+            if (!file_exists($destinationPath)) {
+                mkdir($destinationPath, 0755, true);
+            }
+            
+            // Move uploaded file
+            $image->move($destinationPath, $filename);
+            
+            // Store relative path for database
+            $imagePath = 'chat-images/' . $filename;
+        }
+
         // Create message
         $chatMessage = ChatMessage::create([
             'chat_id' => $chat->id,
             'sender_id' => Auth::id(), // null for guest users
             'sender_type' => 'user',
-            'message' => $request->message,
+            'message' => $request->message ?? '',
+            'image_path' => $imagePath,
         ]);
 
         // Broadcast message
@@ -160,6 +192,8 @@ class ChatController extends Controller
                 'sender_type' => $chatMessage->sender_type,
                 'sender_name' => $chatMessage->sender->name ?? ($chatMessage->sender_id ? 'Guest' : 'Guest'),
                 'message' => $chatMessage->message,
+                'image_path' => $chatMessage->image_path,
+                'image_url' => $chatMessage->image_url,
                 'is_read' => $chatMessage->is_read,
                 'read_at' => $chatMessage->read_at ? $chatMessage->read_at->toIso8601String() : null,
                 'created_at' => $chatMessage->created_at->toIso8601String(),
@@ -333,6 +367,8 @@ class ChatController extends Controller
                     'sender_type' => $message->sender_type,
                     'sender_name' => $message->sender->name ?? ($message->sender_id ? 'Guest' : 'Guest'),
                     'message' => $message->message,
+                    'image_path' => $message->image_path,
+                    'image_url' => $message->image_url,
                     'is_read' => $message->is_read,
                     'read_at' => $message->read_at ? $message->read_at->toIso8601String() : null,
                     'created_at' => $message->created_at->toIso8601String(),

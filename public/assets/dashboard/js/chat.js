@@ -268,11 +268,116 @@
         });
     }
 
+    // Image upload button
+    const imageChatBtn = document.getElementById('imageChatBtn');
+    const chatImageInput = document.getElementById('chatImageInput');
+    
+    if (imageChatBtn && chatImageInput) {
+        imageChatBtn.addEventListener('click', function() {
+            chatImageInput.click();
+        });
+
+        chatImageInput.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                // Validate file type
+                const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'];
+                if (!allowedTypes.includes(file.type)) {
+                    alert('Please select a valid image file (JPEG, PNG, GIF, or WEBP)');
+                    chatImageInput.value = '';
+                    return;
+                }
+
+                // Validate file size (5MB max)
+                const maxSize = 5 * 1024 * 1024; // 5MB in bytes
+                if (file.size > maxSize) {
+                    alert('Image size must be less than 5MB');
+                    chatImageInput.value = '';
+                    return;
+                }
+
+                // Send image immediately
+                sendImage(file);
+            }
+        });
+    }
+
+    function sendImage(file) {
+        if (!currentChatId) return;
+
+        // Disable send button while sending
+        if (sendChatMessage) {
+            sendChatMessage.disabled = true;
+            sendChatMessage.style.opacity = '0.6';
+            sendChatMessage.style.cursor = 'not-allowed';
+        }
+
+        const formData = new FormData();
+        formData.append('image', file);
+        formData.append('message', ''); // Empty message for image-only
+
+        const csrfToken = document.querySelector('meta[name="csrf-token"]');
+        if (!csrfToken) {
+            console.error('CSRF token not found');
+            if (sendChatMessage) {
+                sendChatMessage.disabled = false;
+                sendChatMessage.style.opacity = '1';
+                sendChatMessage.style.cursor = 'pointer';
+            }
+            alert('Security token not found. Please refresh the page.');
+            return;
+        }
+
+        fetch(`/chat/${currentChatId}/message`, {
+            method: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': csrfToken.getAttribute('content')
+            },
+            body: formData
+        })
+        .then(response => {
+            if (!response.ok) {
+                return response.json().then(data => {
+                    throw new Error(data.message || 'Failed to send image');
+                });
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data.success) {
+                chatImageInput.value = '';
+                addMessageToUI(data.message);
+            } else {
+                alert(data.message || 'Failed to send image');
+            }
+        })
+        .catch(error => {
+            console.error('Error sending image:', error);
+            alert('Error: ' + (error.message || 'Failed to send image. Please try again.'));
+        })
+        .finally(() => {
+            // Re-enable send button
+            if (sendChatMessage) {
+                sendChatMessage.disabled = false;
+                sendChatMessage.style.opacity = '1';
+                sendChatMessage.style.cursor = 'pointer';
+            }
+        });
+    }
+
     function sendMessage() {
         if (!currentChatId || !chatMessageInput) return;
 
         const message = chatMessageInput.value.trim();
-        if (!message) return;
+        const imageFile = chatImageInput && chatImageInput.files[0];
+        
+        // If there's an image but no message, use sendImage instead
+        if (imageFile && !message) {
+            sendImage(imageFile);
+            return;
+        }
+        
+        if (!message && !imageFile) return;
 
         // Disable send button while sending
         if (sendChatMessage) {
@@ -293,13 +398,27 @@
             return;
         }
 
+        // Use FormData if there's an image, otherwise use JSON
+        let requestBody;
+        let headers = {
+            'X-CSRF-TOKEN': csrfToken.getAttribute('content')
+        };
+
+        if (imageFile) {
+            const formData = new FormData();
+            formData.append('message', message);
+            formData.append('image', imageFile);
+            requestBody = formData;
+            // Don't set Content-Type for FormData, browser will set it with boundary
+        } else {
+            headers['Content-Type'] = 'application/json';
+            requestBody = JSON.stringify({ message: message });
+        }
+
         fetch(`/chat/${currentChatId}/message`, {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': csrfToken.getAttribute('content')
-            },
-            body: JSON.stringify({ message: message })
+            headers: headers,
+            body: requestBody
         })
         .then(response => {
             if (!response.ok) {
@@ -312,6 +431,9 @@
         .then(data => {
             if (data.success) {
                 chatMessageInput.value = '';
+                if (chatImageInput) {
+                    chatImageInput.value = '';
+                }
                 addMessageToUI(data.message);
             } else {
                 alert(data.message || 'Failed to send message');
@@ -364,7 +486,40 @@
         
         const bubble = document.createElement('div');
         bubble.className = 'chat-message-bubble';
-        bubble.textContent = message.message;
+        
+        // Display image if present
+        if (message.image_path || message.image_url) {
+            const imageUrl = message.image_url || (message.image_path ? `/storage/${message.image_path}` : null);
+            if (imageUrl) {
+                const imgContainer = document.createElement('div');
+                imgContainer.className = 'chat-image-container';
+                imgContainer.style.marginBottom = message.message ? '8px' : '0';
+                
+                const img = document.createElement('img');
+                img.src = imageUrl;
+                img.className = 'chat-message-image';
+                img.style.maxWidth = '100%';
+                img.style.maxHeight = '300px';
+                img.style.borderRadius = '8px';
+                img.style.cursor = 'pointer';
+                img.alt = 'Chat image';
+                
+                // Click to view full size
+                img.addEventListener('click', function() {
+                    window.open(imageUrl, '_blank');
+                });
+                
+                imgContainer.appendChild(img);
+                bubble.appendChild(imgContainer);
+            }
+        }
+        
+        // Display text message if present
+        if (message.message) {
+            const textDiv = document.createElement('div');
+            textDiv.textContent = message.message;
+            bubble.appendChild(textDiv);
+        }
         
         const timeDiv = document.createElement('div');
         timeDiv.className = 'chat-message-time';

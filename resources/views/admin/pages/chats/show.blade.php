@@ -77,6 +77,24 @@
         font-size: 0.9375rem;
     }
 
+    .chat-image-btn {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: #6c757d;
+        border: none;
+        color: white;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background 0.2s;
+    }
+
+    .chat-image-btn:hover {
+        background: #5a6268;
+    }
+
     .chat-send-btn {
         width: 40px;
         height: 40px;
@@ -88,6 +106,17 @@
         display: flex;
         align-items: center;
         justify-content: center;
+    }
+
+    .chat-image-container {
+        margin-bottom: 8px;
+    }
+
+    .chat-message-image {
+        max-width: 100%;
+        max-height: 300px;
+        border-radius: 8px;
+        cursor: pointer;
     }
 </style>
 @endpush
@@ -161,7 +190,14 @@
                                 @foreach($chat->messages as $message)
                                 <div class="chat-message {{ $message->sender_type }}">
                                     <div class="chat-message-bubble">
-                                        {{ $message->message }}
+                                        @if($message->image_path)
+                                            <div class="chat-image-container" style="margin-bottom: {{ $message->message ? '8px' : '0' }};">
+                                                <img src="{{ $message->image_url }}" alt="Chat image" class="chat-message-image" style="max-width: 100%; max-height: 300px; border-radius: 8px; cursor: pointer;" onclick="window.open('{{ $message->image_url }}', '_blank')">
+                                            </div>
+                                        @endif
+                                        @if($message->message)
+                                            <div>{{ $message->message }}</div>
+                                        @endif
                                     </div>
                                     <div class="chat-message-time">
                                         {{ $message->created_at->format('h:i A') }}
@@ -175,6 +211,10 @@
 
                             @if($chat->status !== 'closed')
                             <div class="chat-input-container">
+                                <button class="chat-image-btn" id="adminImageBtn" type="button" title="Upload image">
+                                    <i class="mdi mdi-image"></i>
+                                </button>
+                                <input type="file" id="adminChatImageInput" accept="image/jpeg,image/jpg,image/png,image/gif,image/webp" style="display: none;">
                                 <input type="text" id="adminChatInput" class="chat-input" placeholder="Type your message...">
                                 <button class="chat-send-btn" id="adminSendMessageBtn">
                                     <i class="mdi mdi-send"></i>
@@ -273,28 +313,117 @@
         });
     });
 
-    // Send message
-    document.getElementById('adminSendMessageBtn')?.addEventListener('click', function() {
-        const input = document.getElementById('adminChatInput');
-        const message = input.value.trim();
-        
-        if (!message) return;
+    // Image upload button
+    const adminImageBtn = document.getElementById('adminImageBtn');
+    const adminChatImageInput = document.getElementById('adminChatImageInput');
+    
+    if (adminImageBtn && adminChatImageInput) {
+        adminImageBtn.addEventListener('click', function() {
+            adminChatImageInput.click();
+        });
+
+        adminChatImageInput.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                // Validate file type
+                const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'];
+                if (!allowedTypes.includes(file.type)) {
+                    alert('Please select a valid image file (JPEG, PNG, GIF, or WEBP)');
+                    adminChatImageInput.value = '';
+                    return;
+                }
+
+                // Validate file size (5MB max)
+                const maxSize = 5 * 1024 * 1024; // 5MB in bytes
+                if (file.size > maxSize) {
+                    alert('Image size must be less than 5MB');
+                    adminChatImageInput.value = '';
+                    return;
+                }
+
+                // Send image immediately
+                sendAdminImage(file);
+            }
+        });
+    }
+
+    function sendAdminImage(file) {
+        const formData = new FormData();
+        formData.append('image', file);
+        formData.append('message', ''); // Empty message for image-only
 
         fetch(sendMessageUrl, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json',
                 'X-CSRF-TOKEN': '{{ csrf_token() }}'
             },
-            body: JSON.stringify({ message: message })
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                adminChatImageInput.value = '';
+                location.reload();
+            } else {
+                alert(data.message || 'Failed to send image');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Error sending image. Please try again.');
+        });
+    }
+
+    // Send message
+    document.getElementById('adminSendMessageBtn')?.addEventListener('click', function() {
+        const input = document.getElementById('adminChatInput');
+        const message = input.value.trim();
+        const imageFile = adminChatImageInput && adminChatImageInput.files[0];
+        
+        // If there's an image but no message, use sendAdminImage instead
+        if (imageFile && !message) {
+            sendAdminImage(imageFile);
+            return;
+        }
+        
+        if (!message && !imageFile) return;
+
+        // Use FormData if there's an image, otherwise use JSON
+        let requestBody;
+        let headers = {
+            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+        };
+
+        if (imageFile) {
+            const formData = new FormData();
+            formData.append('message', message);
+            formData.append('image', imageFile);
+            requestBody = formData;
+            // Don't set Content-Type for FormData, browser will set it with boundary
+        } else {
+            headers['Content-Type'] = 'application/json';
+            requestBody = JSON.stringify({ message: message });
+        }
+
+        fetch(sendMessageUrl, {
+            method: 'POST',
+            headers: headers,
+            body: requestBody
         })
         .then(response => response.json())
         .then(data => {
             if (data.success) {
                 input.value = '';
+                if (adminChatImageInput) {
+                    adminChatImageInput.value = '';
+                }
                 // Add message to UI (will be handled by Echo in full implementation)
                 location.reload();
             }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Error sending message. Please try again.');
         });
     });
 

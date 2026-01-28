@@ -57,9 +57,10 @@
             <button class="chat-action-btn" id="refreshChatBtn" aria-label="Refresh">
                 <i class="fas fa-redo"></i>
             </button>
-            <button class="chat-action-btn" id="voiceChatBtn" aria-label="Voice input">
-                <i class="fas fa-microphone"></i>
+            <button class="chat-action-btn" id="imageChatBtn" aria-label="Upload image" type="button">
+                <i class="fas fa-image"></i>
             </button>
+            <input type="file" id="chatImageInput" accept="image/jpeg,image/jpg,image/png,image/gif,image/webp" style="display: none;">
         </div>
         <input type="text" id="chatMessageInput" class="live-chat-input" placeholder="Ask me anything...">
         <button type="button" class="live-chat-send" id="sendChatMessage" aria-label="Send message">
@@ -453,11 +454,14 @@
 /* Mobile Responsive */
 @media (max-width: 768px) {
     .live-chat-window {
-        width: calc(100vw - 20px);
-        height: calc(100vh - 100px);
+        width: 90%;
+        max-width: 350px;
+        height: 70vh;
+        max-height: 500px;
         bottom: 80px;
-        right: 10px;
-        border-radius: 16px 16px 0 0;
+        right: 5%;
+        left: auto;
+        border-radius: 16px;
     }
 
     .chat-button-container {
