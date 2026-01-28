@@ -150,24 +150,27 @@ class DashboardController extends Controller
         // This is for display purposes on the dashboard homepage (current available balance)
         $totalNetBalance = ($user->mining_earning ?? 0) + ($user->referral_earning ?? 0);
         
-        // Calculate all-time Total Earnings from transactions (not affected by withdrawals)
-        // Sum all mining_earning and referral_earning transactions
-        $allTimeMiningEarnings = \App\Models\Transaction::where('user_id', $user->id)
-            ->where('type', 'mining_earning')
-            ->where('status', 'completed')
-            ->sum('amount');
+        // Calculate all-time Total Mining Earnings (only claimed earnings, excluding unclaimed)
+        // total_profit_earned includes both claimed and unclaimed profits
+        // unclaimed_profit is what hasn't been claimed yet
+        // So claimed earnings = total_profit_earned - unclaimed_profit
+        $totalProfitEarned = Investment::where('user_id', $user->id)
+            ->sum('total_profit_earned');
+        
+        $totalUnclaimedProfit = Investment::where('user_id', $user->id)
+            ->sum('unclaimed_profit');
+        
+        $allTimeMiningEarnings = ($totalProfitEarned ?? 0) - ($totalUnclaimedProfit ?? 0);
+        
+        // Ensure the value is not negative (safety check)
+        if ($allTimeMiningEarnings < 0) {
+            $allTimeMiningEarnings = 0;
+        }
         
         $allTimeReferralEarnings = \App\Models\Transaction::where('user_id', $user->id)
             ->where('type', 'referral_earning')
             ->where('status', 'completed')
             ->sum('amount');
-        
-        // Fallback: If no transactions found, use investments' total_profit_earned for mining
-        // This handles cases where earnings were claimed but not recorded as transactions
-        if ($allTimeMiningEarnings == 0) {
-            $allTimeMiningEarnings = Investment::where('user_id', $user->id)
-                ->sum('total_profit_earned');
-        }
         
         // Calculate all-time Total Earnings (All Time) - not affected by withdrawals
         $allTimeTotalEarnings = ($allTimeMiningEarnings ?? 0) + ($allTimeReferralEarnings ?? 0);
@@ -180,7 +183,7 @@ class DashboardController extends Controller
         $secondsUntilNextHour = $secondsUntilNextHour ?? 3600;
         $initialCountdown = $initialCountdown ?? '01:00:00';
         
-        return view('dashboard.index', compact('user', 'hasActivePlan', 'totalUnclaimedProfit', 'initialCountdown', 'secondsUntilNextHour', 'chartData', 'totalNetBalance', 'referralActivitiesData', 'allTimeTotalEarnings'));
+        return view('dashboard.index', compact('user', 'hasActivePlan', 'totalUnclaimedProfit', 'initialCountdown', 'secondsUntilNextHour', 'chartData', 'totalNetBalance', 'referralActivitiesData', 'allTimeTotalEarnings', 'allTimeMiningEarnings'));
     }
 
     /**

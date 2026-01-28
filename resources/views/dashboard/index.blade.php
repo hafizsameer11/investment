@@ -3257,16 +3257,15 @@
             <div class="mining-stat-item">
                 <div class="stat-icon"><i class="fas fa-chart-line"></i></div>
                 <div class="stat-content">
-                    <div class="stat-label">Total Earnings</div>
-                    <div class="stat-value">${{ number_format($allTimeTotalEarnings ?? 0, 2) }}</div>
+                    <div class="stat-label">Total Mining</div>
+                    <div class="stat-value">${{ number_format($allTimeMiningEarnings ?? 0, 2) }}</div>
                 </div>
             </div>
             <div class="mining-stat-item">
                 <div class="stat-icon"><i class="fas fa-coins"></i></div>
                 <div class="stat-content">
                     <div class="stat-label">Total Invested</div>
-                    {{-- <div class="stat-value">${{ number_format($user->total_invested ?? 0, 2) }}</div> --}}
-                    <div class="stat-value">${{ number_format($user->total_invested ) }}</div>
+                    <div class="stat-value">${{ number_format($user->total_invested ?? 0, 2) }}</div>
                 </div>
             </div>
         </div>
