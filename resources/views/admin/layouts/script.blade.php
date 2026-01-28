@@ -159,6 +159,66 @@ $(document).ready(function() {
         }
         hideBadgesOnCurrentPage();
     }, 30000);
+    
+    // Admin Notifications
+    function loadAdminNotifications() {
+        $.ajax({
+            url: '{{ route("admin.notifications") }}',
+            method: 'GET',
+            success: function(data) {
+                if (data.success) {
+                    const badge = $('#admin-notification-badge');
+                    const countBadge = $('#admin-notification-count');
+                    const notificationsList = $('#admin-notifications-list');
+                    const viewAllLink = $('#view-all-notifications');
+                    
+                    // Update badge count
+                    if (data.total_count > 0) {
+                        badge.text(data.total_count).show();
+                        countBadge.text(data.total_count);
+                    } else {
+                        badge.hide();
+                        countBadge.text('0');
+                    }
+                    
+                    // Update notifications list
+                    if (data.notifications && data.notifications.length > 0) {
+                        let html = '';
+                        data.notifications.forEach(function(notification) {
+                            html += `
+                                <a href="${notification.url}" class="dropdown-item notify-item">
+                                    <div class="notify-icon ${notification.icon_bg}">
+                                        <i class="mdi ${notification.icon}"></i>
+                                    </div>
+                                    <p class="notify-details">
+                                        <b>${notification.title}</b>
+                                        <small class="text-muted">${notification.message}</small>
+                                        <small class="text-muted d-block">${notification.time}</small>
+                                    </p>
+                                </a>
+                            `;
+                        });
+                        notificationsList.html(html);
+                        viewAllLink.show();
+                    } else {
+                        notificationsList.html('<div class="dropdown-item notify-item text-center"><p class="text-muted mb-0">No notifications</p></div>');
+                        viewAllLink.hide();
+                    }
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error('Error loading notifications:', error);
+            }
+        });
+    }
+    
+    // Load notifications on page load
+    loadAdminNotifications();
+    
+    // Update notifications every 30 seconds
+    setInterval(function() {
+        loadAdminNotifications();
+    }, 30000);
 });
 </script>
 

@@ -148,6 +148,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::get('/earnings-breakdown-data', [HomeController::class, 'getEarningsBreakdownData'])->name('admin.earnings-breakdown-data');
     Route::get('/transaction-activity-data', [HomeController::class, 'getTransactionActivityData'])->name('admin.transaction-activity-data');
     Route::get('/pending-counts', [HomeController::class, 'getPendingCounts'])->name('admin.pending-counts');
+    Route::get('/notifications', [HomeController::class, 'getAdminNotifications'])->name('admin.notifications');
 
     // Admin Investment Commission Routes
     Route::prefix('investment-commission')->name('admin.investment-commission.')->group(function () {

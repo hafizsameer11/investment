@@ -576,6 +576,75 @@ class HomeController extends Controller
         ]);
     }
     
+    public function getAdminNotifications()
+    {
+        $notifications = [];
+        
+        // Get pending deposits
+        $pendingDepositsCount = Deposit::where('status', 'pending')->count();
+        if ($pendingDepositsCount > 0) {
+            $pendingDepositsAmount = Deposit::where('status', 'pending')->sum('amount') ?? 0;
+            $notifications[] = [
+                'type' => 'deposit',
+                'icon' => 'mdi-cash-multiple',
+                'icon_bg' => 'bg-primary',
+                'title' => 'Pending Deposits',
+                'message' => "{$pendingDepositsCount} pending deposit(s) totaling $" . number_format($pendingDepositsAmount, 2) . " require approval",
+                'count' => $pendingDepositsCount,
+                'url' => route('admin.deposits.index'),
+                'time' => Carbon::now()->diffForHumans(),
+            ];
+        }
+        
+        // Get pending withdrawals
+        $pendingWithdrawalsCount = Withdrawal::where('status', 'pending')->count();
+        if ($pendingWithdrawalsCount > 0) {
+            $pendingWithdrawalsAmount = Withdrawal::where('status', 'pending')->sum('amount') ?? 0;
+            $notifications[] = [
+                'type' => 'withdrawal',
+                'icon' => 'mdi-bank',
+                'icon_bg' => 'bg-warning',
+                'title' => 'Pending Withdrawals',
+                'message' => "{$pendingWithdrawalsCount} pending withdrawal(s) totaling $" . number_format($pendingWithdrawalsAmount, 2) . " require approval",
+                'count' => $pendingWithdrawalsCount,
+                'url' => route('admin.withdrawals.index'),
+                'time' => Carbon::now()->diffForHumans(),
+            ];
+        }
+        
+        // Get new/unread chats
+        $unreadChatsCount = Chat::where('status', 'pending')
+            ->orWhere(function ($query) {
+                $query->where('status', 'active')
+                    ->whereHas('messages', function ($q) {
+                        $q->where('sender_type', 'user')
+                            ->where('is_read', false);
+                    });
+            })
+            ->count();
+        
+        if ($unreadChatsCount > 0) {
+            $notifications[] = [
+                'type' => 'chat',
+                'icon' => 'mdi-message-text',
+                'icon_bg' => 'bg-success',
+                'title' => 'New Chats',
+                'message' => "{$unreadChatsCount} new chat(s) require your attention",
+                'count' => $unreadChatsCount,
+                'url' => route('admin.chats.index'),
+                'time' => Carbon::now()->diffForHumans(),
+            ];
+        }
+        
+        $totalCount = $pendingDepositsCount + $pendingWithdrawalsCount + $unreadChatsCount;
+        
+        return response()->json([
+            'success' => true,
+            'notifications' => $notifications,
+            'total_count' => $totalCount,
+        ]);
+    }
+    
     public function form(){
         return view('admin.pages.form');
     }

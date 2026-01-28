@@ -1,7 +1,7 @@
 </div> <!-- content -->
 
 <footer class="footer">
-    © 2019 Zoter by Mannatthemes.
+    © {{ date('Y') }} Core Mining by HMS Developer.
 </footer>
 
 </div>

@@ -27,77 +27,30 @@
                             <a class="dropdown-item" href="#"><img src="assets/images/flags/russia_flag.jpg" alt="" height="16"/><span> Russian </span></a>
                         </div>
                     </li>
-                    <li class="list-inline-item dropdown notification-list">
-                        <a class="nav-link dropdown-toggle arrow-none waves-effect" data-toggle="dropdown" href="#" role="button"
-                           aria-haspopup="false" aria-expanded="false">
-                            <i class="ti-email noti-icon"></i>
-                            <span class="badge badge-danger noti-icon-badge">5</span>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right dropdown-arrow dropdown-menu-lg">
-                            <!-- item-->
-                            <div class="dropdown-item noti-title">
-                                <h5><span class="badge badge-danger float-right">745</span>Messages</h5>
-                            </div>
-
-                            <!-- item-->
-                            <a href="javascript:void(0);" class="dropdown-item notify-item">
-                                <div class="notify-icon"><img src="assets/images/users/avatar-2.jpg" alt="user-img" class="img-fluid rounded-circle" /> </div>
-                                <p class="notify-details"><b>Charles M. Jones</b><small class="text-muted">Dummy text of the printing and typesetting industry.</small></p>
-                            </a>
-
-                            <!-- item-->
-                            <a href="javascript:void(0);" class="dropdown-item notify-item">
-                                <div class="notify-icon"><img src="assets/images/users/avatar-3.jpg" alt="user-img" class="img-fluid rounded-circle" /> </div>
-                                <p class="notify-details"><b>Thomas J. Mimms</b><small class="text-muted">You have 87 unread messages</small></p>
-                            </a>
-
-                            <!-- item-->
-                            <a href="javascript:void(0);" class="dropdown-item notify-item">
-                                <div class="notify-icon"><img src="assets/images/users/avatar-4.jpg" alt="user-img" class="img-fluid rounded-circle" /> </div>
-                                <p class="notify-details"><b>Luis M. Konrad</b><small class="text-muted">It is a long established fact that a reader will</small></p>
-                            </a>
-
-                            <!-- All-->
-                            <a href="javascript:void(0);" class="dropdown-item notify-item">
-                                View All
-                            </a>
-
-                        </div>
-                    </li>
+                
 
                     <li class="list-inline-item dropdown notification-list">
                         <a class="nav-link dropdown-toggle arrow-none waves-effect" data-toggle="dropdown" href="#" role="button"
                            aria-haspopup="false" aria-expanded="false">
                             <i class="ti-bell noti-icon"></i>
-                            <span class="badge badge-success noti-icon-badge">23</span>
+                            <span class="badge badge-success noti-icon-badge" id="admin-notification-badge">0</span>
                         </a>
-                        <div class="dropdown-menu dropdown-menu-right dropdown-arrow dropdown-menu-lg">
+                        <div class="dropdown-menu dropdown-menu-right dropdown-arrow dropdown-menu-lg" id="admin-notifications-dropdown">
                             <!-- item-->
                             <div class="dropdown-item noti-title">
-                                <h5><span class="badge badge-danger float-right">87</span>Notification</h5>
+                                <h5><span class="badge badge-danger float-right" id="admin-notification-count">0</span>Notifications</h5>
+                            </div>
+                            
+                            <div id="admin-notifications-list">
+                                <!-- Notifications will be loaded here via AJAX -->
+                                <div class="dropdown-item notify-item text-center">
+                                    <p class="text-muted">Loading notifications...</p>
+                                </div>
                             </div>
 
-                            <!-- item-->
-                            <a href="javascript:void(0);" class="dropdown-item notify-item">
-                                <div class="notify-icon bg-primary"><i class="mdi mdi-cart-outline"></i></div>
-                                <p class="notify-details"><b>Your order is placed</b><small class="text-muted">Dummy text of the printing and typesetting industry.</small></p>
-                            </a>
-
-                            <!-- item-->
-                            <a href="javascript:void(0);" class="dropdown-item notify-item">
-                                <div class="notify-icon bg-success"><i class="mdi mdi-message"></i></div>
-                                <p class="notify-details"><b>New Message received</b><small class="text-muted">You have 87 unread messages</small></p>
-                            </a>
-
-                            <!-- item-->
-                            <a href="javascript:void(0);" class="dropdown-item notify-item">
-                                <div class="notify-icon bg-warning"><i class="mdi mdi-martini"></i></div>
-                                <p class="notify-details"><b>Your item is shipped</b><small class="text-muted">It is a long established fact that a reader will</small></p>
-                            </a>
-
                             <!-- All-->
-                            <a href="javascript:void(0);" class="dropdown-item notify-item">
-                                View All
+                            <a href="javascript:void(0);" class="dropdown-item notify-item text-center" id="view-all-notifications" style="display: none;">
+                                <strong>View All</strong>
                             </a>
 
                         </div>
@@ -106,18 +59,28 @@
                     <li class="list-inline-item dropdown notification-list">
                         <a class="nav-link dropdown-toggle arrow-none waves-effect nav-user" data-toggle="dropdown" href="#" role="button"
                            aria-haspopup="false" aria-expanded="false">
-                            <img src="assets/images/users/avatar-1.jpg" alt="user" class="rounded-circle">
-                            <span class="ml-2 text-white">{{ auth()->user()->name ?? 'Admin' }}</span>
+                            @php
+                                $admin = auth()->user();
+                                $profilePhoto = $admin->profile_photo ?? null;
+                            @endphp
+                            @if($profilePhoto && file_exists(public_path($profilePhoto)))
+                                <img src="{{ asset($profilePhoto) }}" alt="user" class="rounded-circle" style="width: 32px; height: 32px; object-fit: cover;">
+                            @else
+                                <div class="rounded-circle bg-primary text-white d-inline-flex align-items-center justify-content-center" style="width: 32px; height: 32px; font-weight: bold; font-size: 14px;">
+                                    {{ strtoupper(substr($admin->name ?? 'A', 0, 1)) }}
+                                </div>
+                            @endif
+                            <span class="ml-2 text-white">{{ $admin->name ?? 'Admin' }}</span>
                         </a>
-                        <div class="dropdown-menu dropdown-menu-right profile-dropdown ">
+                        <div class="dropdown-menu dropdown-menu-right profile-dropdown">
                             <!-- item-->
                             <div class="dropdown-item noti-title">
-                                <h5>Welcome, {{ auth()->user()->name ?? 'Admin' }}</h5>
+                                <h5>Welcome, {{ $admin->name ?? 'Admin' }}</h5>
+                                <small class="text-muted">{{ $admin->email ?? '' }}</small>
                             </div>
-                            <a class="dropdown-item" href="#"><i class="mdi mdi-account-circle m-r-5 text-muted"></i> Profile</a>
-                            <a class="dropdown-item" href="#"><i class="mdi mdi-wallet m-r-5 text-muted"></i> My Wallet</a>
-                            <a class="dropdown-item" href="#"><span class="badge badge-success float-right">5</span><i class="mdi mdi-settings m-r-5 text-muted"></i> Settings</a>
-                            <a class="dropdown-item" href="#"><i class="mdi mdi-lock-open-outline m-r-5 text-muted"></i> Lock screen</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="{{ route('admin.users.show', $admin->id) }}"><i class="mdi mdi-account-circle m-r-5 text-muted"></i> Profile</a>
+                            <a class="dropdown-item" href="{{ route('admin.index') }}"><i class="mdi mdi-view-dashboard m-r-5 text-muted"></i> Dashboard</a>
                             <div class="dropdown-divider"></div>
                             <form action="{{ route('admin.logout') }}" method="POST" class="d-inline">
                                 @csrf
