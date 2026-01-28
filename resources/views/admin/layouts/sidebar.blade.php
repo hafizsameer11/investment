@@ -36,6 +36,10 @@
                 @endauth
 
                 <div id="sidebar-menu">
+                    @php
+                        $currentRoute = Route::currentRouteName();
+                        $currentPath = request()->path();
+                    @endphp
                     <ul>
                         <li class="menu-title">Main</li>
 
@@ -108,7 +112,7 @@
                         </li>
 
                         <li class="has_sub">
-                            <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-bitcoin"></i> <span>
+                            <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-wallet"></i> <span>
                                     Crypto Wallets </span> <span class="float-right"><i
                                         class="mdi mdi-chevron-right"></i></span></a>
                             <ul class="list-unstyled">
@@ -120,14 +124,34 @@
                         <li>
                             <a href="{{ route('admin.deposits.index') }}" class="waves-effect">
                                 <i class="mdi mdi-cash-multiple"></i>
-                                <span> Deposits </span>
+                                <span> Deposits 
+                                    @php
+                                        $isOnDepositsPage = $currentRoute === 'admin.deposits.index' || strpos($currentPath, 'admin/deposits') !== false;
+                                        $showDepositsBadge = isset($pendingDepositsCount) && $pendingDepositsCount > 0 && !$isOnDepositsPage;
+                                    @endphp
+                                    @if($showDepositsBadge)
+                                        <span class="badge badge-pill badge-danger float-right" id="pending-deposits-badge">{{ $pendingDepositsCount }}</span>
+                                    @else
+                                        <span class="badge badge-pill badge-danger float-right" id="pending-deposits-badge" style="display: none;">0</span>
+                                    @endif
+                                </span>
                             </a>
                         </li>
 
                         <li>
                             <a href="{{ route('admin.withdrawals.index') }}" class="waves-effect">
                                 <i class="mdi mdi-bank"></i>
-                                <span> Withdrawals </span>
+                                <span> Withdrawals 
+                                    @php
+                                        $isOnWithdrawalsPage = $currentRoute === 'admin.withdrawals.index' || strpos($currentPath, 'admin/withdrawals') !== false;
+                                        $showWithdrawalsBadge = isset($pendingWithdrawalsCount) && $pendingWithdrawalsCount > 0 && !$isOnWithdrawalsPage;
+                                    @endphp
+                                    @if($showWithdrawalsBadge)
+                                        <span class="badge badge-pill badge-danger float-right" id="pending-withdrawals-badge">{{ $pendingWithdrawalsCount }}</span>
+                                    @else
+                                        <span class="badge badge-pill badge-danger float-right" id="pending-withdrawals-badge" style="display: none;">0</span>
+                                    @endif
+                                </span>
                             </a>
                         </li>
 
@@ -148,7 +172,17 @@
                         <li>
                             <a href="{{ route('admin.chats.index') }}" class="waves-effect">
                                 <i class="mdi mdi-message-text"></i>
-                                <span>Chats</span>
+                                <span>Chats
+                                    @php
+                                        $isOnChatsPage = $currentRoute === 'admin.chats.index' || strpos($currentPath, 'admin/chats') !== false;
+                                        $showChatsBadge = isset($unreadChatsCount) && $unreadChatsCount > 0 && !$isOnChatsPage;
+                                    @endphp
+                                    @if($showChatsBadge)
+                                        <span class="badge badge-pill badge-primary float-right" id="unread-chats-badge">{{ $unreadChatsCount }}</span>
+                                    @else
+                                        <span class="badge badge-pill badge-primary float-right" id="unread-chats-badge" style="display: none;">0</span>
+                                    @endif
+                                </span>
                             </a>
                         </li>
 
