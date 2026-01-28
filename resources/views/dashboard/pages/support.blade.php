@@ -602,7 +602,7 @@
 
     <!-- Quick Actions -->
     <div class="support-quick-actions-new">
-        <div class="support-quick-action-new">
+        <div class="support-quick-action-new" id="support247Action" style="cursor: pointer;">
             <div class="support-quick-action-icon-new">
                 <i class="fas fa-headset"></i>
             </div>
@@ -611,7 +611,7 @@
                 <p class="support-quick-action-desc-new">Round-the-clock assistance for all your queries</p>
             </div>
         </div>
-        <div class="support-quick-action-new">
+        <div class="support-quick-action-new" id="liveChatAction" style="cursor: pointer;">
             <div class="support-quick-action-icon-new">
                 <i class="fas fa-comments"></i>
             </div>
@@ -660,6 +660,18 @@
                             </button>
                         </div>
                     </div>
+                    <div class="support-channel-item-new">
+                        <div class="support-item-header-new">
+                            <div class="support-item-label-new">WhatsApp Customer Service</div>
+                        </div>
+                        <div class="support-item-value-new" id="whatsappCustomerService">+1 6725351819</div>
+                        <div class="support-item-actions-new">
+                            <button class="support-copy-btn-new" data-copy="whatsappCustomerService" title="Copy">
+                                <i class="fas fa-copy"></i>
+                                <span>Copy</span>
+                            </button>
+                        </div>
+                    </div>
                     {{-- <div class="support-channel-item-new">
                         <div class="support-item-header-new">
                             <div class="support-item-label-new">WhatsApp Number</div>
@@ -691,6 +703,18 @@
                         <div class="support-item-value-new" id="telegramChannel">https://t.me/+QTjJdyGyg7lkY2Zk</div>
                         <div class="support-item-actions-new">
                             <button class="support-copy-btn-new" data-copy="telegramChannel" title="Copy">
+                                <i class="fas fa-copy"></i>
+                                <span>Copy</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="support-channel-item-new">
+                        <div class="support-item-header-new">
+                            <div class="support-item-label-new">Telegram username</div>
+                        </div>
+                        <div class="support-item-value-new" id="telegramUsername">@Coremining3</div>
+                        <div class="support-item-actions-new">
+                            <button class="support-copy-btn-new" data-copy="telegramUsername" title="Copy">
                                 <i class="fas fa-copy"></i>
                                 <span>Copy</span>
                             </button>
@@ -779,6 +803,59 @@
                 }, 2000);
             }
         });
+    });
+
+    // 24/7 Support click handler - Show phone number
+    document.getElementById('support247Action')?.addEventListener('click', function() {
+        const phoneNumber = '+1 4502744130';
+        
+        // Copy phone number to clipboard
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(phoneNumber).then(() => {
+                // Show notification with phone number
+                alert('24/7 Support Phone Number:\n\n' + phoneNumber + '\n\n(Phone number copied to clipboard)');
+            }).catch(err => {
+                // Fallback: just show alert
+                alert('24/7 Support Phone Number:\n\n' + phoneNumber);
+            });
+        } else {
+            // Fallback: copy using execCommand
+            const textarea = document.createElement('textarea');
+            textarea.value = phoneNumber;
+            textarea.style.position = 'fixed';
+            textarea.style.opacity = '0';
+            document.body.appendChild(textarea);
+            textarea.select();
+            try {
+                document.execCommand('copy');
+                alert('24/7 Support Phone Number:\n\n' + phoneNumber + '\n\n(Phone number copied to clipboard)');
+            } catch (err) {
+                alert('24/7 Support Phone Number:\n\n' + phoneNumber);
+            }
+            document.body.removeChild(textarea);
+        }
+    });
+
+    // Live Chat click handler - Open chat window
+    document.getElementById('liveChatAction')?.addEventListener('click', function() {
+        // Try to trigger the chat button if it exists
+        const chatButton = document.getElementById('chatButton');
+        if (chatButton) {
+            chatButton.click();
+        } else {
+            // If chat button doesn't exist, try to show chat window directly
+            const liveChatWindow = document.getElementById('liveChatWindow');
+            if (liveChatWindow) {
+                liveChatWindow.style.display = 'flex';
+                // Also trigger checkForActiveChat if the function exists
+                if (typeof checkForActiveChat === 'function') {
+                    checkForActiveChat();
+                }
+            } else {
+                // Fallback: show message
+                alert('Chat feature is loading. Please wait a moment and try again.');
+            }
+        }
     });
 </script>
 @endpush
