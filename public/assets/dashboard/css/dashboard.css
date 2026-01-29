@@ -3433,7 +3433,7 @@ body {
     }
 
     /* Make header blend with page background on mobile */
-    @media (max-width: 390px) {
+    @media (max-width: 450px) {
         .dashboard-header {
             background: var(--bg-primary) !important;
             backdrop-filter: none !important;
@@ -4012,11 +4012,14 @@ body {
     }
 }
 
-/* Mobile Icon Animations for max-width: 390px */
-@media (max-width: 390px) {
+/* Mobile Icon Animations for max-width: 450px */
+@media (max-width: 450px) {
     /* Enhanced animations for smaller screens */
     .nav-icon-wrapper i,
     .mobile-nav-icon i,
+    .bottom-nav-link i {
+        transition: all 0.3s ease;
+    }
     .summary-icon i,
     .quick-stat-icon i,
     .hero-stat-icon i,

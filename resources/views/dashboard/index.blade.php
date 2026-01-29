@@ -399,7 +399,7 @@
         }
     }
 
-    @media (max-width: 390px) {
+    @media (max-width: 450px) {
         .wallet-info-row {
             gap: 0.5rem;
         }
@@ -1251,7 +1251,7 @@
         }
     }
 
-    @media (max-width: 390px) {
+    @media (max-width: 450px) {
         .mining-activity-item {
             padding: 0.75rem;
             gap: 0.625rem;
@@ -1408,7 +1408,7 @@
         }
     }
 
-    @media (max-width: 390px) {
+    @media (max-width: 450px) {
         .mining-activity-pagination {
             padding: 0.875rem 0.25rem;
             gap: 0.25rem;
@@ -1634,7 +1634,7 @@
         }
     }
 
-    @media (max-width: 390px) {
+    @media (max-width: 450px) {
         .referral-activity-modal-content {
             width: 100%;
             border-radius: 20px 20px 0 0;
@@ -1940,10 +1940,10 @@
 
     /* ============================================
        NATIVE MOBILE APP INTERFACE
-       Max-width: 390px (Mobile devices only)
+       Max-width: 450px (Mobile devices only)
        Flat Design | Card-Based | Production App UX
        ============================================ */
-    @media (max-width: 390px) {
+    @media (max-width: 450px) {
         /* Container - Mobile App Width - No Padding */
         .mining-dashboard {
             padding: 0;
@@ -2022,7 +2022,7 @@
         }
 
         /* Smaller icons on very small mobile screens */
-        @media (max-width: 390px) {
+        @media (max-width: 450px) {
             .wallet-action-icon {
                 width: 44px;
                 height: 44px;
@@ -2872,7 +2872,7 @@
         }
     }
 
-    @media (max-width: 390px) {
+    @media (max-width: 450px) {
         .live-earning-section {
             margin-bottom: 1rem;
         }

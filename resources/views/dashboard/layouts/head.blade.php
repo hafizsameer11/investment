@@ -62,7 +62,7 @@
     }
 
     /* Mobile App Interface - Max-width 390px */
-    @media (max-width: 390px) {
+    @media (max-width: 450px) {
         /* Compact header for mobile app - Blended with page background */
         .dashboard-header {
             position: sticky;
