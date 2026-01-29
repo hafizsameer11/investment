@@ -1088,7 +1088,7 @@
         }
     }
 
-    @media (max-width: 400px) {
+    @media (max-width: 450px) {
         .plans-new-page {
             padding: 0;
             width: 100%;
@@ -2463,7 +2463,7 @@
         }
     }
 
-    @media (max-width: 400px) {
+    @media (max-width: 450px) {
         .claim-earning-btn,
         .manage-active-plan-btn {
             font-size: 0.75rem;
