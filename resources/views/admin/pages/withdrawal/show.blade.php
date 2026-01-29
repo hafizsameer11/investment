@@ -175,7 +175,7 @@
                         <h5 class="card-title mb-3">Actions</h5>
 
                         <!-- Approve Form -->
-                        <form action="{{ route('admin.withdrawals.approve', $withdrawal->id) }}" method="POST" enctype="multipart/form-data" class="mb-3" onsubmit="return confirm('Are you sure you want to approve this withdrawal? You must upload a proof image.');">
+                        <form action="{{ route('admin.withdrawals.approve', $withdrawal->id) }}" method="POST" enctype="multipart/form-data" class="mb-3" data-confirm="Are you sure you want to approve this withdrawal? You must upload a proof image.">
                             @csrf
                             <div class="form-group">
                                 <label for="approve_proof">Proof Image <span class="text-danger">*</span>:</label>
@@ -192,7 +192,7 @@
                         </form>
 
                         <!-- Reject Form -->
-                        <form action="{{ route('admin.withdrawals.reject', $withdrawal->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to reject this withdrawal? The amount will be refunded to the user.');">
+                        <form action="{{ route('admin.withdrawals.reject', $withdrawal->id) }}" method="POST" data-confirm="Are you sure you want to reject this withdrawal? The amount will be refunded to the user.">
                             @csrf
                             <div class="form-group">
                                 <label for="reject_notes">Rejection Reason <span class="text-danger">*</span>:</label>

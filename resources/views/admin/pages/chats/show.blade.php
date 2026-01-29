@@ -328,7 +328,9 @@
                 // Validate file type
                 const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'];
                 if (!allowedTypes.includes(file.type)) {
-                    alert('Please select a valid image file (JPEG, PNG, GIF, or WEBP)');
+                    if (typeof window.showErrorMessage === 'function') {
+                        window.showErrorMessage('Please select a valid image file (JPEG, PNG, GIF, or WEBP)');
+                    }
                     adminChatImageInput.value = '';
                     return;
                 }
@@ -336,7 +338,9 @@
                 // Validate file size (5MB max)
                 const maxSize = 5 * 1024 * 1024; // 5MB in bytes
                 if (file.size > maxSize) {
-                    alert('Image size must be less than 5MB');
+                    if (typeof window.showErrorMessage === 'function') {
+                        window.showErrorMessage('Image size must be less than 5MB');
+                    }
                     adminChatImageInput.value = '';
                     return;
                 }
@@ -365,12 +369,16 @@
                 adminChatImageInput.value = '';
                 location.reload();
             } else {
-                alert(data.message || 'Failed to send image');
+                if (typeof window.showErrorMessage === 'function') {
+                    window.showErrorMessage(data.message || 'Failed to send image');
+                }
             }
         })
         .catch(error => {
             console.error('Error:', error);
-            alert('Error sending image. Please try again.');
+            if (typeof window.showErrorMessage === 'function') {
+                window.showErrorMessage('Error sending image. Please try again.');
+            }
         });
     }
 
@@ -423,25 +431,29 @@
         })
         .catch(error => {
             console.error('Error:', error);
-            alert('Error sending message. Please try again.');
+            if (typeof window.showErrorMessage === 'function') {
+                window.showErrorMessage('Error sending message. Please try again.');
+            }
         });
     });
 
     // Close chat
     document.getElementById('closeChatBtn')?.addEventListener('click', function() {
-        if (confirm('Are you sure you want to close this chat?')) {
-            fetch(closeChatUrl, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                }
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    location.reload();
-                }
+        if (typeof window.showConfirmDialog === 'function') {
+            window.showConfirmDialog('Are you sure you want to close this chat?', function() {
+                fetch(closeChatUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        location.reload();
+                    }
+                });
             });
         }
     });

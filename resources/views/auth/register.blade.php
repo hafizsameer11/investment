@@ -5,6 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Core Mining ⛏️- AI Gold Mining ⛏️</title>
+
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Register Now with Core Mining and Start Your Online Earning Journey">
+    <meta property="og:description" content="Register with Core Mining today and begin your online earning journey! Core Mining is a gold mining company that mines gold and distributes the profits with its users.">
+    <meta property="og:image" content="{{ asset('assets/dashboard/images/invite/invite.jpeg') }}">
+    <meta property="og:url" content="{{ request()->fullUrl() }}">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Register Now with Core Mining and Start Your Online Earning Journey">
+    <meta name="twitter:description" content="Register with Core Mining today and begin your online earning journey! Core Mining is a gold mining company that mines gold and distributes the profits with its users.">
+    <meta name="twitter:image" content="{{ asset('assets/dashboard/images/invite/invite.jpeg') }}">
+
     <!-- Favicon -->
     <link rel="icon" type="image/jpeg" href="{{ asset('assets/dashboard/images/meta/logo.jfif') }}">
     <!-- Apple Touch Icons for iOS -->

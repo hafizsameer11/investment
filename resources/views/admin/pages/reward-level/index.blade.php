@@ -115,7 +115,7 @@
                                             <a href="{{ route('admin.reward-level.edit', $rewardLevel->id) }}" class="btn btn-sm btn-primary waves-effect waves-light" title="Edit">
                                                 <i class="mdi mdi-pencil"></i>
                                             </a>
-                                            <form action="{{ route('admin.reward-level.destroy', $rewardLevel->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Are you sure you want to delete this reward level?');">
+                                            <form action="{{ route('admin.reward-level.destroy', $rewardLevel->id) }}" method="POST" class="d-inline" data-confirm="Are you sure you want to delete this reward level?">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="btn btn-sm btn-danger waves-effect waves-light" title="Delete">

@@ -132,44 +132,49 @@ $(function() {
         const button = $(this);
         const userId = button.data('user-id');
         const userName = button.data('user-name');
-        
-        // Confirm deletion
-        if (!confirm('Are you sure you want to delete user "' + userName + '"?\n\nThis action cannot be undone!')) {
-            return;
+
+        // Confirm deletion (no browser popup)
+        if (typeof window.showConfirmDialog === 'function') {
+            window.showConfirmDialog('Are you sure you want to delete user "' + userName + '"?\n\nThis action cannot be undone!', function() {
+                doDelete();
+            });
         }
-        
-        // Disable button and show loading state
-        button.prop('disabled', true);
-        const originalHtml = button.html();
-        button.html('<i class="mdi mdi-loading mdi-spin"></i>');
-        
-        // Make AJAX DELETE request
-        $.ajax({
-            url: '{{ url("/admin/users") }}/' + userId,
-            type: 'POST',
-            data: {
-                _method: 'DELETE',
-                _token: '{{ csrf_token() }}'
-            },
-            success: function(response) {
-                // Reload page to show success message and updated table
-                window.location.reload();
-            },
-            error: function(xhr) {
-                // Re-enable button
-                button.prop('disabled', false);
-                button.html(originalHtml);
-                
-                // Show error message
-                let errorMsg = 'Failed to delete user. Please try again.';
-                if (xhr.responseJSON && xhr.responseJSON.message) {
-                    errorMsg = xhr.responseJSON.message;
+
+        function doDelete() {
+            // Disable button and show loading state
+            button.prop('disabled', true);
+            const originalHtml = button.html();
+            button.html('<i class="mdi mdi-loading mdi-spin"></i>');
+            
+            // Make AJAX DELETE request
+            $.ajax({
+                url: '{{ url("/admin/users") }}/' + userId,
+                type: 'POST',
+                data: {
+                    _method: 'DELETE',
+                    _token: '{{ csrf_token() }}'
+                },
+                success: function(response) {
+                    // Reload page to show success message and updated table
+                    window.location.reload();
+                },
+                error: function(xhr) {
+                    // Re-enable button
+                    button.prop('disabled', false);
+                    button.html(originalHtml);
+                    
+                    // Show error message
+                    let errorMsg = 'Failed to delete user. Please try again.';
+                    if (xhr.responseJSON && xhr.responseJSON.message) {
+                        errorMsg = xhr.responseJSON.message;
+                    }
+                    if (typeof window.showErrorMessage === 'function') {
+                        window.showErrorMessage(errorMsg);
+                    }
                 }
-                alert(errorMsg);
-            }
-        });
+            });
+        }
     });
 });
 </script>
 @endpush
-

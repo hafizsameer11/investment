@@ -156,7 +156,9 @@
             // Helper function to handle error
             const handleError = function(message) {
                 reEnableButton();
-                alert(message || 'An error occurred. Please try again.');
+                if (typeof window.showErrorMessage === 'function') {
+                    window.showErrorMessage(message || 'An error occurred. Please try again.');
+                }
             };
             
             // First check if there's an existing active chat for this email
@@ -283,7 +285,9 @@
                 // Validate file type
                 const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'];
                 if (!allowedTypes.includes(file.type)) {
-                    alert('Please select a valid image file (JPEG, PNG, GIF, or WEBP)');
+                    if (typeof window.showErrorMessage === 'function') {
+                        window.showErrorMessage('Please select a valid image file (JPEG, PNG, GIF, or WEBP)');
+                    }
                     chatImageInput.value = '';
                     return;
                 }
@@ -291,7 +295,9 @@
                 // Validate file size (5MB max)
                 const maxSize = 5 * 1024 * 1024; // 5MB in bytes
                 if (file.size > maxSize) {
-                    alert('Image size must be less than 5MB');
+                    if (typeof window.showErrorMessage === 'function') {
+                        window.showErrorMessage('Image size must be less than 5MB');
+                    }
                     chatImageInput.value = '';
                     return;
                 }
@@ -324,7 +330,9 @@
                 sendChatMessage.style.opacity = '1';
                 sendChatMessage.style.cursor = 'pointer';
             }
-            alert('Security token not found. Please refresh the page.');
+            if (typeof window.showErrorMessage === 'function') {
+                window.showErrorMessage('Security token not found. Please refresh the page.');
+            }
             return;
         }
 
@@ -348,12 +356,16 @@
                 chatImageInput.value = '';
                 addMessageToUI(data.message);
             } else {
-                alert(data.message || 'Failed to send image');
+                if (typeof window.showErrorMessage === 'function') {
+                    window.showErrorMessage(data.message || 'Failed to send image');
+                }
             }
         })
         .catch(error => {
             console.error('Error sending image:', error);
-            alert('Error: ' + (error.message || 'Failed to send image. Please try again.'));
+            if (typeof window.showErrorMessage === 'function') {
+                window.showErrorMessage('Error: ' + (error.message || 'Failed to send image. Please try again.'));
+            }
         })
         .finally(() => {
             // Re-enable send button
@@ -394,7 +406,9 @@
                 sendChatMessage.style.opacity = '1';
                 sendChatMessage.style.cursor = 'pointer';
             }
-            alert('Security token not found. Please refresh the page.');
+            if (typeof window.showErrorMessage === 'function') {
+                window.showErrorMessage('Security token not found. Please refresh the page.');
+            }
             return;
         }
 
@@ -436,12 +450,16 @@
                 }
                 addMessageToUI(data.message);
             } else {
-                alert(data.message || 'Failed to send message');
+                if (typeof window.showErrorMessage === 'function') {
+                    window.showErrorMessage(data.message || 'Failed to send message');
+                }
             }
         })
         .catch(error => {
             console.error('Error sending message:', error);
-            alert('Error: ' + (error.message || 'Failed to send message. Please try again.'));
+            if (typeof window.showErrorMessage === 'function') {
+                window.showErrorMessage('Error: ' + (error.message || 'Failed to send message. Please try again.'));
+            }
         })
         .finally(() => {
             // Re-enable send button

@@ -168,7 +168,7 @@
                         <h5 class="card-title mb-3">Actions</h5>
 
                         <!-- Approve Form -->
-                        <form action="{{ route('admin.deposits.approve', $deposit->id) }}" method="POST" class="mb-3" onsubmit="return confirm('Are you sure you want to approve this deposit? This will add ${{ number_format($deposit->amount, 2) }} to the user\'s Fund Wallet.');">
+                        <form action="{{ route('admin.deposits.approve', $deposit->id) }}" method="POST" class="mb-3" data-confirm="Are you sure you want to approve this deposit? This will add ${{ number_format($deposit->amount, 2) }} to the user's Fund Wallet.">
                             @csrf
                             <div class="form-group">
                                 <label for="approve_notes">Admin Notes (Optional):</label>
@@ -180,7 +180,7 @@
                         </form>
 
                         <!-- Reject Form -->
-                        <form action="{{ route('admin.deposits.reject', $deposit->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to reject this deposit?');">
+                        <form action="{{ route('admin.deposits.reject', $deposit->id) }}" method="POST" data-confirm="Are you sure you want to reject this deposit?">
                             @csrf
                             <div class="form-group">
                                 <label for="reject_notes">Rejection Reason <span class="text-danger">*</span>:</label>

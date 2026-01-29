@@ -159,7 +159,9 @@
         if (notificationType === 'specific_users') {
             if (!userIds.value || userIds.value.length === 0) {
                 e.preventDefault();
-                alert('Please select at least one user.');
+                if (typeof window.showErrorMessage === 'function') {
+                    window.showErrorMessage('Please select at least one user.');
+                }
                 return false;
             }
         }

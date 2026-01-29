@@ -122,7 +122,7 @@
                                             <a href="{{ route('admin.mining-plan.edit', $plan->id) }}" class="btn btn-sm btn-primary waves-effect waves-light" title="Edit">
                                                 <i class="mdi mdi-pencil"></i>
                                             </a>
-                                            <form action="{{ route('admin.mining-plan.destroy', $plan->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Are you sure you want to delete this mining plan?');">
+                                            <form action="{{ route('admin.mining-plan.destroy', $plan->id) }}" method="POST" class="d-inline" data-confirm="Are you sure you want to delete this mining plan?">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="btn btn-sm btn-danger waves-effect waves-light" title="Delete">

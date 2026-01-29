@@ -620,26 +620,24 @@
     }
 
     document.getElementById('markAllReadBtn')?.addEventListener('click', function() {
-        if (confirm('Mark all notifications as read?')) {
-            fetch('{{ route("notifications.mark-all-read") }}', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                }
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    document.querySelectorAll('.notification-card').forEach(card => {
-                        card.classList.remove('unread');
-                    });
-                    document.getElementById('markAllReadBtn')?.remove();
-                    updateUnreadCount();
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
+        if (typeof window.showConfirmDialog === 'function') {
+            window.showConfirmDialog('Mark all notifications as read?', function() {
+                fetch('{{ route("notifications.mark-all-read") }}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        window.location.reload();
+                    }
+                })
+                .catch(error => {
+                    console.error('Error marking all notifications as read:', error);
+                });
             });
         }
     });

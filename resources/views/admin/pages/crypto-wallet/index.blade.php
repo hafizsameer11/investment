@@ -127,7 +127,7 @@
                                                 <a href="{{ route('admin.crypto-wallet.edit', $wallet->id) }}" class="btn btn-sm btn-warning">
                                                     <i class="mdi mdi-pencil"></i>
                                                 </a>
-                                                <form action="{{ route('admin.crypto-wallet.destroy', $wallet->id) }}" method="POST" style="display: inline;" onsubmit="return confirm('Are you sure you want to delete this crypto wallet?');">
+                                                <form action="{{ route('admin.crypto-wallet.destroy', $wallet->id) }}" method="POST" style="display: inline;" data-confirm="Are you sure you want to delete this crypto wallet?">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit" class="btn btn-sm btn-danger">

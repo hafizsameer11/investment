@@ -143,7 +143,7 @@
                                             <a href="{{ route('admin.deposit-payment-method.edit', $paymentMethod->id) }}" class="btn btn-sm btn-primary waves-effect waves-light" title="Edit">
                                                 <i class="mdi mdi-pencil"></i>
                                             </a>
-                                            <form action="{{ route('admin.deposit-payment-method.destroy', $paymentMethod->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Are you sure you want to delete this payment method?');">
+                                            <form action="{{ route('admin.deposit-payment-method.destroy', $paymentMethod->id) }}" method="POST" class="d-inline" data-confirm="Are you sure you want to delete this payment method?">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="btn btn-sm btn-danger waves-effect waves-light" title="Delete">

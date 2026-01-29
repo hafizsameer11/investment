@@ -346,8 +346,10 @@
     function handleTimerExpired() {
         stopStepTimer();
 
-        // Show alert
-        alert('Time expired! Your deposit request has been cancelled. Please start the process again.');
+        // Show styled message
+        if (typeof window.showInfoMessage === 'function') {
+            window.showInfoMessage('Time expired! Your deposit request has been cancelled. Please start the process again.');
+        }
 
         // Redirect to deposit selection page
         const depositIndexUrl = document.getElementById('depositIndexUrl')?.value || '/user/dashboard/deposit';

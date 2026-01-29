@@ -105,7 +105,7 @@
                                             <a href="{{ route('admin.investment-commission.edit', $commission->id) }}" class="btn btn-sm btn-primary waves-effect waves-light" title="Edit">
                                                 <i class="mdi mdi-pencil"></i>
                                             </a>
-                                            <form action="{{ route('admin.investment-commission.destroy', $commission->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Are you sure you want to delete this commission structure?');">
+                                            <form action="{{ route('admin.investment-commission.destroy', $commission->id) }}" method="POST" class="d-inline" data-confirm="Are you sure you want to delete this commission structure?">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="btn btn-sm btn-danger waves-effect waves-light" title="Delete">
