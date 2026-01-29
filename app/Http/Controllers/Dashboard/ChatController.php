@@ -10,6 +10,7 @@ use App\Models\ChatMessage;
 use App\Services\NotificationService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class ChatController extends Controller
 {
@@ -375,5 +376,23 @@ class ChatController extends Controller
                 ];
             }),
         ]);
+    }
+
+    /**
+     * Serve a chat image stored on the public disk.
+     */
+    public function serveImage(string $path)
+    {
+        $normalizedPath = ltrim($path, '/');
+
+        if (!str_starts_with($normalizedPath, 'chat-images/')) {
+            abort(404);
+        }
+
+        if (!Storage::disk('public')->exists($normalizedPath)) {
+            abort(404);
+        }
+
+        return response()->file(Storage::disk('public')->path($normalizedPath));
     }
 }

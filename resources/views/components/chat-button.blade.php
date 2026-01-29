@@ -395,6 +395,7 @@
 .live-chat-input-actions {
     display: flex;
     gap: 0.5rem;
+    flex-shrink: 0;
 }
 
 .chat-action-btn {
@@ -423,6 +424,7 @@
     border-radius: 20px;
     font-size: 0.9375rem;
     outline: none;
+    min-width: 0;
 }
 
 .live-chat-input:focus {
@@ -441,6 +443,7 @@
     align-items: center;
     justify-content: center;
     transition: all 0.2s;
+    flex-shrink: 0;
 }
 
 .live-chat-send:hover {
@@ -462,6 +465,11 @@
         right: 5%;
         left: auto;
         border-radius: 16px;
+    }
+
+    .live-chat-input-container {
+        gap: 0.375rem;
+        padding: 0.75rem;
     }
 
     .chat-button-container {

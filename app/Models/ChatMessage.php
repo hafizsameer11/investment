@@ -127,6 +127,6 @@ class ChatMessage extends Model
             return null;
         }
 
-        return asset('storage/' . $this->image_path);
+        return url('chat/image/' . ltrim($this->image_path, '/'));
     }
 }

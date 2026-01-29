@@ -122,6 +122,9 @@ Route::post('/chat/start', [ChatController::class, 'startChat'])->name('chat.sta
 Route::post('/chat/{id}/message', [ChatController::class, 'sendMessage'])->name('chat.send-message.public');
 Route::get('/chat/{id}/messages', [ChatController::class, 'getMessages'])->name('chat.messages.public');
 Route::post('/chat/{id}/mark-read', [ChatController::class, 'markMessagesAsRead'])->name('chat.mark-read.public');
+Route::get('/chat/image/{path}', [ChatController::class, 'serveImage'])
+    ->where('path', '.*')
+    ->name('chat.image');
 
 // Under Construction Page
 Route::get('/under-construction', function () {
