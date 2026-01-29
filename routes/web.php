@@ -43,6 +43,21 @@ use App\Http\Controllers\Admin\AuthController as AdminAuthController;
 |
 */
 
+// Under Construction Page - Active Route
+Route::get('/under-construction', function () {
+    return view('under-construction');
+})->name('under-construction');
+
+// Catch-all route - redirect all requests to under construction
+Route::fallback(function () {
+    return redirect()->route('under-construction');
+});
+
+// ============================================================================
+// ALL ROUTES BELOW ARE COMMENTED OUT - SITE IS UNDER CONSTRUCTION
+// ============================================================================
+
+/*
 // Authentication Routes
 Route::middleware('guest')->group(function () {
     Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
@@ -264,6 +279,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
         Route::get('/unread-count', [AdminChatController::class, 'getUnreadCount'])->name('unread-count');
     });
 });
+*/
 
 // Database Seeder Route (for production use)
 // Access: /run-seeders?token=YOUR_SECRET_TOKEN
