@@ -92,7 +92,7 @@
                                required>
                     </div>
                     <div class="deposit-timer-wrapper">
-                        <span class="deposit-timer" id="depositTimerStep1">00:40</span>
+                        <span class="deposit-timer" id="depositTimerStep1">30:00</span>
                     </div>
                 </div>
 
@@ -130,7 +130,7 @@
                         </div>
                     </div>
                     <div class="deposit-timer-wrapper">
-                        <span class="deposit-timer" id="depositTimerStep2">00:40</span>
+                        <span class="deposit-timer" id="depositTimerStep2">30:00</span>
                     </div>
                 </div>
 
@@ -172,7 +172,7 @@
                                required>
                     </div>
                     <div class="deposit-timer-wrapper">
-                        <span class="deposit-timer" id="depositTimerStep3">00:40</span>
+                        <span class="deposit-timer" id="depositTimerStep3">30:00</span>
                     </div>
                 </div>
 

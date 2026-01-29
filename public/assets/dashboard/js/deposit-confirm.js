@@ -1,6 +1,6 @@
 /**
  * Deposit Confirmation Page - JavaScript
- * Handles multi-step deposit confirmation with 40-second timer on each step
+ * Handles multi-step deposit confirmation with 30-minute timer on each step
  */
 
 (function() {
@@ -10,7 +10,7 @@
     let currentStep = 1;
     let stepTimer = null;
     let stepTimerSeconds = 0;
-    const TIMER_DURATION = 40; // 40 seconds per step
+    const TIMER_DURATION = 1800; // 30 minutes per step (1800 seconds)
 
     // Form data storage
     let formData = {
@@ -332,8 +332,8 @@
         const seconds = stepTimerSeconds % 60;
         timerElement.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
 
-        // Add warning class when time is running out
-        if (stepTimerSeconds <= 10) {
+        // Add warning class when time is running out (5 minutes remaining)
+        if (stepTimerSeconds <= 300) {
             timerElement.classList.add('warning');
         } else {
             timerElement.classList.remove('warning');

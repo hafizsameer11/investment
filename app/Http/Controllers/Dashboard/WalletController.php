@@ -322,7 +322,12 @@ class WalletController extends Controller
             ->orderBy('network', 'asc')
             ->get();
         
-        return view('dashboard.pages.withdraw', compact('paymentMethods', 'withdrawals', 'conversionRate', 'cryptoWallets'));
+        // Check if user has pending withdrawal
+        $hasPendingWithdrawal = Withdrawal::where('user_id', auth()->id())
+            ->where('status', 'pending')
+            ->exists();
+        
+        return view('dashboard.pages.withdraw', compact('paymentMethods', 'withdrawals', 'conversionRate', 'cryptoWallets', 'hasPendingWithdrawal'));
     }
 
     /**
@@ -368,7 +373,12 @@ class WalletController extends Controller
                 ->with('error', 'Insufficient balance. Your available withdrawal balance is $' . number_format($totalAvailableBalance, 2) . '. You can only withdraw from mining and referral earnings.');
         }
 
-        return view('dashboard.pages.withdraw-confirm', compact('paymentMethod', 'amount'));
+        // Check if user has pending withdrawal
+        $hasPendingWithdrawal = Withdrawal::where('user_id', $user->id)
+            ->where('status', 'pending')
+            ->exists();
+
+        return view('dashboard.pages.withdraw-confirm', compact('paymentMethod', 'amount', 'hasPendingWithdrawal'));
     }
 
     /**
@@ -476,10 +486,16 @@ class WalletController extends Controller
                 ->with('error', 'Insufficient balance. Your available withdrawal balance is $' . number_format($totalAvailableBalance, 2) . '. You can only withdraw from mining and referral earnings.');
         }
 
+        // Check if user has pending withdrawal
+        $hasPendingWithdrawal = Withdrawal::where('user_id', $user->id)
+            ->where('status', 'pending')
+            ->exists();
+
         return view('dashboard.pages.crypto-withdraw-confirm', compact(
             'paymentMethod',
             'cryptoWallet',
-            'amount'
+            'amount',
+            'hasPendingWithdrawal'
         ));
     }
 
@@ -532,6 +548,19 @@ class WalletController extends Controller
             DB::beginTransaction();
 
             $user = auth()->user();
+
+            // Check if user has pending withdrawal
+            $pendingWithdrawal = Withdrawal::where('user_id', $user->id)
+                ->where('status', 'pending')
+                ->exists();
+
+            if ($pendingWithdrawal) {
+                DB::rollBack();
+                return response()->json([
+                    'success' => false,
+                    'message' => 'You have a pending withdrawal request. Please wait for it to be approved or rejected before submitting a new request.',
+                ], 422);
+            }
 
             // Validate payment method is allowed for withdrawal
             if (!$paymentMethod->is_active || !$paymentMethod->allowed_for_withdrawal) {

@@ -95,6 +95,47 @@
         line-height: 1.3;
     }
 
+    /* Pending Withdrawal Warning */
+    .pending-withdrawal-warning {
+        background: rgba(255, 178, 30, 0.1);
+        border: 2px solid rgba(255, 178, 30, 0.4);
+        border-radius: 16px;
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .pending-withdrawal-warning-content {
+        display: flex;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+
+    .pending-withdrawal-icon {
+        font-size: 1.5rem;
+        color: #FFB21E;
+        flex-shrink: 0;
+        margin-top: 0.125rem;
+    }
+
+    .pending-withdrawal-text {
+        flex: 1;
+    }
+
+    .pending-withdrawal-title {
+        margin: 0 0 0.5rem 0;
+        color: var(--text-primary);
+        font-size: 1rem;
+        font-weight: 700;
+        line-height: 1.3;
+    }
+
+    .pending-withdrawal-message {
+        margin: 0;
+        color: var(--text-secondary);
+        font-size: 0.875rem;
+        line-height: 1.5;
+    }
+
     /* Payment Methods Grid */
     .withdraw-payment-methods {
         display: grid;
@@ -1146,6 +1187,31 @@
             font-weight: 700;
             margin-bottom: 1.5rem;
         }
+
+        .pending-withdrawal-warning {
+            padding: 1.25rem;
+            margin-bottom: 1.25rem;
+            border-radius: 12px;
+        }
+
+        .pending-withdrawal-warning-content {
+            gap: 0.875rem;
+        }
+
+        .pending-withdrawal-icon {
+            font-size: 1.25rem;
+            margin-top: 0.125rem;
+        }
+
+        .pending-withdrawal-title {
+            font-size: 0.9375rem;
+            margin-bottom: 0.375rem;
+        }
+
+        .pending-withdrawal-message {
+            font-size: 0.8125rem;
+            line-height: 1.4;
+        }
     }
 
     @media (max-width: 390px) {
@@ -1236,8 +1302,22 @@
     <div class="withdraw-content-grid">
         <!-- Left Panel - Withdraw Form -->
         <div class="withdraw-form-section">
+            @if($hasPendingWithdrawal ?? false)
+            <!-- Pending Withdrawal Warning -->
+            <div class="pending-withdrawal-warning">
+                <div class="pending-withdrawal-warning-content">
+                    <i class="fas fa-exclamation-triangle pending-withdrawal-icon"></i>
+                    <div class="pending-withdrawal-text">
+                        <h3 class="pending-withdrawal-title">Pending Withdrawal Request</h3>
+                        <p class="pending-withdrawal-message">
+                            Please wait for your current withdrawal to be processed before submitting a new request.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            @endif
             <!-- Payment Method Selection -->
-            <div class="withdraw-section-card">
+            <div class="withdraw-section-card" @if($hasPendingWithdrawal ?? false) style="opacity: 0.6; pointer-events: none;" @endif>
                 <h2 class="withdraw-section-title">Selected Payment Method</h2>
                 <div class="withdraw-payment-methods">
                     @forelse($paymentMethods as $paymentMethod)
@@ -1489,6 +1569,40 @@
 <script>
     let selectedPaymentMethod = null;
     const conversionRate = parseFloat({{ $conversionRate ?? 0 }}) || 0;
+    const hasPendingWithdrawal = {{ ($hasPendingWithdrawal ?? false) ? 'true' : 'false' }};
+    
+    // Disable form elements if user has pending withdrawal
+    if (hasPendingWithdrawal) {
+        document.addEventListener('DOMContentLoaded', function() {
+            // Disable all payment method selections
+            document.querySelectorAll('.withdraw-payment-method').forEach(method => {
+                method.style.pointerEvents = 'none';
+                method.style.opacity = '0.6';
+                method.style.cursor = 'not-allowed';
+            });
+            
+            // Disable amount input
+            const amountInput = document.getElementById('withdraw-amount-input');
+            if (amountInput) {
+                amountInput.disabled = true;
+                amountInput.style.cursor = 'not-allowed';
+            }
+            
+            // Disable preset amount buttons
+            document.querySelectorAll('.withdraw-preset-btn').forEach(btn => {
+                btn.disabled = true;
+                btn.style.cursor = 'not-allowed';
+                btn.style.opacity = '0.6';
+            });
+            
+            // Disable continue button
+            const continueBtn = document.getElementById('withdraw-continue-btn');
+            if (continueBtn) {
+                continueBtn.disabled = true;
+                continueBtn.style.cursor = 'not-allowed';
+            }
+        });
+    }
     
     // Crypto wallets data for minimum withdrawal calculation
     const cryptoWallets = @json($cryptoWallets ?? []);

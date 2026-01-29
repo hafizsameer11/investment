@@ -281,6 +281,25 @@
             font-size: 0.875rem;
         }
 
+        /* Pending withdrawal warning mobile styles */
+        .crypto-pending-warning {
+            padding: 1rem !important;
+            margin-bottom: 1.25rem !important;
+        }
+
+        .crypto-pending-title {
+            font-size: 0.875rem !important;
+            margin-bottom: 0.25rem !important;
+        }
+
+        .crypto-pending-message {
+            font-size: 0.75rem !important;
+        }
+
+        .crypto-pending-icon {
+            font-size: 1.125rem !important;
+        }
+
         .crypto-amount-breakdown {
             padding: 1rem;
             margin-bottom: 1.25rem;
@@ -373,6 +392,22 @@
     </div>
 
     <div class="crypto-withdraw-card">
+        @if($hasPendingWithdrawal ?? false)
+        <!-- Pending Withdrawal Warning -->
+        <div class="crypto-pending-warning" style="background: rgba(255, 178, 30, 0.1); border: 2px solid rgba(255, 178, 30, 0.4); border-radius: 12px; padding: 1.25rem; margin-bottom: 1.5rem;">
+            <div style="display: flex; align-items: flex-start; gap: 0.875rem;">
+                <i class="fas fa-exclamation-triangle crypto-pending-icon" style="font-size: 1.25rem; color: #FFB21E; flex-shrink: 0; margin-top: 0.125rem;"></i>
+                <div style="flex: 1;">
+                    <h3 class="crypto-pending-title" style="margin: 0 0 0.375rem 0; color: var(--text-primary); font-size: 0.9375rem; font-weight: 700; line-height: 1.3;">
+                        Pending Withdrawal Request
+                    </h3>
+                    <p class="crypto-pending-message" style="margin: 0; color: var(--text-secondary); font-size: 0.8125rem; line-height: 1.4;">
+                        Please wait for your current withdrawal to be processed before submitting a new request.
+                    </p>
+                </div>
+            </div>
+        </div>
+        @endif
         <p class="crypto-withdraw-instruction">
             Enter your {{ $cryptoWallet->token }} wallet address to receive the withdrawal via {{ $cryptoWallet->network_display_name }} network.
         </p>
@@ -402,19 +437,20 @@
         </div>
 
         <!-- User Wallet Address Form -->
-        <div class="crypto-user-wallet-form">
+        <div class="crypto-user-wallet-form" @if($hasPendingWithdrawal ?? false) style="opacity: 0.6; pointer-events: none;" @endif>
             <div class="crypto-form-group">
                 <label class="crypto-form-label">Your {{ $cryptoWallet->token }} Wallet Address <span style="color: var(--danger-color);">*</span></label>
                 <input type="text" 
                        class="crypto-form-input" 
                        id="userWalletAddress" 
                        placeholder="Enter your {{ $cryptoWallet->token }} wallet address for receiving the withdrawal"
+                       @if($hasPendingWithdrawal ?? false) disabled @endif
                        required>
                 <small style="color: var(--text-secondary); margin-top: 0.5rem; display: block;">
                     Make sure you're using the {{ $cryptoWallet->network_display_name }} network. Sending to the wrong network may result in permanent loss.
                 </small>
             </div>
-            <button class="crypto-submit-btn" id="submitWithdrawBtn">
+            <button class="crypto-submit-btn" id="submitWithdrawBtn" @if($hasPendingWithdrawal ?? false) disabled style="opacity: 0.6; cursor: not-allowed;" @endif>
                 Submit Withdrawal Request
             </button>
             <a href="{{ route('withdraw.index') }}" class="crypto-cancel-btn">

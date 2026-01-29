@@ -88,8 +88,24 @@
                 </div>
             </div>
 
+            @if($hasPendingWithdrawal ?? false)
+            <!-- Pending Withdrawal Warning -->
+            <div style="background: rgba(255, 178, 30, 0.1); border: 2px solid rgba(255, 178, 30, 0.4); border-radius: 12px; padding: 1.25rem; margin-bottom: 1.5rem;">
+                <div style="display: flex; align-items: flex-start; gap: 0.875rem;">
+                    <i class="fas fa-exclamation-triangle" style="font-size: 1.25rem; color: #FFB21E; flex-shrink: 0; margin-top: 0.125rem;"></i>
+                    <div style="flex: 1;">
+                        <h3 style="margin: 0 0 0.375rem 0; color: var(--text-primary); font-size: 0.9375rem; font-weight: 700; line-height: 1.3;">
+                            Pending Withdrawal Request
+                        </h3>
+                        <p style="margin: 0; color: var(--text-secondary); font-size: 0.8125rem; line-height: 1.4;">
+                            Please wait for your current withdrawal to be processed before submitting a new request.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            @endif
             <!-- Step 1: Enter Account Details -->
-            <div class="deposit-step-content active" id="step1Content">
+            <div class="deposit-step-content active" id="step1Content" @if($hasPendingWithdrawal ?? false) style="opacity: 0.6; pointer-events: none;" @endif>
                 <div class="deposit-step-icon">
                     <i class="fas fa-user-circle"></i>
                 </div>
@@ -138,7 +154,7 @@
 
                
 
-                <button class="deposit-continue-btn" id="continueToStep2" disabled>
+                <button class="deposit-continue-btn" id="continueToStep2" disabled @if($hasPendingWithdrawal ?? false) style="opacity: 0.6; cursor: not-allowed;" @endif>
                     <span>Continue</span>
                 </button>
             </div>
@@ -156,7 +172,7 @@
                     <p>After admin approval, the money will be transferred to your account.</p>
                 </div>
 
-                <button class="deposit-continue-btn" id="submitWithdrawal">
+                <button class="deposit-continue-btn" id="submitWithdrawal" @if($hasPendingWithdrawal ?? false) disabled style="opacity: 0.6; cursor: not-allowed;" @endif>
                     <span>Submit Withdrawal Request</span>
                 </button>
             </div>
