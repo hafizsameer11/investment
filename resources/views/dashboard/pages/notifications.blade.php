@@ -385,31 +385,66 @@
     }
 
     /* Pagination Styles */
-    .notifications-page .pagination {
+    .notifications-pagination-wrapper {
         display: flex;
         justify-content: center;
         align-items: center;
         gap: 0.5rem;
         padding: 1.5rem 0;
-        margin: 0;
-        list-style: none;
         flex-wrap: wrap;
     }
 
-    .notifications-page .page-item {
-        margin: 0;
+    .notifications-pagination-btn {
         display: flex;
         align-items: center;
         justify-content: center;
+        width: 36px;
+        height: 36px;
+        padding: 0;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 8px;
+        color: var(--text-primary);
+        text-decoration: none;
+        transition: all 0.2s ease;
+        cursor: pointer;
     }
 
-    .notifications-page .page-link {
+    .notifications-pagination-btn i {
+        font-size: 0.75rem;
+        color: var(--text-primary);
+    }
+
+    .notifications-pagination-btn:hover:not(:disabled) {
+        background: rgba(255, 178, 30, 0.1);
+        border-color: rgba(255, 178, 30, 0.3);
+        box-shadow: 0 0 12px rgba(255, 178, 30, 0.2);
+        transform: translateY(-1px);
+    }
+
+    .notifications-pagination-btn:hover:not(:disabled) i {
+        color: var(--primary-color);
+    }
+
+    .notifications-pagination-btn:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+        color: var(--text-secondary);
+        background: rgba(255, 255, 255, 0.03);
+        border-color: rgba(255, 255, 255, 0.05);
+    }
+
+    .notifications-pagination-btn:disabled i {
+        color: var(--text-secondary);
+    }
+
+    .notifications-pagination-page {
         display: flex;
         align-items: center;
         justify-content: center;
-        min-width: 40px;
-        height: 40px;
-        padding: 0.5rem 0.75rem;
+        min-width: 36px;
+        height: 36px;
+        padding: 0 0.75rem;
         background: rgba(255, 255, 255, 0.05);
         border: 1px solid rgba(255, 255, 255, 0.1);
         border-radius: 8px;
@@ -419,35 +454,9 @@
         font-weight: 500;
         transition: all 0.2s ease;
         cursor: pointer;
-        line-height: 1;
     }
 
-    /* Target all page links and ensure consistent sizing */
-    .notifications-page .page-link,
-    .notifications-page .page-link * {
-        font-size: 0.875rem !important;
-        line-height: 1 !important;
-    }
-
-    /* Previous/Next links with chevrons - ensure they're not oversized */
-    .notifications-page .page-link[rel="prev"],
-    .notifications-page .page-link[rel="next"],
-    .notifications-page .page-link[aria-label*="Previous"],
-    .notifications-page .page-link[aria-label*="Next"],
-    .notifications-page .page-item:first-child .page-link,
-    .notifications-page .page-item:last-child .page-link {
-        font-size: 0.875rem !important;
-        padding: 0.5rem 1rem;
-        min-width: auto;
-    }
-
-    /* Ensure chevron characters are properly sized */
-    .notifications-page .page-link {
-        font-size: 0.875rem !important;
-    }
-
-    /* Hover state */
-    .notifications-page .page-link:hover:not(:disabled) {
+    .notifications-pagination-page:hover {
         background: rgba(255, 178, 30, 0.1);
         border-color: rgba(255, 178, 30, 0.3);
         color: var(--primary-color);
@@ -455,8 +464,7 @@
         transform: translateY(-1px);
     }
 
-    /* Active state */
-    .notifications-page .page-item.active .page-link {
+    .notifications-pagination-page.active {
         background: rgba(255, 178, 30, 0.2);
         border-color: rgba(255, 178, 30, 0.4);
         color: var(--primary-color);
@@ -464,47 +472,26 @@
         box-shadow: 0 0 12px rgba(255, 178, 30, 0.3);
     }
 
-    /* Disabled state */
-    .notifications-page .page-item.disabled .page-link {
-        opacity: 0.5;
-        cursor: not-allowed;
-        color: var(--text-secondary);
-        background: rgba(255, 255, 255, 0.03);
-        border-color: rgba(255, 255, 255, 0.05);
-    }
-
-    .notifications-page .page-item.disabled .page-link:hover {
-        transform: none;
-        box-shadow: none;
-        background: rgba(255, 255, 255, 0.03);
-        border-color: rgba(255, 255, 255, 0.05);
-        color: var(--text-secondary);
-    }
-
-    /* Ensure chevrons are properly sized - target any large text */
-    .notifications-page .pagination .page-link {
-        line-height: 1;
-    }
-
     /* Mobile responsive pagination */
     @media (max-width: 768px) {
-        .notifications-page .pagination {
+        .notifications-pagination-wrapper {
             gap: 0.375rem;
             padding: 1rem 0;
         }
 
-        .notifications-page .page-link {
-            min-width: 36px;
-            height: 36px;
-            padding: 0.5rem;
-            font-size: 0.8125rem;
+        .notifications-pagination-btn {
+            width: 32px;
+            height: 32px;
         }
 
-        .notifications-page .page-link[rel="prev"],
-        .notifications-page .page-link[rel="next"],
-        .notifications-page .page-link[aria-label*="Previous"],
-        .notifications-page .page-link[aria-label*="Next"] {
-            padding: 0.5rem 0.75rem;
+        .notifications-pagination-btn i {
+            font-size: 0.6875rem;
+        }
+
+        .notifications-pagination-page {
+            min-width: 32px;
+            height: 32px;
+            padding: 0 0.625rem;
             font-size: 0.8125rem;
         }
     }
@@ -570,8 +557,34 @@
 
     <!-- Pagination -->
     @if($notifications->hasPages())
-    <div class="mt-4">
-        {{ $notifications->links() }}
+    <div class="notifications-pagination-wrapper">
+        @if($notifications->onFirstPage())
+            <button disabled class="notifications-pagination-btn">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+        @else
+            <a href="{{ $notifications->previousPageUrl() }}" class="notifications-pagination-btn">
+                <i class="fas fa-chevron-left"></i>
+            </a>
+        @endif
+
+        @foreach($notifications->getUrlRange(1, $notifications->lastPage()) as $page => $url)
+            @if($page == $notifications->currentPage())
+                <span class="notifications-pagination-page active">{{ $page }}</span>
+            @else
+                <a href="{{ $url }}" class="notifications-pagination-page">{{ $page }}</a>
+            @endif
+        @endforeach
+
+        @if($notifications->hasMorePages())
+            <a href="{{ $notifications->nextPageUrl() }}" class="notifications-pagination-btn">
+                <i class="fas fa-chevron-right"></i>
+            </a>
+        @else
+            <button disabled class="notifications-pagination-btn">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+        @endif
     </div>
     @endif
 </div>
