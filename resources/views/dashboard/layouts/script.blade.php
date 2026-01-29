@@ -56,6 +56,32 @@
         }
     });
 
+    // Mobile bottom navigation visibility control - Hide on desktop
+    function toggleMobileNavVisibility() {
+        const mobileNav = document.getElementById('mobileBottomNav');
+        if (mobileNav) {
+            if (window.innerWidth > 768) {
+                // Desktop: Hide mobile navigation
+                mobileNav.style.display = 'none';
+                mobileNav.style.visibility = 'hidden';
+                mobileNav.style.opacity = '0';
+            } else {
+                // Mobile: Show mobile navigation (CSS will handle this, but ensure it's visible)
+                mobileNav.style.display = '';
+                mobileNav.style.visibility = '';
+                mobileNav.style.opacity = '';
+            }
+        }
+    }
+
+    // Run on page load
+    document.addEventListener('DOMContentLoaded', function() {
+        toggleMobileNavVisibility();
+        
+        // Run on window resize
+        window.addEventListener('resize', toggleMobileNavVisibility);
+    });
+
     // Mobile bottom navigation active state
     document.addEventListener('DOMContentLoaded', function() {
         const currentRoute = '{{ request()->route() ? request()->route()->getName() : "" }}';

@@ -3509,8 +3509,22 @@ body {
    Mobile Bottom Navigation
    ============================================ */
 
+/* Mobile Bottom Navigation - Hidden by default on desktop */
 .mobile-bottom-nav {
-    display: none;
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+}
+
+/* Explicitly hide on desktop screens */
+@media (min-width: 769px) {
+    .mobile-bottom-nav {
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+        height: 0 !important;
+        overflow: hidden !important;
+    }
 }
 
 @media (max-width: 768px) {
@@ -3652,9 +3666,11 @@ body {
         padding-bottom: 10px; /* Space for bottom nav */
     }
 
-    /* Mobile Bottom Navigation */
+    /* Mobile Bottom Navigation - Show only on mobile */
     .mobile-bottom-nav {
-        display: flex;
+        display: flex !important;
+        visibility: visible !important;
+        opacity: 1 !important;
         position: fixed;
         bottom: 0;
         left: 0;
@@ -3670,6 +3686,7 @@ body {
         align-items: center;
         height: 72px;
         box-sizing: border-box;
+        overflow: visible !important;
     }
 
     .mobile-nav-item {

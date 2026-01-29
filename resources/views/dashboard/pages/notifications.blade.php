@@ -383,6 +383,131 @@
             font-size: 0.75rem;
         }
     }
+
+    /* Pagination Styles */
+    .notifications-page .pagination {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 1.5rem 0;
+        margin: 0;
+        list-style: none;
+        flex-wrap: wrap;
+    }
+
+    .notifications-page .page-item {
+        margin: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .notifications-page .page-link {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 40px;
+        height: 40px;
+        padding: 0.5rem 0.75rem;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 8px;
+        color: var(--text-primary);
+        text-decoration: none;
+        font-size: 0.875rem;
+        font-weight: 500;
+        transition: all 0.2s ease;
+        cursor: pointer;
+        line-height: 1;
+    }
+
+    /* Target all page links and ensure consistent sizing */
+    .notifications-page .page-link,
+    .notifications-page .page-link * {
+        font-size: 0.875rem !important;
+        line-height: 1 !important;
+    }
+
+    /* Previous/Next links with chevrons - ensure they're not oversized */
+    .notifications-page .page-link[rel="prev"],
+    .notifications-page .page-link[rel="next"],
+    .notifications-page .page-link[aria-label*="Previous"],
+    .notifications-page .page-link[aria-label*="Next"],
+    .notifications-page .page-item:first-child .page-link,
+    .notifications-page .page-item:last-child .page-link {
+        font-size: 0.875rem !important;
+        padding: 0.5rem 1rem;
+        min-width: auto;
+    }
+
+    /* Ensure chevron characters are properly sized */
+    .notifications-page .page-link {
+        font-size: 0.875rem !important;
+    }
+
+    /* Hover state */
+    .notifications-page .page-link:hover:not(:disabled) {
+        background: rgba(255, 178, 30, 0.1);
+        border-color: rgba(255, 178, 30, 0.3);
+        color: var(--primary-color);
+        box-shadow: 0 0 12px rgba(255, 178, 30, 0.2);
+        transform: translateY(-1px);
+    }
+
+    /* Active state */
+    .notifications-page .page-item.active .page-link {
+        background: rgba(255, 178, 30, 0.2);
+        border-color: rgba(255, 178, 30, 0.4);
+        color: var(--primary-color);
+        font-weight: 600;
+        box-shadow: 0 0 12px rgba(255, 178, 30, 0.3);
+    }
+
+    /* Disabled state */
+    .notifications-page .page-item.disabled .page-link {
+        opacity: 0.5;
+        cursor: not-allowed;
+        color: var(--text-secondary);
+        background: rgba(255, 255, 255, 0.03);
+        border-color: rgba(255, 255, 255, 0.05);
+    }
+
+    .notifications-page .page-item.disabled .page-link:hover {
+        transform: none;
+        box-shadow: none;
+        background: rgba(255, 255, 255, 0.03);
+        border-color: rgba(255, 255, 255, 0.05);
+        color: var(--text-secondary);
+    }
+
+    /* Ensure chevrons are properly sized - target any large text */
+    .notifications-page .pagination .page-link {
+        line-height: 1;
+    }
+
+    /* Mobile responsive pagination */
+    @media (max-width: 768px) {
+        .notifications-page .pagination {
+            gap: 0.375rem;
+            padding: 1rem 0;
+        }
+
+        .notifications-page .page-link {
+            min-width: 36px;
+            height: 36px;
+            padding: 0.5rem;
+            font-size: 0.8125rem;
+        }
+
+        .notifications-page .page-link[rel="prev"],
+        .notifications-page .page-link[rel="next"],
+        .notifications-page .page-link[aria-label*="Previous"],
+        .notifications-page .page-link[aria-label*="Next"] {
+            padding: 0.5rem 0.75rem;
+            font-size: 0.8125rem;
+        }
+    }
 </style>
 @endpush
 
