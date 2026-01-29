@@ -43,21 +43,6 @@ use App\Http\Controllers\Admin\AuthController as AdminAuthController;
 |
 */
 
-// Under Construction Page - Active Route
-Route::get('/under-construction', function () {
-    return view('under-construction');
-})->name('under-construction');
-
-// Catch-all route - redirect all requests to under construction
-Route::fallback(function () {
-    return redirect()->route('under-construction');
-});
-
-// ============================================================================
-// ALL ROUTES BELOW ARE COMMENTED OUT - SITE IS UNDER CONSTRUCTION
-// ============================================================================
-
-/*
 // Authentication Routes
 Route::middleware('guest')->group(function () {
     Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
@@ -137,6 +122,11 @@ Route::post('/chat/start', [ChatController::class, 'startChat'])->name('chat.sta
 Route::post('/chat/{id}/message', [ChatController::class, 'sendMessage'])->name('chat.send-message.public');
 Route::get('/chat/{id}/messages', [ChatController::class, 'getMessages'])->name('chat.messages.public');
 Route::post('/chat/{id}/mark-read', [ChatController::class, 'markMessagesAsRead'])->name('chat.mark-read.public');
+
+// Under Construction Page
+Route::get('/under-construction', function () {
+    return view('under-construction');
+})->name('under-construction');
 
 // Home route - redirect to login
 Route::get('/', function () {
@@ -279,7 +269,6 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
         Route::get('/unread-count', [AdminChatController::class, 'getUnreadCount'])->name('unread-count');
     });
 });
-*/
 
 // Database Seeder Route (for production use)
 // Access: /run-seeders?token=YOUR_SECRET_TOKEN

@@ -131,6 +131,20 @@
             }
         }
 
+        .back-link {
+            display: inline-block;
+            margin-top: 2rem;
+            color: #FFB21E;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .back-link:hover {
+            color: #FF8A1D;
+            transform: translateX(-5px);
+        }
+
         @media (max-width: 768px) {
             .construction-card {
                 padding: 2rem 1.5rem;
@@ -211,6 +225,10 @@
             <div class="progress-bar-container">
                 <div class="progress-bar"></div>
             </div>
+
+            <a href="{{ route('login') }}" class="back-link">
+                <i class="fas fa-arrow-left"></i> Back to Login
+            </a>
         </div>
     </div>
 </body>
