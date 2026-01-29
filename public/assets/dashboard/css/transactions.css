@@ -717,7 +717,7 @@
     }
 }
 
-@media (max-width: 400px) {
+@media (max-width: 450px) {
     .transactions-page-modern {
         padding: 0;
         width: 100%;

@@ -1061,7 +1061,7 @@
         }
     }
 
-    @media (max-width: 400px) {
+    @media (max-width: 450px) {
         .transactions-new-page {
             padding: 0;
             width: 100%;
