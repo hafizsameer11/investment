@@ -29,7 +29,11 @@ class AuthController extends Controller
      */
     public function showRegisterForm()
     {
-        return view('auth.register');
+        $referralCode = request()->query('ref');
+
+        return view('auth.register', [
+            'referralCode' => $referralCode,
+        ]);
     }
 
     /**
