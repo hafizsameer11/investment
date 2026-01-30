@@ -15,6 +15,88 @@
         -webkit-overflow-scrolling: touch;
     }
 
+    .wallet-pagination {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 1.5rem 1rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        flex-wrap: wrap;
+    }
+
+    .wallet-pagination-button {
+        width: 36px;
+        height: 36px;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--text-primary);
+        cursor: pointer;
+        transition: all 0.2s ease;
+        text-decoration: none;
+    }
+
+    .wallet-pagination-button:hover:not(:disabled) {
+        background: rgba(255, 178, 30, 0.1);
+        border-color: rgba(255, 178, 30, 0.3);
+        color: var(--primary-color);
+    }
+
+    .wallet-pagination-button:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+        color: var(--text-secondary);
+    }
+
+    .wallet-pagination-numbers {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .wallet-pagination-number {
+        min-width: 36px;
+        height: 36px;
+        padding: 0 0.75rem;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--text-primary);
+        text-decoration: none;
+        font-size: 0.875rem;
+        font-weight: 500;
+        transition: all 0.2s ease;
+        cursor: pointer;
+    }
+
+    .wallet-pagination-number:hover {
+        background: rgba(255, 178, 30, 0.1);
+        border-color: rgba(255, 178, 30, 0.3);
+        color: var(--primary-color);
+    }
+
+    .wallet-pagination-number.active {
+        background: rgba(255, 178, 30, 0.2);
+        border-color: rgba(255, 178, 30, 0.4);
+        color: var(--primary-color);
+        font-weight: 600;
+    }
+
+    .wallet-pagination-ellipsis {
+        color: var(--text-secondary);
+        padding: 0 0.25rem;
+        font-weight: 700;
+    }
+
     /* App-like touch interactions */
     @media (max-width: 768px) {
         * {
@@ -27,6 +109,28 @@
 
         button:active, a:active, [role="button"]:active {
             opacity: 0.8;
+        }
+
+        .wallet-pagination {
+            padding: 1rem 0.5rem;
+            gap: 0.375rem;
+        }
+
+        .wallet-pagination-button {
+            width: 32px;
+            height: 32px;
+        }
+
+        .wallet-pagination-number {
+            min-width: 32px;
+            height: 32px;
+            padding: 0 0.5rem;
+            font-size: 0.8125rem;
+        }
+
+        .wallet-pagination-ellipsis {
+            padding: 0 0.5rem;
+            font-size: 0.8125rem;
         }
     }
 
@@ -3516,47 +3620,49 @@ ls-referrer-section-new {
                         }
                     @endphp
 
-                    <div class="referrals-pagination">
+                    <div class="wallet-pagination">
                         @if($referrals->onFirstPage())
-                            <span class="pagination-btn disabled">
+                            <button class="wallet-pagination-button" disabled>
                                 <i class="fas fa-chevron-left"></i>
-                            </span>
+                            </button>
                         @else
-                            <a href="{{ $referrals->previousPageUrl() }}" class="pagination-link pagination-btn">
+                            <a href="{{ $referrals->previousPageUrl() }}" class="pagination-link wallet-pagination-button">
                                 <i class="fas fa-chevron-left"></i>
                             </a>
                         @endif
 
-                        @if($startPage > 1)
-                            <a href="{{ $referrals->url(1) }}" class="pagination-link pagination-number">1</a>
-                            @if($startPage > 2)
-                                <span class="pagination-ellipsis">...</span>
+                        <div class="wallet-pagination-numbers">
+                            @if($startPage > 1)
+                                <a class="pagination-link wallet-pagination-number" href="{{ $referrals->url(1) }}">1</a>
+                                @if($startPage > 2)
+                                    <span class="wallet-pagination-ellipsis">...</span>
+                                @endif
                             @endif
-                        @endif
 
-                        @for($page = $startPage; $page <= $endPage; $page++)
-                            @if($page == $currentPage)
-                                <span class="pagination-number active">{{ $page }}</span>
-                            @else
-                                <a href="{{ $referrals->url($page) }}" class="pagination-link pagination-number">{{ $page }}</a>
-                            @endif
-                        @endfor
+                            @for($page = $startPage; $page <= $endPage; $page++)
+                                @if($page == $currentPage)
+                                    <span class="wallet-pagination-number active">{{ $page }}</span>
+                                @else
+                                    <a class="pagination-link wallet-pagination-number" href="{{ $referrals->url($page) }}">{{ $page }}</a>
+                                @endif
+                            @endfor
 
-                        @if($endPage < $lastPage)
-                            @if($endPage < $lastPage - 1)
-                                <span class="pagination-ellipsis">...</span>
+                            @if($endPage < $lastPage)
+                                @if($endPage < $lastPage - 1)
+                                    <span class="wallet-pagination-ellipsis">...</span>
+                                @endif
+                                <a class="pagination-link wallet-pagination-number" href="{{ $referrals->url($lastPage) }}">{{ $lastPage }}</a>
                             @endif
-                            <a href="{{ $referrals->url($lastPage) }}" class="pagination-link pagination-number">{{ $lastPage }}</a>
-                        @endif
+                        </div>
 
                         @if($referrals->hasMorePages())
-                            <a href="{{ $referrals->nextPageUrl() }}" class="pagination-link pagination-btn">
+                            <a href="{{ $referrals->nextPageUrl() }}" class="pagination-link wallet-pagination-button">
                                 <i class="fas fa-chevron-right"></i>
                             </a>
                         @else
-                            <span class="pagination-btn disabled">
+                            <button class="wallet-pagination-button" disabled>
                                 <i class="fas fa-chevron-right"></i>
-                            </span>
+                            </button>
                         @endif
                     </div>
                 @endif
@@ -3898,41 +4004,45 @@ ls-referrer-section-new {
                 startPage = Math.max(1, endPage - 4);
             }
 
-            html += '<div class="referrals-pagination">';
+            html += '<div class="wallet-pagination">';
 
             if (currentPage === 1) {
-                html += '<span class="pagination-btn disabled"><i class="fas fa-chevron-left"></i></span>';
+                html += '<button class="wallet-pagination-button" disabled><i class="fas fa-chevron-left"></i></button>';
             } else {
-                html += `<a href="${pagination.previous_page_url}" class="pagination-link pagination-btn"><i class="fas fa-chevron-left"></i></a>`;
+                html += `<a href="${pagination.previous_page_url}" class="pagination-link wallet-pagination-button"><i class="fas fa-chevron-left"></i></a>`;
             }
 
+            html += '<div class="wallet-pagination-numbers">';
+
             if (startPage > 1) {
-                html += `<a href="${pagination.url_range['1']}" class="pagination-link pagination-number">1</a>`;
+                html += `<a href="${pagination.url_range['1']}" class="pagination-link wallet-pagination-number">1</a>`;
                 if (startPage > 2) {
-                    html += '<span class="pagination-ellipsis">...</span>';
+                    html += '<span class="wallet-pagination-ellipsis">...</span>';
                 }
             }
 
             for (let page = startPage; page <= endPage; page++) {
                 const pageUrl = pagination.url_range[String(page)];
                 if (page === currentPage) {
-                    html += `<span class="pagination-number active">${page}</span>`;
+                    html += `<span class="wallet-pagination-number active">${page}</span>`;
                 } else {
-                    html += `<a href="${pageUrl}" class="pagination-link pagination-number">${page}</a>`;
+                    html += `<a href="${pageUrl}" class="pagination-link wallet-pagination-number">${page}</a>`;
                 }
             }
 
             if (endPage < lastPage) {
                 if (endPage < lastPage - 1) {
-                    html += '<span class="pagination-ellipsis">...</span>';
+                    html += '<span class="wallet-pagination-ellipsis">...</span>';
                 }
-                html += `<a href="${pagination.url_range[String(lastPage)]}" class="pagination-link pagination-number">${lastPage}</a>`;
+                html += `<a href="${pagination.url_range[String(lastPage)]}" class="pagination-link wallet-pagination-number">${lastPage}</a>`;
             }
 
+            html += '</div>';
+
             if (pagination.has_more_pages) {
-                html += `<a href="${pagination.next_page_url}" class="pagination-link pagination-btn"><i class="fas fa-chevron-right"></i></a>`;
+                html += `<a href="${pagination.next_page_url}" class="pagination-link wallet-pagination-button"><i class="fas fa-chevron-right"></i></a>`;
             } else {
-                html += '<span class="pagination-btn disabled"><i class="fas fa-chevron-right"></i></span>';
+                html += '<button class="wallet-pagination-button" disabled><i class="fas fa-chevron-right"></i></button>';
             }
 
             html += '</div>';
