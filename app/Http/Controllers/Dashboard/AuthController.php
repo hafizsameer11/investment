@@ -11,11 +11,40 @@ use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
 use Exception;
 
 class AuthController extends Controller
 {
+    private function normalizePakistaniPhone(?string $phone): ?string
+    {
+        if ($phone === null) {
+            return null;
+        }
+
+        $digitsOnly = preg_replace('/\D+/', '', $phone);
+        if ($digitsOnly === '') {
+            return null;
+        }
+
+        // Strip leading country code 92 if present
+        if (preg_match('/^92\d{10}$/', $digitsOnly)) {
+            $digitsOnly = substr($digitsOnly, 2);
+        }
+
+        // Accept 10 digits (without leading 0) or 11 digits starting with 0
+        if (preg_match('/^\d{10}$/', $digitsOnly)) {
+            return '0' . $digitsOnly;
+        }
+
+        if (preg_match('/^0\d{10}$/', $digitsOnly)) {
+            return $digitsOnly;
+        }
+
+        return null;
+    }
+
     /**
      * Show the login form.
      */
@@ -49,31 +78,27 @@ class AuthController extends Controller
      */
     public function register(Request $request)
     {
-        $validated = $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'username' => ['nullable', 'string', 'max:255', 'unique:users,username'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
-            'phone' => ['required', 'string', 'max:20'],
-            'password' => ['required', 'string', 'min:8'],
-            'referral_code' => ['required', 'string', 'exists:users,refer_code'],
-        ], [
-            'referral_code.exists' => 'The referral code does not exist. Please enter a valid referral code.',
-        ]);
-
-        // Custom validation for Pakistani phone number
-        $phone = $request->input('phone');
-        // Remove spaces, dashes, and parentheses
-        $cleanPhone = preg_replace('/[\s\-()]/', '', $phone);
-        // Remove +92 country code if present
-        $cleanPhone = preg_replace('/^\+?92/', '', $cleanPhone);
-
-        // Check if it's a valid Pakistani number (10-11 digits)
-        // Should be 11 digits if starts with 0, or 10 digits without 0
-        if (!preg_match('/^(0[0-9]{10}|[0-9]{10})$/', $cleanPhone)) {
+        $normalizedPhone = $this->normalizePakistaniPhone($request->input('phone'));
+        if ($normalizedPhone === null) {
             return redirect()->back()
                 ->withInput()
                 ->withErrors(['phone' => 'Please enter a valid Pakistani phone number. Format: 03001234567 (11 digits starting with 0) or +92 300 1234567.']);
         }
+
+        // Validate against the normalized phone so different formats cannot bypass uniqueness
+        $request->merge(['phone' => $normalizedPhone]);
+
+        $validated = $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'username' => ['nullable', 'string', 'max:255', 'unique:users,username'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
+            'phone' => ['required', 'string', 'max:20', Rule::unique('users', 'phone')],
+            'password' => ['required', 'string', 'min:8'],
+            'referral_code' => ['required', 'string', 'exists:users,refer_code'],
+        ], [
+            'referral_code.exists' => 'The referral code does not exist. Please enter a valid referral code.',
+            'phone.unique' => 'An account with this phone number already exists.',
+        ]);
 
         // Create user first (without referral code)
         $user = User::create([

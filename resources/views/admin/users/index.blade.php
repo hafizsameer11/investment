@@ -44,6 +44,20 @@
                             </a>
                         </div>
 
+                        <form method="GET" action="{{ route('admin.users.index') }}" class="mb-3">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="input-group">
+                                        <input type="text" name="q" value="{{ request()->query('q') }}" class="form-control" placeholder="Search by email or phone">
+                                        <div class="input-group-append">
+                                            <button type="submit" class="btn btn-primary">Search</button>
+                                            <a href="{{ route('admin.users.index') }}" class="btn btn-light">Clear</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+
                         <div class="table-rep-plugin">
                             <div class="table-responsive b-0" data-pattern="priority-columns">
                                 <table id="users-table" class="table table-striped">

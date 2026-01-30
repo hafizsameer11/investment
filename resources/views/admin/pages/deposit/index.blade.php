@@ -9,6 +9,34 @@
     .table-wrapper .btn-toolbar {
         display: none !important;
     }
+
+    @media (max-width: 576px) {
+        .deposits-topbar {
+            flex-wrap: wrap;
+            align-items: flex-start !important;
+            gap: 10px;
+        }
+
+        .deposits-topbar .header-title {
+            width: 100%;
+            margin-bottom: 0;
+        }
+
+        .deposits-filter-actions {
+            width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .deposits-filter-actions .btn {
+            flex: 1 1 calc(50% - 8px);
+            width: 100%;
+            padding-left: 10px;
+            padding-right: 10px;
+            white-space: nowrap;
+        }
+    }
 </style>
 @endpush
 
@@ -58,9 +86,9 @@
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-body">
-                        <div class="d-flex justify-content-between align-items-center mb-3">
+                        <div class="d-flex justify-content-between align-items-center mb-3 deposits-topbar">
                             <h4 class="mt-0 header-title">All Deposits</h4>
-                            <div>
+                            <div class="deposits-filter-actions">
                                 <a href="{{ route('admin.deposits.index', ['status' => 'pending']) }}" class="btn btn-warning waves-effect waves-light">
                                     <i class="mdi mdi-clock"></i> Pending
                                 </a>
@@ -116,8 +144,8 @@
                                             @endif
                                         </td>
                                         <td>
-                                            {{ $deposit->created_at->format('M d, Y') }}<br>
-                                            <small class="text-muted">{{ $deposit->created_at->format('h:i A') }}</small>
+                                            {{ $deposit->created_at->timezone('Asia/Karachi')->format('M d, Y') }}<br>
+                                            <small class="text-muted">{{ $deposit->created_at->timezone('Asia/Karachi')->format('h:i A') }}</small>
                                         </td>
                                         <td>
                                             <a href="{{ route('admin.deposits.show', $deposit->id) }}" class="btn btn-sm btn-info waves-effect waves-light" title="View Details">

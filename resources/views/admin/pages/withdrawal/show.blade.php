@@ -114,16 +114,16 @@
                                         <tr>
                                             <th>Submitted:</th>
                                             <td>
-                                                {{ $withdrawal->created_at->format('M d, Y') }}<br>
-                                                <small class="text-muted">{{ $withdrawal->created_at->format('h:i A') }}</small>
+                                                {{ $withdrawal->created_at->timezone('Asia/Karachi')->format('M d, Y') }}<br>
+                                                <small class="text-muted">{{ $withdrawal->created_at->timezone('Asia/Karachi')->format('h:i A') }}</small>
                                             </td>
                                         </tr>
                                         @if($withdrawal->approved_at)
                                         <tr>
                                             <th>Processed:</th>
                                             <td>
-                                                {{ $withdrawal->approved_at->format('M d, Y') }}<br>
-                                                <small class="text-muted">{{ $withdrawal->approved_at->format('h:i A') }}</small>
+                                                {{ $withdrawal->approved_at->timezone('Asia/Karachi')->format('M d, Y') }}<br>
+                                                <small class="text-muted">{{ $withdrawal->approved_at->timezone('Asia/Karachi')->format('h:i A') }}</small>
                                             </td>
                                         </tr>
                                         @if($withdrawal->approver)
@@ -211,7 +211,7 @@
                         <div class="alert alert-{{ $withdrawal->status === 'approved' ? 'success' : 'danger' }}">
                             <strong>This withdrawal has been {{ $withdrawal->status }}.</strong>
                             @if($withdrawal->approved_at)
-                                <br><small>Processed on {{ $withdrawal->approved_at->format('M d, Y h:i A') }}</small>
+                                <br><small>Processed on {{ $withdrawal->approved_at->timezone('Asia/Karachi')->format('M d, Y h:i A') }}</small>
                             @endif
                         </div>
                     </div>

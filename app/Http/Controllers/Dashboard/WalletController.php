@@ -111,6 +111,23 @@ class WalletController extends Controller
         
         // Sort all transactions by created_at descending
         $allTransactions = $allTransactions->sortByDesc('created_at')->values();
+
+        // Paginate transactions (5 per page)
+        $currentPage = request()->get('page', 1);
+        $perPage = 5;
+        $total = $allTransactions->count();
+        $items = $allTransactions->forPage($currentPage, $perPage)->values();
+        $totalPages = (int) ceil($total / $perPage);
+
+        $transactionsData = [
+            'data' => $items,
+            'current_page' => (int) $currentPage,
+            'per_page' => $perPage,
+            'total' => $total,
+            'last_page' => $totalPages,
+            'from' => $total > 0 ? (($currentPage - 1) * $perPage + 1) : 0,
+            'to' => $total > 0 ? min($currentPage * $perPage, $total) : 0,
+        ];
         
         // Calculate total deposits (all-time)
         $totalDeposits = Deposit::where('user_id', $user->id)
@@ -124,7 +141,7 @@ class WalletController extends Controller
         
         return view('dashboard.pages.wallet', [
             'balances' => $balances,
-            'transactions' => $allTransactions,
+            'transactionsData' => $transactionsData,
             'totalDeposits' => $totalDeposits,
             'totalWithdrawals' => $totalWithdrawals,
         ]);

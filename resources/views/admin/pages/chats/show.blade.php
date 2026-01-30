@@ -118,6 +118,31 @@
         border-radius: 8px;
         cursor: pointer;
     }
+
+    @media (max-width: 576px) {
+        .chat-topbar {
+            flex-wrap: wrap;
+            align-items: flex-start !important;
+            gap: 10px;
+        }
+
+        .chat-actions {
+            width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .chat-actions .ml-2 {
+            margin-left: 0 !important;
+        }
+
+        .chat-actions .btn {
+            flex: 1 1 calc(50% - 8px);
+            width: 100%;
+            white-space: nowrap;
+        }
+    }
 </style>
 @endpush
 
@@ -155,12 +180,12 @@
                     <div class="card-body">
                         <div class="chat-container">
                             <div class="chat-header-info">
-                                <div class="d-flex justify-content-between align-items-center">
+                                <div class="d-flex justify-content-between align-items-center chat-topbar">
                                     <div>
                                         <h5 class="mb-1">{{ $chat->user_name }}</h5>
                                         <small class="text-muted">{{ $chat->user_email }}</small>
                                     </div>
-                                    <div>
+                                    <div class="chat-actions">
                                         @if($chat->status === 'pending')
                                             <span class="badge badge-warning">Pending</span>
                                         @elseif($chat->status === 'active')

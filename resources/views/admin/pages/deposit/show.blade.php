@@ -103,16 +103,16 @@
                                         <tr>
                                             <th>Submitted:</th>
                                             <td>
-                                                {{ $deposit->created_at->format('M d, Y') }}<br>
-                                                <small class="text-muted">{{ $deposit->created_at->format('h:i A') }}</small>
+                                                {{ $deposit->created_at->timezone('Asia/Karachi')->format('M d, Y') }}<br>
+                                                <small class="text-muted">{{ $deposit->created_at->timezone('Asia/Karachi')->format('h:i A') }}</small>
                                             </td>
                                         </tr>
                                         @if($deposit->approved_at)
                                         <tr>
                                             <th>Processed:</th>
                                             <td>
-                                                {{ $deposit->approved_at->format('M d, Y') }}<br>
-                                                <small class="text-muted">{{ $deposit->approved_at->format('h:i A') }}</small>
+                                                {{ $deposit->approved_at->timezone('Asia/Karachi')->format('M d, Y') }}<br>
+                                                <small class="text-muted">{{ $deposit->approved_at->timezone('Asia/Karachi')->format('h:i A') }}</small>
                                             </td>
                                         </tr>
                                         @if($deposit->approver)
@@ -199,7 +199,7 @@
                         <div class="alert alert-{{ $deposit->status === 'approved' ? 'success' : 'danger' }}">
                             <strong>This deposit has been {{ $deposit->status }}.</strong>
                             @if($deposit->approved_at)
-                                <br><small>Processed on {{ $deposit->approved_at->format('M d, Y h:i A') }}</small>
+                                <br><small>Processed on {{ $deposit->approved_at->timezone('Asia/Karachi')->format('M d, Y h:i A') }}</small>
                             @endif
                         </div>
                     </div>

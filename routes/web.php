@@ -203,6 +203,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
         Route::get('/', [UserController::class, 'index'])->name('index');
         Route::get('/create', [UserController::class, 'create'])->name('create');
         Route::post('/', [UserController::class, 'store'])->name('store');
+        Route::post('/{id}/adjust-balance', [UserController::class, 'adjustBalance'])->name('adjust-balance');
         Route::get('/{id}', [UserController::class, 'show'])->name('show');
         Route::get('/{id}/edit', [UserController::class, 'edit'])->name('edit');
         Route::put('/{id}', [UserController::class, 'update'])->name('update');

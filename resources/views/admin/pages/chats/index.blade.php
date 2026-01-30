@@ -1,5 +1,37 @@
 @extends('admin.layouts.main')
 
+@push('styles')
+<style>
+    @media (max-width: 576px) {
+        .chats-topbar {
+            flex-wrap: wrap;
+            align-items: flex-start !important;
+            gap: 10px;
+        }
+
+        .chats-topbar .header-title {
+            width: 100%;
+            margin-bottom: 0;
+        }
+
+        .chats-filter-actions {
+            width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .chats-filter-actions .btn {
+            flex: 1 1 calc(50% - 8px);
+            width: 100%;
+            padding-left: 10px;
+            padding-right: 10px;
+            white-space: nowrap;
+        }
+    }
+</style>
+@endpush
+
 @section('content')
 <div class="page-content-wrapper">
     <div class="container-fluid">
@@ -25,9 +57,9 @@
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-body">
-                        <div class="d-flex justify-content-between align-items-center mb-3">
+                        <div class="d-flex justify-content-between align-items-center mb-3 chats-topbar">
                             <h4 class="mt-0 header-title">All Chats</h4>
-                            <div>
+                            <div class="chats-filter-actions">
                                 <a href="{{ route('admin.chats.index', ['status' => 'pending']) }}" class="btn btn-warning waves-effect waves-light">
                                     <i class="mdi mdi-clock"></i> Pending
                                 </a>

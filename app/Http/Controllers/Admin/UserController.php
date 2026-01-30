@@ -3,18 +3,60 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Deposit;
+use App\Models\Investment;
 use App\Models\User;
+use App\Models\Withdrawal;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rule;
 
 class UserController extends Controller
 {
+    private function normalizePakistaniPhone(?string $phone): ?string
+    {
+        if ($phone === null) {
+            return null;
+        }
+
+        $digitsOnly = preg_replace('/\D+/', '', $phone);
+        if ($digitsOnly === '') {
+            return null;
+        }
+
+        if (preg_match('/^92\d{10}$/', $digitsOnly)) {
+            $digitsOnly = substr($digitsOnly, 2);
+        }
+
+        if (preg_match('/^\d{10}$/', $digitsOnly)) {
+            return '0' . $digitsOnly;
+        }
+
+        if (preg_match('/^0\d{10}$/', $digitsOnly)) {
+            return $digitsOnly;
+        }
+
+        return null;
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $users = User::orderBy('created_at', 'desc')->get();
+        $q = request()->query('q');
+
+        $usersQuery = User::query()->orderBy('created_at', 'desc');
+
+        if (!empty($q)) {
+            $usersQuery->where(function ($query) use ($q) {
+                $query->where('email', 'like', '%' . $q . '%')
+                    ->orWhere('phone', 'like', '%' . $q . '%');
+            });
+        }
+
+        $users = $usersQuery->get();
         return view('admin.users.index', compact('users'));
     }
 
@@ -33,15 +75,27 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+        if ($request->filled('phone')) {
+            $normalizedPhone = $this->normalizePakistaniPhone($request->input('phone'));
+            if ($normalizedPhone === null) {
+                return redirect()->back()
+                    ->withInput()
+                    ->withErrors(['phone' => 'Please enter a valid Pakistani phone number. Format: 03001234567 (11 digits starting with 0) or +92 300 1234567.']);
+            }
+
+            $request->merge(['phone' => $normalizedPhone]);
+        }
+
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'username' => ['required', 'string', 'max:255', 'unique:users,username'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
-            'phone' => ['nullable', 'string', 'max:20'],
+            'phone' => ['nullable', 'string', 'max:20', Rule::unique('users', 'phone')],
             'password' => ['required', 'string', 'min:8'],
             'referral_code' => ['required', 'string', 'exists:users,refer_code'],
         ], [
             'referral_code.exists' => 'The referral code does not exist. Please enter a valid referral code.',
+            'phone.unique' => 'An account with this phone number already exists.',
         ]);
 
         // Create user first (without referral code)
@@ -81,8 +135,68 @@ class UserController extends Controller
         
         // Find referrals by matching this user's referral code
         $referrals = User::where('referred_by', $user->refer_code)->get();
-        
-        return view('admin.users.show', compact('user', 'referrer', 'referrals'));
+
+        $totalEarnings = ($user->mining_earning ?? 0) + ($user->referral_earning ?? 0);
+
+        $totalInvested = Investment::where('user_id', $user->id)->sum('amount');
+
+        $activeInvestments = Investment::where('user_id', $user->id)
+            ->where('status', 'active')
+            ->with('miningPlan')
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        $totalDeposited = Deposit::where('user_id', $user->id)
+            ->where('status', 'approved')
+            ->sum('amount');
+
+        $totalWithdrawn = Withdrawal::where('user_id', $user->id)
+            ->where('status', 'approved')
+            ->sum('amount');
+
+        return view('admin.users.show', compact(
+            'user',
+            'referrer',
+            'referrals',
+            'totalEarnings',
+            'totalInvested',
+            'activeInvestments',
+            'totalDeposited',
+            'totalWithdrawn'
+        ));
+    }
+
+    public function adjustBalance(Request $request, $id)
+    {
+        $validated = $request->validate([
+            'type' => ['required', 'in:add,deduct'],
+            'amount' => ['required', 'numeric', 'min:0.01'],
+        ]);
+
+        $user = User::findOrFail($id);
+
+        DB::transaction(function () use ($user, $validated) {
+            $user->refresh();
+            $user = User::where('id', $user->id)->lockForUpdate()->first();
+
+            $current = (float) ($user->fund_wallet ?? 0);
+            $amount = (float) $validated['amount'];
+
+            if ($validated['type'] === 'add') {
+                $user->fund_wallet = $current + $amount;
+            } else {
+                $newBalance = $current - $amount;
+                if ($newBalance < 0) {
+                    $newBalance = 0;
+                }
+                $user->fund_wallet = $newBalance;
+            }
+
+            $user->save();
+        });
+
+        return redirect()->route('admin.users.show', $user->id)
+            ->with('success', 'User balance updated successfully.');
     }
 
     /**
@@ -101,31 +215,27 @@ class UserController extends Controller
     {
         $user = User::findOrFail($id);
 
-        $validated = $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'username' => ['required', 'string', 'max:255', 'unique:users,username,' . $user->id],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,' . $user->id],
-            'phone' => ['nullable', 'string', 'max:20'],
-            'password' => ['nullable', 'string', 'min:8'],
-            'role' => ['required', 'string', 'in:admin,user'],
-        ]);
-
-        // Custom validation for Pakistani phone number
         if ($request->filled('phone')) {
-            $phone = $request->input('phone');
-            // Remove spaces, dashes, and parentheses
-            $cleanPhone = preg_replace('/[\s\-()]/', '', $phone);
-            // Remove +92 country code if present
-            $cleanPhone = preg_replace('/^\+?92/', '', $cleanPhone);
-            
-            // Check if it's a valid Pakistani number (10-11 digits)
-            // Should be 11 digits if starts with 0, or 10 digits without 0
-            if (!preg_match('/^(0[0-9]{10}|[0-9]{10})$/', $cleanPhone)) {
+            $normalizedPhone = $this->normalizePakistaniPhone($request->input('phone'));
+            if ($normalizedPhone === null) {
                 return redirect()->back()
                     ->withInput()
                     ->withErrors(['phone' => 'Please enter a valid Pakistani phone number. Format: 03001234567 (11 digits starting with 0) or +92 300 1234567.']);
             }
+
+            $request->merge(['phone' => $normalizedPhone]);
         }
+
+        $validated = $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'username' => ['required', 'string', 'max:255', 'unique:users,username,' . $user->id],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,' . $user->id],
+            'phone' => ['nullable', 'string', 'max:20', Rule::unique('users', 'phone')->ignore($user->id)],
+            'password' => ['nullable', 'string', 'min:8'],
+            'role' => ['required', 'string', 'in:admin,user'],
+        ], [
+            'phone.unique' => 'An account with this phone number already exists.',
+        ]);
 
         // Update user
         $user->name = $validated['name'];

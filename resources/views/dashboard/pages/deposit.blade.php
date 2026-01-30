@@ -480,7 +480,7 @@
         background: rgba(255, 178, 30, 0.1);
         border: 1px solid rgba(255, 178, 30, 0.3);
         border-radius: 8px;
-        color: #000000;
+        color: #ffffff;
         font-size: 0.875rem;
         cursor: pointer;
         transition: var(--transition);
@@ -492,8 +492,8 @@
     }
 
     .deposit-filter-dropdown option {
-        color: #000000;
-        background: white;
+        color: #ffffff;
+        background: #101828;
     }
 
     .deposit-history-empty {
@@ -1086,13 +1086,13 @@
             background: rgba(24, 27, 39, 0.8);
             border: 1px solid rgba(255, 178, 30, 0.2);
             border-radius: 10px;
-            color: #000000;
+            color: #ffffff;
             font-size: 0.9375rem;
             font-weight: 600;
             cursor: pointer;
             transition: var(--transition);
             appearance: none;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23000000' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23ffffff' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
             background-repeat: no-repeat;
             background-position: right 1rem center;
             padding-right: 3rem;
@@ -1110,8 +1110,8 @@
         }
 
         .deposit-filter-dropdown option {
-            color: #000000;
-            background: white;
+            color: #ffffff;
+            background: #101828;
         }
 
         .deposit-history-empty {

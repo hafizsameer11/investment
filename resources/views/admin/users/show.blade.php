@@ -115,10 +115,108 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title mb-3">Financial Summary</h5>
+                        <div class="table-responsive">
+                            <table class="table table-borderless table-sm mb-0">
+                                <tbody>
+                                    <tr>
+                                        <th class="pl-0" width="60%">Fund Wallet:</th>
+                                        <td class="text-right">${{ number_format($user->fund_wallet ?? 0, 2) }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="pl-0">Total Earnings:</th>
+                                        <td class="text-right">${{ number_format($totalEarnings ?? 0, 2) }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="pl-0">Total Invested:</th>
+                                        <td class="text-right">${{ number_format($totalInvested ?? 0, 2) }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="pl-0">Total Deposited:</th>
+                                        <td class="text-right">${{ number_format($totalDeposited ?? 0, 2) }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="pl-0">Total Withdrawn:</th>
+                                        <td class="text-right">${{ number_format($totalWithdrawn ?? 0, 2) }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title mb-3">Adjust Fund Wallet</h5>
+                        <form method="POST" action="{{ route('admin.users.adjust-balance', $user->id) }}">
+                            @csrf
+                            <div class="form-row">
+                                <div class="form-group col-md-4">
+                                    <select name="type" class="form-control" required>
+                                        <option value="add">Add</option>
+                                        <option value="deduct">Deduct</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-5">
+                                    <input type="number" name="amount" step="0.01" min="0.01" class="form-control" placeholder="Amount" required>
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <button type="submit" class="btn btn-primary btn-block">Update</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
 
             <!-- Referral Information -->
             <div class="col-lg-8">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h5 class="card-title mb-0">
+                                <i class="mdi mdi-finance text-info"></i> Investments Overview
+                            </h5>
+                            <span class="badge badge-info">Active: {{ isset($activeInvestments) ? $activeInvestments->count() : 0 }}</span>
+                        </div>
+
+                        @if(isset($activeInvestments) && $activeInvestments->count() > 0)
+                            <div class="table-responsive">
+                                <table class="table table-hover table-sm mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Plan</th>
+                                            <th>Amount</th>
+                                            <th>Hourly Rate</th>
+                                            <th>Started</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach($activeInvestments as $investment)
+                                            <tr>
+                                                <td>{{ $loop->iteration }}</td>
+                                                <td>{{ $investment->miningPlan ? $investment->miningPlan->name : 'N/A' }}</td>
+                                                <td>${{ number_format($investment->amount ?? 0, 2) }}</td>
+                                                <td>{{ $investment->hourly_rate ?? '0' }}%</td>
+                                                <td>{{ $investment->created_at ? $investment->created_at->format('Y-m-d H:i') : 'N/A' }}</td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        @else
+                            <div class="text-center py-4">
+                                <i class="mdi mdi-chart-line text-muted" style="font-size: 48px;"></i>
+                                <p class="text-muted mt-3 mb-0">No active investments.</p>
+                            </div>
+                        @endif
+                    </div>
+                </div>
+
                 <!-- Referrer Information (Who referred this user) -->
                 @if($referrer)
                 <div class="card">

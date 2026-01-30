@@ -778,6 +778,49 @@
         color: var(--primary-color);
     }
 
+    .wallet-pagination-numbers {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .wallet-pagination-number {
+        min-width: 36px;
+        height: 36px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0 0.75rem;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 10px;
+        color: var(--text-secondary);
+        font-size: 0.9375rem;
+        font-weight: 600;
+        text-decoration: none;
+        transition: var(--transition);
+    }
+
+    .wallet-pagination-number:hover {
+        background: rgba(255, 178, 30, 0.1);
+        border-color: var(--primary-color);
+        color: var(--primary-color);
+    }
+
+    .wallet-pagination-number.active {
+        background: rgba(255, 178, 30, 0.15);
+        border-color: rgba(255, 178, 30, 0.35);
+        color: var(--primary-color);
+    }
+
+    .wallet-pagination-ellipsis {
+        color: var(--text-secondary);
+        padding: 0 0.25rem;
+        font-weight: 700;
+    }
+
     /* Hide eye icon and arrow on desktop */
     @media (min-width: 769px) {
         .wallet-balance-label-text i {
@@ -1887,7 +1930,10 @@
 
         /* Hide pagination on mobile */
         .wallet-pagination {
-            display: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            align-items: stretch;
         }
 
         /* Transaction Row Layout - Mobile App Style */
@@ -2271,7 +2317,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse($transactions as $transaction)
+                    @forelse(($transactionsData['data'] ?? []) as $transaction)
                         @php
                             $type = $transaction['type'];
                             $amount = $transaction['amount'];
@@ -2379,20 +2425,80 @@
         </div>
 
         <div class="wallet-pagination">
-            <button class="wallet-pagination-button" disabled>
-                <i class="fas fa-chevron-left"></i>
-                <span>Previous</span>
-            </button>
-            <div class="wallet-pagination-info">
-                <span>Page</span>
-                <span class="wallet-pagination-current">1</span>
-                <span>of</span>
-                <span>1</span>
-            </div>
-            <button class="wallet-pagination-button" disabled>
-                <span>Next</span>
-                <i class="fas fa-chevron-right"></i>
-            </button>
+            @php
+                $currentPage = (int) ($transactionsData['current_page'] ?? 1);
+                $lastPage = (int) ($transactionsData['last_page'] ?? 1);
+                $prevUrl = $currentPage > 1 ? request()->fullUrlWithQuery(['page' => $currentPage - 1]) : null;
+                $nextUrl = $currentPage < $lastPage ? request()->fullUrlWithQuery(['page' => $currentPage + 1]) : null;
+
+                $startPage = max(1, $currentPage - 2);
+                $endPage = min($lastPage, $currentPage + 2);
+
+                if ($startPage > 1) {
+                    $endPage = min($lastPage, $startPage + 4);
+                }
+
+                if ($endPage < $lastPage) {
+                    $startPage = max(1, $endPage - 4);
+                }
+            @endphp
+
+            @if($prevUrl)
+                <a class="wallet-pagination-button" href="{{ $prevUrl }}">
+                    <i class="fas fa-chevron-left"></i>
+                    <span>Previous</span>
+                </a>
+            @else
+                <button class="wallet-pagination-button" disabled>
+                    <i class="fas fa-chevron-left"></i>
+                    <span>Previous</span>
+                </button>
+            @endif
+
+            @if($lastPage > 1)
+                <div class="wallet-pagination-numbers">
+                    @if($startPage > 1)
+                        <a class="wallet-pagination-number" href="{{ request()->fullUrlWithQuery(['page' => 1]) }}">1</a>
+                        @if($startPage > 2)
+                            <span class="wallet-pagination-ellipsis">...</span>
+                        @endif
+                    @endif
+
+                    @for($page = $startPage; $page <= $endPage; $page++)
+                        @if($page === $currentPage)
+                            <span class="wallet-pagination-number active">{{ $page }}</span>
+                        @else
+                            <a class="wallet-pagination-number" href="{{ request()->fullUrlWithQuery(['page' => $page]) }}">{{ $page }}</a>
+                        @endif
+                    @endfor
+
+                    @if($endPage < $lastPage)
+                        @if($endPage < $lastPage - 1)
+                            <span class="wallet-pagination-ellipsis">...</span>
+                        @endif
+                        <a class="wallet-pagination-number" href="{{ request()->fullUrlWithQuery(['page' => $lastPage]) }}">{{ $lastPage }}</a>
+                    @endif
+                </div>
+            @else
+                <div class="wallet-pagination-info">
+                    <span>Page</span>
+                    <span class="wallet-pagination-current">{{ $currentPage }}</span>
+                    <span>of</span>
+                    <span>{{ $lastPage }}</span>
+                </div>
+            @endif
+
+            @if($nextUrl)
+                <a class="wallet-pagination-button" href="{{ $nextUrl }}">
+                    <span>Next</span>
+                    <i class="fas fa-chevron-right"></i>
+                </a>
+            @else
+                <button class="wallet-pagination-button" disabled>
+                    <span>Next</span>
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            @endif
         </div>
     </div>
 </div>

@@ -9,6 +9,34 @@
     .table-wrapper .btn-toolbar {
         display: none !important;
     }
+
+    @media (max-width: 576px) {
+        .withdrawals-topbar {
+            flex-wrap: wrap;
+            align-items: flex-start !important;
+            gap: 10px;
+        }
+
+        .withdrawals-topbar .header-title {
+            width: 100%;
+            margin-bottom: 0;
+        }
+
+        .withdrawals-filter-actions {
+            width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .withdrawals-filter-actions .btn {
+            flex: 1 1 calc(50% - 8px);
+            width: 100%;
+            padding-left: 10px;
+            padding-right: 10px;
+            white-space: nowrap;
+        }
+    }
 </style>
 @endpush
 
@@ -58,9 +86,9 @@
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-body">
-                        <div class="d-flex justify-content-between align-items-center mb-3">
+                        <div class="d-flex justify-content-between align-items-center mb-3 withdrawals-topbar">
                             <h4 class="mt-0 header-title">All Withdrawals</h4>
-                            <div>
+                            <div class="withdrawals-filter-actions">
                                 <a href="{{ route('admin.withdrawals.index', ['status' => 'pending']) }}" class="btn btn-warning waves-effect waves-light">
                                     <i class="mdi mdi-clock"></i> Pending
                                 </a>
@@ -127,8 +155,8 @@
                                             @endif
                                         </td>
                                         <td>
-                                            {{ $withdrawal->created_at->format('M d, Y') }}<br>
-                                            <small class="text-muted">{{ $withdrawal->created_at->format('h:i A') }}</small>
+                                            {{ $withdrawal->created_at->timezone('Asia/Karachi')->format('M d, Y') }}<br>
+                                            <small class="text-muted">{{ $withdrawal->created_at->timezone('Asia/Karachi')->format('h:i A') }}</small>
                                         </td>
                                         <td>
                                             <a href="{{ route('admin.withdrawals.show', $withdrawal->id) }}" class="btn btn-sm btn-info waves-effect waves-light" title="View Details">
