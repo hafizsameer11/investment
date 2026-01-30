@@ -977,14 +977,28 @@
         }
 
         .wallet-pagination {
-            flex-direction: column;
-            gap: 1rem;
-            align-items: stretch;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            gap: 0.375rem;
+            padding: 1rem 0.5rem;
         }
 
         .wallet-pagination-button {
-            width: 100%;
-            justify-content: center;
+            width: 32px;
+            height: 32px;
+        }
+
+        .wallet-pagination-number {
+            min-width: 32px;
+            height: 32px;
+            padding: 0 0.5rem;
+            font-size: 0.8125rem;
+        }
+
+        .wallet-pagination-ellipsis {
+            padding: 0 0.5rem;
+            font-size: 0.8125rem;
         }
 
         .wallet-visibility-btn {
@@ -1926,9 +1940,11 @@
         /* Hide pagination on mobile */
         .wallet-pagination {
             display: flex;
-            flex-direction: column;
-            gap: 0.75rem;
-            align-items: stretch;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            gap: 0.375rem;
+            padding: 1rem 0.5rem;
         }
 
         /* Transaction Row Layout - Mobile App Style */
