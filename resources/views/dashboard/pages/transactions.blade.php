@@ -14,6 +14,88 @@
         overflow-x: hidden;
     }
 
+    .wallet-pagination {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 1.5rem 1rem;
+        border-top: 1px solid var(--card-border);
+        flex-wrap: wrap;
+    }
+
+    .wallet-pagination-button {
+        width: 36px;
+        height: 36px;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--text-primary);
+        cursor: pointer;
+        transition: all 0.2s ease;
+        text-decoration: none;
+    }
+
+    .wallet-pagination-button:hover:not(:disabled) {
+        background: rgba(255, 178, 30, 0.1);
+        border-color: rgba(255, 178, 30, 0.3);
+        color: var(--primary-color);
+    }
+
+    .wallet-pagination-button:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+        color: var(--text-secondary);
+    }
+
+    .wallet-pagination-numbers {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .wallet-pagination-number {
+        min-width: 36px;
+        height: 36px;
+        padding: 0 0.75rem;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--text-primary);
+        text-decoration: none;
+        font-size: 0.875rem;
+        font-weight: 500;
+        transition: all 0.2s ease;
+        cursor: pointer;
+    }
+
+    .wallet-pagination-number:hover {
+        background: rgba(255, 178, 30, 0.1);
+        border-color: rgba(255, 178, 30, 0.3);
+        color: var(--primary-color);
+    }
+
+    .wallet-pagination-number.active {
+        background: rgba(255, 178, 30, 0.2);
+        border-color: rgba(255, 178, 30, 0.4);
+        color: var(--primary-color);
+        font-weight: 600;
+    }
+
+    .wallet-pagination-ellipsis {
+        color: var(--text-secondary);
+        padding: 0 0.25rem;
+        font-weight: 700;
+    }
+
     /* Hero Section */
     .transactions-hero-new {
         text-align: center;
@@ -1590,7 +1672,7 @@
                         </tr>
                     </thead>
                     <tbody id="transactionsTableBody">
-                        @forelse($transactions ?? [] as $transaction)
+                        @forelse(($transactionsData['data'] ?? []) as $transaction)
                             @php
                                 $type = $transaction['type'];
                                 $amount = $transaction['amount'];
@@ -1682,22 +1764,73 @@
                 </table>
             </div>
 
-            <div class="transactions-pagination-new">
-                <button class="transactions-pagination-btn-new" id="prevPage" disabled>
-                    <i class="fas fa-chevron-left"></i>
-                    <span>Previous</span>
-                </button>
-                <div class="transactions-pagination-info-new">
-                    <span>Page</span>
-                    <span class="transactions-pagination-current-new" id="currentPage">1</span>
-                    <span class="transactions-pagination-separator-new">of</span>
-                    <span class="transactions-pagination-total-new" id="totalPages">1</span>
+            @php
+                $lastPage = (int) ($transactionsData['last_page'] ?? 1);
+            @endphp
+            @if($lastPage > 1)
+                <div class="wallet-pagination">
+                    @php
+                        $currentPage = (int) ($transactionsData['current_page'] ?? 1);
+                        $prevUrl = $currentPage > 1 ? request()->fullUrlWithQuery(['page' => $currentPage - 1]) : null;
+                        $nextUrl = $currentPage < $lastPage ? request()->fullUrlWithQuery(['page' => $currentPage + 1]) : null;
+
+                        $startPage = max(1, $currentPage - 2);
+                        $endPage = min($lastPage, $currentPage + 2);
+
+                        if ($startPage > 1) {
+                            $endPage = min($lastPage, $startPage + 4);
+                        }
+
+                        if ($endPage < $lastPage) {
+                            $startPage = max(1, $endPage - 4);
+                        }
+                    @endphp
+
+                    @if($prevUrl)
+                        <a class="wallet-pagination-button" href="{{ $prevUrl }}">
+                            <i class="fas fa-chevron-left"></i>
+                        </a>
+                    @else
+                        <button class="wallet-pagination-button" disabled>
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                    @endif
+
+                    <div class="wallet-pagination-numbers">
+                        @if($startPage > 1)
+                            <a class="wallet-pagination-number" href="{{ request()->fullUrlWithQuery(['page' => 1]) }}">1</a>
+                            @if($startPage > 2)
+                                <span class="wallet-pagination-ellipsis">...</span>
+                            @endif
+                        @endif
+
+                        @for($page = $startPage; $page <= $endPage; $page++)
+                            @if($page === $currentPage)
+                                <span class="wallet-pagination-number active">{{ $page }}</span>
+                            @else
+                                <a class="wallet-pagination-number" href="{{ request()->fullUrlWithQuery(['page' => $page]) }}">{{ $page }}</a>
+                            @endif
+                        @endfor
+
+                        @if($endPage < $lastPage)
+                            @if($endPage < $lastPage - 1)
+                                <span class="wallet-pagination-ellipsis">...</span>
+                            @endif
+                            <a class="wallet-pagination-number" href="{{ request()->fullUrlWithQuery(['page' => $lastPage]) }}">{{ $lastPage }}</a>
+                        @endif
+                    </div>
+
+                    @if($nextUrl)
+                        <a class="wallet-pagination-button" href="{{ $nextUrl }}">
+                            <i class="fas fa-chevron-right"></i>
+                        </a>
+                    @else
+                        <button class="wallet-pagination-button" disabled>
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    @endif
                 </div>
-                <button class="transactions-pagination-btn-new" id="nextPage">
-                    <span>Next</span>
-                    <i class="fas fa-chevron-right"></i>
-                </button>
-            </div>
+            @endif
         </div>
     </div>
 </div>

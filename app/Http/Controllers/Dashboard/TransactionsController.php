@@ -223,6 +223,23 @@ class TransactionsController extends Controller
         
         // Sort all transactions by created_at descending
         $allTransactions = $allTransactions->sortByDesc('created_at')->values();
+
+        // Paginate transactions (5 per page)
+        $currentPage = request()->get('page', 1);
+        $perPage = 5;
+        $total = $allTransactions->count();
+        $items = $allTransactions->forPage($currentPage, $perPage)->values();
+        $totalPages = (int) ceil($total / $perPage);
+
+        $transactionsData = [
+            'data' => $items,
+            'current_page' => (int) $currentPage,
+            'per_page' => $perPage,
+            'total' => $total,
+            'last_page' => $totalPages,
+            'from' => $total > 0 ? (($currentPage - 1) * $perPage + 1) : 0,
+            'to' => $total > 0 ? min($currentPage * $perPage, $total) : 0,
+        ];
         
         // Get user balances for display
         $balances = [
@@ -233,7 +250,7 @@ class TransactionsController extends Controller
         ];
         
         return view('dashboard.pages.transactions', [
-            'transactions' => $allTransactions,
+            'transactionsData' => $transactionsData,
             'balances' => $balances,
             'totalEarning' => $totalEarning,
             'referralEarning' => $referralEarning,
