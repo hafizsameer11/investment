@@ -3178,7 +3178,10 @@ ls-referrer-section-new {
                 </div>
                 <div class="referrals-tool-body-new">
                     <div class="referrals-tool-input-wrapper-new">
-                        <input type="text" class="referrals-tool-input-new" id="referralLink" value="{{ url('/register?ref=' . $user->refer_code) }}" readonly>
+                        @php
+                            $inviteVersion = @filemtime(public_path('assets/dashboard/images/invite/invite.jpeg')) ?: 1;
+                        @endphp
+                        <input type="text" class="referrals-tool-input-new" id="referralLink" value="{{ url('/register?ref=' . $user->refer_code . '&v=' . $inviteVersion) }}" readonly>
                         <button class="referrals-tool-copy-btn-new" data-copy="referralLink" title="Copy Link">
                             <i class="fas fa-copy"></i>
                         </button>
@@ -3598,7 +3601,7 @@ ls-referrer-section-new {
 
     // Copy referral link function (for Invite Now button in empty state)
     function copyReferralLink() {
-        const referralLink = '{{ url("/register?ref=" . auth()->user()->refer_code) }}';
+        const referralLink = '{{ url("/register?ref=" . auth()->user()->refer_code . "&v=" . (@filemtime(public_path('assets/dashboard/images/invite/invite.jpeg')) ?: 1)) }}';
 
         // Use modern Clipboard API
         if (navigator.clipboard && navigator.clipboard.writeText) {
