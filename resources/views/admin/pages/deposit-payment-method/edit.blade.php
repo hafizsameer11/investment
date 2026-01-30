@@ -64,6 +64,7 @@
                                     <option value="rast" {{ old('type', $paymentMethod->type) == 'rast' ? 'selected' : '' }}>Rast</option>
                                     <option value="bank" {{ old('type', $paymentMethod->type) == 'bank' ? 'selected' : '' }}>Bank</option>
                                     <option value="crypto" {{ old('type', $paymentMethod->type) == 'crypto' ? 'selected' : '' }}>Crypto</option>
+                                    <option value="onepay" {{ old('type', $paymentMethod->type) == 'onepay' ? 'selected' : '' }}>OnePay</option>
                                 </select>
                                 <small class="form-text text-muted">Select the category of the payment method.</small>
                             </div>
@@ -89,11 +90,29 @@
                                 <small class="form-text text-muted">The name of the account holder.</small>
                             </div>
 
-                            <div class="form-group mb-0">
+                            <div class="form-group mb-0" id="account_number_group">
                                 <label class="my-2 py-1">Account Number <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" name="account_number" value="{{ old('account_number', $paymentMethod->account_number) }}" required
+                                <input type="text" class="form-control" name="account_number" value="{{ old('account_number', $paymentMethod->account_number) }}"
                                     placeholder="Enter account number" />
                                 <small class="form-text text-muted">The account number for this payment method.</small>
+                            </div>
+
+                            <div class="form-group mb-0" id="till_id_group">
+                                <label class="my-2 py-1">Till ID <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" name="till_id" value="{{ old('till_id', $paymentMethod->till_id) }}"
+                                    placeholder="Enter till ID" />
+                                <small class="form-text text-muted">The Till ID for Raast payments.</small>
+                            </div>
+
+                            <div class="form-group mb-0" id="qr_scanner_group">
+                                <label class="my-2 py-1">QR Scanner</label>
+                                @if($paymentMethod->qr_scanner)
+                                    <div class="mb-2">
+                                        <img src="{{ asset($paymentMethod->qr_scanner) }}" alt="QR Scanner" style="max-width: 200px; max-height: 200px; object-fit: cover; border: 1px solid #ddd; padding: 5px;">
+                                    </div>
+                                @endif
+                                <input type="file" class="form-control" name="qr_scanner" accept="image/*">
+                                <small class="form-text text-muted">Upload a new QR scanner image to replace the current one. Leave empty to keep current image.</small>
                             </div>
 
                             <div class="form-group mb-0">
@@ -185,15 +204,42 @@
                 $('#bank_name_group').hide();
                 $('#bank_name_group input').prop('required', false);
                 $('#account_name_group').show();
+
+                $('#account_number_group').hide();
+                $('#account_number_group input').prop('required', false);
+                $('#till_id_group').show();
+                $('#till_id_group input').prop('required', true);
             } else if (type === 'bank') {
                 $('#bank_name_group').show();
                 $('#bank_name_group input').prop('required', true);
                 $('#account_name_group').show();
+
+                $('#account_number_group').show();
+                $('#account_number_group input').prop('required', true);
+                $('#till_id_group').hide();
+                $('#till_id_group input').prop('required', false);
+            } else if (type === 'onepay') {
+                $('#bank_name_group').hide();
+                $('#bank_name_group input').prop('required', false);
+                $('#account_name_group').show();
+                $('#account_name_group input').prop('required', true);
+
+                $('#account_number_group').show();
+                $('#account_number_group input').prop('required', true);
+                $('#till_id_group').hide();
+                $('#till_id_group input').prop('required', false);
             } else {
                 $('#bank_name_group').hide();
                 $('#bank_name_group input').prop('required', false);
                 $('#account_name_group').hide();
+
+                $('#account_number_group').show();
+                $('#account_number_group input').prop('required', true);
+                $('#till_id_group').hide();
+                $('#till_id_group input').prop('required', false);
             }
+
+            $('#qr_scanner_group').show();
         }
 
         $('#payment_type').change(toggleFields);

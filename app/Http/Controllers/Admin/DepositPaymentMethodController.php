@@ -34,11 +34,13 @@ class DepositPaymentMethodController extends Controller
     {
         $request->validate([
             'image' => 'required|image',
-            'type' => 'required|in:rast,bank,crypto',
+            'qr_scanner' => 'nullable|image',
+            'type' => 'required|in:rast,bank,crypto,onepay',
             'account_type' => 'required|string|max:255',
-            'account_name' => 'nullable|string|max:255',
+            'account_name' => 'required_if:type,onepay|nullable|string|max:255',
             'bank_name' => 'required_if:type,bank|nullable|string|max:255',
-            'account_number' => 'required|string|max:255',
+            'account_number' => 'required_unless:type,rast|nullable|string|max:255',
+            'till_id' => 'required_if:type,rast|nullable|string|max:255',
             'minimum_deposit' => 'nullable|numeric|min:0',
             'maximum_deposit' => 'nullable|numeric|min:0',
             'minimum_withdrawal_amount' => 'nullable|numeric|min:0',
@@ -85,13 +87,34 @@ class DepositPaymentMethodController extends Controller
                 $imagePath = 'assets/admin/images/payment-method/' . $imageName;
             }
 
+            $qrScannerPath = null;
+            if ($request->hasFile('qr_scanner')) {
+                $qrImage = $request->file('qr_scanner');
+                $qrImageName = Str::random(40) . '.' . $qrImage->getClientOriginalExtension();
+
+                $directory = public_path('assets/admin/images/payment-method');
+                if (!file_exists($directory)) {
+                    mkdir($directory, 0755, true);
+                }
+
+                if (!$qrImage->move($directory, $qrImageName)) {
+                    return redirect()->back()
+                        ->withInput()
+                        ->withErrors(['qr_scanner' => 'Failed to upload QR scanner image. Please try again.']);
+                }
+
+                $qrScannerPath = 'assets/admin/images/payment-method/' . $qrImageName;
+            }
+
             $paymentMethod = DepositPaymentMethod::create([
                 'image' => $imagePath,
+                'qr_scanner' => $qrScannerPath,
                 'type' => $request->type,
                 'account_type' => $request->account_type,
                 'account_name' => $request->account_name ?? null,
                 'bank_name' => $request->bank_name,
-                'account_number' => $request->account_number,
+                'account_number' => $request->account_number ?? null,
+                'till_id' => $request->till_id ?? null,
                 'minimum_deposit' => $request->minimum_deposit ?? null,
                 'maximum_deposit' => $request->maximum_deposit ?? null,
                 'minimum_withdrawal_amount' => $request->minimum_withdrawal_amount ?? null,
@@ -137,11 +160,13 @@ class DepositPaymentMethodController extends Controller
 
         $request->validate([
             'image' => 'nullable|image',
-            'type' => 'required|in:rast,bank,crypto',
+            'qr_scanner' => 'nullable|image',
+            'type' => 'required|in:rast,bank,crypto,onepay',
             'account_type' => 'required|string|max:255',
-            'account_name' => 'nullable|string|max:255',
+            'account_name' => 'required_if:type,onepay|nullable|string|max:255',
             'bank_name' => 'required_if:type,bank|nullable|string|max:255',
-            'account_number' => 'required|string|max:255',
+            'account_number' => 'required_unless:type,rast|nullable|string|max:255',
+            'till_id' => 'required_if:type,rast|nullable|string|max:255',
             'minimum_deposit' => 'nullable|numeric|min:0',
             'maximum_deposit' => 'nullable|numeric|min:0',
             'minimum_withdrawal_amount' => 'nullable|numeric|min:0',
@@ -167,6 +192,7 @@ class DepositPaymentMethodController extends Controller
         }
 
         $imagePath = $paymentMethod->image;
+        $qrScannerPath = $paymentMethod->qr_scanner;
         
         if ($request->hasFile('image')) {
             // Delete old image if exists
@@ -188,13 +214,32 @@ class DepositPaymentMethodController extends Controller
             $imagePath = 'assets/admin/images/payment-method/' . $imageName;
         }
 
+        if ($request->hasFile('qr_scanner')) {
+            if ($paymentMethod->qr_scanner && file_exists(public_path($paymentMethod->qr_scanner))) {
+                unlink(public_path($paymentMethod->qr_scanner));
+            }
+
+            $qrImage = $request->file('qr_scanner');
+            $qrImageName = Str::random(40) . '.' . $qrImage->getClientOriginalExtension();
+
+            $directory = public_path('assets/admin/images/payment-method');
+            if (!file_exists($directory)) {
+                mkdir($directory, 0755, true);
+            }
+
+            $qrImage->move($directory, $qrImageName);
+            $qrScannerPath = 'assets/admin/images/payment-method/' . $qrImageName;
+        }
+
         $paymentMethod->update([
             'image' => $imagePath,
+            'qr_scanner' => $qrScannerPath,
             'type' => $request->type,
             'account_type' => $request->account_type,
             'account_name' => $request->account_name ?? null,
             'bank_name' => $request->bank_name,
-            'account_number' => $request->account_number,
+            'account_number' => $request->account_number ?? null,
+            'till_id' => $request->till_id ?? null,
             'minimum_deposit' => $request->minimum_deposit ?? null,
             'maximum_deposit' => $request->maximum_deposit ?? null,
             'minimum_withdrawal_amount' => $request->minimum_withdrawal_amount ?? null,

@@ -58,14 +58,33 @@
                 </div>
                 @endif
                 <div class="deposit-detail-row">
-                    <span class="deposit-detail-label">Account Number</span>
-                    <div style="display: flex; align-items: center;">
-                        <span class="deposit-detail-value" id="paymentAccountNumber">{{ $paymentMethod->account_number }}</span>
-                        <button type="button" class="deposit-copy-btn" onclick="copyAccountNumber()" title="Copy account number">
-                            <i class="fas fa-copy"></i>
-                        </button>
+                    <span class="deposit-detail-label" style="min-width: 90px;">{{ $paymentMethod->type === 'rast' ? 'Till ID' : 'Account Number' }}</span>
+                    <div style="display: flex; flex: 1; min-width: 0; flex-direction: column; align-items: flex-end;">
+                        <div style="display: flex; align-items: center; gap: 8px;">
+                            <span class="deposit-detail-value" id="paymentIdentifier">{{ $paymentMethod->type === 'rast' ? $paymentMethod->till_id : $paymentMethod->account_number }}</span>
+                            <button type="button" class="deposit-copy-btn" onclick="copyAccountIdentifier()" title="Copy">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                        </div>
                     </div>
                 </div>
+
+                @if($paymentMethod->type === 'rast')
+                <div class="deposit-detail-row" style="padding-top: 0.25rem; padding-bottom: 0.75rem; align-items: flex-start;">
+                    <div style="width: 100%; font-size: 12px; line-height: 1.35; color: var(--primary-gradient-start);">
+                        Till ID (Dial 78610# and send funds to our TILL ID below)
+                    </div>
+                </div>
+                @endif
+
+                @if(($paymentMethod->type === 'rast' || $paymentMethod->type === 'onepay') && $paymentMethod->qr_scanner)
+                <div class="deposit-detail-row" style="flex-direction: column; align-items: center; width: 100%;">
+                    <span class="deposit-detail-label" style="margin-bottom: 0.5rem; width: 100%;">QR Scanner</span>
+                    <div style="background: #fff; padding: 0.75rem; border-radius: 12px; margin: 0 auto;">
+                        <img src="{{ asset($paymentMethod->qr_scanner) }}" alt="QR Scanner" style="width: 200px; height: 200px; object-fit: contain; display: block;">
+                    </div>
+                </div>
+                @endif
                 <div class="deposit-detail-row">
                     <span class="deposit-detail-label">Amount</span>
                     <span class="deposit-detail-value">{{ number_format($pkrAmount, 0) }} PKR</span>
@@ -212,12 +231,12 @@
 @push('scripts')
 <script src="{{ asset('assets/dashboard/js/deposit-confirm.js') }}"></script>
 <script>
-    function copyAccountNumber() {
-        const accountNumber = document.getElementById('paymentAccountNumber').textContent;
+    function copyAccountIdentifier() {
+        const identifier = document.getElementById('paymentIdentifier').textContent;
         
         // Create temporary textarea
         const textarea = document.createElement('textarea');
-        textarea.value = accountNumber;
+        textarea.value = identifier;
         textarea.style.position = 'fixed';
         textarea.style.opacity = '0';
         document.body.appendChild(textarea);

@@ -99,6 +99,8 @@
                                         <td>
                                             @if($paymentMethod->type == 'rast')
                                                 {{ $paymentMethod->account_type }}
+                                            @elseif($paymentMethod->type == 'onepay')
+                                                {{ $paymentMethod->account_type }}
                                             @elseif($paymentMethod->type == 'bank')
                                                 {{ $paymentMethod->bank_name }}
                                             @else
@@ -106,7 +108,13 @@
                                             @endif
                                         </td>
                                         <td>{{ $paymentMethod->account_name }}</td>
-                                        <td>{{ $paymentMethod->account_number }}</td>
+                                        <td>
+                                            @if($paymentMethod->type == 'rast')
+                                                {{ $paymentMethod->till_id }}
+                                            @else
+                                                {{ $paymentMethod->account_number }}
+                                            @endif
+                                        </td>
                                         <td>
                                             @if($paymentMethod->minimum_deposit)
                                                 ${{ number_format($paymentMethod->minimum_deposit, 2) }}

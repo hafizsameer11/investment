@@ -16,6 +16,8 @@ class DepositPaymentMethod extends Model
         'account_name',
         'bank_name',
         'account_number',
+        'till_id',
+        'qr_scanner',
         'minimum_deposit',
         'maximum_deposit',
         'minimum_withdrawal_amount',
