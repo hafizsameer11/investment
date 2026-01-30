@@ -737,45 +737,39 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        gap: 1.5rem;
+        gap: 0.5rem;
+        padding: 1.5rem 1rem;
+        margin-top: 1rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.05);
+        flex-wrap: wrap;
     }
 
     .wallet-pagination-button {
-        padding: 0.75rem 1.25rem;
-        background: rgba(255, 255, 255, 0.03);
+        width: 36px;
+        height: 36px;
+        background: rgba(255, 255, 255, 0.05);
         border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 10px;
-        color: var(--text-secondary);
+        border-radius: 50%;
+        color: var(--text-primary);
         cursor: pointer;
         transition: var(--transition);
-        font-size: 0.9375rem;
+        font-size: 0.875rem;
         display: flex;
         align-items: center;
         gap: 0.5rem;
+        justify-content: center;
+        text-decoration: none;
     }
 
     .wallet-pagination-button:hover:not(:disabled) {
         background: rgba(255, 178, 30, 0.1);
-        border-color: var(--primary-color);
+        border-color: rgba(255, 178, 30, 0.3);
         color: var(--primary-color);
     }
 
     .wallet-pagination-button:disabled {
         opacity: 0.5;
         cursor: not-allowed;
-    }
-
-    .wallet-pagination-info {
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        font-size: 0.9375rem;
-        color: var(--text-primary);
-    }
-
-    .wallet-pagination-current {
-        font-weight: 600;
-        color: var(--primary-color);
     }
 
     .wallet-pagination-numbers {
@@ -793,26 +787,27 @@
         align-items: center;
         justify-content: center;
         padding: 0 0.75rem;
-        background: rgba(255, 255, 255, 0.03);
+        background: rgba(255, 255, 255, 0.05);
         border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 10px;
-        color: var(--text-secondary);
-        font-size: 0.9375rem;
-        font-weight: 600;
+        border-radius: 50%;
+        color: var(--text-primary);
+        font-size: 0.875rem;
+        font-weight: 500;
         text-decoration: none;
         transition: var(--transition);
     }
 
     .wallet-pagination-number:hover {
         background: rgba(255, 178, 30, 0.1);
-        border-color: var(--primary-color);
+        border-color: rgba(255, 178, 30, 0.3);
         color: var(--primary-color);
     }
 
     .wallet-pagination-number.active {
-        background: rgba(255, 178, 30, 0.15);
-        border-color: rgba(255, 178, 30, 0.35);
+        background: rgba(255, 178, 30, 0.2);
+        border-color: rgba(255, 178, 30, 0.4);
         color: var(--primary-color);
+        font-weight: 600;
     }
 
     .wallet-pagination-ellipsis {
@@ -2424,38 +2419,38 @@
             </table>
         </div>
 
-        <div class="wallet-pagination">
-            @php
-                $currentPage = (int) ($transactionsData['current_page'] ?? 1);
-                $lastPage = (int) ($transactionsData['last_page'] ?? 1);
-                $prevUrl = $currentPage > 1 ? request()->fullUrlWithQuery(['page' => $currentPage - 1]) : null;
-                $nextUrl = $currentPage < $lastPage ? request()->fullUrlWithQuery(['page' => $currentPage + 1]) : null;
+        @php
+            $lastPage = (int) ($transactionsData['last_page'] ?? 1);
+        @endphp
+        @if($lastPage > 1)
+            <div class="wallet-pagination">
+                @php
+                    $currentPage = (int) ($transactionsData['current_page'] ?? 1);
+                    $prevUrl = $currentPage > 1 ? request()->fullUrlWithQuery(['page' => $currentPage - 1]) : null;
+                    $nextUrl = $currentPage < $lastPage ? request()->fullUrlWithQuery(['page' => $currentPage + 1]) : null;
 
-                $startPage = max(1, $currentPage - 2);
-                $endPage = min($lastPage, $currentPage + 2);
+                    $startPage = max(1, $currentPage - 2);
+                    $endPage = min($lastPage, $currentPage + 2);
 
-                if ($startPage > 1) {
-                    $endPage = min($lastPage, $startPage + 4);
-                }
+                    if ($startPage > 1) {
+                        $endPage = min($lastPage, $startPage + 4);
+                    }
 
-                if ($endPage < $lastPage) {
-                    $startPage = max(1, $endPage - 4);
-                }
-            @endphp
+                    if ($endPage < $lastPage) {
+                        $startPage = max(1, $endPage - 4);
+                    }
+                @endphp
 
-            @if($prevUrl)
-                <a class="wallet-pagination-button" href="{{ $prevUrl }}">
-                    <i class="fas fa-chevron-left"></i>
-                    <span>Previous</span>
-                </a>
-            @else
-                <button class="wallet-pagination-button" disabled>
-                    <i class="fas fa-chevron-left"></i>
-                    <span>Previous</span>
-                </button>
-            @endif
+                @if($prevUrl)
+                    <a class="wallet-pagination-button" href="{{ $prevUrl }}">
+                        <i class="fas fa-chevron-left"></i>
+                    </a>
+                @else
+                    <button class="wallet-pagination-button" disabled>
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                @endif
 
-            @if($lastPage > 1)
                 <div class="wallet-pagination-numbers">
                     @if($startPage > 1)
                         <a class="wallet-pagination-number" href="{{ request()->fullUrlWithQuery(['page' => 1]) }}">1</a>
@@ -2479,27 +2474,18 @@
                         <a class="wallet-pagination-number" href="{{ request()->fullUrlWithQuery(['page' => $lastPage]) }}">{{ $lastPage }}</a>
                     @endif
                 </div>
-            @else
-                <div class="wallet-pagination-info">
-                    <span>Page</span>
-                    <span class="wallet-pagination-current">{{ $currentPage }}</span>
-                    <span>of</span>
-                    <span>{{ $lastPage }}</span>
-                </div>
-            @endif
 
-            @if($nextUrl)
-                <a class="wallet-pagination-button" href="{{ $nextUrl }}">
-                    <span>Next</span>
-                    <i class="fas fa-chevron-right"></i>
-                </a>
-            @else
-                <button class="wallet-pagination-button" disabled>
-                    <span>Next</span>
-                    <i class="fas fa-chevron-right"></i>
-                </button>
-            @endif
-        </div>
+                @if($nextUrl)
+                    <a class="wallet-pagination-button" href="{{ $nextUrl }}">
+                        <i class="fas fa-chevron-right"></i>
+                    </a>
+                @else
+                    <button class="wallet-pagination-button" disabled>
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                @endif
+            </div>
+        @endif
     </div>
 </div>
 
