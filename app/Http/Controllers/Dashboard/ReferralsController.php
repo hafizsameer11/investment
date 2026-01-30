@@ -88,7 +88,7 @@ class ReferralsController extends Controller
         $referralsData = $referralsData->sortByDesc('created_at')->values();
         
         // Paginate results
-        $perPage = 15;
+        $perPage = 5;
         $currentPage = $request->input('page', 1);
         $items = $referralsData->slice(($currentPage - 1) * $perPage, $perPage)->values();
         $total = $referralsData->count();

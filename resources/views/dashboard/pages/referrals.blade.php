@@ -3500,35 +3500,65 @@ ls-referrer-section-new {
                 </table>
 
                 @if($referrals->hasPages())
-                <div class="referrals-pagination-wrapper" style="padding: 1.5rem; display: flex; justify-content: center; align-items: center; gap: 0.5rem; border-top: 1px solid rgba(255, 255, 255, 0.1);">
-                    @if($referrals->onFirstPage())
-                        <button disabled style="padding: 0.5rem 1rem; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; color: var(--text-secondary); cursor: not-allowed;">
-                            <i class="fas fa-chevron-left"></i>
-                        </button>
-                    @else
-                        <a href="{{ $referrals->previousPageUrl() }}" class="pagination-link" style="padding: 0.5rem 1rem; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; color: var(--text-primary); text-decoration: none;">
-                            <i class="fas fa-chevron-left"></i>
-                        </a>
-                    @endif
+                    @php
+                        $currentPage = $referrals->currentPage();
+                        $lastPage = $referrals->lastPage();
 
-                    @foreach($referrals->getUrlRange(1, $referrals->lastPage()) as $page => $url)
-                        @if($page == $referrals->currentPage())
-                            <span style="padding: 0.5rem 1rem; background: rgba(255, 178, 30, 0.2); border: 1px solid rgba(255, 178, 30, 0.4); border-radius: 8px; color: var(--primary-color); font-weight: 600;">{{ $page }}</span>
+                        $startPage = max(1, $currentPage - 2);
+                        $endPage = min($lastPage, $currentPage + 2);
+
+                        if ($startPage > 1) {
+                            $endPage = min($lastPage, $startPage + 4);
+                        }
+
+                        if ($endPage < $lastPage) {
+                            $startPage = max(1, $endPage - 4);
+                        }
+                    @endphp
+
+                    <div class="referrals-pagination">
+                        @if($referrals->onFirstPage())
+                            <span class="pagination-btn disabled">
+                                <i class="fas fa-chevron-left"></i>
+                            </span>
                         @else
-                            <a href="{{ $url }}" class="pagination-link" style="padding: 0.5rem 1rem; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; color: var(--text-primary); text-decoration: none;">{{ $page }}</a>
+                            <a href="{{ $referrals->previousPageUrl() }}" class="pagination-link pagination-btn">
+                                <i class="fas fa-chevron-left"></i>
+                            </a>
                         @endif
-                    @endforeach
 
-                    @if($referrals->hasMorePages())
-                        <a href="{{ $referrals->nextPageUrl() }}" class="pagination-link" style="padding: 0.5rem 1rem; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; color: var(--text-primary); text-decoration: none;">
-                            <i class="fas fa-chevron-right"></i>
-                        </a>
-                    @else
-                        <button disabled style="padding: 0.5rem 1rem; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; color: var(--text-secondary); cursor: not-allowed;">
-                            <i class="fas fa-chevron-right"></i>
-                        </button>
-                    @endif
-                </div>
+                        @if($startPage > 1)
+                            <a href="{{ $referrals->url(1) }}" class="pagination-link pagination-number">1</a>
+                            @if($startPage > 2)
+                                <span class="pagination-ellipsis">...</span>
+                            @endif
+                        @endif
+
+                        @for($page = $startPage; $page <= $endPage; $page++)
+                            @if($page == $currentPage)
+                                <span class="pagination-number active">{{ $page }}</span>
+                            @else
+                                <a href="{{ $referrals->url($page) }}" class="pagination-link pagination-number">{{ $page }}</a>
+                            @endif
+                        @endfor
+
+                        @if($endPage < $lastPage)
+                            @if($endPage < $lastPage - 1)
+                                <span class="pagination-ellipsis">...</span>
+                            @endif
+                            <a href="{{ $referrals->url($lastPage) }}" class="pagination-link pagination-number">{{ $lastPage }}</a>
+                        @endif
+
+                        @if($referrals->hasMorePages())
+                            <a href="{{ $referrals->nextPageUrl() }}" class="pagination-link pagination-btn">
+                                <i class="fas fa-chevron-right"></i>
+                            </a>
+                        @else
+                            <span class="pagination-btn disabled">
+                                <i class="fas fa-chevron-right"></i>
+                            </span>
+                        @endif
+                    </div>
                 @endif
             </div>
         </div>
@@ -3854,30 +3884,55 @@ ls-referrer-section-new {
 
         // Add pagination if needed
         if (pagination.last_page > 1) {
-            html += '<div style="padding: 1.5rem; display: flex; justify-content: center; align-items: center; gap: 0.5rem; border-top: 1px solid rgba(255, 255, 255, 0.1);">';
+            const currentPage = parseInt(pagination.current_page || 1);
+            const lastPage = parseInt(pagination.last_page || 1);
 
-            // Previous button
-            if (pagination.current_page === 1) {
-                html += '<button disabled style="padding: 0.5rem 1rem; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; color: var(--text-secondary); cursor: not-allowed;"><i class="fas fa-chevron-left"></i></button>';
-            } else {
-                html += `<a href="${pagination.previous_page_url}" class="pagination-link" style="padding: 0.5rem 1rem; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; color: var(--text-primary); text-decoration: none;"><i class="fas fa-chevron-left"></i></a>`;
+            let startPage = Math.max(1, currentPage - 2);
+            let endPage = Math.min(lastPage, currentPage + 2);
+
+            if (startPage > 1) {
+                endPage = Math.min(lastPage, startPage + 4);
             }
 
-            // Page numbers
-            Object.keys(pagination.url_range).forEach(page => {
-                const pageUrl = pagination.url_range[page];
-                if (parseInt(page) === pagination.current_page) {
-                    html += `<span style="padding: 0.5rem 1rem; background: rgba(255, 178, 30, 0.2); border: 1px solid rgba(255, 178, 30, 0.4); border-radius: 8px; color: var(--primary-color); font-weight: 600;">${page}</span>`;
-                } else {
-                    html += `<a href="${pageUrl}" class="pagination-link" style="padding: 0.5rem 1rem; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; color: var(--text-primary); text-decoration: none;">${page}</a>`;
-                }
-            });
+            if (endPage < lastPage) {
+                startPage = Math.max(1, endPage - 4);
+            }
 
-            // Next button
-            if (pagination.has_more_pages) {
-                html += `<a href="${pagination.next_page_url}" class="pagination-link" style="padding: 0.5rem 1rem; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; color: var(--text-primary); text-decoration: none;"><i class="fas fa-chevron-right"></i></a>`;
+            html += '<div class="referrals-pagination">';
+
+            if (currentPage === 1) {
+                html += '<span class="pagination-btn disabled"><i class="fas fa-chevron-left"></i></span>';
             } else {
-                html += '<button disabled style="padding: 0.5rem 1rem; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; color: var(--text-secondary); cursor: not-allowed;"><i class="fas fa-chevron-right"></i></button>';
+                html += `<a href="${pagination.previous_page_url}" class="pagination-link pagination-btn"><i class="fas fa-chevron-left"></i></a>`;
+            }
+
+            if (startPage > 1) {
+                html += `<a href="${pagination.url_range['1']}" class="pagination-link pagination-number">1</a>`;
+                if (startPage > 2) {
+                    html += '<span class="pagination-ellipsis">...</span>';
+                }
+            }
+
+            for (let page = startPage; page <= endPage; page++) {
+                const pageUrl = pagination.url_range[String(page)];
+                if (page === currentPage) {
+                    html += `<span class="pagination-number active">${page}</span>`;
+                } else {
+                    html += `<a href="${pageUrl}" class="pagination-link pagination-number">${page}</a>`;
+                }
+            }
+
+            if (endPage < lastPage) {
+                if (endPage < lastPage - 1) {
+                    html += '<span class="pagination-ellipsis">...</span>';
+                }
+                html += `<a href="${pagination.url_range[String(lastPage)]}" class="pagination-link pagination-number">${lastPage}</a>`;
+            }
+
+            if (pagination.has_more_pages) {
+                html += `<a href="${pagination.next_page_url}" class="pagination-link pagination-btn"><i class="fas fa-chevron-right"></i></a>`;
+            } else {
+                html += '<span class="pagination-btn disabled"><i class="fas fa-chevron-right"></i></span>';
             }
 
             html += '</div>';
