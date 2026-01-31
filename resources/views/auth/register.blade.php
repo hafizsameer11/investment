@@ -198,19 +198,24 @@
                         $appliedReferral = old('referral_code', $referralCode ?? request()->query('ref'));
                     @endphp
 
-                    @if(!empty($appliedReferral))
-                        <input type="hidden" id="referral_code" name="referral_code" value="{{ $appliedReferral }}">
-                        @error('referral_code')
-                            <div class="text-danger mt-1" style="font-size: 0.75rem; color: #ef4444 !important;">{{ $message }}</div>
-                        @enderror
-                    @else
-                        <div class="form-group">
-                            <label for="referral_code" class="form-label">Referral Code <span class="text-danger">*</span></label>
-                            <div class="input-wrapper">
-                                <svg class="input-icon" viewBox="0 0 20 20" fill="currentColor">
-                                    <path d="M8 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM15 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z"/>
-                                    <path d="M3 4a1 1 0 00-1 1v10a1 1 0 001 1h1.05a2.5 2.5 0 014.9 0H10a1 1 0 001-1V5a1 1 0 00-1-1H3zM14 7a1 1 0 00-1 1v6.05A2.5 2.5 0 0115.95 16H17a1 1 0 001-1v-5a1 1 0 00-.293-.707l-2-2A1 1 0 0015 7h-1z"/>
-                                </svg>
+                    <div class="form-group">
+                        <label for="referral_code" class="form-label">Referral Code <span class="text-danger">*</span></label>
+                        <div class="input-wrapper">
+                            <svg class="input-icon" viewBox="0 0 20 20" fill="currentColor">
+                                <path d="M8 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM15 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z"/>
+                                <path d="M3 4a1 1 0 00-1 1v10a1 1 0 001 1h1.05a2.5 2.5 0 014.9 0H10a1 1 0 001-1V5a1 1 0 00-1-1H3zM14 7a1 1 0 00-1 1v6.05A2.5 2.5 0 0115.95 16H17a1 1 0 001-1v-5a1 1 0 00-.293-.707l-2-2A1 1 0 0015 7h-1z"/>
+                            </svg>
+
+                            @if(!empty($appliedReferral))
+                                <input type="hidden" name="referral_code" value="{{ $appliedReferral }}">
+                                <input
+                                    type="text"
+                                    id="referral_code"
+                                    class="form-input @error('referral_code') is-invalid @enderror"
+                                    value="{{ $appliedReferral }}"
+                                    disabled
+                                >
+                            @else
                                 <input
                                     type="text"
                                     id="referral_code"
@@ -220,12 +225,12 @@
                                     value="{{ old('referral_code') }}"
                                     required
                                 >
-                            </div>
-                            @error('referral_code')
-                                <div class="text-danger mt-1" style="font-size: 0.75rem; color: #ef4444 !important;">{{ $message }}</div>
-                            @enderror
+                            @endif
                         </div>
-                    @endif
+                        @error('referral_code')
+                            <div class="text-danger mt-1" style="font-size: 0.75rem; color: #ef4444 !important;">{{ $message }}</div>
+                        @enderror
+                    </div>
 
 
                     <!-- Password Field -->

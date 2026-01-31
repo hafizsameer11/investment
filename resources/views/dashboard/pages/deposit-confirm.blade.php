@@ -72,7 +72,7 @@
                 @if($paymentMethod->type === 'rast')
                 <div class="deposit-detail-row" style="padding-top: 0.25rem; padding-bottom: 0.75rem; align-items: flex-start;">
                     <div style="width: 100%; font-size: 12px; line-height: 1.35; color: var(--primary-gradient-start);">
-                        Till ID (Dial 78610# and send funds to our TILL ID below)
+                        Kindly dial *786*10# and transfer the funds to the (TILL ID provided)
                     </div>
                 </div>
                 @endif
