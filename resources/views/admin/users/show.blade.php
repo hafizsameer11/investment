@@ -373,7 +373,7 @@
                             </table>
                         </div>
                         <div class="mt-3">
-                            {{ $referrals->appends(request()->except('ref_page'))->links() }}
+                            {{ $referrals->appends(request()->except('ref_page'))->links('pagination::bootstrap-4') }}
                         </div>
                         @else
                         <div class="text-center py-4">
