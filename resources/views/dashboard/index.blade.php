@@ -3565,7 +3565,7 @@
             setTimeout(() => {
                 notification.remove();
             }, 300);
-        }, 3000);
+        }, 6000);
     }
 
     // Smooth scroll behavior

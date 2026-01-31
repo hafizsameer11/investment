@@ -389,7 +389,9 @@
                     }
                     closeInvestmentModal();
                     // Reload page to update balances
-                    window.location.reload();
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 6000);
                 } else {
                     showAlert(data.message || 'Failed to create investment. Please try again.');
                     if (confirmBtn) {

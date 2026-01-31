@@ -83,6 +83,17 @@
             @endif
         </div>
 
+        @if(session()->has('impersonator_id'))
+            <div class="header-right" style="margin-right: 12px;">
+                <form method="POST" action="{{ route('impersonation.stop') }}" style="display: inline;">
+                    @csrf
+                    <button type="submit" class="btn" style="background: #ef4444; color: #fff; border: none; padding: 8px 12px; border-radius: 10px; font-weight: 700; cursor: pointer;">
+                        Stop Impersonation
+                    </button>
+                </form>
+            </div>
+        @endif
+
         <div class="header-right">
             <!-- Notifications -->
             <div class="notification-wrapper">

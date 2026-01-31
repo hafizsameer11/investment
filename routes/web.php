@@ -31,6 +31,7 @@ use App\Http\Controllers\Dashboard\WithdrawSecurityController;
 use App\Http\Controllers\Dashboard\ChatController;
 use App\Http\Controllers\Admin\ChatController as AdminChatController;
 use App\Http\Controllers\Admin\AuthController as AdminAuthController;
+use App\Http\Controllers\Admin\ImpersonationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -54,6 +55,11 @@ Route::middleware('guest')->group(function () {
 
 // Logout Route
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');
+
+// Admin impersonation stop route (must be accessible while impersonating)
+Route::post('/impersonation/stop', [ImpersonationController::class, 'stop'])
+    ->name('impersonation.stop')
+    ->middleware('auth');
 
 // Dashboard Routes - Protected with auth middleware
 Route::prefix('user/dashboard')->middleware('auth')->group(function () {
@@ -208,6 +214,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
         Route::get('/{id}/edit', [UserController::class, 'edit'])->name('edit');
         Route::put('/{id}', [UserController::class, 'update'])->name('update');
         Route::delete('/{id}', [UserController::class, 'destroy'])->name('destroy');
+        Route::post('/{id}/impersonate', [ImpersonationController::class, 'start'])->name('impersonate');
     });
 
     // Admin Deposit Payment Method Routes

@@ -251,7 +251,7 @@
                 showNotification(data.message, 'success');
                 setTimeout(() => {
                     window.location.href = indexUrl;
-                }, 1500);
+                }, 6000);
             } else {
                 showNotification(data.message || 'Failed to submit withdrawal request. Please try again.', 'error');
                 if (submitWithdrawalBtn) {
@@ -318,7 +318,7 @@
                     notification.parentNode.removeChild(notification);
                 }
             }, 300);
-        }, 5000);
+        }, 6000);
     }
 })();
 

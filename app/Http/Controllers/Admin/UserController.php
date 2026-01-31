@@ -136,7 +136,11 @@ class UserController extends Controller
         // Find referrals by matching this user's referral code
         $referrals = User::where('referred_by', $user->refer_code)->get();
 
-        $totalEarnings = ($user->mining_earning ?? 0) + ($user->referral_earning ?? 0);
+        $miningEarning = (float) ($user->mining_earning ?? 0);
+        $referralEarning = (float) ($user->referral_earning ?? 0);
+        $netBalance = (float) ($user->net_balance ?? ($miningEarning + $referralEarning));
+
+        $totalEarnings = $miningEarning + $referralEarning;
 
         $totalInvested = Investment::where('user_id', $user->id)->sum('amount');
 
@@ -158,6 +162,9 @@ class UserController extends Controller
             'user',
             'referrer',
             'referrals',
+            'miningEarning',
+            'referralEarning',
+            'netBalance',
             'totalEarnings',
             'totalInvested',
             'activeInvestments',

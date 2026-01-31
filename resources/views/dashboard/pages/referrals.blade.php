@@ -3847,7 +3847,7 @@ ls-referrer-section-new {
             setTimeout(() => {
                 notification.remove();
             }, 300);
-        }, 3000);
+        }, 6000);
     }
 
     // Custom dropdown functionality

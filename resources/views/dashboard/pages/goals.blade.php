@@ -1532,13 +1532,23 @@
                 .then(data => {
                     if (data.success) {
                         // Show success message
-                        alert('Success! ' + data.message);
+                        if (typeof window.showSuccessMessage === 'function') {
+                            window.showSuccessMessage('Success! ' + data.message);
+                        } else {
+                            alert('Success! ' + data.message);
+                        }
 
                         // Reload page to update balances and UI
-                        window.location.reload();
+                        setTimeout(() => {
+                            window.location.reload();
+                        }, 6000);
                     } else {
                         // Show error message
-                        alert('Error: ' + (data.message || 'Failed to claim reward. Please try again.'));
+                        if (typeof window.showErrorMessage === 'function') {
+                            window.showErrorMessage('Error: ' + (data.message || 'Failed to claim reward. Please try again.'));
+                        } else {
+                            alert('Error: ' + (data.message || 'Failed to claim reward. Please try again.'));
+                        }
 
                         // Re-enable button
                         this.disabled = false;
@@ -1547,7 +1557,11 @@
                 })
                 .catch(error => {
                     console.error('Error:', error);
-                    alert('An error occurred. Please try again.');
+                    if (typeof window.showErrorMessage === 'function') {
+                        window.showErrorMessage('An error occurred. Please try again.');
+                    } else {
+                        alert('An error occurred. Please try again.');
+                    }
 
                     // Re-enable button
                     this.disabled = false;

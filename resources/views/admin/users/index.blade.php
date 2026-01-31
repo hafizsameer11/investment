@@ -95,6 +95,14 @@
                                             <a href="{{ route('admin.users.show', $user->id) }}" class="btn btn-sm btn-info waves-effect waves-light" title="View">
                                                 <i class="mdi mdi-eye"></i>
                                             </a>
+                                            @if($user->role !== 'admin')
+                                                <form method="POST" action="{{ route('admin.users.impersonate', $user->id) }}" class="d-inline">
+                                                    @csrf
+                                                    <button type="submit" class="btn btn-sm btn-warning waves-effect waves-light" title="Login as User">
+                                                        <i class="mdi mdi-account-switch"></i>
+                                                    </button>
+                                                </form>
+                                            @endif
                                             <a href="{{ route('admin.users.edit', $user->id) }}" class="btn btn-sm btn-primary waves-effect waves-light" title="Edit">
                                                 <i class="mdi mdi-pencil"></i>
                                             </a>

@@ -85,6 +85,14 @@
                             <a href="{{ route('admin.users.edit', $user->id) }}" class="btn btn-primary waves-effect waves-light">
                                 <i class="mdi mdi-pencil"></i> Edit User
                             </a>
+                            @if($user->role !== 'admin')
+                                <form method="POST" action="{{ route('admin.users.impersonate', $user->id) }}" class="d-inline">
+                                    @csrf
+                                    <button type="submit" class="btn btn-warning waves-effect waves-light">
+                                        <i class="mdi mdi-account-switch"></i> Login as User
+                                    </button>
+                                </form>
+                            @endif
                             <a href="{{ route('admin.users.index') }}" class="btn btn-secondary waves-effect waves-light">
                                 <i class="mdi mdi-arrow-left"></i> Back
                             </a>
@@ -129,6 +137,18 @@
                                     <tr>
                                         <th class="pl-0">Total Earnings:</th>
                                         <td class="text-right">${{ number_format($totalEarnings ?? 0, 2) }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="pl-0">Mining Earning:</th>
+                                        <td class="text-right">${{ number_format($miningEarning ?? ($user->mining_earning ?? 0), 2) }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="pl-0">Referral Earning:</th>
+                                        <td class="text-right">${{ number_format($referralEarning ?? ($user->referral_earning ?? 0), 2) }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="pl-0">Net Balance:</th>
+                                        <td class="text-right">${{ number_format($netBalance ?? ($user->net_balance ?? 0), 2) }}</td>
                                     </tr>
                                     <tr>
                                         <th class="pl-0">Total Invested:</th>

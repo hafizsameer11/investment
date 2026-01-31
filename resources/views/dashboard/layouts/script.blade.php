@@ -62,7 +62,7 @@
                 setTimeout(() => {
                     if (toast.parentNode) toast.parentNode.removeChild(toast);
                 }, 260);
-            }, 2500);
+            }, 6000);
         };
 
         window.showSuccessMessage = function(message) {

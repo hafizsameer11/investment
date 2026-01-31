@@ -664,7 +664,7 @@
                         <div class="support-item-header-new">
                             <div class="support-item-label-new">WhatsApp Customer Service</div>
                         </div>
-                        <div class="support-item-value-new" id="whatsappCustomerService">+1 6725351819</div>
+                        <div class="support-item-value-new" id="whatsappCustomerService">+92-327-936-2532</div>
                         <div class="support-item-actions-new">
                             <button class="support-copy-btn-new" data-copy="whatsappCustomerService" title="Copy">
                                 <i class="fas fa-copy"></i>

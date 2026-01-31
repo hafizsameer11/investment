@@ -434,10 +434,10 @@
                 if (data.success) {
                     showNotification(data.message || 'Deposit request submitted successfully!', 'success');
 
-                    // Redirect after 2 seconds
+                    // Redirect after 6 seconds
                     setTimeout(() => {
                         window.location.href = data.redirect || '/user/dashboard/deposit';
-                    }, 2000);
+                    }, 6000);
                 } else {
                     submitDepositBtn.disabled = false;
                     submitDepositBtn.innerHTML = originalText;
@@ -492,7 +492,7 @@
             setTimeout(() => {
                 notification.remove();
             }, 300);
-        }, 3000);
+        }, 6000);
     }
 
     // Add animation styles
