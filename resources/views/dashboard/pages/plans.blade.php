@@ -3189,6 +3189,6 @@
 </div>
 
 @push('scripts')
-<script src="{{ asset('assets/dashboard/js/plans.js') }}"></script>
+<script src="{{ asset('assets/dashboard/js/plans.js') }}?v={{ filemtime(public_path('assets/dashboard/js/plans.js')) }}"></script>
 @endpush
 @endsection
