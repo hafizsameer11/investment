@@ -829,6 +829,7 @@
 
     .referrals-tool-input-new {
         flex: 1;
+        min-width: 0;
         padding: 1rem 1.25rem;
         background: rgba(255, 255, 255, 0.03);
         border: 1px solid rgba(255, 255, 255, 0.1);
@@ -860,7 +861,7 @@
         align-items: center;
         justify-content: center;
         box-shadow: 0 4px 16px rgba(255, 178, 30, 0.3);
-        flex-shrink: 0;
+        flex: 0 0 auto;
     }
 
     .referrals-tool-copy-btn-new:hover {
@@ -934,6 +935,7 @@
 
         .referrals-tool-input-new {
             flex: 1;
+            min-width: 0;
             padding: 0.875rem 1rem;
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(255, 255, 255, 0.1);
@@ -954,6 +956,7 @@
             width: 44px;
             height: 44px;
             min-width: 44px;
+            flex: 0 0 44px;
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(255, 255, 255, 0.1);
             color: var(--text-primary);
