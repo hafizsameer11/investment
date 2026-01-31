@@ -329,6 +329,14 @@
 
     /* Mobile Responsive for WhatsApp Box */
     @media (max-width: 768px) {
+        .balance-amount-display {
+            flex-wrap: nowrap !important;
+        }
+
+        .telegram-support-box {
+            margin-left: auto;
+        }
+
         .wallet-info-row {
             gap: 0.75rem;
             flex-wrap: nowrap;
