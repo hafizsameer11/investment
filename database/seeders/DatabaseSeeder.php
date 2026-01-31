@@ -20,12 +20,12 @@ class DatabaseSeeder extends Seeder
         // ]);
 
         $this->call([
-            // AdminUserSeeder::class,
-            InvestmentCommissionStructureSeeder::class,
-            EarningCommissionStructureSeeder::class,
-            MiningPlanSeeder::class,
-            RewardLevelSeeder::class,
-            DepositPaymentMethodSeeder::class,
+            AdminUserSeeder::class,
+            // InvestmentCommissionStructureSeeder::class,
+            // EarningCommissionStructureSeeder::class,
+            // MiningPlanSeeder::class,
+            // RewardLevelSeeder::class,
+            // DepositPaymentMethodSeeder::class,
         ]);
     }
 }
