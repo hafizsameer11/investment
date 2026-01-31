@@ -311,7 +311,7 @@
                         <div class="d-flex justify-content-between align-items-center mb-3">
                             <h5 class="card-title mb-0">
                                 <i class="mdi mdi-account-multiple text-success"></i> Referred Users
-                                <span class="badge badge-primary ml-2">{{ $referrals->count() }}</span>
+                                <span class="badge badge-primary ml-2">{{ $totalReferrals ?? $referrals->count() }}</span>
                             </h5>
                         </div>
 
@@ -321,6 +321,7 @@
                                 <thead>
                                     <tr>
                                         <th>#</th>
+                                        <th>Level</th>
                                         <th>Name</th>
                                         <th>Username</th>
                                         <th>Email</th>
@@ -332,7 +333,21 @@
                                 <tbody>
                                     @foreach($referrals as $referral)
                                     <tr>
-                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $referrals->firstItem() + $loop->index }}</td>
+                                        <td>
+                                            @php
+                                                $level = (int) ($referral->referral_level ?? 0);
+                                                $levelBadgeClass = match ($level) {
+                                                    1 => 'badge-success',
+                                                    2 => 'badge-info',
+                                                    3 => 'badge-warning',
+                                                    4 => 'badge-primary',
+                                                    5 => 'badge-danger',
+                                                    default => 'badge-secondary',
+                                                };
+                                            @endphp
+                                            <span class="badge {{ $levelBadgeClass }}">Level {{ $referral->referral_level ?? 'N/A' }}</span>
+                                        </td>
                                         <td>{{ $referral->name ?? 'N/A' }}</td>
                                         <td>{{ $referral->username ?? 'N/A' }}</td>
                                         <td>{{ $referral->email ?? 'N/A' }}</td>
@@ -356,6 +371,9 @@
                                     @endforeach
                                 </tbody>
                             </table>
+                        </div>
+                        <div class="mt-3">
+                            {{ $referrals->appends(request()->except('ref_page'))->links() }}
                         </div>
                         @else
                         <div class="text-center py-4">

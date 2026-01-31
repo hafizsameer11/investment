@@ -126,6 +126,7 @@ class UserController extends Controller
     public function show($id)
     {
         $user = User::findOrFail($id);
+        $request = request();
         
         // Find referrer by matching referral code
         $referrer = null;
@@ -133,8 +134,30 @@ class UserController extends Controller
             $referrer = User::where('refer_code', $user->referred_by)->first();
         }
         
-        // Find referrals by matching this user's referral code
-        $referrals = User::where('referred_by', $user->refer_code)->get();
+        // Get all referrals recursively (up to level 5) - same logic as dashboard referrals page
+        $allReferrals = $user->getAllReferralsRecursive(5);
+        $totalReferrals = $allReferrals->count();
+        $allReferrals = $allReferrals->sortByDesc('created_at')->values();
+
+        // Paginate referrals (10 per page)
+        $perPage = 10;
+        $currentPage = (int) $request->input('ref_page', 1);
+        if ($currentPage < 1) {
+            $currentPage = 1;
+        }
+        $items = $allReferrals->slice(($currentPage - 1) * $perPage, $perPage)->values();
+
+        $referrals = new \Illuminate\Pagination\LengthAwarePaginator(
+            $items,
+            $totalReferrals,
+            $perPage,
+            $currentPage,
+            [
+                'path' => $request->url(),
+                'query' => $request->query(),
+                'pageName' => 'ref_page',
+            ]
+        );
 
         $miningEarning = (float) ($user->mining_earning ?? 0);
         $referralEarning = (float) ($user->referral_earning ?? 0);
@@ -162,6 +185,7 @@ class UserController extends Controller
             'user',
             'referrer',
             'referrals',
+            'totalReferrals',
             'miningEarning',
             'referralEarning',
             'netBalance',
