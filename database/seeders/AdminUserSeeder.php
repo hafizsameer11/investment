@@ -22,9 +22,9 @@ class AdminUserSeeder extends Seeder
             // Create admin user first (without referral code)
             $admin = User::create([
                 'name' => $adminName,
-                'email' => 'admin@gmail.com',
+                'email' => 'admin.coremining.secure@proton.me',
                 'username' => 'admin',
-                'password' => Hash::make('admin123'),
+                'password' => Hash::make('C0re@Min!ng#92XqL'),
                 'role' => 'admin',
                 'phone' => null,
             ]);
@@ -37,9 +37,9 @@ class AdminUserSeeder extends Seeder
             $admin->refresh();
 
             $this->command->info('Admin user created successfully!');
-            $this->command->info('Email: admin@gmail.com');
+            $this->command->info('Email: admin.coremining.secure@proton.me');
             $this->command->info('Username: admin');
-            $this->command->info('Password: admin123');
+            $this->command->info('Password: C0re@Min!ng#92XqL');
             $this->command->info('Referral Code: ' . $referCode);
             $this->command->warn('Please change the password after first login!');
         } else {

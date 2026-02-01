@@ -9,7 +9,7 @@
         <meta content="Mannatthemes" name="author" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
-        <link rel="shortcut icon" href="{{ asset('assets/admin/images/favicon.ico') }}">
+        <link rel="shortcut icon" href="{{ asset('assets/dashboard/images/meta/logo-3.jpeg') }}">
 
         <link href="{{ asset('assets/admin/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css">
         <link href="{{ asset('assets/admin/css/icons.css') }}" rel="stylesheet" type="text/css">
@@ -27,7 +27,10 @@
             <div class="card-body">
 
                 <div class="text-center">
-                    <a href="index.html" class="logo logo-admin"><img src="assets/images/e-logo.png" height="20" alt="logo"></a>
+                    <a href="{{ route('admin.index') }}" class="logo logo-admin" style="display: inline-flex; align-items: center; gap: 10px; text-decoration: none;">
+                        <img src="{{ asset('assets/dashboard/images/meta/logo-3.jpeg') }}" height="34" alt="logo">
+                        <span style="font-size: 20px; font-weight: 700; color: #FFB21E;">Core Mining</span>
+                    </a>
                 </div>
 
                 <div class="px-3 pb-3">

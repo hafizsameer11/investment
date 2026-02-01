@@ -17,26 +17,7 @@
                 <div class="text-center">
                     <a href="{{ route('admin.index') }}" class="logo" style="text-decoration: none; padding: 15px 10px; display: flex; align-items: center; justify-content: center;">
                         <div class="logo-icon-wrapper" style="width: 50px; height: 50px; display: flex; align-items: center; justify-content: center;">
-                            <svg class="logo-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 42px; height: 42px;">
-                                <!-- Mining Pickaxe Icon -->
-                                <path d="M12 2L8 6L10 8L6 12L8 14L12 10L16 14L18 12L14 8L16 6L12 2Z" fill="url(#coreMiningGradient)" stroke="#FFB21E" stroke-width="1.5" stroke-linejoin="round"/>
-                                <!-- Mining Blocks -->
-                                <rect x="4" y="16" width="4" height="4" rx="1" fill="#FFB21E" opacity="0.6"/>
-                                <rect x="10" y="18" width="4" height="4" rx="1" fill="#FF8A1D" opacity="0.6"/>
-                                <rect x="16" y="16" width="4" height="4" rx="1" fill="#FFB21E" opacity="0.6"/>
-                                <!-- Glow Effect -->
-                                <circle cx="12" cy="8" r="8" fill="url(#coreMiningGlow)" opacity="0.3"/>
-                                <defs>
-                                    <linearGradient id="coreMiningGradient" x1="12" y1="2" x2="12" y2="14" gradientUnits="userSpaceOnUse">
-                                        <stop offset="0%" stop-color="#FFB21E"/>
-                                        <stop offset="100%" stop-color="#FF8A1D"/>
-                                    </linearGradient>
-                                    <radialGradient id="coreMiningGlow" cx="50%" cy="50%">
-                                        <stop offset="0%" stop-color="#FFB21E" stop-opacity="0.8"/>
-                                        <stop offset="100%" stop-color="#FFB21E" stop-opacity="0"/>
-                                    </radialGradient>
-                                </defs>
-                            </svg>
+                            <img src="{{ asset('assets/dashboard/images/meta/logo-2.png') }}" alt="logo" style="width: 42px; height: 42px; object-fit: contain;">
                         </div>
                     </a>
                 </div>
