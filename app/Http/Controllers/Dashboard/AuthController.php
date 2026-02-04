@@ -3,14 +3,14 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
+use App\Notifications\PasswordResetOtpNotification;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Str;
+use Carbon\Carbon;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
 use Exception;
@@ -181,90 +181,155 @@ class AuthController extends Controller
             'email' => ['required', 'email'],
         ]);
 
-        // Check if user exists with this email
-        $user = User::where('email', $request->email)->first();
+        $email = $request->email;
+        $genericStatus = 'If your email exists in our system, a verification code has been sent.';
 
-        if (!$user) {
-            return back()->withErrors(['email' => 'We can\'t find a user with that email address.']);
-        }
+        $user = User::where('email', $email)->first();
+        if ($user) {
+            $latestOtpRow = DB::table('password_reset_otps')
+                ->where('email', $email)
+                ->orderByDesc('id')
+                ->first();
 
-        try {
-            // Try to send password reset notification normally
-            $status = Password::sendResetLink(
-                $request->only('email')
-            );
-
-            if ($status === Password::RESET_LINK_SENT) {
-                // If using log driver, also show the link on the page for development
-                if (config('mail.default') === 'log' && app()->environment(['local', 'development', 'testing'])) {
-                    // Get the token from the database that was just created by sendResetLink
-                    // The token in DB is hashed, so we need to create a new one to get plain token
-                    $token = Str::random(64);
-                    $hashedToken = hash('sha256', $token);
-
-                    // Update the database with the new token
-                    DB::table('password_reset_tokens')->updateOrInsert(
-                        ['email' => $request->email],
-                        [
-                            'token' => $hashedToken,
-                            'created_at' => now()
-                        ]
-                    );
-
-                    $resetUrl = route('password.reset', ['token' => $token, 'email' => $request->email]);
-
-                    return back()->with('status', 'Password reset link has been generated! Check your email or use the link below:')
-                                 ->with('dev_reset_url', $resetUrl);
+            if ($latestOtpRow && $latestOtpRow->last_sent_at) {
+                $secondsSinceLastSend = now()->diffInSeconds($latestOtpRow->last_sent_at);
+                if ($secondsSinceLastSend < 60) {
+                    return redirect()->route('password.otp.form', ['email' => $email])->with('status', $genericStatus);
                 }
-
-                return back()->with('status', 'We have emailed your password reset link!');
             }
 
-            throw ValidationException::withMessages([
-                'email' => [__($status)],
+            $otp = (string) random_int(100000, 999999);
+
+            DB::table('password_reset_otps')->where('email', $email)->delete();
+            DB::table('password_reset_otps')->insert([
+                'email' => $email,
+                'otp_hash' => Hash::make($otp),
+                'expires_at' => now()->addMinutes(10),
+                'used_at' => null,
+                'attempts' => 0,
+                'last_sent_at' => now(),
+                'created_at' => now(),
+                'updated_at' => now(),
             ]);
-        } catch (Exception $e) {
-            // Log the error for debugging
-            Log::error('Password reset email failed: ' . $e->getMessage());
 
-            // Check if it's a mail connection error
-            if (str_contains($e->getMessage(), 'Connection could not be established') ||
-                str_contains($e->getMessage(), 'getaddrinfo') ||
-                str_contains($e->getMessage(), 'mailpit')) {
-
-                // For development: Generate token manually using the same method Laravel uses
-                if (app()->environment(['local', 'development', 'testing'])) {
-                    // Delete any existing token first to ensure we get a fresh one
-                    DB::table('password_reset_tokens')->where('email', $request->email)->delete();
-
-                    // Create token the same way Laravel does internally
-                    // Generate a random 64-character token
-                    $token = Str::random(64);
-                    // Hash it using SHA-256 (same as Laravel does for password reset tokens)
-                    $hashedToken = hash('sha256', $token);
-
-                    // Store the hashed token in the database
-                    DB::table('password_reset_tokens')->insert([
-                        'email' => $request->email,
-                        'token' => $hashedToken,
-                        'created_at' => now()
-                    ]);
-
-                    // Create the reset URL with the plain token
-                    $resetUrl = route('password.reset', ['token' => $token, 'email' => $request->email]);
-
-                    return back()->with('status', 'Password reset link generated! Since mail is not configured, use the link below:')
-                                 ->with('dev_reset_url', $resetUrl);
-                }
-
-                return back()->withErrors([
-                    'email' => 'Unable to send password reset email. Please contact support or check your mail configuration.'
-                ]);
+            try {
+                $user->notify(new PasswordResetOtpNotification($otp, 10));
+            } catch (Exception $e) {
+                Log::error('Password reset OTP email failed: ' . $e->getMessage());
             }
-
-            // Re-throw other exceptions
-            throw $e;
         }
+
+        return redirect()->route('password.otp.form', ['email' => $email])->with('status', $genericStatus);
+    }
+
+    public function showVerifyOtpForm(Request $request)
+    {
+        $email = $request->query('email');
+
+        return view('auth.verify-otp', [
+            'email' => $email,
+        ]);
+    }
+
+    public function verifyOtp(Request $request)
+    {
+        $request->validate([
+            'email' => ['required', 'email'],
+            'otp' => ['required', 'digits:6'],
+        ]);
+
+        $email = $request->email;
+        $otp = (string) $request->otp;
+
+        $otpRow = DB::table('password_reset_otps')
+            ->where('email', $email)
+            ->whereNull('used_at')
+            ->orderByDesc('id')
+            ->first();
+
+        if (!$otpRow) {
+            return back()->withInput($request->only('email'))->withErrors(['otp' => 'Invalid or expired verification code.']);
+        }
+
+        if (now()->greaterThan($otpRow->expires_at)) {
+            return back()->withInput($request->only('email'))->withErrors(['otp' => 'Invalid or expired verification code.']);
+        }
+
+        if (($otpRow->attempts ?? 0) >= 5) {
+            return back()->withInput($request->only('email'))->withErrors(['otp' => 'Invalid or expired verification code.']);
+        }
+
+        if (!Hash::check($otp, $otpRow->otp_hash)) {
+            DB::table('password_reset_otps')->where('id', $otpRow->id)->update([
+                'attempts' => ($otpRow->attempts ?? 0) + 1,
+                'updated_at' => now(),
+            ]);
+
+            return back()->withInput($request->only('email'))->withErrors(['otp' => 'Invalid or expired verification code.']);
+        }
+
+        DB::table('password_reset_otps')->where('id', $otpRow->id)->update([
+            'used_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        $request->session()->put('password_reset_email', $email);
+        $request->session()->put('password_reset_verified_at', now()->toISOString());
+
+        return redirect()->route('password.reset.otp.form');
+    }
+
+    public function showResetPasswordOtpForm(Request $request)
+    {
+        $email = $request->session()->get('password_reset_email');
+        $verifiedAt = $request->session()->get('password_reset_verified_at');
+
+        if (!$email || !$verifiedAt) {
+            return redirect()->route('password.request');
+        }
+
+        if (now()->diffInMinutes(Carbon::parse($verifiedAt)) > 10) {
+            $request->session()->forget(['password_reset_email', 'password_reset_verified_at']);
+            return redirect()->route('password.request');
+        }
+
+        return view('auth.reset-password-otp', [
+            'email' => $email,
+        ]);
+    }
+
+    public function resetPasswordWithOtp(Request $request)
+    {
+        $email = $request->session()->get('password_reset_email');
+        $verifiedAt = $request->session()->get('password_reset_verified_at');
+
+        if (!$email || !$verifiedAt) {
+            return redirect()->route('password.request');
+        }
+
+        if (now()->diffInMinutes(Carbon::parse($verifiedAt)) > 10) {
+            $request->session()->forget(['password_reset_email', 'password_reset_verified_at']);
+            return redirect()->route('password.request');
+        }
+
+        $request->validate([
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
+        ]);
+
+        $user = User::where('email', $email)->first();
+        if (!$user) {
+            $request->session()->forget(['password_reset_email', 'password_reset_verified_at']);
+            return redirect()->route('password.request');
+        }
+
+        DB::table('users')
+            ->where('id', $user->id)
+            ->update(['password' => Hash::make($request->password)]);
+
+        DB::table('password_reset_otps')->where('email', $email)->delete();
+        $request->session()->forget(['password_reset_email', 'password_reset_verified_at']);
+
+        return redirect()->route('login')->with('success', 'Your password has been reset successfully. You can now login with your new password.');
     }
 
     /**

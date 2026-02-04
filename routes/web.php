@@ -117,6 +117,11 @@ Route::prefix('user/dashboard')->middleware('auth')->group(function () {
 Route::middleware('guest')->group(function () {
     Route::get('/password/reset', [AuthController::class, 'showForgotPasswordForm'])->name('password.request');
     Route::post('/password/email', [AuthController::class, 'sendPasswordResetLink'])->name('password.email');
+    Route::get('/password/verify', [AuthController::class, 'showVerifyOtpForm'])->name('password.otp.form');
+    Route::post('/password/verify', [AuthController::class, 'verifyOtp'])->name('password.otp.verify');
+    Route::get('/password/reset-otp', [AuthController::class, 'showResetPasswordOtpForm'])->name('password.reset.otp.form');
+    Route::post('/password/reset-otp', [AuthController::class, 'resetPasswordWithOtp'])->name('password.reset.otp');
+
     Route::get('/password/reset/{token}', [AuthController::class, 'showResetPasswordForm'])->name('password.reset');
     Route::post('/password/reset', [AuthController::class, 'resetPassword'])->name('password.update');
 });
