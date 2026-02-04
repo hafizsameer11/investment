@@ -226,9 +226,6 @@
                 <div class="progress-bar"></div>
             </div>
 
-            <a href="{{ route('login') }}" class="back-link">
-                <i class="fas fa-arrow-left"></i> Back to Login
-            </a>
         </div>
     </div>
 </body>

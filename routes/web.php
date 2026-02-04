@@ -144,7 +144,7 @@ Route::get('/under-construction', function () {
 
 // Home route - redirect to login
 Route::get('/', function () {
-    return redirect()->route('login');
+    return redirect()->route('under-construction');
 });
 
 // Admin Authentication Routes
